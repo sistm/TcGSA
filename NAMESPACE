@@ -2,7 +2,7 @@ import("ggplot2")
 
 import("lme4")
 import("GSA")
-import("multtest")
+importFrom("multtest", mt.rawp2adjp)
 importFrom("gplots", balloonplot,
 					       bandplot,
 					       barplot2,
