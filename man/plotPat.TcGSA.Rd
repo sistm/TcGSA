@@ -12,7 +12,7 @@ This function plots a series of gene sets dynamic trends heatmaps.  One heatmap 
 \usage{
 plotPat.TcGSA(x, threshold=0.05, myproc="BY", nbsimu_pval=1e+06, 
          expr, Patient_ID, TimePoint, 
-         baseline=NULL,
+         baseline=NULL, only.signif=TRUE,
          group.var=NULL, Group_ID_paired=NULL, ref=NULL, group_of_interest=NULL,
          FUNcluster=NULL, clustering_metric="euclidian", clustering_method="ward", B=500,
          max_trends=4, aggreg.fun="median",
@@ -56,6 +56,9 @@ a numeric vector or a factor of length \eqn{p} that is in the same order as \cod
 }
   \item{baseline}{
 a character string which is the value of \code{TimePoint} used as baseline.  See Details.
+}
+  \item{only.signif}{
+logical flag for plotting only the significant gene sets.  If \code{FALSE},  all the gene sets from the \bold{gmt} object contained in \code{x} are plotted.  Default is \code{TRUE}.
 }
   \item{group.var}{
 in the case of several treatment groups, this is a factor of length \eqn{p} that is in the same order as \code{Timepoint}, \code{Patient_ID}, \code{sample_name} and the columns of \code{expr}.  It indicates to which treatment group each sample belongs to.  Default is \code{NULL}, which means that there is only one treatment group.  See Details.

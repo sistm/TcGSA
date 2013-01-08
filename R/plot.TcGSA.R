@@ -19,7 +19,7 @@ plot.TcGSA <-
            horiz.clusterKey=TRUE,
            main=NULL, subtitle=NULL, 
            ...){
-    library(gplots)
+#		library(gplots)
     gmt <- x[["GeneSets_gmt"]]
     
     if(!is.null(baseline)){

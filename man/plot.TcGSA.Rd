@@ -35,7 +35,7 @@ This function plots a gene sets dynamic trends heatmap.
 
 \arguments{
   \item{x}{
-a \bold{tcgsa} object.
+    an object of class'\code{TcGSA}'.
 }
   \item{threshold}{
 the threshold at which the FDR or the FWER should be controlled.

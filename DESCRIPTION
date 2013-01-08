@@ -1,12 +1,12 @@
 Package: TcGSA
 Type: Package
 Title: Time-course Gene Set Analysis
-Version: 0.9.11
-Date: 2012-12-22
+Version: 0.9.12
+Date: 2013-01-07
 Author: Boris P. Hejblum
 Maintainer: Boris P. Hejblum <boris.hejblum@isped.u-bordeaux2.fr>
-Depends: R (>= 2.11.1), lme4, GSA, reshape2, multtest, gplots, splines, ggplot2, cluster
-Imports: lme4, GSA, reshape2, multtest, gplots, splines, ggplot2
-Suggests: doSNOW, Rmpi, cluster
+Depends: R (>= 2.14), ggplot2
+Imports: lme4, GSA, multtest, reshape2, grid, gtools, gplots, splines, cluster
+Suggests: doSNOW, Rmpi
 Description: This package implements the TcGSA workflow, an algorithm to analyze longitudinal gene-expression data at the Gene Set level.
 License: LGPL-3

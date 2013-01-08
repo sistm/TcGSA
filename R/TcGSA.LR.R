@@ -10,11 +10,11 @@ function(expr, gmt, Patient_ID, TimePoint, func = "linear", maxGSsize=500, group
   if(!is.null(group.var) & separatePatients){
     stop("'separatePatients' is TRUE while 'group.var' is not NULL.\n This is an attempt to separate patients in a multiple group setting.\n This is not handled by the TcGSA.LR function.\n\n")
   }
-  
-  library(GSA)
-  library(lme4)
-  library(reshape2)
-  require(splines)
+
+#   library(GSA)
+#   library(lme4)
+#   library(reshape2)
+#   require(splines)
    
   LR <- numeric(length(gmt$genesets))
   CVG_H0 <- numeric(length(gmt$genesets))
@@ -45,7 +45,7 @@ function(expr, gmt, Patient_ID, TimePoint, func = "linear", maxGSsize=500, group
           data_lm$t3 <- data_lm$t3/1000
           
         }else if(func=="splines"){
-          library(splines)
+          # library(splines)
           nk = ceiling(length(unique(data_lm$t1))/4)
           noeuds = quantile(data_lm$t1, probs=(c(0:(nk+1))/(nk+1))[-c(1,(nk+1+1))])
           bsplines <- as.data.frame(bs(data_lm$t1, knots = noeuds, degree = 3, Boundary.knots = range(data_lm$t1)), intercept = FALSE)

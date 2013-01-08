@@ -1,12 +1,11 @@
 TcGSA.LR.parallel <-
 function(Nproc, type_connec, expr, gmt, Patient_ID, TimePoint, func = "linear", maxGSsize=500, group.var=NULL, separatePatients=FALSE, monitorfile=""){
   
-  library(GSA)
-  library(lme4)
-  library(reshape2)
-  require(splines)
-  
-  library(doSNOW)
+#   library(GSA)
+#   library(lme4)
+#   library(reshape2)
+#   library(splines) 
+#   library(doSNOW)
 
   if(!is.null(group.var) & separatePatients){
     stop("'separatePatients' is TRUE while 'group.var' is not NULL.\n This is an attempt to separate patients in a multiple group setting.\n This is not handled by the TcGSA.LR function.\n\n")
@@ -15,7 +14,7 @@ function(Nproc, type_connec, expr, gmt, Patient_ID, TimePoint, func = "linear", 
   cl <- makeCluster(Nproc, type = type_connec)
   registerDoSNOW(cl)
   
-  res_par <- foreach(gs=1:length(gmt$genesets), .packages=c("lme4", "reshape2")) %dopar% {
+  res_par <- foreach(gs=1:length(gmt$genesets), .packages=c("lme4", "reshape2", "splines")) %dopar% {
     probes <- intersect(gmt$genesets[[gs]], rownames(expr))
 
     

@@ -45,9 +45,6 @@ a numeric vector or a factor of length \eqn{p} that is in the same order as \cod
   \item{baseline}{
 a character string which is the value of \code{TimePoint} that can be used as a baseline.  Default is \code{NULL}, in which case no timepoint is used as a baseline value for gene expression.  Has to be \code{NULL} when comparing two treatment groups.  See Details.
 }
-  \item{only.signif}{
-logical flag for analysing the trends in only the significant gene sets.  If \code{FALSE},  all the gene sets from the \bold{gmt} object contained in \code{x} are clustered.  Default is \code{TRUE}.
-}
   \item{group.var}{
 in the case of several treatment groups, this is a factor of length \eqn{p} that is in the same order as \code{Timepoint}, \code{Patient_ID} and the columns of \code{expr}.  It indicates to which treatment group each sample belongs to.  Default is \code{NULL}, which means that there is only one treatment group.  See Details.
 }
@@ -127,7 +124,7 @@ a numerical value (in [0, 360]) giving the orientation by which x-axis annotatio
 a numeric vector of length 2 giving the range of the y-axis.  See \code{\link{plot.default}}.
 }
   \item{x.lim}{
-if numeric, will create a continuous scale, if factor or character, will create a discrete scale.  Observations not in this range will be dropped.  See \code{\link[ggplot2:xlim]{xlim}}.
+if numeric, will create a continuous scale, if factor or character, will create a discrete scale.  Observations not in this range will be dropped.  See \code{\link{xlim}}.
 }
   \item{gg.add}{
 See \link{+.gg}.  Default is \code{theme()}, which adds nothing to the plot.
@@ -177,7 +174,8 @@ plot1GS(expr=genesDyn_1grp, TimePoint=design$TimePoint, Patient_ID=design$Patien
         geneset.name="Gene set 3",
         indiv="genes",
         time_unit="H",
-        lab.cex=0.7)
+        lab.cex=0.7
+)
 
 
 colval <- c(hsv(0.56, 0.9, 1),
@@ -192,9 +190,10 @@ colval <- c(hsv(0.56, 0.9, 1),
 n <- length(colval);  y <- 1:n
 op <- par(mar=rep(1.5,4))
 plot(y, axes = FALSE, frame.plot = TRUE,
-xlab = "", ylab = "", pch = 21, cex = 8,
-bg = colval, ylim=c(-1,n+1), xlim=c(-1,n+1),
-main = "Color scale")
+		 xlab = "", ylab = "", pch = 21, cex = 8,
+		 bg = colval, ylim=c(-1,n+1), xlim=c(-1,n+1),
+		 main = "Color scale"
+)
 par(op)
 
 
@@ -203,7 +202,7 @@ plot1GS(expr=expr_1grp, TimePoint=design$TimePoint, Patient_ID=design$Patient_ID
         indiv="genes",
         time_unit="H",
         title="",
-        gg.add= scale_color_manual(values=colval),
+        gg.add=scale_color_manual(values=colval),
         lab.cex=0.7
 )
 }

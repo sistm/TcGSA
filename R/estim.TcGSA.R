@@ -1,6 +1,6 @@
 estim.TcGSA <-
 function(tcgsa, expr, Patient_ID, TimePoint){
-  require(splines)
+# require(splines)
   
   func <- tcgsa$func_form
   group.var <- tcgsa$group.var
@@ -117,7 +117,7 @@ function(tcgsa, expr, Patient_ID, TimePoint){
       }
     }
     else if(func=="splines"){
-      library(splines)
+      #  library(splines)
       nk = ceiling(length(unique(t1))/4)
       noeuds = quantile(t1, probs=(c(0:(nk+1))/(nk+1))[-c(1,(nk+1+1))])
       bsplines <- as.data.frame(bs(t1, knots = noeuds, degree = 3, Boundary.knots = range(t1)), intercept = FALSE)
@@ -366,7 +366,7 @@ function(tcgsa, expr, Patient_ID, TimePoint){
       }
     }
     else if(func=="splines"){
-      library(splines)
+      #  library(splines)
       nk = ceiling(length(unique(t1))/4)
       noeuds = quantile(t1, probs=(c(0:(nk+1))/(nk+1))[-c(1,(nk+1+1))])
       bsplines <- as.data.frame(bs(t1, knots = noeuds, degree = 3, Boundary.knots = range(t1)), intercept = FALSE)

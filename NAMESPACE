@@ -1,1 +1,47 @@
+import("ggplot2")
+
+import("lme4")
+import("GSA")
+import("multtest")
+importFrom("gplots", balloonplot,
+					       bandplot,
+					       barplot2,
+					       bluered,
+					       boxplot.n,
+					       ci2d,
+					       col2hex,
+					       colorpanel,
+					       greenred,
+					       heatmap.2,
+					       hist2d,
+					       lowess,
+					       ooplot,
+					       overplot,
+					       panel.overplot,
+					       plot.lm2,
+					       plot.venn,
+					       plotCI,
+					       plotmeans,
+					       qqnorm.aov,
+					       redblue,
+					       redgreen,
+					       residplot,
+					       rich.colors,
+					       sinkplot,
+					       smartlegend,
+					       space,
+					       textplot,
+					       venn
+)
+# wapply already loaded in "multtest" 
+# so import("gplots") is incorrect
+importFrom("gtools", mixedorder)
+import("reshape2")
+import("grid")
+import("cluster")
+import("splines")
+
+S3method(plot, TcGSA)
+
 exportPattern("^[[:alpha:]]+")
+

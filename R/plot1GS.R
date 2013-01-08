@@ -14,9 +14,9 @@ plot1GS <-
             gg.add=theme()
            ){
   
-  library(ggplot2)
-  library(cluster)
-  library(splines)
+#   library(ggplot2)
+#   library(cluster)
+#   library(splines)
   
   capwords <- function(s, strict = FALSE){
     cap <- function(s){

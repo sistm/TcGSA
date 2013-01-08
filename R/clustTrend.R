@@ -8,7 +8,7 @@ function(x,
          indiv="genes",
          verbose=TRUE
          ){
-  library(cluster)
+#  library(cluster)
   
   Fun_byIndex<-function(X, index, fun){
     tapply(X, INDEX=index, FUN = fun)

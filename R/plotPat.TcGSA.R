@@ -20,7 +20,7 @@ function(x, threshold=0.05, myproc="BY", nbsimu_pval=1e+06,
          main=NULL, subtitle=NULL, 
          ...){
   
-  library(gplots)
+#  library(gplots)
   
   Fun_byIndex<-function(X, index, fun){
     tapply(X, INDEX=index, FUN = fun)

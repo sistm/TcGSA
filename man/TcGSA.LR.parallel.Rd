@@ -22,7 +22,7 @@ TcGSA.LR.parallel(Nproc, type_connec,
 The number of processors available on the cluster.
   }
   \item{type_connec}{
-The type of connection between the processors. Supported cluster types are \code{"SOCK"}, \code{"PVM"}, \code{"MPI"}, and \code{"NWS"}. See also \code{\link[snow:makeCluster]{makeCluster}}.
+The type of connection between the processors. Supported cluster types are \code{"SOCK"}, \code{"PVM"}, \code{"MPI"}, and \code{"NWS"}. See also \code{\link{makeCluster}}.
 }
   \item{expr}{
 a matrix or dataframe of gene expression. Its dimensions are \eqn{n}x\eqn{p}, with the \eqn{p} sample in column and the \eqn{n} genes in row.
@@ -101,7 +101,7 @@ Boris P. Hejblum
 }
 
 \seealso{
-  \code{\link{TcGSA.LR}}, \code{\link{summary.TcGSA}}, \code{\link{estim.TcGSA}}, \code{\link[snow:makeCluster]{makeCluster}}
+  \code{\link{TcGSA.LR}}, \code{\link{summary.TcGSA}}, \code{\link{estim.TcGSA}}, \code{\link{makeCluster}}
 }
 \examples{
 data(data_simu_TcGSA)
