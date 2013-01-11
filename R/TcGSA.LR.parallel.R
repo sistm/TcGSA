@@ -1,16 +1,18 @@
 TcGSA.LR.parallel <-
 function(Nproc, type_connec, expr, gmt, Patient_ID, TimePoint, func = "linear", maxGSsize=500, group.var=NULL, separatePatients=FALSE, monitorfile=""){
-  
+	
 #   library(GSA)
 #   library(lme4)
 #   library(reshape2)
 #   library(splines) 
-#   library(doSNOW)
+   library(doSNOW)
+	
 
   if(!is.null(group.var) & separatePatients){
     stop("'separatePatients' is TRUE while 'group.var' is not NULL.\n This is an attempt to separate patients in a multiple group setting.\n This is not handled by the TcGSA.LR function.\n\n")
   }
   
+   
   cl <- makeCluster(Nproc, type = type_connec)
   registerDoSNOW(cl)
   
@@ -38,11 +40,13 @@ function(Nproc, type_connec, expr, gmt, Patient_ID, TimePoint, func = "linear", 
         }else if(func=="splines"){
           nk = ceiling(length(unique(data_lm$t1))/4)
           noeuds = quantile(data_lm$t1, probs=(c(0:(nk+1))/(nk+1))[-c(1,(nk+1+1))])
-          Bsplines <- as.data.frame(ns(data_lm$t1, knots = noeuds, Boundary.knots = range(data_lm$t1)), intercept = FALSE)
+          Bsplines <- as.data.frame(bs(data_lm$t1, knots = noeuds, Boundary.knots = range(data_lm$t1), intercept = FALSE))
           colnames(Bsplines) <- paste("spline_t",colnames(Bsplines) , sep="")
           Bsplines <- Bsplines*10
           data_lm <- cbind.data.frame(data_lm, Bsplines)
         }
+        
+        
         
         if(!separatePatients){
           if(length(levels(data_lm$probe))>1){
@@ -136,7 +140,7 @@ function(Nproc, type_connec, expr, gmt, Patient_ID, TimePoint, func = "linear", 
         }else if(func=="splines"){
           nk = ceiling(length(unique(data_lm$t1))/4)
           noeuds = quantile(data_lm$t1, probs=(c(0:(nk+1))/(nk+1))[-c(1,(nk+1+1))])
-          Bsplines <- as.data.frame(ns(data_lm$t1, knots = noeuds, Boundary.knots = range(data_lm$t1)), intercept = FALSE)
+          Bsplines <- as.data.frame(bs(data_lm$t1, knots = noeuds, Boundary.knots = range(data_lm$t1), intercept = FALSE))
           colnames(Bsplines) <- paste("spline_t",colnames(Bsplines) , sep="")
           Bsplines <- Bsplines*10
           data_lm <- cbind.data.frame(data_lm, Bsplines)
@@ -191,12 +195,21 @@ function(Nproc, type_connec, expr, gmt, Patient_ID, TimePoint, func = "linear", 
 	  #lmm_fits_H0[[gs]] <- lmm_H0
 	  #lmm_fits_H1[[gs]] <- lmm_H1
 		
-      LR <- lmm_H0@deviance["ML"] - lmm_H1@deviance["ML"]
-	    CVG_H0 <- lmm_H0@dims["cvg"]
-	    CVG_H1 <- lmm_H1@dims["cvg"]
-      
-      FixEf <- fixef(lmm_H1)
-      RanEf <- ranef(lmm_H1)
+      if (!is.null(lmm_H0) & !is.null(lmm_H1)) {
+      	LR <- lmm_H0@deviance["ML"] - lmm_H1@deviance["ML"]
+      	CVG_H0 <- lmm_H0@dims["cvg"]
+      	CVG_H1 <- lmm_H1@dims["cvg"]
+    
+      	FixEf <- fixef(lmm_H1)
+      	RanEf <- ranef(lmm_H1)
+      } else {
+      	LR <- NA
+      	CVG_H0 <- NA
+      	CVG_H1 <- NA
+      	
+      	FixEf <- NA
+      	RanEf <- NA
+      }
       
       #       "3" = "X-convergence (3)",
       #       "4" = "relative convergence (4)",

@@ -76,6 +76,9 @@ plot.TcGSA <-
     }
     
     if(is.null(clust_trends)){
+    	if (length(which(!is.na(x$fit$LR)))<1){
+    		stop ("SERIOUS PROBLEM\n Was not able to compute any likelihood ratios...")
+    	}
       clust_trends <- clustTrend(x=x, expr=expr, Patient_ID=Patient_ID, TimePoint=TimePoint, baseline=baseline, only.signif=TRUE,
                                  group.var=group.var, Group_ID_paired=Group_ID_paired, ref=ref, group_of_interest=group_of_interest,
                                  FUNcluster=FUNcluster, clustering_metric=clustering_metric, clustering_method=clustering_method, B=B,

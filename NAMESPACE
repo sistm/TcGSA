@@ -1,7 +1,7 @@
 import("ggplot2")
 
 import("lme4")
-import("GSA")
+importFrom("GSA", GSA.read.gmt)
 importFrom("multtest", mt.rawp2adjp)
 importFrom("gplots", balloonplot,
 					       bandplot,
@@ -38,8 +38,8 @@ importFrom("gplots", balloonplot,
 importFrom("gtools", mixedorder, invalid)
 import("reshape2")
 import("grid")
+importFrom("splines", bs)
 import("cluster")
-import("splines", bs)
 
 S3method(plot, TcGSA)
 
