@@ -48,65 +48,87 @@ function(expr, gmt, Patient_ID, TimePoint, func = "linear", maxGSsize=500, group
           # library(splines)
           nk = ceiling(length(unique(data_lm$t1))/4)
           noeuds = quantile(data_lm$t1, probs=(c(0:(nk+1))/(nk+1))[-c(1,(nk+1+1))])
-          bsplines <- as.data.frame(bs(data_lm$t1, knots = noeuds, degree = 3, Boundary.knots = range(data_lm$t1)), intercept = FALSE)
-          colnames(bsplines) <- paste("spline_t",colnames(bsplines) , sep="")
-          bsplines <- bsplines*10
-          data_lm <- cbind.data.frame(data_lm, bsplines)
+          Bsplines <- as.data.frame(bs(data_lm$t1, knots = noeuds, degree=3, Boundary.knots = range(data_lm$t1)), intercept = FALSE)
+          colnames(Bsplines) <- paste("spline_t",colnames(Bsplines) , sep="")
+          Bsplines <- Bsplines*10
+          data_lm <- cbind.data.frame(data_lm, Bsplines)
+          SplinesForm <- paste(colnames(Bsplines), collapse=" + ")
         }
         
         if(!separatePatients){
           if(length(levels(data_lm$probe))>1){
-            lmm_H0 <- lmer(expression ~ 1 + probe + (1|Patient_ID:probe), REML=FALSE, data=data_lm)
+          	lmm_H0 <- tryCatch(lmer(expression ~ 1 + probe + (1|Patient_ID:probe), REML=FALSE, data=data_lm),
+                     error=function(e){NULL})
             if(func=="linear"){
               data_lm$t1 <- data_lm$t1/10
-              lmm_H1 <- lmer(expression ~ 1 + probe + t1 + (t1|probe) + (1|Patient_ID:probe), REML=FALSE, data=data_lm)
+              lmm_H1 <- tryCatch(lmer(expression ~ 1 + probe + t1 + (t1|probe) + (1|Patient_ID:probe), REML=FALSE, data=data_lm),
+                       error=function(e){NULL})
             }else if(func=="cubic"){
-              lmm_H1 <- lmer(expression ~ 1 + probe + t1 + t2 + t3 + (t1 + t2 + t3 | probe) + (1|Patient_ID:probe), REML=FALSE, data=data_lm) #, control=list(xf.tol=2.2e-14, sing.tol=1e-10))
+              lmm_H1 <- tryCatch(lmer(expression ~ 1 + probe + t1 + t2 + t3 + (t1 + t2 + t3 | probe) + (1|Patient_ID:probe), REML=FALSE, data=data_lm),
+                       error=function(e){NULL})
+                #, control=list(xf.tol=2.2e-14, sing.tol=1e-10))
                 #lme(expression ~ 1 + probe + t1 + t2 + t3, random =  list(as.formula("~ t1 + t2 + t3 | probe"), as.formula("~ 1 | Patient_ID")), method="ML", data=data_lm)
             }else if(func=="splines"){
-              lmm_H1 <- lmer(expression ~ 1 + probe + spline_t1 + spline_t2 + spline_t3 + spline_t4 +spline_t5
-                             + (spline_t1 + spline_t2 + spline_t3 + spline_t4 +spline_t5|probe) + (1|Patient_ID:probe), REML=FALSE, data=data_lm)
+            	lmm_H1 <- tryCatch(lmer(formula= paste("expression ~ 1 + probe + ", SplinesForm, 
+                             " + (", SplinesForm, "|probe) + (1|Patient_ID:probe)", sep=""), REML=FALSE, data=data_lm),
+                       error=function(e){NULL})
             }
           }else{          
-            lmm_H0 <- lmer(expression ~ 1 + (1|Patient_ID), REML=FALSE, data=data_lm)
+            lmm_H0 <- tryCatch(lmer(expression ~ 1 + (1|Patient_ID), REML=FALSE, data=data_lm),
+                     error=function(e){NULL})
             if(func=="linear"){
               data_lm$t1 <- data_lm$t1/10
-              lmm_H1 <- lmer(expression ~ 1 + t1 + (1|Patient_ID), REML=FALSE, data=data_lm)
+              lmm_H1 <- tryCatch(lmer(expression ~ 1 + t1 + (1|Patient_ID), REML=FALSE, data=data_lm),
+                       error=function(e){NULL})
             }else if(func=="cubic"){
-              lmm_H1 <- lmer(expression ~ 1 + t1 + t2 + t3 + (1|Patient_ID), REML=FALSE, data=data_lm)
+              lmm_H1 <- tryCatch(lmer(expression ~ 1 + t1 + t2 + t3 + (1|Patient_ID), REML=FALSE, data=data_lm),
+                       error=function(e){NULL})
             }else if(func=="splines"){
-              lmm_H1 <- lmer(expression ~ 1 + spline_t1 + spline_t2 + spline_t3 + spline_t4 +spline_t5
-                              + (1|Patient_ID), REML=FALSE, data=data_lm, control=list(maxIter=600))
+              lmm_H1 <- tryCatch(lmer(formula= paste("expression ~ 1 + ", SplinesForm,
+                              " + (1|Patient_ID)", sep=""), REML=FALSE, data=data_lm, control=list(maxIter=600)),
+                       error=function(e){NULL})
             }
           }
         }else{
           if(length(levels(data_lm$probe))>1){
             if(func=="linear"){
               data_lm$t1 <- data_lm$t1/10
-              lmm_H0 <- lmer(expression ~ 1 + probe + t1 + (1|Patient_ID:probe), REML=FALSE, data=data_lm)
-              lmm_H1 <- lmer(expression ~ 1 + probe + t1 + (t1|Patient_ID) + (1|Patient_ID:probe), REML=FALSE, data=data_lm)
+              lmm_H0 <- tryCatch(lmer(expression ~ 1 + probe + t1 + (1|Patient_ID:probe), REML=FALSE, data=data_lm),
+                       error=function(e){NULL})
+              lmm_H1 <- tryCatch(lmer(expression ~ 1 + probe + t1 + (t1|Patient_ID) + (1|Patient_ID:probe), REML=FALSE, data=data_lm),
+                       error=function(e){NULL})
             }else if(func=="cubic"){
-              lmm_H0 <- lmer(expression ~ 1 + probe + t1 + t2 + t3 + (1|Patient_ID:probe), REML=FALSE, data=data_lm) #, control=list(xf.tol=2.2e-14, sing.tol=1e-10))
-              lmm_H1 <- lmer(expression ~ 1 + probe + t1 + t2 + t3 + (t1 + t2 + t3 | Patient_ID) + (1|Patient_ID:probe), REML=FALSE, data=data_lm) #, control=list(xf.tol=2.2e-14, sing.tol=1e-10))
+              lmm_H0 <- tryCatch(lmer(expression ~ 1 + probe + t1 + t2 + t3 + (1|Patient_ID:probe), REML=FALSE, data=data_lm), #, control=list(xf.tol=2.2e-14, sing.tol=1e-10)),
+                       error=function(e){NULL})
+              lmm_H1 <- tryCatch(lmer(expression ~ 1 + probe + t1 + t2 + t3 + (t1 + t2 + t3 | Patient_ID) + (1|Patient_ID:probe), REML=FALSE, data=data_lm),
+                       error=function(e){NULL})
             }else if(func=="splines"){
-              lmm_H0 <- lmer(expression ~ 1 + probe + spline_t1 + spline_t2 + spline_t3 + spline_t4 +spline_t5
-                             + (1|Patient_ID:probe), REML=FALSE, data=data_lm)
-              lmm_H1 <- lmer(expression ~ 1 + probe + spline_t1 + spline_t2 + spline_t3 + spline_t4 +spline_t5
-                             + (spline_t1 + spline_t2 + spline_t3 + spline_t4 +spline_t5|Patient_ID) + (1|Patient_ID:probe), REML=FALSE, data=data_lm)
+              lmm_H0 <- tryCatch(lmer(formula= paste("expression ~ 1 + probe + ", SplinesForm,
+                             " + (1|Patient_ID:probe)", sep=""), REML=FALSE, data=data_lm),
+                       error=function(e){NULL})
+              lmm_H1 <- tryCatch(lmer(formula= paste("expression ~ 1 + probe + ", SplinesForm,
+                             " + (", SplinesForm, "|Patient_ID) + (1|Patient_ID:probe)", sep=""), REML=FALSE, data=data_lm),
+                       error=function(e){NULL})
             }
           }else{          
             if(func=="linear"){
               data_lm$t1 <- data_lm$t1/10
-              lmm_H0 <- lmer(expression ~ 1 + t1 + (1|Patient_ID), REML=FALSE, data=data_lm)
-              lmm_H1 <- lmer(expression ~ 1 + t1 + (t1|Patient_ID) + (1|Patient_ID), REML=FALSE, data=data_lm)
+              lmm_H0 <- tryCatch(lmer(expression ~ 1 + t1 + (1|Patient_ID), REML=FALSE, data=data_lm),
+                       error=function(e){NULL})
+              lmm_H1 <- tryCatch(lmer(expression ~ 1 + t1 + (t1|Patient_ID) + (1|Patient_ID), REML=FALSE, data=data_lm),
+                       error=function(e){NULL})
             }else if(func=="cubic"){
-              lmm_H0 <- lmer(expression ~ 1 + t1 + t2 + t3 + (1|Patient_ID), REML=FALSE, data=data_lm) #, control=list(xf.tol=2.2e-14, sing.tol=1e-10))
-              lmm_H1 <- lmer(expression ~ 1 + t1 + t2 + t3 + (t1 + t2 + t3 | Patient_ID) + (1|Patient_ID), REML=FALSE, data=data_lm) #, control=list(xf.tol=2.2e-14, sing.tol=1e-10))
+              lmm_H0 <- tryCatch(lmer(expression ~ 1 + t1 + t2 + t3 + (1|Patient_ID), REML=FALSE, data=data_lm),
+                       error=function(e){NULL})
+              lmm_H1 <- tryCatch(lmer(expression ~ 1 + t1 + t2 + t3 + (t1 + t2 + t3 | Patient_ID) + (1|Patient_ID), REML=FALSE, data=data_lm),
+                       error=function(e){NULL})
             }else if(func=="splines"){
-              lmm_H0 <- lmer(expression ~ 1 + spline_t1 + spline_t2 + spline_t3 + spline_t4 +spline_t5
-                             + (1|Patient_ID), REML=FALSE, data=data_lm)
-              lmm_H1 <- lmer(expression ~ 1 + spline_t1 + spline_t2 + spline_t3 + spline_t4 +spline_t5
-                             + (spline_t1 + spline_t2 + spline_t3 + spline_t4 +spline_t5|Patient_ID) + (1|Patient_ID), REML=FALSE, data=data_lm)
+              lmm_H0 <- tryCatch(lmer(formula= paste("expression ~ 1 + ", SplinesForm,
+                             " + (1|Patient_ID)", sep=""), REML=FALSE, data=data_lm),
+                       error=function(e){NULL})
+              lmm_H1 <- tryCatch(lmer(formula= paste("expression ~ 1 + ", SplinesForm,
+                             " + (", SplinesForm, "|Patient_ID) + (1|Patient_ID)", sep=""), REML=FALSE, data=data_lm),
+                       error=function(e){NULL})
             }
           }
         }
@@ -127,52 +149,76 @@ function(expr, gmt, Patient_ID, TimePoint, func = "linear", maxGSsize=500, group
         }else if(func=="splines"){
           nk = ceiling(length(unique(data_lm$t1))/4)
           noeuds = quantile(data_lm$t1, probs=(c(0:(nk+1))/(nk+1))[-c(1,(nk+1+1))])
-          bsplines <- as.data.frame(bs(data_lm$t1, knots = noeuds, degree = 3, Boundary.knots = range(data_lm$t1)), ntercept = FALSE)
-          colnames(bsplines) <- paste("spline_t",colnames(bsplines) , sep="")
-          bsplines <- bsplines*10
-          data_lm <- cbind.data.frame(data_lm, bsplines)
+          Bsplines <- as.data.frame(bs(data_lm$t1, knots = noeuds, degree=3, Boundary.knots = range(data_lm$t1)), intercept = FALSE)
+          colnames(Bsplines) <- paste("spline_t",colnames(Bsplines) , sep="")
+          Bsplines <- Bsplines*10
+          data_lm <- cbind.data.frame(data_lm, Bsplines)
+          SplinesForm <- paste(colnames(Bsplines), collapse=" + ")
+          SplinesGForm <- paste(paste(colnames(Bsplines), collapse=":Group + "), ":Group", sep="")
         }
         
         if(length(levels(data_lm$probe))>1){
           if(func=="linear"){
             data_lm$t1 <- data_lm$t1/10
-            lmm_H0 <- lmer(expression ~ 1 + probe + Group + t1 + (t1|probe) + (1|Patient_ID:probe), REML=FALSE, data=data_lm)
-            lmm_H1 <- lmer(expression ~ 1 + probe + Group + t1 + t1:Group + (t1:Group|probe) + (1|Patient_ID:probe), REML=FALSE, data=data_lm)
+            lmm_H0 <- tryCatch(lmer(expression ~ 1 + probe + Group + t1 + (t1|probe) + (1|Patient_ID:probe), REML=FALSE, data=data_lm),
+                     error=function(e){NULL})
+            lmm_H1 <- tryCatch(lmer(expression ~ 1 + probe + Group + t1 + t1:Group + (t1:Group|probe) + (1|Patient_ID:probe), REML=FALSE, data=data_lm),
+                     error=function(e){NULL})
           }else if(func=="cubic"){
-            lmm_H0 <- lmer(expression ~ 1 + probe + Group + t1 + t2 + t3 + (t1 + t2 + t3 | probe) + (1|Patient_ID:probe), REML=FALSE, data=data_lm) 
-            lmm_H1 <- lmer(expression ~ 1 + probe + Group + t1 + t1:Group + t2 + t2:Group + t3 + t3:Group + (t1:Group + t2:Group + t3:Group | probe) + (1|Patient_ID:probe), REML=FALSE, data=data_lm) 
+            lmm_H0 <- tryCatch(lmer(expression ~ 1 + probe + Group + t1 + t2 + t3 + (t1 + t2 + t3 | probe) + (1|Patient_ID:probe), REML=FALSE, data=data_lm),
+                     error=function(e){NULL})
+            lmm_H1 <- tryCatch(lmer(expression ~ 1 + probe + Group + t1 + t1:Group + t2 + t2:Group + t3 + t3:Group + (t1:Group + t2:Group + t3:Group | probe) + (1|Patient_ID:probe), REML=FALSE, data=data_lm),
+                     error=function(e){NULL}) 
           }else if(func=="splines"){
-            lmm_H1 <- lmer(expression ~ 1 + probe + Group + spline_t1 + spline_t2 + spline_t3 + spline_t4 +spline_t5
-                           + (spline_t1 + spline_t2 + spline_t3 + spline_t4 +spline_t5|probe) + (1|Patient_ID:probe), REML=FALSE, data=data_lm)
-            lmm_H1 <- lmer(expression ~ 1 + probe + Group + spline_t1 + spline_t2 + spline_t3 + spline_t4 +spline_t5
-                           + spline_t1:Group + spline_t2:Group + spline_t3:Group + spline_t4:Group +spline_t5:Group
-                           + (spline_t1 + spline_t2 + spline_t3 + spline_t4 +spline_t5|probe) 
-                           + (spline_t1:Group + spline_t2:Group + spline_t3:Group + spline_t4:Group +spline_t5:Group|probe)
-                           + (1|Patient_ID:probe), REML=FALSE, data=data_lm)
+            lmm_H0 <- tryCatch(lmer(formula=paste("expression ~ 1 + probe + Group + ", SplinesForm,
+                           " + (", SplinesForm, "|probe) + (1|Patient_ID:probe)", sep=""), REML=FALSE, data=data_lm),
+                     error=function(e){NULL})
+            lmm_H1 <- tryCatch(lmer(formula=paste("expression ~ 1 + probe + Group + ", SplinesForm,
+                           " + ", SplinesGForm,
+                           " + (", SplinesForm, "|probe)", 
+                           " + (", SplinesGForm, "|probe)",
+                           "+ (1|Patient_ID:probe)", sep=""), REML=FALSE, data=data_lm),
+                     error=function(e){NULL})
           }
         }else{
           if(func=="linear"){
-            lmm_H0 <- lmer(expression ~ 1 + Group + t1 + (1|Patient_ID), REML=FALSE, data=data_lm)
-            lmm_H1 <- lmer(expression ~ 1 + Group + t1 + t1:Group + (1|Patient_ID), REML=FALSE, data=data_lm)
+            data_lm$t1 <- data_lm$t1/10
+            lmm_H0 <- tryCatch(lmer(expression ~ 1 + Group + t1 + (1|Patient_ID), REML=FALSE, data=data_lm),
+                     error=function(e){NULL})
+            lmm_H1 <- tryCatch(lmer(expression ~ 1 + Group + t1 + t1:Group + (1|Patient_ID), REML=FALSE, data=data_lm),
+                     error=function(e){NULL})
           }else if(func=="cubic"){
-            lmm_H0 <- lmer(expression ~ 1 + Group + t1 + t2 + t3 + (1|Patient_ID), REML=FALSE, data=data_lm)
-            lmm_H1 <- lmer(expression ~ 1 + Group + t1 + t1:Group + t2 + t2:Group + t3 + t3:Group + (1|Patient_ID), REML=FALSE, data=data_lm) #, control=list(xf.tol=2.2e-14, sing.tol=1e-10))
+            lmm_H0 <- tryCatch(lmer(expression ~ 1 + Group + t1 + t2 + t3 + (1|Patient_ID), REML=FALSE, data=data_lm),
+                     error=function(e){NULL})
+            lmm_H1 <- tryCatch(lmer(expression ~ 1 + Group + t1 + t1:Group + t2 + t2:Group + t3 + t3:Group + (1|Patient_ID), REML=FALSE, data=data_lm),  #, control=list(xf.tol=2.2e-14, sing.tol=1e-10)),
+                     error=function(e){NULL})
           }else if(func=="splines"){
-            lmm_H0 <- lmer(expression ~ 1 + Group + spline_t1 + spline_t2 + spline_t3 + spline_t4 +spline_t5
-                           + (1|Patient_ID), REML=FALSE, data=data_lm, control=list(maxIter=600))
-            lmm_H1 <- lmer(expression ~ 1 + Group + spline_t1 + spline_t2 + spline_t3 + spline_t4 +spline_t5
-                           + spline_t1:Group + spline_t2:Group + spline_t3:Group + spline_t4:Group +spline_t5:Group
-                           + (1|Patient_ID), REML=FALSE, data=data_lm)
+            lmm_H0 <- tryCatch(lmer(formula=paste("expression ~ 1 + Group + ", SplinesForm,
+                           " + (1|Patient_ID)", sep=""), REML=FALSE, data=data_lm, control=list(maxIter=600)),
+                     error=function(e){NULL})
+            lmm_H1 <- tryCatch(lmer(formula=paste("expression ~ 1 + Group + ", SplinesForm,
+                           " + ", SplinesGForm, 
+                           " + (1|Patient_ID)", sep=""), REML=FALSE, data=data_lm),
+                     error=function(e){NULL})
           }
         }
       }
 		
-      LR[gs] <- lmm_H0@deviance["ML"] - lmm_H1@deviance["ML"]
-	    CVG_H0[gs] <- lmm_H0@dims["cvg"]
-	    CVG_H1[gs] <- lmm_H1@dims["cvg"]
-      
-      FixEf[[gs]] <- fixef(lmm_H1)
-      RanEf[[gs]] <- ranef(lmm_H1)
+      if (!is.null(lmm_H0) & !is.null(lmm_H1)) {
+        LR[gs] <- lmm_H0@deviance["ML"] - lmm_H1@deviance["ML"]
+  	    CVG_H0[gs] <- lmm_H0@dims["cvg"]
+  	    CVG_H1[gs] <- lmm_H1@dims["cvg"]
+        
+        FixEf[[gs]] <- fixef(lmm_H1)
+        RanEf[[gs]] <- ranef(lmm_H1)
+      } else {
+        LR[gs] <- NA
+        CVG_H0[gs] <- NA
+        CVG_H1[gs] <- NA
+        
+        FixEf[[gs]] <- NA
+        RanEf[[gs]] <- NA
+      }
       
       #       "3" = "X-convergence (3)",
       #       "4" = "relative convergence (4)",

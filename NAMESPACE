@@ -35,11 +35,11 @@ importFrom("gplots", balloonplot,
 )
 # wapply already loaded in "multtest" 
 # so import("gplots") is incorrect
-importFrom("gtools", mixedorder)
+importFrom("gtools", mixedorder, invalid)
 import("reshape2")
 import("grid")
 import("cluster")
-import("splines")
+import("splines", bs)
 
 S3method(plot, TcGSA)
 
