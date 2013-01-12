@@ -142,8 +142,8 @@ function(expr, gmt, Patient_ID, TimePoint, func = "linear", maxGSsize=500, group
           data_lm$t2 <- (data_lm$t1)^2
           data_lm$t3 <- (data_lm$t1)^3
           
-          data_lm$t1 <- data_lm$t1/10
-          data_lm$t2 <- data_lm$t2/100
+          data_lm$t1 <- data_lm$t1/10   # reduction of fixed effect magnitude in order to be able to better estimate variance parameters 
+          data_lm$t2 <- data_lm$t2/100  # (otherwise the variances are too small compared to fixed effects)
           data_lm$t3 <- data_lm$t3/1000
           
         }else if(func=="splines"){
@@ -170,15 +170,15 @@ function(expr, gmt, Patient_ID, TimePoint, func = "linear", maxGSsize=500, group
             lmm_H1 <- tryCatch(lmer(expression ~ 1 + probe + Group + t1 + t1:Group + t2 + t2:Group + t3 + t3:Group + (t1:Group + t2:Group + t3:Group | probe) + (1|Patient_ID:probe), REML=FALSE, data=data_lm),
                      error=function(e){NULL}) 
           }else if(func=="splines"){
-            lmm_H0 <- tryCatch(lmer(formula=paste("expression ~ 1 + probe + Group + ", SplinesForm,
-                           " + (", SplinesForm, "|probe) + (1|Patient_ID:probe)", sep=""), REML=FALSE, data=data_lm),
-                     error=function(e){NULL})
-            lmm_H1 <- tryCatch(lmer(formula=paste("expression ~ 1 + probe + Group + ", SplinesForm,
-                           " + ", SplinesGForm,
-                           " + (", SplinesForm, "|probe)", 
-                           " + (", SplinesGForm, "|probe)",
-                           "+ (1|Patient_ID:probe)", sep=""), REML=FALSE, data=data_lm),
-                     error=function(e){NULL})
+          	lmm_H0 <- tryCatch(lmer(formula=paste("expression ~ 1 + probe + Group + ", SplinesForm,
+          																				" + (", SplinesForm, "|probe) + (1|Patient_ID:probe)", sep=""), REML=FALSE, data=data_lm),
+          										 error=function(e){NULL})
+          	lmm_H1 <- tryCatch(lmer(formula=paste("expression ~ 1 + probe + Group + ", SplinesForm,
+          																				" + ", SplinesGForm,
+          																				" + (", SplinesForm, "|probe)", 
+          																				" + (", SplinesGForm, "|probe)",
+          																				" + (1|Patient_ID:probe)", sep=""), REML=FALSE, data=data_lm),
+          										 error=function(e){NULL})
           }
         }else{
           if(func=="linear"){
@@ -193,13 +193,13 @@ function(expr, gmt, Patient_ID, TimePoint, func = "linear", maxGSsize=500, group
             lmm_H1 <- tryCatch(lmer(expression ~ 1 + Group + t1 + t1:Group + t2 + t2:Group + t3 + t3:Group + (1|Patient_ID), REML=FALSE, data=data_lm),  #, control=list(xf.tol=2.2e-14, sing.tol=1e-10)),
                      error=function(e){NULL})
           }else if(func=="splines"){
-            lmm_H0 <- tryCatch(lmer(formula=paste("expression ~ 1 + Group + ", SplinesForm,
-                           " + (1|Patient_ID)", sep=""), REML=FALSE, data=data_lm, control=list(maxIter=600)),
-                     error=function(e){NULL})
-            lmm_H1 <- tryCatch(lmer(formula=paste("expression ~ 1 + Group + ", SplinesForm,
-                           " + ", SplinesGForm, 
-                           " + (1|Patient_ID)", sep=""), REML=FALSE, data=data_lm),
-                     error=function(e){NULL})
+          	lmm_H0 <- tryCatch(lmer(formula=paste("expression ~ 1 + Group + ", SplinesForm,
+          																				" + (1|Patient_ID)", sep=""), REML=FALSE, data=data_lm, control=list(maxIter=600)),
+          										 error=function(e){NULL})
+          	lmm_H1 <- tryCatch(lmer(formula=paste("expression ~ 1 + Group + ", SplinesForm,
+          																				" + ", SplinesGForm, 
+          																				" + (1|Patient_ID)", sep=""), REML=FALSE, data=data_lm),
+          										 error=function(e){NULL})
           }
         }
       }

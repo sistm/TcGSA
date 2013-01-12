@@ -115,8 +115,7 @@ function(tcgsa, expr, Patient_ID, TimePoint){
           cat(paste(gs,"/", ngs," gene set dynamics estimated ", "\n", sep=""))
         }
       }
-    }
-    else if(func=="splines"){
+    } else if(func=="splines") {
       # library(splines)
       nk = ceiling(length(unique(t1))/4)
       noeuds = quantile(t1, probs=(c(0:(nk+1))/(nk+1))[-c(1,(nk+1+1))])
@@ -137,6 +136,7 @@ function(tcgsa, expr, Patient_ID, TimePoint){
             i=1
             for (j in 1:npat){
               for (k in 1:ntim){
+              	browser()
                 estim_expr[[gs]][prob[i], pat[j], as.character(tim[k])] <- (tcgsa$Estimations[["FixEf"]][[gs]]["(Intercept)"]
                                                                             + bsplines$spline_t1[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t1"] + bsplines$spline_t2[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t2"] + bsplines$spline_t3[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t3"] + bsplines$spline_t4[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t4"] + bsplines$spline_t5[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t5"]
                                                                             + tcgsa$Estimations[["RanEf"]][[gs]]["Patient_ID"][[1]][pat[j],]
