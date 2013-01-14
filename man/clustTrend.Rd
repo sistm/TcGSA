@@ -32,7 +32,7 @@ clustTrend(x,
 a \bold{tcgsa} object for \code{clustTrend}, or a \bold{ClusteredTrends} object for \code{print.ClusteredTrends} and \code{plot.ClusteredTrends}.
 }
   \item{expr}{
-either a matrix or dataframe of gene expression upon which dynamics are to be calculated, or a list of gene sets estimation of gene expression.  In the case of a matrix or dataframe, its dimension are \eqn{n} x \eqn{p}, with the \eqn{p} sample in column and the \eqn{n} genes in row.  In the case of a list, its length should correspond to the number of gene sets under scrutiny and each element should be an 3 dimension array of estimated gene expression, such as for the list returned by \code{\link{estim.TcGSA}}.  See details.
+either a matrix or dataframe of gene expression upon which dynamics are to be calculated, or a list of gene sets estimation of gene expression.  In the case of a matrix or dataframe, its dimension are \eqn{n} x \eqn{p}, with the \eqn{p} sample in column and the \eqn{n} genes in row.  In the case of a list, its length should correspond to the number of gene sets under scrutiny and each element should be an 3 dimension array of estimated gene expression, such as for the list returned in the \code{'Estimations'} element of \code{\link{TcGSA.LR}}.  See details.
 }
   \item{Patient_ID}{
 a factor of length \eqn{p} that is in the same order as the columns of \code{expr} (when it is a dataframe) and that contains the patient identifier of each sample.%  See Details.
@@ -94,7 +94,7 @@ logical flag enabling verbose messages to track the computing status of the func
   }
 }
 \details{
-If \code{expr} is a matrix or a dataframe, then the genes dynamics are clustered on the "original" data.  On the other hand, if \code{expr} is a list returned by \code{\link{estim.TcGSA}}), then the dynamics are computed on the "estimations" made by the \code{\link{TcGSA.LR}} function.
+If \code{expr} is a matrix or a dataframe, then the genes dynamics are clustered on the "original" data.  On the other hand, if \code{expr} is a list returned in the \code{'Estimations'} element of \code{\link{TcGSA.LR}}, then the dynamics are computed on the estimations made by the \code{\link{TcGSA.LR}} function.
 
 This function uses the Gap statistics to determine the optimal number of clusters in the plotted gene set.  See \code{\link[cluster:clusGap]{clusGap}}.
 %TODO group.var and baseline
@@ -131,9 +131,6 @@ data(data_simu_TcGSA)
 
 tcgsa_sim_1grp <- TcGSA.LR(expr=expr_1grp, gmt=gmt_sim, Patient_ID=design$Patient_ID,
                            TimePoint=design$TimePoint, func = "linear")
-
-genesDyn_1grp <- estim.TcGSA(tcgsa=tcgsa_sim_1grp, expr=expr_1grp, Patient_ID=design$Patient_ID, 
-                             TimePoint=design$TimePoint)
   
 CT <- clustTrend(tcgsa_sim_1grp,
      expr=expr_1grp, Patient_ID=design$Patient_ID, TimePoint=design$TimePoint)

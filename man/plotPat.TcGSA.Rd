@@ -46,7 +46,7 @@ the threshold at which the FDR or the FWER should be controlled.
 The number of observations under the null distribution to be generated in order to compute the p-values. Default is \code{1e+06}.
 }
   \item{expr}{
-either a matrix or dataframe of gene expression upon which dynamics are to be calculated, or a list of gene sets estimation of gene expression.  In the case of a matrix or dataframe, its dimension are \eqn{n} x \eqn{p}, with the \eqn{p} sample in column and the \eqn{n} genes in row.  In the case of a list, its length should correspond to the number of gene sets under scrutiny and each element should be an 3 dimension array of estimated gene expression, such as for the list returned by \code{\link{estim.TcGSA}}.  See details.
+either a matrix or dataframe of gene expression upon which dynamics are to be calculated, or a list of gene sets estimation of gene expression.  In the case of a matrix or dataframe, its dimension are \eqn{n} x \eqn{p}, with the \eqn{p} sample in column and the \eqn{n} genes in row.  In the case of a list, its length should correspond to the number of gene sets under scrutiny and each element should be an 3 dimension array of estimated gene expression, such as for the list returned in the \code{'Estimations'} element of \code{\link{TcGSA.LR}}.  See details.
 }
   \item{Patient_ID}{
 a factor of length \eqn{p} that is in the same order as the columns of \code{expr} (when it is a dataframe) and that contains the patient identifier of each sample.%  See Details.
@@ -178,7 +178,7 @@ On the heatmap, each line corresponds to a gene set, and each column to a timepo
 
 First a heatmap is computed on all the patients (see \code{\link{plot.TcGSA}} and \code{\link{clustTrend}}) to define the clustering. Then, the clustering and coloring thus defined on all the patients are consistently used in the separate heatmaps that are plotted by patient.
 
-If \code{expr} is a matrix or a dataframe, then the "original" data are plotted.  On the other hand, if \code{expr} is a list returned by \code{\link{estim.TcGSA}}), then it is those "estimations" made by the \code{\link{TcGSA.LR}} function that are plotted.
+If \code{expr} is a matrix or a dataframe, then the "original" data are plotted.  On the other hand, if \code{expr} is a list returned in the \code{'Estimations'} element of \code{\link{TcGSA.LR}}, then it is those "estimations" made by the \code{\link{TcGSA.LR}} function that are plotted.
 
 If \code{descript} is \code{FALSE}, the second element of \code{margins} can be reduced (for instance use \code{margins = c(5, 10)}), as there is not so much need for space in order to display only the gene set names, without their description.
 
@@ -247,16 +247,13 @@ data(data_simu_TcGSA)
 tcgsa_sim_1grp <- TcGSA.LR(expr=expr_1grp, gmt=gmt_sim, Patient_ID=design$Patient_ID,
                            TimePoint=design$TimePoint, func = "linear")
 
-genesDyn_1grp <- estim.TcGSA(tcgsa=tcgsa_sim_1grp, expr=expr_1grp, Patient_ID=design$Patient_ID, 
-                             TimePoint=design$TimePoint)
-
 plotPat.TcGSA(x=tcgsa_sim_1grp, expr=expr_1grp, 
      Patient_ID=design$Patient_ID, TimePoint=design$TimePoint,
      B=100,
      time_unit="H"
      )
 
-plotPat.TcGSA(x=tcgsa_sim_1grp, expr=genesDyn_1grp, 
+plotPat.TcGSA(x=tcgsa_sim_1grp, expr=tcgsa_sim_1grp$Estimations, 
      Patient_ID=design$Patient_ID, TimePoint=design$TimePoint,
      baseline=1, 
      B=100,

@@ -28,7 +28,7 @@ plot1GS(expr, gmt, Patient_ID,TimePoint, geneset.name,
 
 \arguments{
   \item{expr}{
-  either a matrix or dataframe of gene expression upon which dynamics are to be calculated, or a list of gene sets estimation of gene expression.  In the case of a matrix or dataframe, its dimension are \eqn{n} x \eqn{p}, with the \eqn{p} sample in column and the \eqn{n} genes in row.  In the case of a list, its length should correspond to the number of gene sets under scrutiny and each element should be an 3 dimension array of estimated gene expression, such as for the list returned by \code{\link{estim.TcGSA}}.  See details.
+  either a matrix or dataframe of gene expression upon which dynamics are to be calculated, or a list of gene sets estimation of gene expression.  In the case of a matrix or dataframe, its dimension are \eqn{n} x \eqn{p}, with the \eqn{p} sample in column and the \eqn{n} genes in row.  In the case of a list, its length should correspond to the number of gene sets under scrutiny and each element should be an 3 dimension array of estimated gene expression, such as for the list returned in the \code{'Estimations'} element of \code{\link{TcGSA.LR}}.  See details.
 }
   \item{gmt}{
   a \bold{gmt} object containing the gene sets definition.  See \code{\link[GSA:GSA.read.gmt]{GSA.read.gmt}} and \href{http://www.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#GMT:_Gene_Matrix_Transposed_file_format_.28.2A.gmt.29}{GMT definition on www.broadinstitute.org}.
@@ -132,7 +132,7 @@ See \link{+.gg}.  Default is \code{theme()}, which adds nothing to the plot.
 }
 
 \details{
-If \code{expr} is a matrix or a dataframe, then the "original" data are plotted.  On the other hand, if \code{expr} is a list returned by \code{\link{estim.TcGSA}}), then it is those "estimations" made by the \code{\link{TcGSA.LR}} function that are plotted.
+If \code{expr} is a matrix or a dataframe, then the "original" data are plotted.  On the other hand, if \code{expr} is a list returned in the \code{'Estimations'} element of \code{\link{TcGSA.LR}}, then it is those "estimations" made by the \code{\link{TcGSA.LR}} function that are plotted.
 
 If \code{indiv} is 'genes', then each line of the plot is the median of a gene expression over the patients. On the other hand, if \code{indiv} is 'patients', then each line of the plot is the median of a patient genes expression in this gene set.
 
@@ -155,8 +155,6 @@ Boris P. Hejblum
 data(data_simu_TcGSA)
 tcgsa_sim_1grp <- TcGSA.LR(expr=expr_1grp, gmt=gmt_sim, Patient_ID=design$Patient_ID,
                              TimePoint=design$TimePoint, func = "linear")
-genesDyn_1grp <- estim.TcGSA(tcgsa=tcgsa_sim_1grp, expr=expr_1grp, Patient_ID=design$Patient_ID, 
-                               TimePoint=design$TimePoint)
 
 plot1GS(expr=expr_1grp, TimePoint=design$TimePoint, Patient_ID=design$Patient_ID, gmt=gmt_sim,
         geneset.name="Gene set 4",
@@ -170,7 +168,7 @@ plot1GS(expr=expr_1grp, TimePoint=design$TimePoint, Patient_ID=design$Patient_ID
         time_unit="H",
         lab.cex=0.7)
         
-plot1GS(expr=genesDyn_1grp, TimePoint=design$TimePoint, Patient_ID=design$Patient_ID, gmt=gmt_sim,
+plot1GS(expr=tcgsa_sim_1grp$Estimations, TimePoint=design$TimePoint, Patient_ID=design$Patient_ID, gmt=gmt_sim,
         geneset.name="Gene set 3",
         indiv="genes",
         time_unit="H",

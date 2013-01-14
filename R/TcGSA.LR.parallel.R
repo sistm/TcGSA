@@ -17,7 +17,9 @@ function(Nproc, type_connec, expr, gmt, Patient_ID, TimePoint, func = "linear", 
   registerDoSNOW(cl)
   
   res_par <- foreach(gs=1:length(gmt$genesets), .packages=c("lme4", "reshape2", "splines")) %dopar% {
-    probes <- intersect(gmt$genesets[[gs]], rownames(expr))
+  	splines_DF <- NA
+  	
+  	probes <- intersect(gmt$genesets[[gs]], rownames(expr))
 
     
     if(length(probes)>0 & length(probes)<maxGSsize){                                                       
@@ -44,7 +46,10 @@ function(Nproc, type_connec, expr, gmt, Patient_ID, TimePoint, func = "linear", 
           NCsplines <- as.data.frame(ns(data_lm$t1, knots = noeuds, Boundary.knots = range(data_lm$t1), intercept = FALSE))
           colnames(NCsplines) <- paste("spline_t",colnames(NCsplines) , sep="")
           NCsplines <- NCsplines*10
+          
           data_lm <- cbind.data.frame(data_lm, NCsplines)
+          
+          splines_DF <- dim(NCsplines)[2]
           SplinesForm <- paste(colnames(NCsplines), collapse=" + ")
         }
         
@@ -146,7 +151,10 @@ function(Nproc, type_connec, expr, gmt, Patient_ID, TimePoint, func = "linear", 
           NCsplines <- as.data.frame(ns(data_lm$t1, knots = noeuds, Boundary.knots = range(data_lm$t1), intercept = FALSE))
           colnames(NCsplines) <- paste("spline_t",colnames(NCsplines) , sep="")
           NCsplines <- NCsplines*10
+          
           data_lm <- cbind.data.frame(data_lm, NCsplines)
+          
+          splines_DF <- dim(NCsplines)[2]
           SplinesForm <- paste(colnames(NCsplines), collapse=" + ")
           SplinesGForm <- paste(paste(colnames(NCsplines), collapse=":Group + "), ":Group", sep="")
         }
@@ -205,15 +213,17 @@ function(Nproc, type_connec, expr, gmt, Patient_ID, TimePoint, func = "linear", 
       	CVG_H0 <- lmm_H0@dims["cvg"]
       	CVG_H1 <- lmm_H1@dims["cvg"]
     
-      	FixEf <- fixef(lmm_H1)
-      	RanEf <- ranef(lmm_H1)
+      	estims <- cbind.data.frame(data_lm, "fitted"=fitted(lmm_H1))
+      	estims_tab <- acast(data=estims, formula = probe~Patient_ID~t1, value.var="fitted")
+      	estim_expr <- estims_tab
       } else {
       	LR <- NA
       	CVG_H0 <- NA
       	CVG_H1 <- NA
       	
-      	FixEf <- NA
-      	RanEf <- NA
+      	estims <- cbind.data.frame(data_lm, "fitted"=NA)
+      	estims_tab <- acast(data=estims, formula = probe~Patient_ID~t1, value.var="fitted")
+      	estim_expr <- estims_tab
       }
       
       #       "3" = "X-convergence (3)",
@@ -237,31 +247,35 @@ function(Nproc, type_connec, expr, gmt, Patient_ID, TimePoint, func = "linear", 
 	    LR <- NA
 	    CVG_H0 <- NA
 	    CVG_H1 <- NA
-	    FixEf <- NA
-	    RanEf <- NA
+	    
+	    estims <- cbind.data.frame(data_lm, "fitted"=NA)
+	    estims_tab <- acast(data=estims, formula = probe~Patient_ID~t1, value.var="fitted")
+	    estim_expr <- estims_tab
 	}
     line_number <- 0
     try(line_number <- length(readLines(monitorfile)), silent=TRUE)
     cat(paste(line_number+1,"/", length(gmt$genesets)," gene sets analyzed (geneset ", gs, ")\n", sep=""), file=monitorfile, append = TRUE)
 
-    res <- list("LR"=LR, "CVG_H0"=CVG_H0, "CVG_H1"=CVG_H1, "FixEf"=FixEf, "RanEf"=RanEf)
+    res <- list("LR"=LR, "CVG_H0"=CVG_H0, "CVG_H1"=CVG_H1, "estim_expr"=estim_expr, "splines_DF"=splines_DF)
   }
   
   LR <- numeric(length(gmt$genesets))
   CVG_H0 <- numeric(length(gmt$genesets))
   CVG_H1 <- numeric(length(gmt$genesets))
-  FixEf <- list()
-  RanEf <- list()
+  
+  estim_expr <- list()
+  splines_DF <- numeric(length(gmt$genesets))
   
   cat("Combining the results...")
   for (gs in 1:length(gmt$genesets)){
     LR[gs] <- res_par[[gs]][["LR"]]
     CVG_H0[gs] <- res_par[[gs]][["CVG_H0"]]
     CVG_H1[gs] <- res_par[[gs]][["CVG_H1"]]
-    FixEf[[gs]] <- res_par[[gs]][["FixEf"]]
-    RanEf[[gs]] <- res_par[[gs]][["RanEf"]]
+    
+    estim_expr[[gs]] <- res_par[[gs]][["estim_expr"]]
+    splines_DF[gs] <- res_par[[gs]][["splines_DF"]]
   }
-  tcgsa <- list("fit"=as.data.frame(cbind(LR, CVG_H0, CVG_H1)), "func_form"=func, "GeneSets_gmt"=gmt, "group.var"=group.var, "separatePatients"=separatePatients, "Estimations"=list("FixEf"=FixEf, "RanEf"=RanEf))
+  tcgsa <- list("fit"=as.data.frame(cbind(LR, CVG_H0, CVG_H1)), "func_form"=func, "GeneSets_gmt"=gmt, "group.var"=group.var, "separatePatients"=separatePatients, "Estimations"=estim_expr, "splines_DF"=max(unique(splines_DF), na.rm=T))
   class(tcgsa) <- "TcGSA"
   stopCluster(cl)
   return(tcgsa)

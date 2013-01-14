@@ -22,5 +22,5 @@ print.summary.TcGSA <-function(x, ...){
   cat(x[["nsignif"]])
   cat(" out of ")
   cat(x[["ngs"]])
-  cat(" gene sets tested")
+  cat(" gene sets")
 }

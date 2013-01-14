@@ -78,11 +78,10 @@ This Time-course Gene Set Analysis aims at identifying gene sets that are not st
     a logical flag passing along the value of the \code{separatePatients} argument used in the call.
   }
   \item{Estimations}{
-    a list that contains the 2 following elements:
-    \itemize{
-      \item \code{FixEf}: a list of the fixed effects estimations, with one element for each gene set modelled.
-      \item \code{RanEf}: a list of the random effects estimations, with one element for each gene set modelled.
-    }See also \code{\link{estim.TcGSA}}.
+    a list of 3 dimensions arrays.  Each element of the list (i.e. each array) corresponds to the estimations of gene expression dynamics for each of the gene sets under scrutiny (obtained from mixed models).  The first dimension of those arrays is the genes included in the concerned gene set, the second dimension is the \code{Patient_ID}, and the third dimension is the \code{TimePoint}.  The values inside those arrays are estimated gene expressions..
+  }
+  \item{splines_DF}{
+  	
   }
 }
 
@@ -95,7 +94,7 @@ Boris P. Hejblum
 }
 
 \seealso{
-  \code{\link{summary.TcGSA}}, \code{\link{estim.TcGSA}}
+  \code{\link{summary.TcGSA}}, \code{\link{plot.TcGSA}}
 }
 \examples{
 data(data_simu_TcGSA)

@@ -19,9 +19,8 @@ function(expr, gmt, Patient_ID, TimePoint, func = "linear", maxGSsize=500, group
   LR <- numeric(length(gmt$genesets))
   CVG_H0 <- numeric(length(gmt$genesets))
   CVG_H1 <- numeric(length(gmt$genesets))
-  FixEf <- list()
-  RanEf <- list()
-
+  estim_expr <- list()
+  splines_DF <- rep(NA, length(gmt$genesets))
   
   for (gs in 1:length(gmt$genesets)){
     probes <- intersect(gmt$genesets[[gs]], rownames(expr))
@@ -52,7 +51,10 @@ function(expr, gmt, Patient_ID, TimePoint, func = "linear", maxGSsize=500, group
           NCsplines <- as.data.frame(ns(data_lm$t1, knots = noeuds, Boundary.knots = range(data_lm$t1), intercept = FALSE))
           colnames(NCsplines) <- paste("spline_t",colnames(NCsplines) , sep="")
           NCsplines <- NCsplines*10
+          
           data_lm <- cbind.data.frame(data_lm, NCsplines)
+          
+          splines_DF[gs] <- dim(NCsplines)[2]
           Splines_form <- paste(colnames(NCsplines), collapse=" + ")
         }
         
@@ -164,7 +166,10 @@ function(expr, gmt, Patient_ID, TimePoint, func = "linear", maxGSsize=500, group
           NCsplines <- as.data.frame(ns(data_lm$t1, knots = noeuds, Boundary.knots = range(data_lm$t1), intercept = FALSE))
           colnames(NCsplines) <- paste("spline_t",colnames(NCsplines) , sep="")
           NCsplines <- NCsplines*10
+          
           data_lm <- cbind.data.frame(data_lm, NCsplines)
+          
+          splines_DF[gs] <- dim(NCsplines)[2]
           Splines_form <- paste(colnames(NCsplines), collapse=" + ")
           SplinesG_form <- paste(paste(colnames(NCsplines), collapse=":Group + "), ":Group", sep="")
         }
@@ -225,16 +230,18 @@ function(expr, gmt, Patient_ID, TimePoint, func = "linear", maxGSsize=500, group
   	    CVG_H0[gs] <- lmm_H0@dims["cvg"]
   	    CVG_H1[gs] <- lmm_H1@dims["cvg"]
         
-        FixEf[[gs]] <- fixef(lmm_H1)
-        RanEf[[gs]] <- ranef(lmm_H1)
+        estims <- cbind.data.frame(data_lm, "fitted"=fitted(lmm_H1))
+        estims_tab <- acast(data=estims, formula = probe~Patient_ID~t1, value.var="fitted")
+        estim_expr[[gs]] <- estims_tab
       } 
       else {
         LR[gs] <- NA
         CVG_H0[gs] <- NA
         CVG_H1[gs] <- NA
         
-        FixEf[[gs]] <- NA
-        RanEf[[gs]] <- NA
+        estims <- cbind.data.frame(data_lm, "fitted"=NA)
+        estims_tab <- acast(data=estims, formula = probe~Patient_ID~t1, value.var="fitted")
+        estim_expr[[gs]] <- estims_tab
         cat("Unable to fit the mixed models for this gene set\n")
       }
       
@@ -260,15 +267,18 @@ function(expr, gmt, Patient_ID, TimePoint, func = "linear", maxGSsize=500, group
 	    CVG_H0[gs] <- NA
 	    CVG_H1[gs] <- NA
 	    
-	    FixEf[[gs]] <- NA
-	    RanEf[[gs]] <- NA
+	    estims <- cbind.data.frame(data_lm, "fitted"=NA)
+	    estims_tab <- acast(data=estims, formula = probe~Patient_ID~t1, value.var="fitted")
+	    estim_expr[[gs]] <- estims_tab
 	    cat("The size of the gene set is problematic (too many or too few genes)\n")
 	}
     
-    browser()
     cat(paste(gs,"/", length(gmt$genesets)," gene sets analyzed\n", sep=""))
   }
-  tcgsa <- list("fit"=as.data.frame(cbind(LR, CVG_H0, CVG_H1)), "func_form"=func, "GeneSets_gmt"=gmt, "group.var"=group.var, "separatePatients"=separatePatients, "Estimations"=list("FixEf"=FixEf, "RanEf"=RanEf))
+  tcgsa <- list("fit"=as.data.frame(cbind(LR, CVG_H0, CVG_H1)), "func_form"=func, "GeneSets_gmt"=gmt, 
+  							"group.var"=group.var, "separatePatients"=separatePatients, "Estimations"=estim_expr, 
+  							"splines_DF"=ifelse(length(which(!is.na(unique(splines_DF))))>0, max(unique(splines_DF), na.rm=T), NA)
+  							)
   class(tcgsa) <- "TcGSA"
   return(tcgsa)
 }

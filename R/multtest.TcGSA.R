@@ -4,13 +4,7 @@ function(tcgsa, threshold=0.05, myproc="BY", nbsimu_pval = 1000000){
   func <- tcgsa[["func_form"]]
   group.var <- tcgsa[["group.var"]]
   separatePatients <- tcgsa[["separatePatients"]]
-  
-  nk = ceiling(length(unique(t1))/4)
-  noeuds = quantile(t1, probs=c(1:(nk))/(nk+1))
-  # Bsplines <- as.data.frame(bs(t1, knots = noeuds, degree = 3, Boundary.knots = range(t1), intercept = FALSE))
-  NCsplines <- as.data.frame(ns(t1, knots = noeuds, Boundary.knots = range(t1), intercept = FALSE))
-  colnames(NCsplines) <- paste("spline_t", colnames(NCsplines) , sep="")
-  NCsplines <- NCsplines*10
+	splines_DF <- tcgsa[["splines_DF"]]
   
   if(is.null(group.var)){
     if(!separatePatients){
@@ -19,7 +13,7 @@ function(tcgsa, threshold=0.05, myproc="BY", nbsimu_pval = 1000000){
       }else if(func=="cubic"){
         theodist <- rmixchisq(nbsimu_pval,3,3)
       }else if(func=="splines"){
-        theodist <-rmixchisq(nbsimu_pval,5,5)
+        theodist <-rmixchisq(nbsimu_pval,splines_DF,splines_DF)
       }
     }else{
       if(func=="linear"){
@@ -27,7 +21,7 @@ function(tcgsa, threshold=0.05, myproc="BY", nbsimu_pval = 1000000){
       }else if(func=="cubic"){
         theodist <- rmixchisq(nbsimu_pval,0,3)
       }else if(func=="splines"){
-        theodist <-rmixchisq(nbsimu_pval,0,5)
+        theodist <-rmixchisq(nbsimu_pval,0,splines_DF)
       }
     }
   }else{
@@ -37,7 +31,7 @@ function(tcgsa, threshold=0.05, myproc="BY", nbsimu_pval = 1000000){
     }else if(func=="cubic"){
       theodist <- rmixchisq(nbsimu_pval,((3*nbgp-1)+1),(3*nbgp))
     }else if(func=="splines"){
-      theodist <-rmixchisq(nbsimu_pval,((5*nbgp-1)+1),5*nbgp)
+      theodist <-rmixchisq(nbsimu_pval,((splines_DF*nbgp-1)+1),splines_DF*nbgp)
     }
   }
  
