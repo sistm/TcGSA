@@ -1,8 +1,8 @@
 Package: TcGSA
 Type: Package
 Title: Time-course Gene Set Analysis
-Version: 0.9.13
-Date: 2013-01-10
+Version: 0.9.131
+Date: 2013-01-12
 Author: Boris P. Hejblum
 Maintainer: Boris P. Hejblum <boris.hejblum@isped.u-bordeaux2.fr>
 Depends: R (>= 2.14), ggplot2

@@ -5,6 +5,13 @@ function(tcgsa, threshold=0.05, myproc="BY", nbsimu_pval = 1000000){
   group.var <- tcgsa[["group.var"]]
   separatePatients <- tcgsa[["separatePatients"]]
   
+  nk = ceiling(length(unique(t1))/4)
+  noeuds = quantile(t1, probs=c(1:(nk))/(nk+1))
+  # Bsplines <- as.data.frame(bs(t1, knots = noeuds, degree = 3, Boundary.knots = range(t1), intercept = FALSE))
+  NCsplines <- as.data.frame(ns(t1, knots = noeuds, Boundary.knots = range(t1), intercept = FALSE))
+  colnames(NCsplines) <- paste("spline_t", colnames(NCsplines) , sep="")
+  NCsplines <- NCsplines*10
+  
   if(is.null(group.var)){
     if(!separatePatients){
       if(func=="linear"){

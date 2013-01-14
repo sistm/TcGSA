@@ -1,7 +1,7 @@
 estim.TcGSA <-
 function(tcgsa, expr, Patient_ID, TimePoint){
 # require(splines)
-  
+	
   func <- tcgsa$func_form
   group.var <- tcgsa$group.var
   gmt <- tcgsa$GeneSets_gmt
@@ -14,7 +14,6 @@ function(tcgsa, expr, Patient_ID, TimePoint){
   measuredProbes <- rownames(expr)
   
   t1 <- tim/10
-  
   if(is.null(group.var)){
     if(func=="linear"){
       for (gs in 1:ngs){
@@ -115,13 +114,15 @@ function(tcgsa, expr, Patient_ID, TimePoint){
           cat(paste(gs,"/", ngs," gene set dynamics estimated ", "\n", sep=""))
         }
       }
-    } else if(func=="splines") {
+    } 
+    else if(func=="splines") {
       # library(splines)
       nk = ceiling(length(unique(t1))/4)
-      noeuds = quantile(t1, probs=(c(0:(nk+1))/(nk+1))[-c(1,(nk+1+1))])
-      bsplines <- as.data.frame(bs(t1, knots = noeuds, degree = 3, Boundary.knots = range(t1)), intercept = FALSE)
-      colnames(bsplines) <- paste("spline_t", colnames(bsplines) , sep="")
-      bsplines <- bsplines*10
+      noeuds = quantile(t1, probs=c(1:(nk))/(nk+1))
+      # Bsplines <- as.data.frame(bs(t1, knots = noeuds, degree = 3, Boundary.knots = range(t1), intercept = FALSE))
+      NCsplines <- as.data.frame(ns(t1, knots = noeuds, Boundary.knots = range(t1), intercept = FALSE))
+      colnames(NCsplines) <- paste("spline_t", colnames(NCsplines) , sep="")
+      NCsplines <- NCsplines*10
       for (gs in 1:length(gmt$genesets)){
         if(!is.na(tcgsa$Estimations[["RanEf"]][[gs]])[1]){
           if(!is.null(tcgsa$Estimations[["RanEf"]][[gs]]$probe)){
@@ -131,14 +132,16 @@ function(tcgsa, expr, Patient_ID, TimePoint){
           }
           nprob <- length(prob)
           estim_expr[[gs]] <- array(dim=c(nprob, npat, ntim), dimnames=list(prob, pat, tim))
-          
           if(nprob<2){
             i=1
             for (j in 1:npat){
               for (k in 1:ntim){
-              	browser()
+              	sum_splines_eff <- 0
+              	for(e in colnames(NCsplines)){
+              		sum_splines_eff <- sum_splines_eff + NCsplines[k, e]*tcgsa$Estimations[["FixEf"]][[gs]][e]
+              	}
                 estim_expr[[gs]][prob[i], pat[j], as.character(tim[k])] <- (tcgsa$Estimations[["FixEf"]][[gs]]["(Intercept)"]
-                                                                            + bsplines$spline_t1[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t1"] + bsplines$spline_t2[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t2"] + bsplines$spline_t3[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t3"] + bsplines$spline_t4[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t4"] + bsplines$spline_t5[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t5"]
+                																														+ sum_splines_eff
                                                                             + tcgsa$Estimations[["RanEf"]][[gs]]["Patient_ID"][[1]][pat[j],]
                 )
               }
@@ -148,21 +151,31 @@ function(tcgsa, expr, Patient_ID, TimePoint){
             i=1
             for (j in 1:npat){
               for (k in 1:ntim){
-                estim_expr[[gs]][prob[i], pat[j], as.character(tim[k])] <- (tcgsa$Estimations[["FixEf"]][[gs]]["(Intercept)"]
-                                                              + bsplines$spline_t1[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t1"] + bsplines$spline_t2[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t2"] + bsplines$spline_t3[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t3"] + bsplines$spline_t4[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t4"] + bsplines$spline_t5[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t5"]
-                                                              + bsplines$spline_t1[k]*tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,"spline_t1"] + bsplines$spline_t2[k]*tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,"spline_t2"] + bsplines$spline_t3[k]*tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,"spline_t3"] + bsplines$spline_t4[k]*tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,"spline_t4"] + bsplines$spline_t5[k]*tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,"spline_t5"]
-                                                              + tcgsa$Estimations[["RanEf"]][[gs]]["Patient_ID:probe"][[1]][paste(pat[j], prob[i], sep=":"),]
-                )
+              	sum_splines_eff <- 0
+              	for(e in colnames(NCsplines)){
+	                sum_splines_eff <- sum_splines_eff + NCsplines[k, e]*(  tcgsa$Estimations[["FixEf"]][[gs]][e]
+	                																										 + tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,e]
+	                )
+                }
+              	estim_expr[[gs]][prob[i], pat[j], as.character(tim[k])] <- (tcgsa$Estimations[["FixEf"]][[gs]]["(Intercept)"]
+              																															+ sum_splines_eff
+              																															+ tcgsa$Estimations[["RanEf"]][[gs]]["Patient_ID:probe"][[1]][paste(pat[j], prob[i], sep=":"),]
+              	)
               }
             }
             for (i in 2:nprob){
               for (j in 1:npat){
                 for (k in 1:ntim){
+                	sum_splines_eff <- 0
+                	for(e in colnames(NCsplines)){
+                		sum_splines_eff <- sum_splines_eff + NCsplines[k, e]*(  tcgsa$Estimations[["FixEf"]][[gs]][e]
+                																													 + tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,e]
+                		)
+                	}
                   estim_expr[[gs]][prob[i], pat[j], as.character(tim[k])] <- (tcgsa$Estimations[["FixEf"]][[gs]]["(Intercept)"]
-                                                                + tcgsa$Estimations[["FixEf"]][[gs]][paste("probe", prob[i], sep="")]
-                                                                + bsplines$spline_t1[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t1"] + bsplines$spline_t2[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t2"] + bsplines$spline_t3[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t3"] + bsplines$spline_t4[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t4"] + bsplines$spline_t5[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t5"]
-                                                                + bsplines$spline_t1[k]*tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,"spline_t1"] + bsplines$spline_t2[k]*tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,"spline_t2"] + bsplines$spline_t3[k]*tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,"spline_t3"] + bsplines$spline_t4[k]*tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,"spline_t4"] + bsplines$spline_t5[k]*tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,"spline_t5"]
-                                                                + tcgsa$Estimations[["RanEf"]][[gs]]["Patient_ID:probe"][[1]][paste(pat[j], prob[i], sep=":"),]
+                                                                							+ tcgsa$Estimations[["FixEf"]][[gs]][paste("probe", prob[i], sep="")]
+                  																														+ sum_splines_eff
+                  																														+ tcgsa$Estimations[["RanEf"]][[gs]]["Patient_ID:probe"][[1]][paste(pat[j], prob[i], sep=":"),]
                   )
                 }
               }
@@ -178,7 +191,7 @@ function(tcgsa, expr, Patient_ID, TimePoint){
     patients_group <- acast(cbind.data.frame(Patient_ID, "Group"=group.var), margins="Group", formula=Patient_ID~., fun.aggregate=function(x){sum(as.numeric(x))/ntim})[,1]
     patients_group <- as.factor(patients_group[pat])
     levels(patients_group) <- levels(group.var)
-    
+
     if(func=="linear"){
       for (gs in 1:ngs){
           if(!is.na(tcgsa$Estimations[["RanEf"]][[gs]])[1]){
@@ -217,6 +230,7 @@ function(tcgsa, expr, Patient_ID, TimePoint){
             for (j in 1:npat){
               if (as.character(patients_group[j])==levels(group.var)[1]){
                 for (k in 1:ntim){
+                	thisgr <- paste("Group", as.character(patients_group[j]), sep="")
                   estim_expr[[gs]][prob[i], pat[j], as.character(tim[k])] <- (tcgsa$Estimations[["FixEf"]][[gs]]["(Intercept)"] 
                                                                 + t1[k]*tcgsa$Estimations[["FixEf"]][[gs]]["t1"]
                                                                 + tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,"(Intercept)"] 
@@ -242,6 +256,7 @@ function(tcgsa, expr, Patient_ID, TimePoint){
               for (j in 1:npat){
                 if (as.character(patients_group[j])==levels(group.var)[1]){
                   for (k in 1:ntim){
+                  	thisgr <- paste("Group", as.character(patients_group[j]), sep="")
                     estim_expr[[gs]][prob[i], pat[j], as.character(tim[k])] <- (tcgsa$Estimations[["FixEf"]][[gs]]["(Intercept)"] 
                                                                   + tcgsa$Estimations[["FixEf"]][[gs]][paste("probe", prob[i], sep="")] 
                                                                   + t1[k]*tcgsa$Estimations[["FixEf"]][[gs]]["t1"]
@@ -368,10 +383,11 @@ function(tcgsa, expr, Patient_ID, TimePoint){
     else if(func=="splines"){
       #  library(splines)
       nk = ceiling(length(unique(t1))/4)
-      noeuds = quantile(t1, probs=(c(0:(nk+1))/(nk+1))[-c(1,(nk+1+1))])
-      bsplines <- as.data.frame(bs(t1, knots = noeuds, degree = 3, Boundary.knots = range(t1)), intercept = FALSE)
-      colnames(bsplines) <- paste("spline_t",colnames(bsplines) , sep="")
-      bsplines <- bsplines*10
+      noeuds = quantile(t1, probs=c(1:(nk))/(nk+1))
+      # Bsplines <- as.data.frame(bs(t1, knots = noeuds, degree = 3, Boundary.knots = range(t1), intercept = FALSE))
+      NCsplines <- as.data.frame(ns(t1, knots = noeuds, Boundary.knots = range(t1), intercept = FALSE))
+      colnames(NCsplines) <- paste("spline_t",colnames(NCsplines) , sep="")
+      NCsplines <- NCsplines*10
       for (gs in 1:length(gmt$genesets)){
           if(!is.na(tcgsa$Estimations[["RanEf"]][[gs]])[1]){
             if(!is.null(tcgsa$Estimations[["RanEf"]][[gs]]$probe)){
@@ -387,21 +403,31 @@ function(tcgsa, expr, Patient_ID, TimePoint){
             for (j in 1:npat){
               if (as.character(patients_group[j])==levels(group.var)[1]){
                 for (k in 1:ntim){
+                	thisgr <- paste("Group", as.character(patients_group[j]), sep="")
+                	sum_splines_eff <- 0
+                	for(e in colnames(NCsplines)){
+                		sum_splines_eff <- sum_splines_eff + NCsplines[k, e]*tcgsa$Estimations[["FixEf"]][[gs]][e]
+                																													 
+                	}
                   estim_expr[[gs]][prob[i], pat[j], as.character(tim[k])] <- (tcgsa$Estimations[["FixEf"]][[gs]]["(Intercept)"]
-                                                                              + bsplines$spline_t1[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t1"] + bsplines$spline_t2[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t2"] + bsplines$spline_t3[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t3"] + bsplines$spline_t4[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t4"] + bsplines$spline_t5[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t5"]
                                                                               + tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,"(Intercept)"]
-                                                                              + bsplines$spline_t1[k]*tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,paste("spline_t1", thisgr, sep=":")] + bsplines$spline_t2[k]*tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,paste("spline_t2", thisgr, sep=":")] + bsplines$spline_t3[k]*tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,paste("spline_t3", thisgr, sep=":")] + bsplines$spline_t4[k]*tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,paste("spline_t4", thisgr, sep=":")] + bsplines$spline_t5[k]*tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,paste("spline_t5", thisgr, sep=":")]
-                                                                              + tcgsa$Estimations[["RanEf"]][[gs]]["Patient_ID:probe"][[1]][paste(pat[j], prob[i], sep=":"),]
+                                                                              + sum_splines_eff
+                  																														+ tcgsa$Estimations[["RanEf"]][[gs]]["Patient_ID:probe"][[1]][paste(pat[j], prob[i], sep=":"),]
                   )
                 }
               }else{
                 for (k in 1:ntim){
                   thisgr <- paste("Group", as.character(patients_group[j]), sep="")
+                  sum_splines_eff <- 0
+                  for(e in colnames(NCsplines)){
+                  	sum_splines_eff <- sum_splines_eff + NCsplines[k, e]*(  tcgsa$Estimations[["FixEf"]][[gs]][e]
+                  																												 + tcgsa$Estimations[["Fixef"]][[gs]]$probe[i,paste(e, thisgr, sep=":")]
+                  	)
+                  }
                   estim_expr[[gs]][prob[i], pat[j], as.character(tim[k])] <- (tcgsa$Estimations[["FixEf"]][[gs]]["(Intercept)"]
                                                                               + tcgsa$Estimations[["FixEf"]][[gs]][thisgr]
-                                                                              + bsplines$spline_t1[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t1"] + bsplines$spline_t2[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t2"] + bsplines$spline_t3[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t3"] + bsplines$spline_t4[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t4"] + bsplines$spline_t5[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t5"]
-                                                                              + bsplines$spline_t1[k]*tcgsa$Estimations[["FixEf"]][[gs]][paste(thisgr, "spline_t1", sep="")] + bsplines$spline_t2[k]*tcgsa$Estimations[["FixEf"]][[gs]][paste(thisgr, "spline_t2", sep="")] + bsplines$spline_t3[k]*tcgsa$Estimations[["FixEf"]][[gs]][paste(thisgr, "spline_t3", sep="")] + bsplines$spline_t4[k]*tcgsa$Estimations[["FixEf"]][[gs]][paste(thisgr, "spline_t4", sep="")] + bsplines$spline_t5[k]*tcgsa$Estimations[["FixEf"]][[gs]][paste(thisgr, "spline_t5", sep="")]
-                                                                              + tcgsa$Estimations[["RanEf"]][[gs]]["Patient_ID"][[1]][pat[j],]
+                  																														+ sum_splines_eff
+                  																														+ tcgsa$Estimations[["RanEf"]][[gs]]["Patient_ID"][[1]][pat[j],]
                   )
                 }
               }
@@ -411,23 +437,34 @@ function(tcgsa, expr, Patient_ID, TimePoint){
             for (j in 1:npat){
               if (as.character(patients_group[j])==levels(group.var)[1]){
                 for (k in 1:ntim){
+                	thisgr <- paste("Group", as.character(patients_group[j]), sep="")
+                	sum_splines_eff <- 0
+                	for(e in colnames(NCsplines)){
+                		sum_splines_eff <- sum_splines_eff + NCsplines[k, e]*(  tcgsa$Estimations[["FixEf"]][[gs]][e]
+                																													 + tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,paste(e, thisgr, sep=":")]
+                		)
+                	}
                   estim_expr[[gs]][prob[i], pat[j], as.character(tim[k])] <- (tcgsa$Estimations[["FixEf"]][[gs]]["(Intercept)"]
-                                                                + bsplines$spline_t1[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t1"] + bsplines$spline_t2[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t2"] + bsplines$spline_t3[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t3"] + bsplines$spline_t4[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t4"] + bsplines$spline_t5[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t5"]
-                                                                + tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,"(Intercept)"]
-                                                                + bsplines$spline_t1[k]*tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,paste("spline_t1", thisgr, sep=":")] + bsplines$spline_t2[k]*tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,paste("spline_t2", thisgr, sep=":")] + bsplines$spline_t3[k]*tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,paste("spline_t3", thisgr, sep=":")] + bsplines$spline_t4[k]*tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,paste("spline_t4", thisgr, sep=":")] + bsplines$spline_t5[k]*tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,paste("spline_t5", thisgr, sep=":")]
-                                                                + tcgsa$Estimations[["RanEf"]][[gs]]["Patient_ID:probe"][[1]][paste(pat[j], prob[i], sep=":"),]
+                  																														+ tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,"(Intercept)"]
+                  																														+ sum_splines_eff
+                  																														+ tcgsa$Estimations[["RanEf"]][[gs]]["Patient_ID:probe"][[1]][paste(pat[j], prob[i], sep=":"),]
                   )
                 }
               }else{
                 for (k in 1:ntim){
                   thisgr <- paste("Group", as.character(patients_group[j]), sep="")
+                  sum_splines_eff <- 0
+                  for(e in colnames(NCsplines)){
+                  	sum_splines_eff <- sum_splines_eff + NCsplines[k, e]*(  tcgsa$Estimations[["FixEf"]][[gs]][e]
+                  																												 + tcgsa$Estimations[["Fixef"]][[gs]]$probe[i,paste(e, thisgr, sep=":")]
+                  																												 + tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,paste(e, thisgr, sep=":")]
+                  	)
+                  }
                   estim_expr[[gs]][prob[i], pat[j], as.character(tim[k])] <- (tcgsa$Estimations[["FixEf"]][[gs]]["(Intercept)"]
-                                                                + tcgsa$Estimations[["FixEf"]][[gs]][thisgr]
-                                                                + bsplines$spline_t1[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t1"] + bsplines$spline_t2[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t2"] + bsplines$spline_t3[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t3"] + bsplines$spline_t4[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t4"] + bsplines$spline_t5[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t5"]
-                                                                + bsplines$spline_t1[k]*tcgsa$Estimations[["FixEf"]][[gs]][paste(thisgr, "spline_t1", sep="")] + bsplines$spline_t2[k]*tcgsa$Estimations[["FixEf"]][[gs]][paste(thisgr, "spline_t2", sep="")] + bsplines$spline_t3[k]*tcgsa$Estimations[["FixEf"]][[gs]][paste(thisgr, "spline_t3", sep="")] + bsplines$spline_t4[k]*tcgsa$Estimations[["FixEf"]][[gs]][paste(thisgr, "spline_t4", sep="")] + bsplines$spline_t5[k]*tcgsa$Estimations[["FixEf"]][[gs]][paste(thisgr, "spline_t5", sep="")]
-                                                                + tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,"(Intercept)"]
-                                                                + bsplines$spline_t1[k]*tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,paste("spline_t1", thisgr, sep=":")] + bsplines$spline_t2[k]*tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,paste("spline_t2", thisgr, sep=":")] + bsplines$spline_t3[k]*tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,paste("spline_t3", thisgr, sep=":")] + bsplines$spline_t4[k]*tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,paste("spline_t4", thisgr, sep=":")] + bsplines$spline_t5[k]*tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,paste("spline_t5", thisgr, sep=":")]
-                                                                + tcgsa$Estimations[["RanEf"]][[gs]]["Patient_ID:probe"][[1]][paste(pat[j], prob[i], sep=":"),]
+                                                                							+ tcgsa$Estimations[["FixEf"]][[gs]][thisgr]
+                  																														+ tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,"(Intercept)"]
+                  																														+ sum_splines_eff
+                  																														+ tcgsa$Estimations[["RanEf"]][[gs]]["Patient_ID:probe"][[1]][paste(pat[j], prob[i], sep=":"),]
                   )
                 }
               }
@@ -436,25 +473,36 @@ function(tcgsa, expr, Patient_ID, TimePoint){
               for (j in 1:npat){
                 if (as.character(patients_group[j])==levels(group.var)[1]){
                   for (k in 1:ntim){
+                  	thisgr <- paste("Group", as.character(patients_group[j]), sep="")
+                  	sum_splines_eff <- 0
+                  	for(e in colnames(NCsplines)){
+                  		sum_splines_eff <- sum_splines_eff + NCsplines[k, e]*(  tcgsa$Estimations[["FixEf"]][[gs]][e]
+                  																													 + tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,paste(e, thisgr, sep=":")]
+                  		)
+                  	}
                     estim_expr[[gs]][prob[i], pat[j], as.character(tim[k])] <- (tcgsa$Estimations[["FixEf"]][[gs]]["(Intercept)"] 
-                                                                  + tcgsa$Estimations[["FixEf"]][[gs]][paste("probe", prob[i], sep="")]
-                                                                  + bsplines$spline_t1[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t1"] + bsplines$spline_t2[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t2"] + bsplines$spline_t3[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t3"] + bsplines$spline_t4[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t4"] + bsplines$spline_t5[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t5"]
-                                                                  + tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,"(Intercept)"] 
-                                                                  + bsplines$spline_t1[k]*tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,paste("spline_t1", thisgr, sep=":")] + bsplines$spline_t2[k]*tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,paste("spline_t2", thisgr, sep=":")] + bsplines$spline_t3[k]*tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,paste("spline_t3", thisgr, sep=":")] + bsplines$spline_t4[k]*tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,paste("spline_t4", thisgr, sep=":")] + bsplines$spline_t5[k]*tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,paste("spline_t5", thisgr, sep=":")]
-                                                                  + tcgsa$Estimations[["RanEf"]][[gs]]["Patient_ID:probe"][[1]][paste(pat[j], prob[i], sep=":"),]
+                                                                  								+ tcgsa$Estimations[["FixEf"]][[gs]][paste("probe", prob[i], sep="")]
+                                                                  								+ tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,"(Intercept)"] 
+                                                                  								+ sum_splines_eff
+                    																															+ tcgsa$Estimations[["RanEf"]][[gs]]["Patient_ID:probe"][[1]][paste(pat[j], prob[i], sep=":"),]
                     )
                   }
                 }else{
                   for (k in 1:ntim){
                     thisgr <- paste("Group", as.character(patients_group[j]), sep="")
+                    sum_splines_eff <- 0
+                    for(e in colnames(NCsplines)){
+                    	sum_splines_eff <- sum_splines_eff + NCsplines[k, e]*(  tcgsa$Estimations[["FixEf"]][[gs]][e]
+                    																												 + tcgsa$Estimations[["Fixef"]][[gs]]$probe[i,paste(e, thisgr, sep=":")]
+                    																												 + tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,paste(e, thisgr, sep=":")]
+                    	)
+                    }
                     estim_expr[[gs]][prob[i], pat[j], as.character(tim[k])] <- (tcgsa$Estimations[["FixEf"]][[gs]]["(Intercept)"]
-                                                                  + tcgsa$Estimations[["FixEf"]][[gs]][paste("probe", prob[i], sep="")]
-                                                                  + tcgsa$Estimations[["FixEf"]][[gs]][thisgr]
-                                                                  + bsplines$spline_t1[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t1"] + bsplines$spline_t2[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t2"] + bsplines$spline_t3[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t3"] + bsplines$spline_t4[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t4"] + bsplines$spline_t5[k]*tcgsa$Estimations[["FixEf"]][[gs]]["spline_t5"]
-                                                                  + bsplines$spline_t1[k]*tcgsa$Estimations[["FixEf"]][[gs]][paste(thisgr, "spline_t1", sep=":")] + bsplines$spline_t2[k]*tcgsa$Estimations[["FixEf"]][[gs]][paste(thisgr, "spline_t2", sep=":")] + bsplines$spline_t3[k]*tcgsa$Estimations[["FixEf"]][[gs]][paste(thisgr, "spline_t3", sep=":")] + bsplines$spline_t4[k]*tcgsa$Estimations[["FixEf"]][[gs]][paste(thisgr, "spline_t4", sep=":")] + bsplines$spline_t5[k]*tcgsa$Estimations[["FixEf"]][[gs]][paste(thisgr, "spline_t5", sep=":")]
-                                                                  + tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,"(Intercept)"]
-                                                                  + bsplines$spline_t1[k]*tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,paste("spline_t1", thisgr, sep=":")] + bsplines$spline_t2[k]*tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,paste("spline_t2", thisgr, sep=":")] + bsplines$spline_t3[k]*tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,paste("spline_t3", thisgr, sep=":")] + bsplines$spline_t4[k]*tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,paste("spline_t4", thisgr, sep=":")] + bsplines$spline_t5[k]*tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,paste("spline_t5", thisgr, sep=":")]
-                                                                  + tcgsa$Estimations[["RanEf"]][[gs]]["Patient_ID:probe"][[1]][paste(pat[j], prob[i], sep=":"),]
+                    																														+ tcgsa$Estimations[["FixEf"]][[gs]][paste("probe", prob[i], sep="")]
+                    																														+ tcgsa$Estimations[["FixEf"]][[gs]][thisgr]
+                    																														+ tcgsa$Estimations[["RanEf"]][[gs]]$probe[i,"(Intercept)"]
+                    																														+ sum_splines_eff
+                    																														+ tcgsa$Estimations[["RanEf"]][[gs]]["Patient_ID:probe"][[1]][paste(pat[j], prob[i], sep=":"),]
                     )
                   }
                 }
@@ -463,9 +511,12 @@ function(tcgsa, expr, Patient_ID, TimePoint){
           }
           cat(paste(gs,"/", ngs," gene set dynamics estimated ", "\n", sep=""))
         }
+        else{
+        	estim_expr[[gs]][,,]<-NA	
+        }
       }
     }
   }
-  names(estim_expr) <- gmt$geneset.names
+  #names(estim_expr) <- gmt$geneset.names
   return(estim_expr)
 }

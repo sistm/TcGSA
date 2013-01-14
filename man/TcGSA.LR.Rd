@@ -30,7 +30,7 @@ a factor of length \eqn{p} that is in the same order as the columns of \code{exp
 a numeric vector or a factor of length \eqn{p} that is in the same order as \code{TimePoint} and the columns of \code{expr} (when it is a dataframe), and that contains the time points at which gene expression was measured.%  See Details.
 }
   \item{func}{
-the form of the time trend. Can be either one of \code{"linear"}, \code{"cubic"} or \code{"splines"}. The \code{"splines"} form corresponds to the natural cubic B-splines.  If there are only a few timepoints, a \code{"linear"} form should be sufficient. Otherwise, the \code{"cubic"} form is more parsimonious than the \code{"splines"} form, and should be sufficiently flexible.
+the form of the time trend. Can be either one of \code{"linear"}, \code{"cubic"} or \code{"splines"}. The \code{"splines"} form corresponds to the natural cubic B-splines (see also \code{\link[splines:ns]{ns}}).  If there are only a few timepoints, a \code{"linear"} form should be sufficient. Otherwise, the \code{"cubic"} form is more parsimonious than the \code{"splines"} form, and should be sufficiently flexible.
 }
   \item{maxGSsize}{
 the maximum number of genes in a gene set.  If there are more genes than this number in one of the gene sets under scrutinity, the Likelihood Ratio of this gene set is not computed (the mixed model are not fitted).  This is to avoid very long computation times.  Default is \code{500} genes as the maximum.

@@ -71,5 +71,11 @@ plot1GS(expr=genesDyn_1grp, TimePoint=design$TimePoint, Patient_ID=design$Patien
         geneset.name="Gene set 3",
         indiv="genes",
         time_unit="H")
-
+\dontrun{        
+tcgsa_sim_2grp <- TcGSA.LR(expr=expr_2grp, gmt=gmt_sim, Patient_ID=design$Patient_ID,
+                           TimePoint=design$TimePoint, func="splines", 
+                           group.var=design$group.var)        
+genesDyn_2grp <- estim.TcGSA(tcgsa=tcgsa_sim_2grp, expr=expr_2grp, Patient_ID=design$Patient_ID, 
+                             TimePoint=design$TimePoint)
+}
 }

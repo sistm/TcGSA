@@ -39,12 +39,13 @@ function(Nproc, type_connec, expr, gmt, Patient_ID, TimePoint, func = "linear", 
           
         }else if(func=="splines"){
           nk = ceiling(length(unique(data_lm$t1))/4)
-          noeuds = quantile(data_lm$t1, probs=(c(0:(nk+1))/(nk+1))[-c(1,(nk+1+1))])
-          Bsplines <- as.data.frame(bs(data_lm$t1, knots = noeuds, Boundary.knots = range(data_lm$t1), intercept = FALSE))
-          colnames(Bsplines) <- paste("spline_t",colnames(Bsplines) , sep="")
-          Bsplines <- Bsplines*10
-          data_lm <- cbind.data.frame(data_lm, Bsplines)
-          SplinesForm <- paste(colnames(Bsplines), collapse=" + ")
+          noeuds = quantile(data_lm$t1, probs=c(1:(nk))/(nk+1))
+          # Bsplines <- as.data.frame(bs(data_lm$t1, knots = noeuds, degree=3, Boundary.knots = range(data_lm$t1), intercept = FALSE))
+          NCsplines <- as.data.frame(ns(data_lm$t1, knots = noeuds, Boundary.knots = range(data_lm$t1), intercept = FALSE))
+          colnames(NCsplines) <- paste("spline_t",colnames(NCsplines) , sep="")
+          NCsplines <- NCsplines*10
+          data_lm <- cbind.data.frame(data_lm, NCsplines)
+          SplinesForm <- paste(colnames(NCsplines), collapse=" + ")
         }
         
         
@@ -140,13 +141,14 @@ function(Nproc, type_connec, expr, gmt, Patient_ID, TimePoint, func = "linear", 
           
         }else if(func=="splines"){
           nk = ceiling(length(unique(data_lm$t1))/4)
-          noeuds = quantile(data_lm$t1, probs=(c(0:(nk+1))/(nk+1))[-c(1,(nk+1+1))])
-          Bsplines <- as.data.frame(bs(data_lm$t1, knots = noeuds, degree=3, Boundary.knots = range(data_lm$t1), intercept = FALSE))
-          colnames(Bsplines) <- paste("spline_t",colnames(Bsplines) , sep="")
-          Bsplines <- Bsplines*10
-          data_lm <- cbind.data.frame(data_lm, Bsplines)
-          SplinesForm <- paste(colnames(Bsplines), collapse=" + ")
-          SplinesGForm <- paste(paste(colnames(Bsplines), collapse=":Group + "), ":Group", sep="")
+          noeuds = quantile(data_lm$t1, probs=c(1:(nk))/(nk+1))
+          # Bsplines <- as.data.frame(bs(data_lm$t1, knots = noeuds, degree=3, Boundary.knots = range(data_lm$t1), intercept = FALSE))
+          NCsplines <- as.data.frame(ns(data_lm$t1, knots = noeuds, Boundary.knots = range(data_lm$t1), intercept = FALSE))
+          colnames(NCsplines) <- paste("spline_t",colnames(NCsplines) , sep="")
+          NCsplines <- NCsplines*10
+          data_lm <- cbind.data.frame(data_lm, NCsplines)
+          SplinesForm <- paste(colnames(NCsplines), collapse=" + ")
+          SplinesGForm <- paste(paste(colnames(NCsplines), collapse=":Group + "), ":Group", sep="")
         }
         
         if(length(levels(data_lm$probe))>1){

@@ -38,7 +38,7 @@ importFrom("gplots", balloonplot,
 importFrom("gtools", mixedorder, invalid)
 import("reshape2")
 import("grid")
-importFrom("splines", bs)
+importFrom("splines", ns, bs)
 import("cluster")
 
 S3method(plot, TcGSA)
