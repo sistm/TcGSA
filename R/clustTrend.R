@@ -9,9 +9,8 @@ function(x,
          verbose=TRUE
          ){
 #  library(cluster)
-  
-  Fun_byIndex<-function(X, index, fun){
-    tapply(X, INDEX=index, FUN = fun)
+  Fun_byIndex<-function(X, index, fun, ...){
+    tapply(X, INDEX=index, FUN = fun, ...)
   }
   
   if(is.null(FUNcluster)){
@@ -28,7 +27,8 @@ function(x,
   if(only.signif){
     GSsig <- signifLRT.TcGSA(x)
     GeneSetsList <- GSsig$GeneSet
-  }else{
+  }
+  else{
     GeneSetsList <- gmt$geneset.names
   }
   
@@ -46,16 +46,19 @@ function(x,
   ClustsMeds <- list()
   GenesPartition <- list()
   for(gs in GeneSetsList){
-    interest <- which(gmt$geneset.names==gs)
+    interest <- which(gmt$geneset.names==as.character(gs))
     if(is.null(group.var)){
       if(is.data.frame(expr)){
         select_probe <- intersect(rownames(expr), unique(gmt$genesets[[interest]]))
         data_sel <- as.matrix(expr[select_probe,])
-      }else if(is.list(expr)){
+      }
+      else if(is.list(expr)){
         expr_sel <- expr[[interest]]
         expr_sel <- expr_sel[, , order(as.numeric(dimnames(expr_sel)[[3]]))]
-        data_sel <- matrix(expr_sel, nrow=dim(expr_sel)[1], ncol=dim(expr_sel)[2]*dim(expr_sel)[3])
-        rownames(data_sel) <- dimnames(expr_sel)[[1]]
+        # data_sel <- matrix(expr_sel, nrow=dim(expr_sel)[1], ncol=dim(expr_sel)[2]*dim(expr_sel)[3])
+        data_sel <- acast(melt(expr_sel, varnames=c("Probe_ID", "Patient_ID", "TimePoint")), 
+        			formula=Probe_ID ~ TimePoint + Patient_ID)
+        # rownames(data_sel) <- dimnames(expr_sel)[[1]]
         select_probe <- dimnames(expr_sel)[[1]]
         TimePoint <- sort(as.numeric(rep(dimnames(expr_sel)[[3]], dim(expr_sel)[2])))
         Patient_ID <- rep(dimnames(expr_sel)[[2]], dim(expr_sel)[3])
@@ -63,9 +66,10 @@ function(x,
       
       data_stand <- t(apply(X=data_sel, MARGIN=1, FUN=scale))
       if(indiv=="genes"){
-        data_stand_ByTP <- t(apply(X=data_stand, MARGIN=1, FUN=Fun_byIndex, index=as.factor(TimePoint), fun=aggreg.fun))
-      }else if(indiv=="patients"){
-        data_tocast<-cbind.data.frame(TimePoint, Patient_ID, "M" = apply(X=data_stand, MARGIN=2, FUN=aggreg.fun))
+        data_stand_ByTP <- t(apply(X=data_stand, MARGIN=1, FUN=Fun_byIndex, index=as.factor(TimePoint), fun=aggreg.fun, na.rm=T))
+      }
+      else if(indiv=="patients"){
+        data_tocast<-cbind.data.frame(TimePoint, Patient_ID, "M" = apply(X=data_stand, MARGIN=2, FUN=aggreg.fun, na.rm=T))
         data_stand_ByTP <- as.matrix(acast(data_tocast, formula="Patient_ID~TimePoint", value.var="M"))
       }
       
@@ -77,7 +81,8 @@ function(x,
         data_stand_ByTP <- data_stand_ByTP-data_stand_ByTP[,colbaseline]
       }
       
-    }else{
+    }
+    else{
       if(!is.null(baseline)){
         stop("the 'baseline' argument is not NULL while a grouping variable is supplied in 'group.var'...\n")
       }

@@ -53,6 +53,7 @@ function(expr, gmt, Patient_ID, TimePoint, func = "linear", maxGSsize=500, group
           NCsplines <- NCsplines*10
           
           data_lm <- cbind.data.frame(data_lm, NCsplines)
+          data_lm$t1 <- data_lm$t1/10
           
           splines_DF[gs] <- dim(NCsplines)[2]
           Splines_form <- paste(colnames(NCsplines), collapse=" + ")
@@ -168,6 +169,7 @@ function(expr, gmt, Patient_ID, TimePoint, func = "linear", maxGSsize=500, group
           NCsplines <- NCsplines*10
           
           data_lm <- cbind.data.frame(data_lm, NCsplines)
+          data_lm$t1 <- data_lm$t1/10
           
           splines_DF[gs] <- dim(NCsplines)[2]
           Splines_form <- paste(colnames(NCsplines), collapse=" + ")
@@ -232,6 +234,8 @@ function(expr, gmt, Patient_ID, TimePoint, func = "linear", maxGSsize=500, group
         
         estims <- cbind.data.frame(data_lm, "fitted"=fitted(lmm_H1))
         estims_tab <- acast(data=estims, formula = probe~Patient_ID~t1, value.var="fitted")
+        # drop = FALSE by default, which means that missing combination will be kept in the estims_tab and filled with NA
+        dimnames(estims_tab)[[3]] <- as.numeric(dimnames(estims_tab)[[3]])*10
         estim_expr[[gs]] <- estims_tab
       } 
       else {
@@ -241,6 +245,7 @@ function(expr, gmt, Patient_ID, TimePoint, func = "linear", maxGSsize=500, group
         
         estims <- cbind.data.frame(data_lm, "fitted"=NA)
         estims_tab <- acast(data=estims, formula = probe~Patient_ID~t1, value.var="fitted")
+        dimnames(estims_tab)[[3]] <- as.numeric(dimnames(estims_tab)[[3]])*10
         estim_expr[[gs]] <- estims_tab
         cat("Unable to fit the mixed models for this gene set\n")
       }
@@ -269,6 +274,7 @@ function(expr, gmt, Patient_ID, TimePoint, func = "linear", maxGSsize=500, group
 	    
 	    estims <- cbind.data.frame(data_lm, "fitted"=NA)
 	    estims_tab <- acast(data=estims, formula = probe~Patient_ID~t1, value.var="fitted")
+	    dimnames(estims_tab)[[3]] <- as.numeric(dimnames(estims_tab)[[3]])*10
 	    estim_expr[[gs]] <- estims_tab
 	    cat("The size of the gene set is problematic (too many or too few genes)\n")
 	}

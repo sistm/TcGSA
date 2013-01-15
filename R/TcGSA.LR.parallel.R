@@ -48,6 +48,7 @@ function(Nproc, type_connec, expr, gmt, Patient_ID, TimePoint, func = "linear", 
           NCsplines <- NCsplines*10
           
           data_lm <- cbind.data.frame(data_lm, NCsplines)
+          data_lm$t1 <- data_lm$t1/10
           
           splines_DF <- dim(NCsplines)[2]
           SplinesForm <- paste(colnames(NCsplines), collapse=" + ")
@@ -153,6 +154,7 @@ function(Nproc, type_connec, expr, gmt, Patient_ID, TimePoint, func = "linear", 
           NCsplines <- NCsplines*10
           
           data_lm <- cbind.data.frame(data_lm, NCsplines)
+          data_lm$t1 <- data_lm$t1/10
           
           splines_DF <- dim(NCsplines)[2]
           SplinesForm <- paste(colnames(NCsplines), collapse=" + ")
@@ -215,6 +217,7 @@ function(Nproc, type_connec, expr, gmt, Patient_ID, TimePoint, func = "linear", 
     
       	estims <- cbind.data.frame(data_lm, "fitted"=fitted(lmm_H1))
       	estims_tab <- acast(data=estims, formula = probe~Patient_ID~t1, value.var="fitted")
+      	dimnames(estims_tab)[[3]] <- as.numeric(dimnames(estims_tab)[[3]])*10
       	estim_expr <- estims_tab
       } else {
       	LR <- NA
@@ -223,6 +226,7 @@ function(Nproc, type_connec, expr, gmt, Patient_ID, TimePoint, func = "linear", 
       	
       	estims <- cbind.data.frame(data_lm, "fitted"=NA)
       	estims_tab <- acast(data=estims, formula = probe~Patient_ID~t1, value.var="fitted")
+      	dimnames(estims_tab)[[3]] <- as.numeric(dimnames(estims_tab)[[3]])*10
       	estim_expr <- estims_tab
       }
       
@@ -250,6 +254,7 @@ function(Nproc, type_connec, expr, gmt, Patient_ID, TimePoint, func = "linear", 
 	    
 	    estims <- cbind.data.frame(data_lm, "fitted"=NA)
 	    estims_tab <- acast(data=estims, formula = probe~Patient_ID~t1, value.var="fitted")
+	    dimnames(estims_tab)[[3]] <- as.numeric(dimnames(estims_tab)[[3]])*10
 	    estim_expr <- estims_tab
 	}
     line_number <- 0
