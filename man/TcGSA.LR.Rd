@@ -10,7 +10,7 @@ This function computes the Likelihood Ratios for the gene sets under scrutiny, a
 }
 \usage{
 TcGSA.LR(expr, gmt, Patient_ID, TimePoint, 
-         func = "linear", maxGSsize=500, 
+         func = "linear",  minGSsize=10, maxGSsize=500, 
          group.var = NULL, separatePatients=FALSE)
 
 \S3method{print}{TcGSA}(x, ...)
@@ -31,6 +31,9 @@ a numeric vector or a factor of length \eqn{p} that is in the same order as \cod
 }
   \item{func}{
 the form of the time trend. Can be either one of \code{"linear"}, \code{"cubic"} or \code{"splines"}. The \code{"splines"} form corresponds to the natural cubic B-splines (see also \code{\link[splines:ns]{ns}}).  If there are only a few timepoints, a \code{"linear"} form should be sufficient. Otherwise, the \code{"cubic"} form is more parsimonious than the \code{"splines"} form, and should be sufficiently flexible.
+}  
+\item{minGSsize}{
+the minimum number of genes in a gene set.  If there are less genes than this number in one of the gene sets under scrutinity, the Likelihood Ratio of this gene set is not computed (the mixed model are not fitted). Default is \code{10} genes as the minimum.
 }
   \item{maxGSsize}{
 the maximum number of genes in a gene set.  If there are more genes than this number in one of the gene sets under scrutinity, the Likelihood Ratio of this gene set is not computed (the mixed model are not fitted).  This is to avoid very long computation times.  Default is \code{500} genes as the maximum.

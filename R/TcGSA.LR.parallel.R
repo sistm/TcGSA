@@ -1,5 +1,5 @@
 TcGSA.LR.parallel <-
-function(Nproc, type_connec, expr, gmt, Patient_ID, TimePoint, func = "linear", maxGSsize=500, group.var=NULL, separatePatients=FALSE, monitorfile=""){
+function(Nproc, type_connec, expr, gmt, Patient_ID, TimePoint, func = "linear", minGSsize=10, maxGSsize=500, group.var=NULL, separatePatients=FALSE, monitorfile=""){
 	
 #   library(GSA)
 #   library(lme4)
@@ -22,7 +22,7 @@ function(Nproc, type_connec, expr, gmt, Patient_ID, TimePoint, func = "linear", 
   	probes <- intersect(gmt$genesets[[gs]], rownames(expr))
 
     
-    if(length(probes)>0 & length(probes)<maxGSsize){                                                       
+    if(length(probes)>0 && length(probes)<=maxGSsize && length(probes)>=minGSsize){                                                       
       expr_temp <- t(expr[probes, ])
       rownames(expr_temp) <- NULL
       
@@ -280,7 +280,10 @@ function(Nproc, type_connec, expr, gmt, Patient_ID, TimePoint, func = "linear", 
     estim_expr[[gs]] <- res_par[[gs]][["estim_expr"]]
     splines_DF[gs] <- res_par[[gs]][["splines_DF"]]
   }
-  tcgsa <- list("fit"=as.data.frame(cbind(LR, CVG_H0, CVG_H1)), "func_form"=func, "GeneSets_gmt"=gmt, "group.var"=group.var, "separatePatients"=separatePatients, "Estimations"=estim_expr, "splines_DF"=max(unique(splines_DF), na.rm=T))
+  tcgsa <- list("fit"=as.data.frame(cbind(LR, CVG_H0, CVG_H1)), "func_form"=func, "GeneSets_gmt"=gmt, 
+  							"group.var"=group.var, "separatePatients"=separatePatients, "Estimations"=estim_expr, 
+  							"splines_DF"=ifelse(length(which(!is.na(unique(splines_DF))))>0, max(unique(splines_DF), na.rm=T), NA)
+  							)
   class(tcgsa) <- "TcGSA"
   stopCluster(cl)
   return(tcgsa)

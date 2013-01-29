@@ -15,7 +15,7 @@ print.ClusteredTrends <- function(x, ...){
     cat(summary(f)[i])
     cat("\n\t")
   }
-  cat("Total number of trends:", sum(x$NbClust), "(out of", length(CT_BL24_Estim_splines$NbClust), "significant gene sets)\n") 
+  cat("Total number of trends:", sum(x$NbClust), "(out of", length(x$NbClust), "significant gene sets)\n") 
   cat("\n")
   
   cat("Maximal number of clusters tested:", maxK, "\n")

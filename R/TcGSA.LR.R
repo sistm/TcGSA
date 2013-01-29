@@ -1,5 +1,5 @@
 TcGSA.LR <-
-function(expr, gmt, Patient_ID, TimePoint, func = "linear", maxGSsize=500, group.var=NULL, separatePatients=FALSE){
+function(expr, gmt, Patient_ID, TimePoint, func = "linear", minGSsize=10, maxGSsize=500, group.var=NULL, separatePatients=FALSE){
   
   #DEBUG: data(data_simu_TcGSA);
   #expr=expr; Patient_ID=design$Patient_ID; TimePoint=design$Timepoint; gmt=gmt_sim; func="linear"; gs=2; maxGSsize=500; group.var=NULL;
@@ -7,7 +7,7 @@ function(expr, gmt, Patient_ID, TimePoint, func = "linear", maxGSsize=500, group
   #  print(paste(i, ":", length(intersect(gmt$genesets[[i]], rownames(expr)))))
   #}
   
-  if(!is.null(group.var) & separatePatients){
+  if(!is.null(group.var) && separatePatients){
     stop("'separatePatients' is TRUE while 'group.var' is not NULL.\n This is an attempt to separate patients in a multiple group setting.\n This is not handled by the TcGSA.LR function.\n\n")
   }
 
@@ -26,7 +26,7 @@ function(expr, gmt, Patient_ID, TimePoint, func = "linear", maxGSsize=500, group
     probes <- intersect(gmt$genesets[[gs]], rownames(expr))
 
     
-    if(length(probes)>0 & length(probes)<maxGSsize){                                                       
+    if(length(probes)>0 && length(probes)<=maxGSsize && length(probes)>=minGSsize){                                                       
       expr_temp <- t(expr[probes, ])
       rownames(expr_temp) <- NULL
       
