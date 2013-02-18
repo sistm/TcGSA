@@ -1,6 +1,9 @@
 #Adapted from the function 'heatmap.2' included in the package 'gplots',
 #authored by Andy Liaw, original; R. Gentleman, M. Maechler, W. Huber, G. Warnes, revisions,
 #under the GPL-2 license.
+
+#'@keywords internal
+
 MYheatmap.2 <- function (x, Rowv = TRUE, Colv = if (symm) "Rowv" else TRUE, 
                          distfun = dist, hclustfun = hclust, dendrogram = c("both", 
                                                                             "row", "column", "none"), symm = FALSE, scale = c("none", 

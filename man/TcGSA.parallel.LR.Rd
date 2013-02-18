@@ -1,8 +1,8 @@
-\name{TcGSA.LR.parallel}
-\alias{TcGSA.LR.parallel}
+\name{TcGSA.parallel.LR}
+\alias{TcGSA.parallel.LR}
 \title{Parallel computing the Likelihood Ratios for the Gene Sets under Scrutiny}
 \usage{
-  TcGSA.LR.parallel(Ncpus, type_connec, expr, gmt, design,
+  TcGSA.parallel.LR(Ncpus, type_connec, expr, gmt, design,
     subject_name = "Patient_ID", time_name = "TimePoint",
     crossedRandom = FALSE, covariates_fixed = "",
     time_covariates = "", time_func = "linear",

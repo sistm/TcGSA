@@ -40,6 +40,7 @@ import("reshape2")
 import("grid")
 importFrom("splines", ns, bs)
 import("cluster")
+importFrom("stringr", str_split)
 
 S3method(plot, TcGSA)
 

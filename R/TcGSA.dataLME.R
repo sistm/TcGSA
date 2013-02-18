@@ -1,17 +1,15 @@
+#'@keywords internal
+
 TcGSA.dataLME<-
 	function(expr, design, subject_name="Patient_ID", time_name="TimePoint", 
 					 covariates_fixed="", time_covariates="",
-					 group.var=NULL){
+					 group_name=""){
 
-	if(is.null(group.var)){
-		data_temp <- cbind.data.frame(design, expr)
-		group.var=""
-	}
-	else{
-		data_temp <- cbind.data.frame(design, group.var, expr)
-	}
-	ID_vars <- c(subject_name, time_name, covariates_fixed, time_covariates, group.var)
+	data_temp <- cbind.data.frame(design, expr)
+	
+	ID_vars <- c(subject_name, time_name, covariates_fixed, time_covariates, group_name)
 	if(length(which(ID_vars==""))>0){ID_vars <- ID_vars[-which(ID_vars=="")]}
+	
 	data_lm <- melt(data_temp, id.vars=ID_vars, variable.name ="probe", value.name="expression", measure.vars=colnames(expr))
 	colnames(data_lm)[which(colnames(data_lm)==time_name)] <- "t1"
 

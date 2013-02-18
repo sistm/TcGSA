@@ -1,9 +1,10 @@
-
+#'@keywords internal
 
 TcGSA.formula <- 
-	function(design, subject_name="Patient_ID", time_name="TimePoint", crossedRandom=FALSE,
-					 covariates_fixed="", time_covariates="",
-					 time_func = "linear", group.var=NULL, separateSubjects=FALSE){
+	function(design, subject_name="Patient_ID", time_name="TimePoint", 
+					 covariates_fixed="", time_covariates="", group_name="", 
+					 separateSubjects=FALSE, crossedRandom=FALSE,
+					 time_func = "linear"){
 		
 		# TIME function
 		if(time_func=="linear"){
@@ -25,6 +26,10 @@ TcGSA.formula <-
 			#This must be an expression involving only columnnames of the design matrix
 		}
 		
+		time_split <- trim(str_split(paste("+", time, collapse=" "), "\\+")[[1]])
+		if(length(which(time_split==""))>0){time_split <- time_split[-which(time_split=="")]}
+		
+		time_DF <- length(time_split)
 		
 		
 		
@@ -34,8 +39,6 @@ TcGSA.formula <-
 		}
 		
 		if(time_covariates[1]!=""){
-			time_split <- trim(str_split(paste("+", time, collapse=" "), "\\+")[[1]])
-			if(length(which(time_split==""))>0){time_split <- time_split[-which(time_split=="")]}
 			tc <- NULL
 			for (c in time_covariates){
 				tc <- paste(tc, paste(" +", paste(time_split, c, sep=":", collapse=" + "), collapse=" "), sep="")
@@ -46,7 +49,7 @@ TcGSA.formula <-
 		
 		
 		if (!crossedRandom){
-			if(is.null(group.var) & !separateSubjects){
+			if(group_name=="" & !separateSubjects){
 				formula_H0 = paste("expression ~ 1 + (1|probe)", covariates_fixed,
 													" + (1|", subject_name, ")", sep="")
 				
@@ -60,7 +63,7 @@ TcGSA.formula <-
 													" + (1|", subject_name, ")", sep="")
 				
 			}
-			else if(is.null(group.var) & separateSubjects){
+			else if(group_name=="" & separateSubjects){
 				formula_H0 = paste("expression ~ 1 + (1|probe)", covariates_fixed,
 													 " + (1|", subject_name, ")", sep="")
 				
@@ -74,23 +77,23 @@ TcGSA.formula <-
 																	" + (", time, "|", subject_name, ") + (1|", subject_name, ")", sep="")
 				
 			}
-			else if(!is.null(group.var) & !separateSubjects){
-				formula_H0 = paste("expression ~ 1 + (1|probe) + Group", covariates_fixed, " + ", time, time_covariates,
+			else if(group_name!="" & !separateSubjects){
+				formula_H0 = paste("expression ~ 1 + (1|probe) + ", group_name, covariates_fixed, " + ", time, time_covariates,
 													 " + (", time, "|probe) + (1|", subject_name, ")", sep="")
 				
-				formula_H1 = paste("expression ~ 1 + (1|probe) + Group", covariates_fixed, " + ", time, " + ", paste(time, ":Group", sep=""), time_covariates,
-													 " + (", paste(time, ":Group", sep=""), "|probe) + (1|", subject_name, ")", sep="")
+				formula_H1 = paste("expression ~ 1 + (1|probe) + ", group_name, covariates_fixed, " + ", time, " + ", paste(time, ":", group_name, sep=""), time_covariates,
+													 " + (", paste(time, ":", group_name, sep=""), "|probe) + (1|", subject_name, ")", sep="")
 				
-				formula_H0_1probe = paste("expression ~ 1 + Group", covariates_fixed, " + ", time, time_covariates,
+				formula_H0_1probe = paste("expression ~ 1 + ", group_name, covariates_fixed, " + ", time, time_covariates,
 																	" + (1|", subject_name, ")", sep="")
 				
-				formula_H1_1probe = paste("expression ~ 1 + Group", covariates_fixed, " + ", time, " + ", paste(time, ":Group", sep=""), time_covariates,
+				formula_H1_1probe = paste("expression ~ 1 + ", group_name, covariates_fixed, " + ", time, " + ", paste(time, ":", group_name, sep=""), time_covariates,
 																	" + (1|", subject_name, ")", sep="")
 				
 			}
 		}
 		else{	
-			if(is.null(group.var) & !separateSubjects){
+			if(group_name=="" & !separateSubjects){
 				formula_H0 = paste("expression ~ 1 + probe", covariates_fixed,
 													 " + (1|", subject_name, ":probe)", sep="")
 				
@@ -104,7 +107,7 @@ TcGSA.formula <-
 																	" + (1|", subject_name, ")", sep="")
 				
 			}
-			else if(is.null(group.var) & separateSubjects){
+			else if(group_name=="" & separateSubjects){
 				formula_H0 = paste("expression ~ 1 + probe", covariates_fixed,
 													 " + (1|", subject_name, ":probe)", sep="")
 				
@@ -118,22 +121,22 @@ TcGSA.formula <-
 																	" + (", time, "|", subject_name, ") + (1|", subject_name, ")", sep="")
 				
 			}
-			else if(!is.null(group.var) & !separateSubjects){
-				formula_H0 = paste("expression ~ 1 + probe + Group", covariates_fixed, " + ", time, time_covariates,
+			else if(group_name!="" & !separateSubjects){
+				formula_H0 = paste("expression ~ 1 + probe + ", group_name, covariates_fixed, " + ", time, time_covariates,
 													 " + (", time, "|probe) + (1|", subject_name, ":probe)", sep="")
 				
-				formula_H1 = paste("expression ~ 1 + probe + Group", covariates_fixed, " + ", time, " + ", paste(time, ":Group", sep=""), time_covariates,
-													 " + (", paste(time, ":Group", sep=""), "|probe) + (1|", subject_name, ":probe)", sep="")
+				formula_H1 = paste("expression ~ 1 + probe + ", group_name, covariates_fixed, " + ", time, " + ", paste(time, ":", group_name, sep=""), time_covariates,
+													 " + (", paste(time, ":", group_name, sep=""), "|probe) + (1|", subject_name, ":probe)", sep="")
 				
-				formula_H0_1probe = paste("expression ~ 1 + Group", covariates_fixed, " + ", time, time_covariates,
+				formula_H0_1probe = paste("expression ~ 1 + ", group_name, covariates_fixed, " + ", time, time_covariates,
 																	" + (1|", subject_name, ")", sep="")
 				
-				formula_H1_1probe = paste("expression ~ 1 + Group", covariates_fixed, " + ", time, " + ", paste(time, ":Group", sep=""), time_covariates,
+				formula_H1_1probe = paste("expression ~ 1 + ", group_name, covariates_fixed, " + ", time, " + ", paste(time, ":", group_name, sep=""), time_covariates,
 																	" + (1|", subject_name, ")", sep="")
 				
 			}
 		}
-		return(list("H0"=c("reg"=formula_H0, "1probe"=formula_H0_1probe), "H1"=c("reg"=formula_H1, "1probe"=formula_H1_1probe)))	
+		return(list("H0"=c("reg"=formula_H0, "1probe"=formula_H0_1probe), "H1"=c("reg"=formula_H1, "1probe"=formula_H1_1probe), "time_DF"=time_DF))	
 	}
 
 
