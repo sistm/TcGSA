@@ -220,9 +220,13 @@ function(x,
   }
   
   gmt <- x[["GeneSets_gmt"]]
-  if(only.signif){
+  separateSubjects <- x[["separateSubjects"]]
+	if(only.signif){
     GSsig <- signifLRT.TcGSA(x)
     GeneSetsList <- GSsig$GeneSet
+    if(length(GeneSetsList)<1){
+    	stop("NO SIGNIFICANT GENE SETS\n No gene sets to be plotted: set 'only.signif' argument to 'FALSE' in order to plot all the investigated gene sets")
+    }
   }
   else{
     GeneSetsList <- gmt$geneset.names
@@ -332,7 +336,12 @@ function(x,
     NbClust[gs] <- nc
     ClustsMeds[[gs]] <- medoids
     GenesPartition[[gs]] <- clust
-    names(GenesPartition[[gs]]) <- select_probe
+    if(indiv=="genes"){
+	    names(GenesPartition[[gs]]) <- select_probe
+    }
+    else if(indiv=="patients"){
+    	names(GenesPartition[[gs]]) <- rownames(data_stand_ByTP)
+    }
     if(verbose){
       cat(paste(which(GeneSetsList==gs), "/", length(GeneSetsList), " gene sets clustered\n", sep=""))
     }

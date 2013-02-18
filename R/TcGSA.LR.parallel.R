@@ -155,10 +155,10 @@
 #'                           time_func="linear", crossedRandom=FALSE)
 #'                           
 #'\dontrun{ 
-#'tcgsa_sim_1grp <- TcGSA.LR.parallel(Nproc = 2, type_connec = 'SOCK',
+#'tcgsa_sim_1grp <- TcGSA.LR.parallel(Ncpus = 2, type_connec = 'SOCK',
 #'																		expr=expr_1grp, gmt=gmt_sim, design=design, 
 #'													 					subject_name="Patient_ID", time_name="TimePoint",
-#'                           					time_func="linear", crossedRandom=FALSE)
+#'                           					time_func="linear", crossedRandom=FALSE, separateSubjects=TRUE)
 #'}
 #'tcgsa_sim_1grp
 #'summary(tcgsa_sim_1grp)
@@ -185,88 +185,52 @@ TcGSA.LR.parallel <-
 		#   library(reshape2)
 		#   require(splines)
 		
-		LR <- numeric(length(gmt$genesets))
-		CVG_H0 <- numeric(length(gmt$genesets))
-		CVG_H1 <- numeric(length(gmt$genesets))
-		estim_expr <- list()
-		
 		my_formul <- TcGSA.formula(design=design, subject_name=subject_name, time_name=time_name,  
 															 covariates_fixed=covariates_fixed, time_covariates=time_covariates, group_name=group_name,
 															 separateSubjects=separateSubjects, crossedRandom=crossedRandom,
 															 time_func=time_func)
 		time_DF <- my_formul[["time_DF"]]
 		
+		
+		
 		cl <- makeCluster(Ncpus, type = type_connec)
 		registerDoSNOW(cl)
 		
 		res_par <- foreach(gs=1:length(gmt$genesets), .packages=c("lme4", "reshape2", "splines"), .export=c("TcGSA.dataLME")) %dopar% {
+			probes <- intersect(gmt$genesets[[gs]], rownames(expr))
 			
-			for (gs in 1:length(gmt$genesets)){
-				probes <- intersect(gmt$genesets[[gs]], rownames(expr))
+			if(length(probes)>0 && length(probes)<=maxGSsize && length(probes)>=minGSsize){                                                       
+				expr_temp <- t(expr[probes, ])
+				rownames(expr_temp) <- NULL
+				data_lme  <- TcGSA.dataLME(expr=expr_temp, design=design, subject_name=subject_name, time_name=time_name, 
+																	 covariates_fixed=covariates_fixed, time_covariates=time_covariates,
+																	 group_name=group_name)
 				
-				if(length(probes)>0 && length(probes)<=maxGSsize && length(probes)>=minGSsize){                                                       
-					expr_temp <- t(expr[probes, ])
-					rownames(expr_temp) <- NULL
-					data_lme  <- TcGSA.dataLME(expr=expr_temp, design=design, subject_name=subject_name, time_name=time_name, 
-																		 covariates_fixed=covariates_fixed, time_covariates=time_covariates,
-																		 group_name=group_name)
-					
-					if(length(levels(data_lme$probe))>1){
-						lmm_H0 <- tryCatch(lmer(formula =my_formul[["H0"]]["reg"], REML=FALSE, data=data_lme),
-															 error=function(e){NULL})
-						lmm_H1 <- tryCatch(lmer(formula =my_formul[["H1"]]["reg"], REML=FALSE, data=data_lme),
-															 error=function(e){NULL})
-					}
-					else{
-						lmm_H0 <- tryCatch(lmer(formula =my_formul[["H0"]]["1probe"], REML=FALSE, data=data_lme),
-															 error=function(e){NULL})
-						lmm_H1 <- tryCatch(lmer(formula =my_formul[["H1"]]["1probe"], REML=FALSE, data=data_lme),
-															 error=function(e){NULL})
-					}
-					
-					if (!is.null(lmm_H0) & !is.null(lmm_H1)) {
-						LR[gs] <- lmm_H0@deviance["ML"] - lmm_H1@deviance["ML"]
-						CVG_H0[gs] <- lmm_H0@dims["cvg"]
-						CVG_H1[gs] <- lmm_H1@dims["cvg"]
-						
-						estims <- cbind.data.frame(data_lme, "fitted"=fitted(lmm_H1))
-						estims_tab <- acast(data=estims, formula = probe~Patient_ID~t1, value.var="fitted")
-						# drop = FALSE by default, which means that missing combination will be kept in the estims_tab and filled with NA
-						dimnames(estims_tab)[[3]] <- as.numeric(dimnames(estims_tab)[[3]])*10
-						estim_expr[[gs]] <- estims_tab
-					} 
-					else {
-						LR[gs] <- NA
-						CVG_H0[gs] <- NA
-						CVG_H1[gs] <- NA
-						
-						estims <- cbind.data.frame(data_lme, "fitted"=NA)
-						estims_tab <- acast(data=estims, formula = probe~Patient_ID~t1, value.var="fitted")
-						dimnames(estims_tab)[[3]] <- as.numeric(dimnames(estims_tab)[[3]])*10
-						estim_expr[[gs]] <- estims_tab
-						cat("Unable to fit the mixed models for this gene set\n")
-					}
-					
-					#		CONVERGENCE DIAGNOSTICS IN LME4
-					#       "3" = "X-convergence (3)",
-					#       "4" = "relative convergence (4)",
-					#       "5" = "both X-convergence and relative convergence (5)",
-					#       "6" = "absolute function convergence (6)",
-					# 
-					#       "7" = "singular convergence (7)",
-					#       "8" = "false convergence (8)",
-					#       "9" = "function evaluation limit reached without convergence (9)",
-					#       "10" = "iteration limit reached without convergence (9)",
-					#       "14" = "storage has been allocated (?) (14)",
-					# 
-					#       "15" = "LIV too small (15)",
-					#       "16" = "LV too small (16)",
-					#       "63" = "fn cannot be computed at initial par (63)",
-					#       "65" = "gr cannot be computed at initial par (65)")
-					#
-					
+				if(length(levels(data_lme$probe))>1){
+					lmm_H0 <- tryCatch(lmer(formula =my_formul[["H0"]]["reg"], REML=FALSE, data=data_lme),
+														 error=function(e){NULL})
+					lmm_H1 <- tryCatch(lmer(formula =my_formul[["H1"]]["reg"], REML=FALSE, data=data_lme),
+														 error=function(e){NULL})
 				}
 				else{
+					lmm_H0 <- tryCatch(lmer(formula =my_formul[["H0"]]["1probe"], REML=FALSE, data=data_lme),
+														 error=function(e){NULL})
+					lmm_H1 <- tryCatch(lmer(formula =my_formul[["H1"]]["1probe"], REML=FALSE, data=data_lme),
+														 error=function(e){NULL})
+				}
+				
+				if (!is.null(lmm_H0) & !is.null(lmm_H1)) {
+					LR <- lmm_H0@deviance["ML"] - lmm_H1@deviance["ML"]
+					CVG_H0 <- lmm_H0@dims["cvg"]
+					CVG_H1 <- lmm_H1@dims["cvg"]
+					
+					estims <- cbind.data.frame(data_lme, "fitted"=fitted(lmm_H1))
+					estims_tab <- acast(data=estims, formula = probe~Patient_ID~t1, value.var="fitted")
+					# drop = FALSE by default, which means that missing combination will be kept in the estims_tab and filled with NA
+					dimnames(estims_tab)[[3]] <- as.numeric(dimnames(estims_tab)[[3]])*10
+					estim_expr <- estims_tab
+				} 
+				else {
 					LR <- NA
 					CVG_H0 <- NA
 					CVG_H1 <- NA
@@ -275,9 +239,40 @@ TcGSA.LR.parallel <-
 					estims_tab <- acast(data=estims, formula = probe~Patient_ID~t1, value.var="fitted")
 					dimnames(estims_tab)[[3]] <- as.numeric(dimnames(estims_tab)[[3]])*10
 					estim_expr <- estims_tab
-					cat("The size of the gene set is problematic (too many or too few genes)\n")
+					cat("Unable to fit the mixed models for this gene set\n")
 				}
+				
+				#		CONVERGENCE DIAGNOSTICS IN LME4
+				#       "3" = "X-convergence (3)",
+				#       "4" = "relative convergence (4)",
+				#       "5" = "both X-convergence and relative convergence (5)",
+				#       "6" = "absolute function convergence (6)",
+				# 
+				#       "7" = "singular convergence (7)",
+				#       "8" = "false convergence (8)",
+				#       "9" = "function evaluation limit reached without convergence (9)",
+				#       "10" = "iteration limit reached without convergence (9)",
+				#       "14" = "storage has been allocated (?) (14)",
+				# 
+				#       "15" = "LIV too small (15)",
+				#       "16" = "LV too small (16)",
+				#       "63" = "fn cannot be computed at initial par (63)",
+				#       "65" = "gr cannot be computed at initial par (65)")
+				#
+				
 			}
+			else{
+				LR <- NA
+				CVG_H0 <- NA
+				CVG_H1 <- NA
+				
+				estims <- cbind.data.frame(data_lme, "fitted"=NA)
+				estims_tab <- acast(data=estims, formula = probe~Patient_ID~t1, value.var="fitted")
+				dimnames(estims_tab)[[3]] <- as.numeric(dimnames(estims_tab)[[3]])*10
+				estim_expr <- estims_tab
+				cat("The size of the gene set is problematic (too many or too few genes)\n")
+			}
+			
 			line_number <- 0
 			try(line_number <- length(readLines(monitorfile)), silent=TRUE)
 			cat(paste(line_number+1,"/", length(gmt$genesets)," gene sets analyzed (geneset ", gs, ")\n", sep=""), file=monitorfile, append = TRUE)
@@ -310,6 +305,7 @@ TcGSA.LR.parallel <-
 		)
 		class(tcgsa) <- "TcGSA"
 		stopCluster(cl)
+		
 		return(tcgsa)
 	}
 

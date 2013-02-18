@@ -420,12 +420,11 @@ plot.TcGSA <-
       gmt <- list("genesets"=gmt$genesets[select], "geneset.names"=gmt$geneset.names[select], "geneset.descriptions"=gmt$geneset.descriptions[select])
       class(gmt) = "GSA.genesets"
     }
-    
     if(is.null(clust_trends)){
     	if (length(which(!is.na(x$fit$LR)))<1){
     		stop ("SERIOUS PROBLEM\n Was not able to compute any likelihood ratios...")
     	}
-      clust_trends <- clustTrend(x=x, expr=expr, Subject_ID=Subject_ID, TimePoint=TimePoint, baseline=baseline, only.signif=TRUE,
+      clust_trends <- clustTrend(x=x, expr=expr, Subject_ID=Subject_ID, TimePoint=TimePoint, baseline=baseline, only.signif=only.signif,
                                  group.var=group.var, Group_ID_paired=Group_ID_paired, ref=ref, group_of_interest=group_of_interest,
                                  FUNcluster=FUNcluster, clustering_metric=clustering_metric, clustering_method=clustering_method, B=B,
                                  max_trends=max_trends, aggreg.fun=aggreg.fun,
