@@ -173,7 +173,12 @@
 #'
 #'@param title 
 #'character specifying the title of the plot.  If \code{NULL}, a
-#'title is automatically generated, if \code{""}, no title appear.  Default is
+#'title is automatically generated, if \code{""}, no title appears.  Default is
+#'\code{NULL}.
+#'
+#'@param y.lab 
+#'character specifying the annotation of the y axis.  If \code{NULL}, an
+#'annotation is automatically generated, if \code{""}, no annotation appears.  Default is
 #'\code{NULL}.
 #'
 #'@param desc 
@@ -215,6 +220,11 @@
 #'@param gg.add 
 #'See \link{+.gg}.  Default is \code{theme()}, which adds nothing
 #'to the plot.
+#'
+#'@return A dataframe the 2 following variables: \itemize{
+#'\item \code{ProbeID} which contains the IDs of the probes of the plotted gene set.
+#'\item \code{Cluster} which to which cluster the probe belongs to.
+#'} If \code{clustering} is \code{FALSE}, then \code{Cluster} is \code{NA} for all the probes.
 #'
 #'@author Boris P. Hejblum
 #'
@@ -291,7 +301,7 @@ plot1GS <-
             indiv="genes",
             verbose=TRUE,
             clustering=TRUE, showTrend=TRUE, smooth=TRUE,
-            time_unit="", title=NULL, desc=TRUE,
+            time_unit="", title=NULL, y.lab=NULL, desc=TRUE,
             lab.cex=1, axis.cex=1, main.cex=1, y.lab.angle=90, x.axis.angle=45,
             y.lim=NULL, x.lim=NULL, 
             gg.add=theme()
@@ -300,7 +310,6 @@ plot1GS <-
 #   library(ggplot2)
 #   library(cluster)
 #   library(splines)
-  
   capwords <- function(s, strict = FALSE){
     cap <- function(s){
       paste(toupper(substring(s,1,1)),{s <- substring(s,2); if(strict) tolower(s) else s},
@@ -341,6 +350,15 @@ plot1GS <-
     }
   }
   
+  if(is.null(y.lab)){
+  	if(is.data.frame(expr)){
+  		y.lab <- paste(capwords(aggreg.fun), 'of standardized gene expression')
+  	}
+  	else{
+  		y.lab <- paste(capwords(aggreg.fun), 'of standardized estimate')
+  	}
+  }
+  
   interest <- which(gmt$geneset.names==geneset.name)
   if(length(interest)==0){
     stop("The 'geneset.name' supplied is not in the 'gmt'")
@@ -350,7 +368,7 @@ plot1GS <-
     data_sel <- as.matrix(expr[select_probe,])
   }else if(is.list(expr)){
     expr_sel <- expr[[interest]]
-    expr_sel <- expr_sel[, , order(as.numeric(dimnames(expr_sel)[[3]]))]
+    expr_sel <- expr_sel[, , order(as.numeric(dimnames(expr_sel)[[3]])), drop=FALSE]
     data_sel <- matrix(expr_sel, nrow=dim(expr_sel)[1], ncol=dim(expr_sel)[2]*dim(expr_sel)[3])
     rownames(data_sel) <- dimnames(expr_sel)[[1]]
     select_probe <- dimnames(expr_sel)[[1]]
@@ -405,6 +423,8 @@ plot1GS <-
     medoids <- cbind.data.frame("TimePoint"=colnames(data_stand_MedianByTP), "1"='NA')
     clust <- rep(NA, dim(data_stand_MedianByTP)[1])
   }
+  classif <- cbind.data.frame("ProbeID"=rownames(data_stand_MedianByTP), "Cluster"=clust)
+  classif <- classif[order(classif$Cluster), ]
   meltedData <- melt(cbind.data.frame("Probe_ID"=rownames(data_stand_MedianByTP), "Cluster"=clust, data_stand_MedianByTP), id.vars=c("Probe_ID", "Cluster"), variable.name="TimePoint")
   meltedStats <- melt(medoids, id.vars="TimePoint", variable.name="Cluster")
   meltedData$Cluster <- as.factor(meltedData$Cluster)
@@ -444,7 +464,7 @@ plot1GS <-
   }
 
   p <- (p
-        + ylab(paste(capwords(aggreg.fun), 'of standardized gene expression'))
+        + ylab(y.lab)
         + xlab('Time')
         + ggtitle(mytitle)
         + theme(plot.title=element_text(size = 35*main.cex))
@@ -466,12 +486,13 @@ plot1GS <-
     }
     p <- p + scale_linetype_manual(name=paste("Cluster", capwords(trend.fun)), values=as.numeric(levels(meltedStats$Cluster))+1, 
                                      guide=guide_legend(override.aes=list(size=1), keywidth=2*lab.cex, 
-                                                        title.theme=element_text(size = 15*lab.cex, angle=0),
-                                                        label.theme=element_text(size = 9*lab.cex, angle=0)
+                                                        title.theme=element_text(size = 17*lab.cex, angle=0),
+                                                        label.theme=element_text(size = 12*lab.cex, angle=0)
                                      )
     )
   }
   print(p)
+  invisible(classif)
 }
 
 

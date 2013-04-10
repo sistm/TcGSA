@@ -5,6 +5,8 @@
 #'
 #'@aliases summary.TcGSA print.summary.TcGSA
 #'
+#'@method summary TcGSA
+#'
 #'@param object 
 #'an object of class'\code{TcGSA}'.
 #'

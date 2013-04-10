@@ -8,8 +8,8 @@
 }
 \details{
   \tabular{ll}{ Package: \tab TcGSA\cr Type: \tab
-  Package\cr Version: \tab 0.9.2\cr Date: \tab
-  2013-02-18\cr License:\tab
+  Package\cr Version: \tab 0.9.3\cr Date: \tab
+  2013-04-04\cr License:\tab
   \href{http://www.gnu.org/licenses/lgpl.txt}{LGPL-3}\cr }
   The main function in this package is
   \code{\link{TcGSA.LR}} which performs Time-course Gene
@@ -21,10 +21,9 @@
   Boris P. Hejblum Maintainer: Boris P. Hejblum
 }
 \references{
-  Hejblum, B.P., Skinner, J., Thiebaut, R., 2012, TcGSA:
-  Time-course gene set analysis of longitudinal gene
-  expression, with an application to a therapeutic HIV
-  vaccine trial, \bold{submitted}.
+  Hejblum, B.P., Skinner, J., Thiebaut, R., 2013, TcGSA: a
+  gene set approach for longitudinal gene expression data
+  analysis, \bold{submitted}.
 }
 \seealso{
   \code{\link[GSA:GSA]{GSA}}

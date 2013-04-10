@@ -55,9 +55,7 @@
 #'
 #'@seealso \code{\link{multtest.TcGSA}}, \code{\link{TcGSA.LR}}
 #'
-#'@references Hejblum, B.P., Skinner, J., Thiebaut, R., 2012, TcGSA:
-#'Time-course gene set analysis of longitudinal gene expression, with an
-#'application to a therapeutic HIV vaccine trial, \bold{submitted}.
+#'@references Hejblum, B.P., Skinner, J., Thiebaut, R., 2013, TcGSA: a gene set approach for longitudinal gene expression data analysis, \bold{submitted}.
 #'
 #'@examples
 #'

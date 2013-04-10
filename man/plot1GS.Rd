@@ -12,9 +12,9 @@
     methodOptiClust = "firstSEmax", indiv = "genes",
     verbose = TRUE, clustering = TRUE, showTrend = TRUE,
     smooth = TRUE, time_unit = "", title = NULL,
-    desc = TRUE, lab.cex = 1, axis.cex = 1, main.cex = 1,
-    y.lab.angle = 90, x.axis.angle = 45, y.lim = NULL,
-    x.lim = NULL, gg.add = theme())
+    y.lab = NULL, desc = TRUE, lab.cex = 1, axis.cex = 1,
+    main.cex = 1, y.lab.angle = 90, x.axis.angle = 45,
+    y.lim = NULL, x.lim = NULL, gg.add = theme())
 }
 \arguments{
   \item{expr}{either a matrix or dataframe of gene
@@ -181,7 +181,12 @@
 
   \item{title}{character specifying the title of the plot.
   If \code{NULL}, a title is automatically generated, if
-  \code{""}, no title appear.  Default is \code{NULL}.}
+  \code{""}, no title appears.  Default is \code{NULL}.}
+
+  \item{y.lab}{character specifying the annotation of the y
+  axis.  If \code{NULL}, an annotation is automatically
+  generated, if \code{""}, no annotation appears.  Default
+  is \code{NULL}.}
 
   \item{desc}{a logical flag. If \code{TRUE}, a line is
   added to the title of the plot with the description of
@@ -220,6 +225,14 @@
 
   \item{gg.add}{See \link{+.gg}.  Default is
   \code{theme()}, which adds nothing to the plot.}
+}
+\value{
+  A dataframe the 2 following variables: \itemize{ \item
+  \code{ProbeID} which contains the IDs of the probes of
+  the plotted gene set. \item \code{Cluster} which to which
+  cluster the probe belongs to. } If \code{clustering} is
+  \code{FALSE}, then \code{Cluster} is \code{NA} for all
+  the probes.
 }
 \description{
   This function can plot different representations of the

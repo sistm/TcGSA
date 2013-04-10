@@ -17,6 +17,8 @@
 #'
 #'%TODO
 #'
+#'@method plot TcGSA
+#'
 #'@param x 
 #'an object of class'\code{TcGSA}'.
 #'
@@ -267,42 +269,43 @@
 #'@return An object of class \bold{\link{hclust}} which describes the tree
 #'produced by the clustering process.  The object is a list with components:
 #'\itemize{
-#'\item merge an \eqn{n-1} by \eqn{2} matrix.  Row \eqn{i} of
+#'\item \code{merge} an \eqn{n-1} by \eqn{2} matrix.  Row \eqn{i} of
 #'\code{merge} describes the merging of clusters at step i of the clustering.
 #'If an element \eqn{j} in the row is negative, then observation -\eqn{j} was
 #'merged at this stage.  If \eqn{j} is positive then the merge was with the
 #'cluster formed at the (earlier) stage \eqn{j} of the algorithm.  Thus
 #'negative entries in merge indicate agglomerations of singletons, and positive
 #'entries indicate agglomerations of non-singletons.
-#'\item height a set of \eqn{n-1} real values (non-decreasing for
+#'\item \code{height} a set of \eqn{n-1} real values (non-decreasing for
 #'ultrametric trees).  The clustering height: that is, the value of the
 #'criterion associated with the Ward clustering method.
-#'\item order a vector giving the permutation of the original
+#'\item \code{order} a vector giving the permutation of the original
 #'observations suitable for plotting, in the sense that a cluster plot using
 #'this ordering and matrix merge will not have crossings of the branches.
-#'\item labels the gene set trends name.
-#'\item call the call which produced the result clustering:
+#'\item \code{labels} the gene set trends name.
+#'\item \code{call} the call which produced the result clustering:
 #'\cr\code{hclust(d = dist(map2heat, method = "euclidean"), method = "ward")}
-#'\item method "ward", as it is the clustering method that has been used
+#'\item \code{method} "ward", as it is the clustering method that has been used
 #'for clustering the gene set trends.
-#'\item dist.method "euclidean", as it is the distance that has been used
+#'\item \code{dist.method} "euclidean", as it is the distance that has been used
 #'for clustering the gene set trends.
-#'\item legend.breaks a numeric vector giving the splitting points used
+#'\item \code{legend.breaks} a numeric vector giving the splitting points used
 #'for coloring the heatmap.  If \code{plot} is \code{FALSE}, then it is
 #'\code{NULL}.
-#'\item myclusters a character vector of colors for the dynamic clusters
+#'\item \code{myclusters} a character vector of colors for the dynamic clusters
 #'of the represented gene set trends, with as many levels as the value of
 #'\code{N_clusters}.  If no dynamic clusters were represented, than this is
 #'\code{NULL}.
-#'\item ddr a \bold{dendrogram} object with the reordering used for the
+#'\item \code{ddr} a \bold{dendrogram} object with the reordering used for the
 #'heatmap.  See \code{\link{heatmap.2}}.
 #'\item geneset.names character vector with the names of the gene sets
 #'used in the heatmap.
-#'\item clust.trends a \bold{\link{ClusteredTrends}} object.
-#'\item clustersExport a data frame with 2 variables containing the two
+#'\item \code{clust.trends} a \bold{\link{ClusteredTrends}} object.
+#'\item \code{clustersExport} a data frame with 2 variables containing the two
 #'following variables : \itemize{ \item \code{GeneSet}: the gene set trends
 #'clustered.  \item \code{Cluster}: the dynamic cluster they belong to.  } The
 #'data frame is order by the variable \code{Cluster}.
+#'\item \code{data_plotted}: the data matrix represented by the heatmap
 #'}
 #'
 #'@author Boris P. Hejblum
@@ -310,9 +313,7 @@
 #'@seealso \code{\link[gplots:heatmap.2]{heatmap.2}}, \code{\link{TcGSA.LR}},
 #'\code{\link{hclust}}
 #'
-#'@references Hejblum, B.P., Skinner, J., Thiebaut, R., 2012, TcGSA:
-#'Time-course gene set analysis of longitudinal gene expression, with an
-#'application to a therapeutic HIV vaccine trial, \bold{submitted}.
+#'@references Hejblum, B.P., Skinner, J., Thiebaut, R., 2013, TcGSA: a gene set approach for longitudinal gene expression data analysis, \bold{submitted}.
 #'
 #'@examples
 #'
@@ -580,8 +581,10 @@ plot.TcGSA <-
     hc$legend.breaks <- legend.breaks
     hc$myclusters <- myclusters
     hc$ddr <- ddr
+    hc$order <- rev(order.dendrogram(ddr))
     hc$geneset.names <- gmt$geneset.names[select]
     hc$clust.trends <- clust_trends
+    hc$data_plotted <- as.matrix(map2heat[hc$order,])
     
     if(!is.null(myclusters)){
       clusters <- as.factor(myclusters)
