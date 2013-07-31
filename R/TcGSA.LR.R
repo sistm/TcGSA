@@ -36,7 +36,7 @@
 #'Default is \code{'Patient_ID'}.  See Details.
 #'
 #'@param time_name
-#'the name of the numeric or factor variable from \code{design} contains 
+#'the name of a numeric variable from \code{design} that contains 
 #'the information on the time replicates (the time points at which gene 
 #'expression was measured).  Default is \code{'TimePoint'}.  See Details.
 #'
@@ -59,12 +59,18 @@
 #'
 #'@param time_func 
 #'the form of the time trend. Can be either one of \code{"linear"},
-#'\code{"cubic"}, \code{"splines"} or specified by the user as an expression using 
-#'names of variables from the \code{design} matrix. The \code{"splines"} form corresponds to
-#'the natural cubic B-splines (see also \code{\link[splines:ns]{ns}}).  If
-#'there are only a few timepoints, a \code{"linear"} form should be sufficient.
-#'Otherwise, the \code{"cubic"} form is more parsimonious than the
-#'\code{"splines"} form, and should be sufficiently flexible.
+#'\code{"cubic"}, \code{"splines"} or specified by the user, or the column name of 
+#'a factor variable from \code{design}. If specified by the user, 
+#'it must be as an expression using only names of variables from the \code{design} matrix 
+#'with only the three following operators: \code{+}, \code{*}, \code{/} . 
+#'The \code{"splines"} form corresponds to the natural cubic B-splines 
+#'(see also \code{\link[splines:ns]{ns}}).  If there are only a few timepoints, 
+#'a \code{"linear"} form should be sufficient. Otherwise, the \code{"cubic"} form is 
+#'more parsimonious than the \code{"splines"} form, and should be sufficiently flexible.
+#'If the column name of a factor variable from \code{design} is supplied, 
+#'then time is considered as discrete in the analysis.
+#'If the user specify a formula using column names from design, both factor and numeric
+#'variables can be used.
 #'
 #'@param minGSsize 
 #'the minimum number of genes in a gene set.  If there are
@@ -103,7 +109,7 @@
 	#'hypothesis.
 #'}
 #'\item \code{time_func}: a character string passing along the value of the
-#'\code{func} argument used in the call.
+#'\code{time_func} argument used in the call.
 #'\item \code{GeneSets_gmt}: a \code{gmt} object passing along the value of the
 #'\code{gmt} argument used in the call.
 #'\item \code{group.var}: a factor passing along the \code{group_name} variable
@@ -184,13 +190,13 @@ function(expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", cr
   	
   for (gs in 1:length(gmt$genesets)){
     probes <- intersect(gmt$genesets[[gs]], rownames(expr))
-    
+    #browser()
     if(length(probes)>0 && length(probes)<=maxGSsize && length(probes)>=minGSsize){                                                       
     	expr_temp <- t(expr[probes, ])
     	rownames(expr_temp) <- NULL
     	data_lme  <- TcGSA.dataLME(expr=expr_temp, design=design, subject_name=subject_name, time_name=time_name, 
     														 covariates_fixed=covariates_fixed, time_covariates=time_covariates,
-    														 group_name=group_name)
+    														 group_name=group_name, time_func=time_func)
     	
       if(length(levels(data_lme$probe))>1){
           lmm_H0 <- tryCatch(lmer(formula =my_formul[["H0"]]["reg"], REML=FALSE, data=data_lme),
@@ -204,14 +210,13 @@ function(expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", cr
     		lmm_H1 <- tryCatch(lmer(formula =my_formul[["H1"]]["1probe"], REML=FALSE, data=data_lme),
     											 error=function(e){NULL})
       }
-		
+
       if (!is.null(lmm_H0) & !is.null(lmm_H1)) {
         LR[gs] <- lmm_H0@deviance["ML"] - lmm_H1@deviance["ML"]
   	    CVG_H0[gs] <- lmm_H0@dims["cvg"]
   	    CVG_H1[gs] <- lmm_H1@dims["cvg"]
-        
         estims <- cbind.data.frame(data_lme, "fitted"=fitted(lmm_H1))
-        estims_tab <- acast(data=estims, formula = probe~Patient_ID~t1, value.var="fitted")
+        estims_tab <- acast(data=estims, formula = as.formula(paste("probe", subject_name, "t1", sep="~")), value.var="fitted")
         # drop = FALSE by default, which means that missing combination will be kept in the estims_tab and filled with NA
         dimnames(estims_tab)[[3]] <- as.numeric(dimnames(estims_tab)[[3]])*10
         estim_expr[[gs]] <- estims_tab
@@ -222,8 +227,10 @@ function(expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", cr
         CVG_H1[gs] <- NA
         
         estims <- cbind.data.frame(data_lme, "fitted"=NA)
-        estims_tab <- acast(data=estims, formula = probe~Patient_ID~t1, value.var="fitted")
-        dimnames(estims_tab)[[3]] <- as.numeric(dimnames(estims_tab)[[3]])*10
+        estims_tab <- acast(data=estims, formula = as.formula(paste("probe", subject_name, "t1", sep="~")), value.var="fitted")
+        if(is.numeric(design[, time_name])){
+        	dimnames(estims_tab)[[3]] <- as.numeric(dimnames(estims_tab)[[3]])*10
+        }
         estim_expr[[gs]] <- estims_tab
         cat("Unable to fit the mixed models for this gene set\n")
       }
@@ -252,11 +259,8 @@ function(expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", cr
 	    CVG_H0[gs] <- NA
 	    CVG_H1[gs] <- NA
 	    
-	    estims <- cbind.data.frame(data_lme, "fitted"=NA)
-	    estims_tab <- acast(data=estims, formula = probe~Patient_ID~t1, value.var="fitted")
-	    dimnames(estims_tab)[[3]] <- as.numeric(dimnames(estims_tab)[[3]])*10
-	    estim_expr[[gs]] <- estims_tab
-	    cat("The size of the gene set is problematic (too many or too few genes)\n")
+	    estim_expr[[gs]] <- NA
+	    cat("The size of the gene set ",  gmt$geneset.names[[gs]], "is problematic (too many or too few genes)\n")
 	}
     
     cat(paste(gs,"/", length(gmt$genesets)," gene sets analyzed\n", sep=""))

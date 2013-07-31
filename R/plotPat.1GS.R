@@ -141,10 +141,10 @@
 #'\code{\link[cluster:clusGap]{clusGap}}, Details and \emph{Tibshirani et al.,
 #'2001} in References.
 #'
-#'@param indiv a character string indicating by which unit observations are
-#'aggregated (through \code{aggreg.fun}) before the clustering.  Possible
-#'values are \code{"genes"} or \code{"patients"}.  Default is \code{"genes"}.
-#'See Details.
+#@param indiv a character string indicating by which unit observations are
+#aggregated (through \code{aggreg.fun}) before the clustering.  Possible
+#values are \code{"genes"} or \code{"patients"}.  Default is \code{"genes"}.
+#See Details.
 #'
 #'@param verbose 
 #'logical flag enabling verbose messages to track the computing
@@ -155,16 +155,16 @@
 #'representation; if \code{TRUE}, the lines are colored according to which
 #'cluster they belong to.  Default is \code{TRUE}.  See Details.
 #'
-#'@param showTrend 
-#'logical flag.  If \code{TRUE}, a black line is added for
-#'each cluster, representing the corresponding \code{trend.fun}.  Default is
-#'\code{TRUE}.
+#@param showTrend 
+#logical flag.  If \code{TRUE}, a black line is added for
+#each cluster, representing the corresponding \code{trend.fun}.  Default is
+#\code{TRUE}.
 #'
-#'@param smooth 
-#'logical flag.  If \code{TRUE} and \code{showTrend} is also
-#'\code{TRUE}, the representation of each cluster \code{trend.fun} is smoothed
-#'using cubic polynoms (see \code{\link[ggplot2:stat_smooth]{stat_smooth}}.
-#'Default is \code{TRUE}.
+#@param smooth 
+#logical flag.  If \code{TRUE} and \code{showTrend} is also
+#\code{TRUE}, the representation of each cluster \code{trend.fun} is smoothed
+#using cubic polynoms (see \code{\link[ggplot2:stat_smooth]{stat_smooth}}.
+#Default is \code{TRUE}.
 #'
 #'@param time_unit 
 #'the time unit to be displayed (such as \code{"Y"},
@@ -221,9 +221,6 @@
 #'A list of instructions to add to the ggplot2 instruction.  See \link{+.gg}.  Default is \code{list(theme())}, which adds nothing
 #'to the plot.
 #'
-#'@param plot 
-#'logical flag.  If \code{FALSE}, no plot is drawn.  Default is \code{TRUE}.
-#'
 #'@return A dataframe the 2 following variables: \itemize{
 #'\item \code{ProbeID} which contains the IDs of the probes of the plotted gene set.
 #'\item \code{Cluster} which to which cluster the probe belongs to.
@@ -245,24 +242,18 @@
 #'													 subject_name="Patient_ID", time_name="TimePoint",
 #'                           time_func="linear", crossedRandom=FALSE)
 #'
-#'plot1GS(expr=expr_1grp, TimePoint=design$TimePoint, Subject_ID=design$Patient_ID, gmt=gmt_sim,
+#'plotPat.1GS(expr=expr_1grp, TimePoint=design$TimePoint, Subject_ID=design$Patient_ID, gmt=gmt_sim,
 #'        geneset.name="Gene set 4",
-#'        indiv="genes", clustering=FALSE,
+#'        clustering=FALSE,
 #'        time_unit="H",
 #'        lab.cex=0.7)
 #'
-#'plot1GS(expr=expr_1grp, TimePoint=design$TimePoint, Subject_ID=design$Patient_ID, gmt=gmt_sim,
+#'plotPat.1GS(expr=expr_1grp, TimePoint=design$TimePoint, Subject_ID=design$Patient_ID, gmt=gmt_sim,
 #'        geneset.name="Gene set 4",
-#'        indiv="patients", clustering=FALSE, baseline=1,
+#'        clustering=FALSE, baseline=1,
 #'        time_unit="H",
 #'        lab.cex=0.7)
 #'        
-#'plot1GS(expr=tcgsa_sim_1grp$Estimations, TimePoint=design$TimePoint, Subject_ID=design$Patient_ID, gmt=gmt_sim,
-#'        geneset.name="Gene set 3",
-#'        indiv="genes",
-#'        time_unit="H",
-#'        lab.cex=0.7
-#')
 #'
 #'
 #'colval <- c(hsv(0.56, 0.9, 1),
@@ -284,31 +275,35 @@
 #'par(op)
 #'
 #'
-#'plot1GS(expr=expr_1grp, TimePoint=design$TimePoint, Subject_ID=design$Patient_ID, gmt=gmt_sim,
+#'plotPat.1GS(expr=expr_1grp, TimePoint=design$TimePoint, Subject_ID=design$Patient_ID, gmt=gmt_sim,
 #'        geneset.name="Gene set 5",
-#'        indiv="genes",
 #'        time_unit="H",
 #'        title="",
-#'        gg.add=list(scale_color_manual(values=colval), guides(colour = guide_legend(reverse=TRUE))),
+#'        gg.add=list(scale_color_manual(values=colval)),
 #'        lab.cex=0.7
 #')
 #'
+#'plotPat.1GS(expr=tcgsa_sim_1grp$Estimations, TimePoint=design$TimePoint, Subject_ID=design$Patient_ID, gmt=gmt_sim,
+#'        geneset.name="Gene set 3",
+#'        time_unit="H",
+#'        lab.cex=0.7
+#')
 #'
-plot1GS <- 
+plotPat.1GS <- 
   function(expr, gmt, Subject_ID,TimePoint, geneset.name, 
             baseline=NULL,
             group.var=NULL, Group_ID_paired=NULL, ref=NULL, group_of_interest=NULL,
             FUNcluster=NULL, clustering_metric="euclidian", clustering_method="ward", B=500,
             max_trends=4, aggreg.fun="median", trend.fun="median",
             methodOptiClust = "firstSEmax",
-            indiv="genes",
+            #indiv="genes",
             verbose=TRUE,
-            clustering=TRUE, showTrend=TRUE, smooth=TRUE,
+            clustering=TRUE, 
+  				 #showTrend=TRUE, smooth=TRUE,
             time_unit="", title=NULL, y.lab=NULL, desc=TRUE,
             lab.cex=1, axis.cex=1, main.cex=1, y.lab.angle=90, x.axis.angle=45,
             y.lim=NULL, x.lim=NULL, 
-            gg.add=list(theme()),
-  				 plot=TRUE
+            gg.add=list(theme())
            ){
   
 #   library(ggplot2)
@@ -339,12 +334,12 @@ plot1GS <-
   if(is.null(title)){
     if(desc){
       mydesc <- gmt$geneset.descriptions[which(gmt$geneset.names==geneset.name)]
-      mytitle <- paste(geneset.name, "\n", mydesc, "\n", indiv, "\n", sep="")
+      mytitle <- paste(geneset.name, "\n", mydesc, "\n genes \n", sep="")
       main.cex <- main.cex*0.15
       lab.cex <- lab.cex*0.5
       axis.cex <- axis.cex*0.5
     }else{
-      mytitle <- paste(geneset.name, "\n", indiv, "\n", sep="")
+      mytitle <- paste(geneset.name, "\n genes \n", sep="")
     }
   }else{
     if(title==""){
@@ -380,62 +375,57 @@ plot1GS <-
     Subject_ID <- rep(dimnames(expr_sel)[[2]], dim(expr_sel)[3])
   }
   
-  
-      
-  if(indiv=="genes"){
-    data_stand <- t(apply(X=data_sel, MARGIN=1, FUN=scale))
-    data_stand_MedianByTP <- t(apply(X=data_stand, MARGIN=1, FUN=Fun_byIndex, index=as.factor(TimePoint), fun=aggreg.fun))
-  }else if(indiv=="patients"){
-    data_stand <- t(apply(X=data_sel, MARGIN=1, FUN=scale))
-    data_tocast<-cbind.data.frame(TimePoint, Subject_ID, "M" = apply(X=data_stand, MARGIN=2, FUN=aggreg.fun))
-    data_stand_MedianByTP <- as.matrix(acast(data_tocast, formula="Subject_ID~TimePoint", value.var="M"))
-  }
+  all_clust <- plot1GS(expr, gmt, Subject_ID,TimePoint, geneset.name, 
+  										 baseline, group.var, Group_ID_paired, ref, group_of_interest,
+  										 FUNcluster, clustering_metric, clustering_method, B,
+  										 max_trends, aggreg.fun, trend.fun,
+  										 methodOptiClust,
+  										 indiv="genes",
+  										 verbose,
+  										 clustering, showTrend=FALSE, smooth=FALSE,
+  										 time_unit, title, y.lab, desc,
+  										 lab.cex, axis.cex, main.cex, y.lab.angle, x.axis.angle,
+  										 y.lim, x.lim, 
+  										 gg.add, plot=FALSE)
+  data_stand <- t(apply(X=data_sel, MARGIN=1, FUN=scale))
   
   if(!is.null(baseline)){
-    colbaseline <- which(sort(unique(TimePoint))==baseline)
-    if(length(colbaseline)==0){
-      stop("the 'baseline' value used is not one of the time points in 'TimePoint'...\n\n")
-    }
-    data_stand_MedianByTP <- data_stand_MedianByTP-data_stand_MedianByTP[,colbaseline]
+    for(p in unique(Subject_ID)){
+    	colbaseline <- which(sort(unique(TimePoint))==baseline & Subject_ID==p)
+    	if(length(colbaseline)==0){
+    		stop("the 'baseline' value used is not one of the time points in 'TimePoint'...\n\n")
+    	}
+    	data_stand[, which(Subject_ID==p)] <- data_stand[, which(Subject_ID==p)]-data_stand[,colbaseline]
+  	}
   }
-
   
-  if(clustering | showTrend){
-    if(verbose){
-      cat("Optimally clustering...\n")
-    }
-    kmax <- ifelse(dim(data_stand_MedianByTP)[1]>4, max_trends, dim(data_stand_MedianByTP)[1]-1)
-    if(kmax>=2){
-      cG <- clusGap(x=data_stand_MedianByTP, FUNcluster=FUNcluster, K.max=kmax, B=B, verbose=FALSE)
-      nc <- maxSE(f = cG$Tab[, "gap"], SE.f = cG$Tab[, "SE.sim"], method = methodOptiClust)
-      clust <- FUNcluster(data_stand_MedianByTP, k=nc)$cluster
-    }else{
-      nc <- 1
-      clust <- rep(1, dim(data_stand_MedianByTP)[1])
-    }
-    
-    medoids <- as.data.frame(t(apply(X=data_stand_MedianByTP, MARGIN=2, FUN=Fun_byIndex, index=clust, fun=trend.fun)))
-    if(dim(medoids)[1]==1){
-      medoids <- cbind.data.frame("TimePoint"= colnames(medoids), "1"=t(medoids))
-    }else{
-      medoids <- cbind.data.frame("TimePoint"= rownames(medoids), medoids)
-    }
-    if(verbose){
-        cat("DONE\n")
-    }
-  }else{
-    medoids <- cbind.data.frame("TimePoint"=colnames(data_stand_MedianByTP), "1"='NA')
-    clust <- rep(NA, dim(data_stand_MedianByTP)[1])
+  rownames(all_clust) <- all_clust$ProbeID
+  clust <- all_clust[rownames(data_stand), "Cluster"]
+  
+  
+  meltedData <- NULL
+  subj_temp <- NULL
+  for (p in unique(Subject_ID)){
+  	sample_sel <- which(Subject_ID==p)
+  	melted_temp <- melt(cbind.data.frame("Probe_ID"=rownames(data_stand[, sample_sel]), 
+  																						"Cluster"=clust, data_stand[, sample_sel]), 
+  													 id.vars=c("Probe_ID", "Cluster"), variable.name="TimePoint")
+		meltedData <- rbind(meltedData, melted_temp)
+  	subj_temp <- c(subj_temp, rep(p, dim(melted_temp)[1]))
   }
-  classif <- cbind.data.frame("ProbeID"=rownames(data_stand_MedianByTP), "Cluster"=clust)
-  classif <- classif[order(classif$Cluster), ]
-  meltedData <- melt(cbind.data.frame("Probe_ID"=rownames(data_stand_MedianByTP), "Cluster"=clust, data_stand_MedianByTP), id.vars=c("Probe_ID", "Cluster"), variable.name="TimePoint")
-  meltedStats <- melt(medoids, id.vars="TimePoint", variable.name="Cluster")
+  meltedData$Subject_ID <- as.factor(subj_temp)
+  rm(list=c("melted_temp", "subj_temp"))
   meltedData$Cluster <- as.factor(meltedData$Cluster)
   
+  
+ 
 
   meltedData$TimePoint <- paste(time_unit, meltedData$TimePoint, sep="")
-  meltedStats$TimePoint <- paste(time_unit, meltedStats$TimePoint, sep="")
+  
+  # Next TODO: medoids by patient
+  # browser()
+  # meltedStats$TimePoint <- paste(time_unit, meltedStats$TimePoint, sep="")
+  
   if(is.null(y.lim)){
     y.max <- max(abs(meltedData$value))
     y.min <- -y.max
@@ -448,6 +438,7 @@ plot1GS <-
   }
   p <- (ggplot(meltedData, aes(x=TimePoint, y=value)) 
         + geom_hline(aes(y = 0), linetype=1, colour='grey50', size=0.4)
+  			+ facet_wrap( ~Subject_ID, ncol=floor(sqrt(length(unique(meltedData$Subject_ID)))))
   )
    
   if(!clustering){
@@ -480,26 +471,25 @@ plot1GS <-
         + theme(legend.key=element_rect(fill="white"))
   )
   
-  if(showTrend){
-    if(!smooth){
-      p <- (p + geom_line(data=meltedStats, aes(x=TimePoint, y=value, group=Cluster, linetype=Cluster), size=4))
-    }else{
-      p <- (p + stat_smooth(formula=y~poly(x,3), data=meltedStats, aes(x=TimePoint, y=value, group=Cluster, linetype=Cluster), size=4, se=FALSE, method="lm", color="black"))
-    }
-    p <- p + scale_linetype_manual(name=paste("Cluster", capwords(trend.fun)), values=as.numeric(levels(meltedStats$Cluster))+1, 
-                                     guide=guide_legend(override.aes=list(size=1), keywidth=2*lab.cex, 
-                                                        title.theme=element_text(size = 17*lab.cex, angle=0),
-                                                        label.theme=element_text(size = 12*lab.cex, angle=0)
-                                     )
-    )
-  }
   for(a in gg.add){
-    p <- p + a
+  	p <- p + a
   }
-  if(plot){
-	  print(p)
-  }
-  invisible(classif)
+  
+#   if(showTrend){
+#     if(!smooth){
+#       p <- (p + geom_line(data=meltedStats, aes(x=TimePoint, y=value, group=Cluster, linetype=Cluster), size=4))
+#     }else{
+#       p <- (p + stat_smooth(formula=y~poly(x,3), data=meltedStats, aes(x=TimePoint, y=value, group=Cluster, linetype=Cluster), size=4, se=FALSE, method="lm", color="black"))
+#     }
+#     p <- p + scale_linetype_manual(name=paste("Cluster", capwords(trend.fun)), values=as.numeric(levels(meltedStats$Cluster))+1, 
+#                                      guide=guide_legend(override.aes=list(size=1), keywidth=2*lab.cex, 
+#                                                         title.theme=element_text(size = 17*lab.cex, angle=0),
+#                                                         label.theme=element_text(size = 12*lab.cex, angle=0)
+#                                      )
+#     )
+#   }
+  print(p)
+  invisible(clust)
 }
 
 

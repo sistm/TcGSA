@@ -23,7 +23,7 @@ Correction}
   details.  Default is "\code{BY}", the Benjamini &
   Yekutieli (2001) step-up FDR-controlling procedure
   (general dependency structures).  In order to control the
-  FWER(in case of an analysis that is more a hypothesis
+  FWER (in case of an analysis that is more a hypothesis
   confirmation than an exploration of the expression data),
   we recommand to use "\code{Holm}", the Holm (1979)
   step-down adjusted p-values for strong control of the

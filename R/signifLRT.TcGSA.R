@@ -85,7 +85,7 @@ function(tcgsa, threshold=0.05, myproc="BY", nbsimu_pval = 1e+06, write=F, txtfi
   }
 
   Res_Linear_Mod_FDR <- cbind.data.frame("GeneSet"=signif_mod, "AdjPval"=AdjPval, "desc"=signif_desc)
-  if(dim(Res_Linear_Mod_FDR)[1]>0){
+  if(dim(Res_Linear_Mod_FDR)[1]>1){
     Res_Linear_Mod_FDR <- Res_Linear_Mod_FDR[mixedorder(gsub('.',"a",as.character(Res_Linear_Mod_FDR$GeneSet), fixed=TRUE)),]
   }
   
@@ -100,6 +100,5 @@ function(tcgsa, threshold=0.05, myproc="BY", nbsimu_pval = 1e+06, write=F, txtfi
       cat("ERROR: could not write the significant results file because the argument 'txtfilename' is empty")
     }
   }
-  
-  return(Res_Linear_Mod_FDR)
+  return(list("mixedLRTadjRes"=Res_Linear_Mod_FDR, "multCorProc"= myproc, "threshold"=threshold))
 }

@@ -26,9 +26,17 @@ TcGSA.formula <-
 			#This must be an expression involving only columnnames of the design matrix
 		}
 		
-		time_split <- trim(str_split(paste("+", time, collapse=" "), "\\+")[[1]])
-		if(length(which(time_split==""))>0){time_split <- time_split[-which(time_split=="")]}
-		
+		if(time_func %in% c("linear", "cubic", "splines")){
+			time_split <- trim(str_split(paste("+", time, collapse=" "), "\\+")[[1]])
+			if(length(which(time_split==""))>0){time_split <- time_split[-which(time_split=="")]}
+		}
+		else if((time_func %in% colnames(design)) && is.factor(design[, time_func])){
+			time_split <- c(1:(length(levels(design[, time_func]))-1))
+		}
+		else {
+			time_split <- gsub(" ", "", unlist(lapply(unlist(lapply(unlist(str_split(time_func, "\\+")), FUN=str_split, pattern="\\/")), FUN=str_split, pattern="\\*")))
+		}
+	
 		time_DF <- length(time_split)
 		
 		
@@ -54,7 +62,7 @@ TcGSA.formula <-
 													" + (1|", subject_name, ")", sep="")
 				
 				formula_H1 = paste("expression ~ 1 + (1|probe)", covariates_fixed, " + ", time, time_covariates,
-													" + (", time, "|probe) + (1|", subject_name, ")", sep="")
+													" + (0+", time, "|probe) + (1|", subject_name, ")", sep="")
 				
 				formula_H0_1probe = paste("expression ~ 1", covariates_fixed,
 																 " + (1|", subject_name, ")", sep="")
@@ -68,21 +76,22 @@ TcGSA.formula <-
 													 " + (1|", subject_name, ")", sep="")
 				
 				formula_H1 = paste("expression ~ 1 + (1|probe)", covariates_fixed, " + ", time, time_covariates,
-													 " + (", time, "|", subject_name, ") + (1|", subject_name, ")", sep="")
+													 " + (0+", time, "|", subject_name, ") + (1|", subject_name, ")", sep="")
 				
 				formula_H0_1probe = paste("expression ~ 1", covariates_fixed,
 																	" + (1|", subject_name, ")", sep="")
 				
 				formula_H1_1probe = paste("expression ~ 1", covariates_fixed, " + ", time, time_covariates,
-																	" + (", time, "|", subject_name, ") + (1|", subject_name, ")", sep="")
+																	" + (0+", time, "|", subject_name, ") + (1|", subject_name, ")", sep="")
 				
 			}
 			else if(group_name!="" & !separateSubjects){
 				formula_H0 = paste("expression ~ 1 + (1|probe) + ", group_name, covariates_fixed, " + ", time, time_covariates,
-													 " + (", time, "|probe) + (1|", subject_name, ")", sep="")
+													 " + (0 + ", time, "|probe) + (1|", subject_name, ")", sep="")
 				
-				formula_H1 = paste("expression ~ 1 + (1|probe) + ", group_name, covariates_fixed, " + ", time, " + ", paste(time, ":", group_name, sep=""), time_covariates,
-													 " + (", paste(time, ":", group_name, sep=""), "|probe) + (1|", subject_name, ")", sep="")
+				formula_H1 = paste("expression ~ 1 + (1|probe) + ", group_name, covariates_fixed, " + ", time, " + ", paste("(", time, "):", group_name, sep=""), time_covariates,
+													 #" + (0 + ", paste( " (", time, "):", group_name, sep=""), "|probe) + (1|", subject_name, ")", sep="")
+													 " + (0 + ", time, "|probe) + (1|", subject_name, ")", sep="")
 				
 				formula_H0_1probe = paste("expression ~ 1 + ", group_name, covariates_fixed, " + ", time, time_covariates,
 																	" + (1|", subject_name, ")", sep="")
@@ -98,7 +107,7 @@ TcGSA.formula <-
 													 " + (1|", subject_name, ":probe)", sep="")
 				
 				formula_H1 = paste("expression ~ 1 + probe", covariates_fixed, " + ", time, time_covariates,
-													 " + (", time, "|probe) + (1|", subject_name, ":probe)", sep="")
+													 " + (0+", time, "|probe) + (1|", subject_name, ":probe)", sep="")
 				
 				formula_H0_1probe = paste("expression ~ 1", covariates_fixed,
 																	" + (1|", subject_name, ")", sep="")
@@ -112,22 +121,23 @@ TcGSA.formula <-
 													 " + (1|", subject_name, ":probe)", sep="")
 				
 				formula_H1 = paste("expression ~ 1 + probe", covariates_fixed, " + ", time, time_covariates,
-													 " + (", time, "|", subject_name, ") + (1|", subject_name, ":probe)", sep="")
+													 " + (0+", time, "|", subject_name, ") + (1|", subject_name, ":probe)", sep="")
 				
 				formula_H0_1probe = paste("expression ~ 1", covariates_fixed,
 																	" + (1|", subject_name, ")", sep="")
 				
 				formula_H1_1probe = paste("expression ~ 1", covariates_fixed, " + ", time, time_covariates,
-																	" + (", time, "|", subject_name, ") + (1|", subject_name, ")", sep="")
+																	" + (0+", time, "|", subject_name, ") + (1|", subject_name, ")", sep="")
 				
 			}
 			else if(group_name!="" & !separateSubjects){
 				formula_H0 = paste("expression ~ 1 + probe + ", group_name, covariates_fixed, " + ", time, time_covariates,
-													 " + (", time, "|probe) + (1|", subject_name, ":probe)", sep="")
+													 " + (0 + ", time, "|probe) + (1|", subject_name, ":probe)", sep="")
 				
-				formula_H1 = paste("expression ~ 1 + probe + ", group_name, covariates_fixed, " + ", time, " + ", paste(time, ":", group_name, sep=""), time_covariates,
-													 " + (", paste(time, ":", group_name, sep=""), "|probe) + (1|", subject_name, ":probe)", sep="")
-				
+				formula_H1 = paste("expression ~ 1 + probe + ", group_name, covariates_fixed, " + ", time, " + ", paste("(", time, "):", group_name, sep=""), time_covariates,
+													 #" + (0 + ", paste("(", time, "):", group_name, sep=""), "|probe) + (1|", subject_name, ":probe)", sep="")
+													 " + (0 + ", time, "|probe) + (1|", subject_name, ":probe)", sep="")
+													 
 				formula_H0_1probe = paste("expression ~ 1 + ", group_name, covariates_fixed, " + ", time, time_covariates,
 																	" + (1|", subject_name, ")", sep="")
 				

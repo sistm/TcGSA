@@ -214,6 +214,11 @@ function(x,
       clus <- cutree(agnes(x, method=clustering_method, metric=clustering_metric, ...), k=k)
       return(list("cluster"=clus))
     }
+# Kmeans: what about missing data?
+#     FUNcluster <- function(x, k, ...){
+#     	clus <- kmeans(x, centers=k, nstart=1)$cluster
+#     	return(list("cluster"=clus))
+#     }
   }
   if(!is.function(FUNcluster)){
     stop("the 'FUNcluster' supplied is not a function")
@@ -222,7 +227,7 @@ function(x,
   gmt <- x[["GeneSets_gmt"]]
   separateSubjects <- x[["separateSubjects"]]
 	if(only.signif){
-    GSsig <- signifLRT.TcGSA(x)
+    GSsig <- signifLRT.TcGSA(x)$mixedLRTadjRes
     GeneSetsList <- GSsig$GeneSet
     if(length(GeneSetsList)<1){
     	stop("NO SIGNIFICANT GENE SETS\n No gene sets to be plotted: set 'only.signif' argument to 'FALSE' in order to plot all the investigated gene sets")
@@ -248,9 +253,13 @@ function(x,
   for(gs in GeneSetsList){
     interest <- which(gmt$geneset.names==as.character(gs))
     if(is.null(group.var)){
-      if(is.data.frame(expr)){
+      if(is.data.frame(expr) | is.matrix(expr)){
         select_probe <- intersect(rownames(expr), unique(gmt$genesets[[interest]]))
-        data_sel <- as.matrix(expr[select_probe,])
+        if(!is.numeric(expr)){
+        	data_sel <- as.matrix(apply(expr[select_probe,], 2, as.numeric))
+        }else{
+        	data_sel <- as.matrix(expr[select_probe,])
+        }
       }
       else if(is.list(expr)){
         expr_sel <- expr[[interest]]
@@ -265,6 +274,7 @@ function(x,
       }
       
       data_stand <- t(apply(X=data_sel, MARGIN=1, FUN=scale))
+      data_stand[unique(which(is.nan(data_stand), arr.ind=TRUE)[,1]), ] <- 0 
       if(indiv=="genes"){
         data_stand_ByTP <- t(apply(X=data_stand, MARGIN=1, FUN=Fun_byIndex, index=as.factor(TimePoint), fun=aggreg.fun, na.rm=T))
       }
@@ -286,9 +296,13 @@ function(x,
       if(!is.null(baseline)){
         stop("the 'baseline' argument is not NULL while a grouping variable is supplied in 'group.var'...\n")
       }
-      if(is.data.frame(expr)){
+      if(is.data.frame(expr) | is.matrix(expr)){
         select_probe <- intersect(rownames(expr), unique(gmt$genesets[[interest]]))
-        data_sel <- as.matrix(expr[select_probe,])
+        if(!is.numeric(expr)){
+        	data_sel <- as.matrix(apply(expr[select_probe,], 2, as.numeric))
+        }else{
+        	data_sel <- as.matrix(expr[select_probe,])
+        }
       }else if(is.list(expr)){
         expr_sel <- expr[[interest]]
         expr_sel <- expr_sel[, , order(as.numeric(dimnames(expr_sel)[[3]]))]

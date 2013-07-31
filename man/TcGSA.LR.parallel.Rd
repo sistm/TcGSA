@@ -61,24 +61,30 @@
   See details. Default is \code{""}, which corresponds to
   no covariates in the model.}
 
-  \item{time_covariates}{a character vector with the names
-  of numeric or factor variables from the \code{design}
-  matrix that should appear as fixed effects interaction
-  with the \code{time_name} variable in the model.  See
-  details.  Default is \code{""}, which corresponds to no
-  covariates in the model.}
+  \item{time_covariates}{the name of a numeric variable
+  from \code{design} that contains the information on the
+  time replicates (the time points at which gene expression
+  was measured).  Default is \code{'TimePoint'}.  See
+  Details.}
 
   \item{time_func}{the form of the time trend. Can be
   either one of \code{"linear"}, \code{"cubic"},
-  \code{"splines"} or specified by the user as an
-  expression using names of variables from the
-  \code{design} matrix. The \code{"splines"} form
+  \code{"splines"} or specified by the user, or the column
+  name of a factor variable from \code{design}. If
+  specified by the user, it must be as an expression using
+  only names of variables from the \code{design} matrix
+  with only the three following operators: \code{+},
+  \code{*}, \code{/} . The \code{"splines"} form
   corresponds to the natural cubic B-splines (see also
   \code{\link[splines:ns]{ns}}).  If there are only a few
   timepoints, a \code{"linear"} form should be sufficient.
   Otherwise, the \code{"cubic"} form is more parsimonious
   than the \code{"splines"} form, and should be
-  sufficiently flexible.}
+  sufficiently flexible. If the column name of a factor
+  variable from \code{design} is supplied, then time is
+  considered as discrete in the analysis. If the user
+  specify a formula using column names from design, both
+  factor and numeric variables can be used.}
 
   \item{minGSsize}{the minimum number of genes in a gene
   set.  If there are less genes than this number in one of

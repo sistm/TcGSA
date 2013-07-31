@@ -49,6 +49,7 @@ function(n,s,q){
       mixprobs[k-s+1] <- choose(q,k-s)*2^(-q)
     }
     mix <- n*mixprobs
+    #s <- s + q*(q-1)/2 #conservative corrections for the covariances terms
   }else{
     mix=n
   }

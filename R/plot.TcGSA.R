@@ -40,7 +40,7 @@
 #'Holm (1979) step-down adjusted p-values for strong control of the FWER.
 #'
 #'@param nbsimu_pval 
-#'The number of observations under the null distribution to
+#'the number of observations under the null distribution to
 #'be generated in order to compute the p-values. Default is \code{1e+06}.
 #'
 #'@param expr 
@@ -97,11 +97,15 @@
 #'Details.
 #'
 #'@param group_of_interest
-#' the group of interest, for which dynamics are to be
+#'the group of interest, for which dynamics are to be
 #'computed in the case of several treatment groups.  Default is \code{NULL},
 #'which means that group of interest is the second group in alphabetical order
 #'of the labels of \code{group.var}.  See Details.%% ~~Describe
 #'\code{group_of_interest} here~~
+#'
+#'@param ranking
+#'a logical flag. If \code{TRUE}, the gene set trends are not hierarchicaly classified, but
+#'ordered by decreasing Likelihood ratios. Default is \code{FALSE}.
 #'
 #'@param FUNcluster 
 #'the clustering function used to agglomerate genes in
@@ -350,6 +354,7 @@ plot.TcGSA <-
            expr, Subject_ID, TimePoint, 
            baseline=NULL, only.signif=TRUE,
            group.var=NULL, Group_ID_paired=NULL, ref=NULL, group_of_interest=NULL,
+  				 ranking=FALSE,
            FUNcluster=NULL, clustering_metric="euclidian", clustering_method="ward", B=500,
            max_trends=4, aggreg.fun="median",
            methodOptiClust = "firstSEmax",
@@ -443,12 +448,30 @@ plot.TcGSA <-
     ncl <- gsub("^.*?_", "", rownames(medoids2clust))
     medoids2clust <- medoids2clust[,order(as.numeric(colnames(medoids2clust)))]
     
+    if(ranking){
+	    trendsIndex <- match(gsNames, gmt_sim$geneset.names)
+  	  LRtrends <- x$fit$LR[trendsIndex]
+	    rank <- order(LRtrends, decreasing=TRUE)
+	    gsNames <- gsNames[rank]
+	    medoids2clust <- medoids2clust[rank, ]
+	    
+	    percentiles <- quantile(x$fit$LR, probs=seq(0.01, 1, 0.01))
+	    percTrends <- findInterval(LRtrends[rank], vec=percentiles)  
+    }
+    
     if(!descript){
       rownames(medoids2clust) <- paste(gsub("_", " ", rownames(medoids2clust)), clust_trends[[1]][gsNames], sep="/")
     }else{
-      rownames(medoids2clust) <- paste(gsub(": Undetermined","", paste(gmt$geneset.names[match(gsNames, gmt$geneset.names)], ": ", gmt$geneset.description[match(gsNames, gmt$geneset.names)], sep="")),
-                                       " ", ncl, "/", clust_trends[[1]][gsNames],
-                                       sep="")
+    	if(ranking){
+      rownames(medoids2clust) <- paste(gsub(": Undetermined","", paste(gmt$geneset.names[match(gsNames, gmt$geneset.names)], 
+      																																 "[", percTrends, "th pctile]: ", 
+      																																 gmt$geneset.description[match(gsNames, gmt$geneset.names)], sep="")),
+      																 " ", ncl, "/", clust_trends[[1]][gsNames], sep="")
+    	}else{
+    	rownames(medoids2clust) <- paste(gsub(": Undetermined","", paste(gmt$geneset.names[match(gsNames, gmt$geneset.names)], ": ", 
+    																																	 gmt$geneset.description[match(gsNames, gmt$geneset.names)], sep="")),
+    																	 " ", ncl, "/", clust_trends[[1]][gsNames], sep="")
+    	}
     }
     
     map2heat <- medoids2clust
@@ -510,13 +533,22 @@ plot.TcGSA <-
       }
       
       colnames(map2heat) <- paste(time_unit, colnames(map2heat), sep="")
+
+      if(ranking){
+      	clRows <- FALSE
+      	dendo <- "none"
+      }
+      else{
+      	dendo <- "row"
+      }
+      
       try(
         if(!is.null(myclusters)){
           MYheatmap.2(x = map2heat, 
                       Rowv=clRows,
                       Colv=FALSE,
                       hclustfun=myhclustward,
-                      dendrogram='row',
+                      dendrogram=dendo,
                       scale="none",
                       col=colorRampPalette(rev(color.vec))(length(legend.breaks)-1),
                       breaks=legend.breaks,
@@ -556,7 +588,7 @@ plot.TcGSA <-
                       Rowv=clRows,
                       Colv=FALSE,
                       hclustfun=myhclustward,
-                      dendrogram='row',
+                      dendrogram=dendo,
                       scale="none",
                       col=colorRampPalette(rev(color.vec))(length(legend.breaks)-1),
                       breaks=legend.breaks,

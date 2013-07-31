@@ -21,7 +21,7 @@
 #'"\code{BH}", "\code{BY}", "\code{ABH}", "\code{TSBH}". See
 #'\code{\link[multtest:mt.rawp2adjp]{mt.rawp2adjp}} for details.  Default is
 #'"\code{BY}", the Benjamini & Yekutieli (2001) step-up FDR-controlling
-#'procedure (general dependency structures).  In order to control the FWER(in
+#'procedure (general dependency structures).  In order to control the FWER (in
 #'case of an analysis that is more a hypothesis confirmation than an
 #'exploration of the expression data), we recommand to use "\code{Holm}", the
 #'Holm (1979) step-down adjusted p-values for strong control of the FWER.
@@ -87,11 +87,11 @@ function(tcgsa, threshold=0.05, myproc="BY", nbsimu_pval = 1000000){
   }else{
     nbgp <- length(levels(group.var))
     if(func=="linear"){
-      theodist <- rmixchisq(nbsimu_pval,((1*nbgp-1)+1),(1*nbgp))
+      theodist <- rmixchisq(nbsimu_pval, 1*(nbgp-1), 0)
     }else if(func=="cubic"){
-      theodist <- rmixchisq(nbsimu_pval,((3*nbgp-1)+1),(3*nbgp))
+      theodist <- rmixchisq(nbsimu_pval, 3*(nbgp-1), 0)
     }else{
-      theodist <-rmixchisq(nbsimu_pval,((time_DF*nbgp-1)+1),time_DF*nbgp)
+      theodist <-rmixchisq(nbsimu_pval, time_DF*(nbgp-1), 0)
     }
   }
  

@@ -1,21 +1,19 @@
-\name{plot1GS}
-\alias{plot1GS}
+\name{plotPat.1GS}
+\alias{plotPat.1GS}
 \title{Plotting a Specific Gene Set}
 \usage{
-  plot1GS(expr, gmt, Subject_ID, TimePoint, geneset.name,
-    baseline = NULL, group.var = NULL,
+  plotPat.1GS(expr, gmt, Subject_ID, TimePoint,
+    geneset.name, baseline = NULL, group.var = NULL,
     Group_ID_paired = NULL, ref = NULL,
     group_of_interest = NULL, FUNcluster = NULL,
     clustering_metric = "euclidian",
     clustering_method = "ward", B = 500, max_trends = 4,
     aggreg.fun = "median", trend.fun = "median",
-    methodOptiClust = "firstSEmax", indiv = "genes",
-    verbose = TRUE, clustering = TRUE, showTrend = TRUE,
-    smooth = TRUE, time_unit = "", title = NULL,
+    methodOptiClust = "firstSEmax", verbose = TRUE,
+    clustering = TRUE, time_unit = "", title = NULL,
     y.lab = NULL, desc = TRUE, lab.cex = 1, axis.cex = 1,
     main.cex = 1, y.lab.angle = 90, x.axis.angle = 45,
-    y.lim = NULL, x.lim = NULL, gg.add = list(theme()),
-    plot = TRUE)
+    y.lim = NULL, x.lim = NULL, gg.add = list(theme()))
 }
 \arguments{
   \item{expr}{either a matrix or dataframe of gene
@@ -149,12 +147,6 @@
   \code{\link[cluster:clusGap]{clusGap}}, Details and
   \emph{Tibshirani et al., 2001} in References.}
 
-  \item{indiv}{a character string indicating by which unit
-  observations are aggregated (through \code{aggreg.fun})
-  before the clustering.  Possible values are
-  \code{"genes"} or \code{"patients"}.  Default is
-  \code{"genes"}. See Details.}
-
   \item{verbose}{logical flag enabling verbose messages to
   track the computing status of the function.  Default is
   \code{TRUE}.}
@@ -163,17 +155,6 @@
   is no clustering representation; if \code{TRUE}, the
   lines are colored according to which cluster they belong
   to.  Default is \code{TRUE}.  See Details.}
-
-  \item{showTrend}{logical flag.  If \code{TRUE}, a black
-  line is added for each cluster, representing the
-  corresponding \code{trend.fun}.  Default is \code{TRUE}.}
-
-  \item{smooth}{logical flag.  If \code{TRUE} and
-  \code{showTrend} is also \code{TRUE}, the representation
-  of each cluster \code{trend.fun} is smoothed using cubic
-  polynoms (see
-  \code{\link[ggplot2:stat_smooth]{stat_smooth}}. Default
-  is \code{TRUE}.}
 
   \item{time_unit}{the time unit to be displayed (such as
   \code{"Y"}, \code{"M"}, \code{"W"}, \code{"D"},
@@ -227,9 +208,6 @@
   \item{gg.add}{A list of instructions to add to the
   ggplot2 instruction.  See \link{+.gg}.  Default is
   \code{list(theme())}, which adds nothing to the plot.}
-
-  \item{plot}{logical flag.  If \code{FALSE}, no plot is
-  drawn.  Default is \code{TRUE}.}
 }
 \value{
   A dataframe the 2 following variables: \itemize{ \item
@@ -267,24 +245,18 @@ tcgsa_sim_1grp <- TcGSA.LR(expr=expr_1grp, gmt=gmt_sim, design=design,
 													 subject_name="Patient_ID", time_name="TimePoint",
                           time_func="linear", crossedRandom=FALSE)
 
-plot1GS(expr=expr_1grp, TimePoint=design$TimePoint, Subject_ID=design$Patient_ID, gmt=gmt_sim,
+plotPat.1GS(expr=expr_1grp, TimePoint=design$TimePoint, Subject_ID=design$Patient_ID, gmt=gmt_sim,
        geneset.name="Gene set 4",
-       indiv="genes", clustering=FALSE,
+       clustering=FALSE,
        time_unit="H",
        lab.cex=0.7)
 
-plot1GS(expr=expr_1grp, TimePoint=design$TimePoint, Subject_ID=design$Patient_ID, gmt=gmt_sim,
+plotPat.1GS(expr=expr_1grp, TimePoint=design$TimePoint, Subject_ID=design$Patient_ID, gmt=gmt_sim,
        geneset.name="Gene set 4",
-       indiv="patients", clustering=FALSE, baseline=1,
+       clustering=FALSE, baseline=1,
        time_unit="H",
        lab.cex=0.7)
 
-plot1GS(expr=tcgsa_sim_1grp$Estimations, TimePoint=design$TimePoint, Subject_ID=design$Patient_ID, gmt=gmt_sim,
-       geneset.name="Gene set 3",
-       indiv="genes",
-       time_unit="H",
-       lab.cex=0.7
-)
 
 
 colval <- c(hsv(0.56, 0.9, 1),
@@ -306,12 +278,17 @@ plot(y, axes = FALSE, frame.plot = TRUE,
 par(op)
 
 
-plot1GS(expr=expr_1grp, TimePoint=design$TimePoint, Subject_ID=design$Patient_ID, gmt=gmt_sim,
+plotPat.1GS(expr=expr_1grp, TimePoint=design$TimePoint, Subject_ID=design$Patient_ID, gmt=gmt_sim,
        geneset.name="Gene set 5",
-       indiv="genes",
        time_unit="H",
        title="",
-       gg.add=list(scale_color_manual(values=colval), guides(colour = guide_legend(reverse=TRUE))),
+       gg.add=list(scale_color_manual(values=colval)),
+       lab.cex=0.7
+)
+
+plotPat.1GS(expr=tcgsa_sim_1grp$Estimations, TimePoint=design$TimePoint, Subject_ID=design$Patient_ID, gmt=gmt_sim,
+       geneset.name="Gene set 3",
+       time_unit="H",
        lab.cex=0.7
 )
 }

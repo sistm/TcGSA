@@ -39,11 +39,10 @@
   patient identifiers for instance. Default is
   \code{'Patient_ID'}.  See Details.}
 
-  \item{time_name}{the name of the numeric or factor
-  variable from \code{design} contains the information on
-  the time replicates (the time points at which gene
-  expression was measured).  Default is \code{'TimePoint'}.
-  See Details.}
+  \item{time_name}{the name of a numeric variable from
+  \code{design} that contains the information on the time
+  replicates (the time points at which gene expression was
+  measured).  Default is \code{'TimePoint'}.  See Details.}
 
   \item{crossedRandom}{logical flag indicating wether the
   random effects of the subjects and of the time points
@@ -66,15 +65,22 @@
 
   \item{time_func}{the form of the time trend. Can be
   either one of \code{"linear"}, \code{"cubic"},
-  \code{"splines"} or specified by the user as an
-  expression using names of variables from the
-  \code{design} matrix. The \code{"splines"} form
+  \code{"splines"} or specified by the user, or the column
+  name of a factor variable from \code{design}. If
+  specified by the user, it must be as an expression using
+  only names of variables from the \code{design} matrix
+  with only the three following operators: \code{+},
+  \code{*}, \code{/} . The \code{"splines"} form
   corresponds to the natural cubic B-splines (see also
   \code{\link[splines:ns]{ns}}).  If there are only a few
   timepoints, a \code{"linear"} form should be sufficient.
   Otherwise, the \code{"cubic"} form is more parsimonious
   than the \code{"splines"} form, and should be
-  sufficiently flexible.}
+  sufficiently flexible. If the column name of a factor
+  variable from \code{design} is supplied, then time is
+  considered as discrete in the analysis. If the user
+  specify a formula using column names from design, both
+  factor and numeric variables can be used.}
 
   \item{minGSsize}{the minimum number of genes in a gene
   set.  If there are less genes than this number in one of
@@ -117,10 +123,10 @@
   hypothesis. \item \code{CVG_H1}: convergence status of
   the model under the alternative hypothesis. } \item
   \code{time_func}: a character string passing along the
-  value of the \code{func} argument used in the call. \item
-  \code{GeneSets_gmt}: a \code{gmt} object passing along
-  the value of the \code{gmt} argument used in the call.
-  \item \code{group.var}: a factor passing along the
+  value of the \code{time_func} argument used in the call.
+  \item \code{GeneSets_gmt}: a \code{gmt} object passing
+  along the value of the \code{gmt} argument used in the
+  call. \item \code{group.var}: a factor passing along the
   \code{group_name} variable from the \code{design} matrix.
   \item \code{separateSubjects}: a logical flag passing
   along the value of the \code{separateSubjects} argument

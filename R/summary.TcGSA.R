@@ -44,12 +44,14 @@
 #'
 #'
 summary.TcGSA <-function(object, ...){
-  nsignif <- dim(signifLRT.TcGSA(object))[1]
+	signifRes <- signifLRT.TcGSA(object, ...)
+  nsignif <- dim(signifRes$mixedLRTadjRes)[1]
   time_func <- object[["time_func"]]
   separateSubjects <- object[["separateSubjects"]]
   ntg <- ifelse(is.null(object[["group.var"]]),1,length(levels(object[["group.var"]])))
   ngs <- length(object[["GeneSets_gmt"]]$geneset.name)
-  res  <- list("time_func"=time_func, "separateSubjects"=separateSubjects, "ntg"=ntg, "ngs"=ngs, "nsignif"=nsignif)
+  res  <- list("time_func"=time_func, "separateSubjects"=separateSubjects, "ntg"=ntg, "ngs"=ngs, 
+  						 "nsignif"=nsignif, "threshold"=signifRes$threshold, "multCorProc"=signifRes$multCorProc)
   class(res) <- "summary.TcGSA"
   
   return(res)
@@ -78,7 +80,7 @@ print.summary.TcGSA <-function(x, ...){
 	cat("\n\t")
 	cat(x[["ngs"]])
 	cat("\n\n")
-	cat("Number of significant gene sets at a 5% FDR (Benjamini & Yekutieli step-up procedure):")
+	cat("Number of significant gene sets at a ", x$threshold*100,"% threshold (", x$multCorProc, " procedure):", sep="")
 	cat("\n\t")
 	cat(x[["nsignif"]])
 	cat(" out of ")

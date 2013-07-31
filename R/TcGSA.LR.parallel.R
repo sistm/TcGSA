@@ -65,20 +65,25 @@
 #'Default is \code{""}, which corresponds to no covariates in the model.
 #'
 #'@param time_covariates
-#'a character vector with the names of numeric or factor variables from the \code{design} 
-#'matrix that should appear as fixed effects interaction with the \code{time_name} 
-#'variable in the model.  See details.  Default is \code{""}, which corresponds 
-#'to no covariates in the model.
+#'the name of a numeric variable from \code{design} that contains 
+#'the information on the time replicates (the time points at which gene 
+#'expression was measured).  Default is \code{'TimePoint'}.  See Details.
 #'
 #'
 #'@param time_func 
 #'the form of the time trend. Can be either one of \code{"linear"},
-#'\code{"cubic"}, \code{"splines"} or specified by the user as an expression using 
-#'names of variables from the \code{design} matrix. The \code{"splines"} form corresponds to
-#'the natural cubic B-splines (see also \code{\link[splines:ns]{ns}}).  If
-#'there are only a few timepoints, a \code{"linear"} form should be sufficient.
-#'Otherwise, the \code{"cubic"} form is more parsimonious than the
-#'\code{"splines"} form, and should be sufficiently flexible.
+#'\code{"cubic"}, \code{"splines"} or specified by the user, or the column name of 
+#'a factor variable from \code{design}. If specified by the user, 
+#'it must be as an expression using only names of variables from the \code{design} matrix 
+#'with only the three following operators: \code{+}, \code{*}, \code{/} . 
+#'The \code{"splines"} form corresponds to the natural cubic B-splines 
+#'(see also \code{\link[splines:ns]{ns}}).  If there are only a few timepoints, 
+#'a \code{"linear"} form should be sufficient. Otherwise, the \code{"cubic"} form is 
+#'more parsimonious than the \code{"splines"} form, and should be sufficiently flexible.
+#'If the column name of a factor variable from \code{design} is supplied, 
+#'then time is considered as discrete in the analysis.
+#'If the user specify a formula using column names from design, both factor and numeric
+#'variables can be used.
 #'
 #'@param minGSsize 
 #'the minimum number of genes in a gene set.  If there are
@@ -203,7 +208,7 @@ TcGSA.LR.parallel <-
 				rownames(expr_temp) <- NULL
 				data_lme  <- TcGSA.dataLME(expr=expr_temp, design=design, subject_name=subject_name, time_name=time_name, 
 																	 covariates_fixed=covariates_fixed, time_covariates=time_covariates,
-																	 group_name=group_name)
+																	 group_name=group_name, time_func=time_func)
 				
 				if(length(levels(data_lme$probe))>1){
 					lmm_H0 <- tryCatch(lmer(formula =my_formul[["H0"]]["reg"], REML=FALSE, data=data_lme),
@@ -224,7 +229,7 @@ TcGSA.LR.parallel <-
 					CVG_H1 <- lmm_H1@dims["cvg"]
 					
 					estims <- cbind.data.frame(data_lme, "fitted"=fitted(lmm_H1))
-					estims_tab <- acast(data=estims, formula = probe~Patient_ID~t1, value.var="fitted")
+					estims_tab <- acast(data=estims, formula = as.formula(paste("probe", subject_name, "t1", sep="~")), value.var="fitted")
 					# drop = FALSE by default, which means that missing combination will be kept in the estims_tab and filled with NA
 					dimnames(estims_tab)[[3]] <- as.numeric(dimnames(estims_tab)[[3]])*10
 					estim_expr <- estims_tab
@@ -235,7 +240,7 @@ TcGSA.LR.parallel <-
 					CVG_H1 <- NA
 					
 					estims <- cbind.data.frame(data_lme, "fitted"=NA)
-					estims_tab <- acast(data=estims, formula = probe~Patient_ID~t1, value.var="fitted")
+					estims_tab <- acast(data=estims, formula = as.formula(paste("probe", subject_name, "t1", sep="~")), value.var="fitted")
 					dimnames(estims_tab)[[3]] <- as.numeric(dimnames(estims_tab)[[3]])*10
 					estim_expr <- estims_tab
 					cat("Unable to fit the mixed models for this gene set\n")
@@ -264,12 +269,9 @@ TcGSA.LR.parallel <-
 				LR <- NA
 				CVG_H0 <- NA
 				CVG_H1 <- NA
-				
-				estims <- cbind.data.frame(data_lme, "fitted"=NA)
-				estims_tab <- acast(data=estims, formula = probe~Patient_ID~t1, value.var="fitted")
-				dimnames(estims_tab)[[3]] <- as.numeric(dimnames(estims_tab)[[3]])*10
-				estim_expr <- estims_tab
-				cat("The size of the gene set is problematic (too many or too few genes)\n")
+        
+				estim_expr <- NA
+				cat("The size of the gene set",  gmt$geneset.names[[gs]], "is problematic (too many or too few genes)\n")
 			}
 			
 			line_number <- 0

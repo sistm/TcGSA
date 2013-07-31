@@ -6,8 +6,8 @@
     nbsimu_pval = 1e+06, expr, Subject_ID, TimePoint,
     baseline = NULL, only.signif = TRUE, group.var = NULL,
     Group_ID_paired = NULL, ref = NULL,
-    group_of_interest = NULL, FUNcluster = NULL,
-    clustering_metric = "euclidian",
+    group_of_interest = NULL, ranking = FALSE,
+    FUNcluster = NULL, clustering_metric = "euclidian",
     clustering_method = "ward", B = 500, max_trends = 4,
     aggreg.fun = "median", methodOptiClust = "firstSEmax",
     indiv = "genes", verbose = TRUE, clust_trends = NULL,
@@ -47,7 +47,7 @@
   step-down adjusted p-values for strong control of the
   FWER.}
 
-  \item{nbsimu_pval}{The number of observations under the
+  \item{nbsimu_pval}{the number of observations under the
   null distribution to be generated in order to compute the
   p-values. Default is \code{1e+06}.}
 
@@ -111,6 +111,11 @@
   alphabetical order of the labels of \code{group.var}.
   See Details.%% ~~Describe \code{group_of_interest}
   here~~}
+
+  \item{ranking}{a logical flag. If \code{TRUE}, the gene
+  set trends are not hierarchicaly classified, but ordered
+  by decreasing Likelihood ratios. Default is
+  \code{FALSE}.}
 
   \item{FUNcluster}{the clustering function used to
   agglomerate genes in trends.  Default is \code{NULL}, in
