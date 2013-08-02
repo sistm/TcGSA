@@ -44,6 +44,27 @@
 #'was measured. 
 #'@TODO See Details.
 #'
+#'@param threshold 
+#'the threshold at which the FDR or the FWER should be
+#'controlled.
+#'
+#'#'@param myproc 
+#'a vector of character strings containing the names of the
+#'multiple testing procedures for which adjusted p-values are to be computed.
+#'This vector should include any of the following: "\code{Bonferroni}",
+#'"\code{Holm}", "\code{Hochberg}", "\code{SidakSS}", "\code{SidakSD}",
+#'"\code{BH}", "\code{BY}", "\code{ABH}", "\code{TSBH}". See
+#'\code{\link[multtest:mt.rawp2adjp]{mt.rawp2adjp}} for details.  Default is
+#'"\code{BY}", the Benjamini & Yekutieli (2001) step-up FDR-controlling
+#'procedure (general dependency structures).  In order to control the FWER(in
+#'case of an analysis that is more a hypothesis confirmation than an
+#'exploration of the expression data), we recommand to use "\code{Holm}", the
+#'Holm (1979) step-down adjusted p-values for strong control of the FWER.
+#'
+#'@param nbsimu_pval 
+#'the number of observations under the null distribution to
+#'be generated in order to compute the p-values.  Default is \code{1e+06}.
+#'
 #'@param baseline 
 #'a character string which is the value of \code{TimePoint}
 #'that can be used as a baseline.  Default is \code{NULL}, in which case no
@@ -196,7 +217,8 @@
 
 clustTrend <- 
 function(x,
-         expr, Subject_ID, TimePoint, baseline=NULL, only.signif=TRUE,
+         expr, Subject_ID, TimePoint, threshold = 0.05, myproc = "BY", nbsimu_pval = 1e+06, 
+				 baseline=NULL, only.signif=TRUE,
          group.var=NULL, Group_ID_paired=NULL, ref=NULL, group_of_interest=NULL,
          FUNcluster=NULL, clustering_metric="euclidian", clustering_method="ward", B=100,
          max_trends=4, aggreg.fun="median", trend.fun="median",
@@ -227,7 +249,7 @@ function(x,
   gmt <- x[["GeneSets_gmt"]]
   separateSubjects <- x[["separateSubjects"]]
 	if(only.signif){
-    GSsig <- signifLRT.TcGSA(x)$mixedLRTadjRes
+    GSsig <- signifLRT.TcGSA(tcgsa=x, threshold=threshold, myproc = "BY", nbsimu_pval = 1e+06)$mixedLRTadjRes
     GeneSetsList <- GSsig$GeneSet
     if(length(GeneSetsList)<1){
     	stop("NO SIGNIFICANT GENE SETS\n No gene sets to be plotted: set 'only.signif' argument to 'FALSE' in order to plot all the investigated gene sets")

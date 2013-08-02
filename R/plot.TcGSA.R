@@ -449,7 +449,7 @@ plot.TcGSA <-
     medoids2clust <- medoids2clust[,order(as.numeric(colnames(medoids2clust)))]
     
     if(ranking){
-	    trendsIndex <- match(gsNames, gmt_sim$geneset.names)
+	    trendsIndex <- match(gsNames, gmt$geneset.names)
   	  LRtrends <- x$fit$LR[trendsIndex]
 	    rank <- order(LRtrends, decreasing=TRUE)
 	    gsNames <- gsNames[rank]
@@ -599,8 +599,8 @@ plot.TcGSA <-
                       trace="none",
                       density.info="none",
                       lmat=matrix(c(4,3,2,1), nrow=2,ncol=2,byrow=TRUE),
-                      lhei=c(0.115*heatKey.size,1),
-                      lwid=c(0.1*dendrogram.size,1),
+          						lhei=c(0.115*heatKey.size, 0.3*heatmap.height),
+          						lwid=c(0.1*dendrogram.size,0.4*heatmap.width),
                       cexRow = 0.1*cex.label.row + 0.5*cex.label.row/log10(dim(map2heat)[1]),
                       cexCol = 0.1*cex.label.column + 0.5*cex.label.column/log10(dim(map2heat)[2]),
                       margins=margins,
