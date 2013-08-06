@@ -6,7 +6,7 @@
 #'
 #'@name TcGSA-internal
 #'
-#'@aliases MYheatmap.2  TcGSA.formula TcGSA.dataLME
+#'@aliases MYheatmap.2  TcGSA.formula TcGSA.dataLME STSdist
 #'
 #'@keywords internal
 #'

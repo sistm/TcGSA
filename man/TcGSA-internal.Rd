@@ -1,5 +1,6 @@
 \name{TcGSA-internal}
 \alias{MYheatmap.2}
+\alias{STSdist}
 \alias{TcGSA-internal}
 \alias{TcGSA.dataLME}
 \alias{TcGSA.formula}

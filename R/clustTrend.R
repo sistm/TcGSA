@@ -116,7 +116,11 @@
 #'for calculating dissimilarities between observations in the hierarchical
 #'clustering when \code{FUNcluster} is \code{NULL}.  The currently available
 #'options are \code{"euclidean"} and \code{"manhattan"}.  Default is
-#'\code{"euclidean"}.  See \code{\link[cluster:agnes]{agnes}}.
+#'\code{"euclidean"}.  See \code{\link[cluster:agnes]{agnes}}.  Also, a \code{"sts"} option 
+#'is available in TcGSA.  It implements the 'Short Time Series' distance 
+#'[Möller-Levet et al., Fuzzy CLustering of short time series and unevenly distributed 
+#'sampling points, \textit{Advances in Intelligent Data Analysis V}:330-340 Springer, 2003]
+#'designed specifically for clustering time series.
 #'
 #'@param clustering_method 
 #'character string defining the agglomerative method
@@ -232,10 +236,19 @@ function(x,
   }
   
   if(is.null(FUNcluster)){
-    FUNcluster <- function(x, k, ...){
-      clus <- cutree(agnes(x, method=clustering_method, metric=clustering_metric, ...), k=k)
-      return(list("cluster"=clus))
-    }
+  	if(clustering_metric!="sts"){
+  		FUNcluster <- function(x, k, ...){
+  			clus <- cutree(agnes(x, method=clustering_method, metric=clustering_metric, ...), k=k)
+  			return(list("cluster"=clus))
+  		}
+  	}
+  	else{
+  		FUNcluster <- function(x, k, time, ...){
+  			d <- STSdist(m=x, time = time)
+  			clus <- cutree(agnes(d, ...), k=k)
+  			return(list("cluster"=clus))
+  		}
+  	}
 # Kmeans: what about missing data?
 #     FUNcluster <- function(x, k, ...){
 #     	clus <- kmeans(x, centers=k, nstart=1)$cluster
@@ -354,9 +367,15 @@ function(x,
    
     kmax <- ifelse(dim(data_stand_ByTP)[1]>4, max_trends, dim(data_stand_ByTP)[1]-1)
     if(kmax>=2){
-      cG <- clusGap(x=data_stand_ByTP, FUNcluster=FUNcluster, K.max=kmax, B=B, verbose=FALSE)
-      nc <- maxSE(f = cG$Tab[, "gap"], SE.f = cG$Tab[, "SE.sim"], method = methodOptiClust)
-      clust <- FUNcluster(data_stand_ByTP, k=nc)$cluster
+    	if(clustering_metric!="sts"){
+    		cG <- clusGap(x=data_stand_ByTP, FUNcluster=FUNcluster, K.max=kmax, B=B, verbose=FALSE)
+    		nc <- maxSE(f = cG$Tab[, "gap"], SE.f = cG$Tab[, "SE.sim"], method = methodOptiClust)
+    		clust <- FUNcluster(data_stand_ByTP, k=nc)$cluster
+    	}else{
+    		cG <- clusGap(x=data_stand_ByTP, FUNcluster=FUNcluster, K.max=kmax, B=B, verbose=FALSE, time=as.numeric(colnames(data_stand_ByTP)))
+    		nc <- maxSE(f = cG$Tab[, "gap"], SE.f = cG$Tab[, "SE.sim"], method = methodOptiClust)
+    		clust <- FUNcluster(data_stand_ByTP, k=nc, time=as.numeric(colnames(data_stand_ByTP)))$cluster
+    	}
     }else{
       nc <- 1
       clust <- rep(1, dim(data_stand_ByTP)[1])

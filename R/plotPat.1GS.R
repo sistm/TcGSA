@@ -100,7 +100,11 @@
 #'for calculating dissimilarities between observations in the hierarchical
 #'clustering when \code{FUNcluster} is \code{NULL}.  The currently available
 #'options are \code{"euclidean"} and \code{"manhattan"}.  Default is
-#'\code{"euclidean"}.  See \code{\link[cluster:agnes]{agnes}}.
+#'\code{"euclidean"}.  See \code{\link[cluster:agnes]{agnes}}.  Also, a \code{"sts"} option 
+#'is available in TcGSA.  It implements the 'Short Time Series' distance 
+#'[Möller-Levet et al., Fuzzy CLustering of short time series and unevenly distributed 
+#'sampling points, \textit{Advances in Intelligent Data Analysis V}:330-340 Springer, 2003]
+#'designed specifically for clustering time series.
 #'
 #'@param clustering_method 
 #'character string defining the agglomerative method
@@ -322,10 +326,19 @@ plotPat.1GS <-
   }
   
   if(is.null(FUNcluster)){
-    FUNcluster <- function(x, k, ...){
-      clus <- cutree(agnes(x, method=clustering_method, metric=clustering_metric, ...), k=k)
-      return(list("cluster"=clus))
-    }
+  	if(clustering_metric!="sts"){
+  		FUNcluster <- function(x, k, ...){
+  			clus <- cutree(agnes(x, method=clustering_method, metric=clustering_metric, ...), k=k)
+  			return(list("cluster"=clus))
+  		}
+  	}
+  	else{
+  		FUNcluster <- function(x, k, time, ...){
+  			d <- STSdist(m=x, time = time)
+  			clus <- cutree(agnes(d, ...), k=k)
+  			return(list("cluster"=clus))
+  		}
+  	}
   }
   if(!is.function(FUNcluster)){
     stop("the 'FUNcluster' supplied is not a function")
