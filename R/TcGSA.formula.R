@@ -29,15 +29,18 @@ TcGSA.formula <-
 		if(time_func %in% c("linear", "cubic", "splines")){
 			time_split <- trim(str_split(paste("+", time, collapse=" "), "\\+")[[1]])
 			if(length(which(time_split==""))>0){time_split <- time_split[-which(time_split=="")]}
+			time_DF <- length(time_split)
 		}
 		else if((time_func %in% colnames(design)) && is.factor(design[, time_func])){
-			time_split <- c(1:(length(levels(design[, time_func]))-1))
+			time_DF <- length(levels(design[, time_func]))-1
 		}
 		else {
 			time_split <- gsub(" ", "", unlist(lapply(unlist(lapply(unlist(str_split(time_func, "\\+")), FUN=str_split, pattern="\\/")), FUN=str_split, pattern="\\*")))
+			time_DF <- 0
+			for (v in time_split){
+				time_DF <- time_DF + ifelse(is.numeric(design[, v]), 1, length(levels(as.factor(design[, v])))-1)
+			}
 		}
-	
-		time_DF <- length(time_split)
 		
 		
 		
