@@ -293,8 +293,8 @@ for(gs in 1:5){
 }
 gmt_sim[["geneset.names"]] <- paste("Gene set", 1:5)
 gmt_sim[["geneset.descriptions"]] <- c(
-    rep("This is a simulated gene set under H0", 3),
-    rep("This is a simulated gene set under H1 (homogeneous)", 1), 
+    rep("This is a simulated gene set under H0", 2),
+    rep("This is a simulated gene set under H1 (homogeneous)", 2), 
     rep("This is a simulated gene set under H1 (heterogeneous)", 1)
   )
 class(gmt_sim) <- "GSA.genesets"                           
