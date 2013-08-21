@@ -460,6 +460,7 @@ plot1GS <-
   	meltedData$TimePoint <- as.numeric(meltedData$TimePoint)
   	meltedStats$TimePoint <- as.numeric(meltedStats$TimePoint)
   }
+  
 	if(is.null(y.lim)){
     y.max <- max(abs(meltedData$value))
     y.min <- -y.max
@@ -473,6 +474,7 @@ plot1GS <-
   		x.lim <- c(min(x.lim), max(x.lim))
   	}
   }
+  
   p <- (ggplot(meltedData, aes(x=TimePoint, y=value)) 
         + geom_hline(aes(y = 0), linetype=1, colour='grey50', size=0.4)
   )
@@ -511,6 +513,10 @@ plot1GS <-
     if(!smooth){
       p <- (p + geom_line(data=meltedStats, aes(x=TimePoint, y=value, group=Cluster, linetype=Cluster), size=4))
     }else{
+    	if(length(unique(meltedStats$TimePoint))<4){
+    		stop("Not enough time points to estimate a smoothed trend! 
+    				 Set 'smooth' argument to 'FALSE'.\n")
+    	}
       p <- (p + stat_smooth(formula=y~poly(x,3), data=meltedStats, aes(x=TimePoint, y=value, group=Cluster, linetype=Cluster), size=4, se=FALSE, method="lm", color="black"))
     }
     p <- p + scale_linetype_manual(name=paste("Cluster", capwords(trend.fun)), values=as.numeric(levels(meltedStats$Cluster))+1, 
