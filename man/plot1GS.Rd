@@ -184,7 +184,9 @@
   \item{time_unit}{the time unit to be displayed (such as
   \code{"Y"}, \code{"M"}, \code{"W"}, \code{"D"},
   \code{"H"}, etc) next to the values of \code{TimePoint}
-  on the x-axis.  Default is \code{""}.}
+  on the x-axis.  Default is \code{""}, in which case the
+  time scale on the x-axis is proportionnal to the time
+  values.}
 
   \item{title}{character specifying the title of the plot.
   If \code{NULL}, a title is automatically generated, if

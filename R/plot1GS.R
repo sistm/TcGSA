@@ -173,7 +173,8 @@
 #'@param time_unit 
 #'the time unit to be displayed (such as \code{"Y"},
 #'\code{"M"}, \code{"W"}, \code{"D"}, \code{"H"}, etc) next to the values of
-#'\code{TimePoint} on the x-axis.  Default is \code{""}.
+#'\code{TimePoint} on the x-axis.  Default is \code{""}, in which case the time 
+#'scale on the x-axis is proportionnal to the time values.
 #'
 #'@param title 
 #'character specifying the title of the plot.  If \code{NULL}, a
@@ -451,10 +452,15 @@ plot1GS <-
   meltedStats <- melt(medoids, id.vars="TimePoint", variable.name="Cluster")
   meltedData$Cluster <- as.factor(meltedData$Cluster)
   
-
-  meltedData$TimePoint <- paste(time_unit, meltedData$TimePoint, sep="")
-  meltedStats$TimePoint <- paste(time_unit, meltedStats$TimePoint, sep="")
-  if(is.null(y.lim)){
+  if(time_unit!=""){
+	  meltedData$TimePoint <- paste(time_unit, meltedData$TimePoint, sep="")
+ 		meltedStats$TimePoint <- paste(time_unit, meltedStats$TimePoint, sep="")
+	}
+  else{
+  	meltedData$TimePoint <- as.numeric(meltedData$TimePoint)
+  	meltedStats$TimePoint <- as.numeric(meltedStats$TimePoint)
+  }
+	if(is.null(y.lim)){
     y.max <- max(abs(meltedData$value))
     y.min <- -y.max
   }else{
@@ -462,7 +468,10 @@ plot1GS <-
     y.min <- y.lim[1]
   }
   if(is.null(x.lim)){
-    x.lim <- unique(meltedData$TimePoint)
+  	x.lim <- unique(meltedData$TimePoint)
+  	if(time_unit==""){
+  		x.lim <- c(min(x.lim), max(x.lim))
+  	}
   }
   p <- (ggplot(meltedData, aes(x=TimePoint, y=value)) 
         + geom_hline(aes(y = 0), linetype=1, colour='grey50', size=0.4)
