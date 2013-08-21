@@ -361,6 +361,14 @@
   for space in order to display only the gene set names,
   without their description.
 
+  If there is a large number of significant gene sets, the
+  hierarchical clustering step repeated for each of them
+  can take a few minutes. To speed things up (especially)
+  when playing with the ploting parameters for having a
+  nice plot, one can run the \code{clustTrend} function
+  beforehand, and plug its results in the \code{plot.TcGSA}
+  function via the \code{clust_trends} argument.
+
   %TODO
 }
 \examples{
