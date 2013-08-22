@@ -42,7 +42,9 @@
 #'directory of the .txt file in which the results table is to be written, if
 #'\code{write} is \code{TRUE}. Default is \code{NULL}.
 #'
-#'@return \code{signifLRT.TcGSA} returns a data frame with \eqn{p} rows (one
+#'@return \code{signifLRT.TcGSA} returns a list. 
+#'
+#'The fisrt element \code{mixedLRTadjRes} is data frame with \eqn{p} rows (one
 #'row for each significant gene set) and the 3 following variables:
 #'\itemize{
 #'\item GeneSet the significant gene set name from the gmt object.
@@ -50,6 +52,12 @@
 #'set.
 #'\item desc the significant gene set description from the gmt object.
 #'}
+#'
+#'The second element \code{multCorProc} passes along the multiple testing 
+#'procedure used (from the argument \code{myproc}).
+#'
+#'The third element \code{threshold} passes along the significance threshold
+#' used (from the argument \code{threshold}).
 #'
 #'@author Boris P. Hejblum
 #'
