@@ -119,7 +119,7 @@
 #'\code{"euclidean"}.  See \code{\link[cluster:agnes]{agnes}}.  Also, a \code{"sts"} option 
 #'is available in TcGSA.  It implements the 'Short Time Series' distance 
 #'[Möller-Levet et al., Fuzzy CLustering of short time series and unevenly distributed 
-#'sampling points, \textit{Advances in Intelligent Data Analysis V}:330-340 Springer, 2003]
+#'sampling points, \emph{Advances in Intelligent Data Analysis V}:330-340 Springer, 2003]
 #'designed specifically for clustering time series.
 #'
 #'@param clustering_method 

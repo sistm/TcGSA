@@ -66,13 +66,15 @@
   \item{Subject_ID}{a factor of length \eqn{p} that is in
   the same order as the columns of \code{expr} (when it is
   a dataframe) and that contains the patient identifier of
-  each sample.}
+  each sample. Ignored if \code{expr} is a list of
+  estimations.}
 
   \item{TimePoint}{a numeric vector or a factor of length
   \eqn{p} that is in the same order as \code{Subject_ID}
   and the columns of \code{expr} (when it is a dataframe),
   and that contains the time points at which gene
-  expression was measured.}
+  expression was measured. Ignored if \code{expr} is a list
+  of estimations.}
 
   \item{baseline}{a character string which is the value of
   \code{TimePoint} used as baseline.  See Details.}
@@ -135,7 +137,7 @@
   option is available in TcGSA.  It implements the 'Short
   Time Series' distance [Möller-Levet et al., Fuzzy
   CLustering of short time series and unevenly distributed
-  sampling points, \textit{Advances in Intelligent Data
+  sampling points, \emph{Advances in Intelligent Data
   Analysis V}:330-340 Springer, 2003] designed specifically
   for clustering time series.}
 

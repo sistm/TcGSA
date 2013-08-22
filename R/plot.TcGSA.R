@@ -62,14 +62,14 @@
 #'@param Subject_ID 
 #'a factor of length \eqn{p} that is in the same order as the
 #'columns of \code{expr} (when it is a dataframe) and that contains the patient
-#'identifier of each sample.
+#'identifier of each sample. Ignored if \code{expr} is a list of estimations.
 #'@TODO See Details.
 #'
 #'@param TimePoint 
 #'a numeric vector or a factor of length \eqn{p} that is in
 #'the same order as \code{Subject_ID} and the columns of \code{expr} (when it
 #'is a dataframe), and that contains the time points at which gene expression
-#'was measured.
+#'was measured. Ignored if \code{expr} is a list of estimations.
 #'@TODO See Details.
 #'
 #'@param baseline 
@@ -128,7 +128,7 @@
 #'\code{"euclidean"}.  See \code{\link[cluster:agnes]{agnes}}.  Also, a \code{"sts"} option 
 #'is available in TcGSA.  It implements the 'Short Time Series' distance 
 #'[Möller-Levet et al., Fuzzy CLustering of short time series and unevenly distributed 
-#'sampling points, \textit{Advances in Intelligent Data Analysis V}:330-340 Springer, 2003]
+#'sampling points, \emph{Advances in Intelligent Data Analysis V}:330-340 Springer, 2003]
 #'designed specifically for clustering time series.
 #'
 #'@param clustering_method 
@@ -465,7 +465,9 @@ plot.TcGSA <-
 	    gsNames <- gsNames[rank]
 	    medoids2clust <- medoids2clust[rank, ]
 	    
-	    percentiles <- quantile(x$fit$LR, probs=seq(0.01, 1, 0.01))
+	    LR2quant <- x$fit$LR
+	    LR2quant[which(is.na(LR2quant))] <- 0
+	    percentiles <- quantile(LR2quant, probs=seq(0.01, 1, 0.01))
 	    percTrends <- findInterval(LRtrends[rank], vec=percentiles)  
     }
     
