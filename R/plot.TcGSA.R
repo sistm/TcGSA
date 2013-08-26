@@ -342,7 +342,8 @@
 #'     Subject_ID=design$Patient_ID, TimePoint=design$TimePoint,
 #'     baseline=1, 
 #'     B=100,
-#'     time_unit="H"
+#'     time_unit="H",
+#'     dendrogram.size=0.4, heatmap.width=0.8, heatmap.height=2, cex.main=0.7
 #'     )
 #'
 #'               
@@ -354,7 +355,7 @@
 #'plot(x=tcgsa_sim_2grp, expr=expr_2grp, 
 #'     Subject_ID=design$Patient_ID, TimePoint=design$TimePoint,
 #'     B=100,
-#'     time_unit="H"
+#'     time_unit="H",
 #'     )
 #'
 #'
@@ -463,6 +464,7 @@ plot.TcGSA <-
   	  LRtrends <- x$fit$LR[trendsIndex]
 	    rank <- order(LRtrends, decreasing=TRUE)
 	    gsNames <- gsNames[rank]
+	    ncl <- ncl[rank]
 	    medoids2clust <- medoids2clust[rank, ]
 	    
 	    LR2quant <- x$fit$LR
@@ -485,6 +487,7 @@ plot.TcGSA <-
     																	 " ", ncl, "/", clust_trends[[1]][gsNames], sep="")
     	}
     }
+    
     
     map2heat <- medoids2clust
     

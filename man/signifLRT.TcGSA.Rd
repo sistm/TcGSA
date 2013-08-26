@@ -48,13 +48,23 @@
   is \code{TRUE}. Default is \code{NULL}.}
 }
 \value{
-  \code{signifLRT.TcGSA} returns a data frame with \eqn{p}
-  rows (one row for each significant gene set) and the 3
-  following variables: \itemize{ \item GeneSet the
-  significant gene set name from the gmt object. \item
+  \code{signifLRT.TcGSA} returns a list.
+
+  The fisrt element \code{mixedLRTadjRes} is data frame
+  with \eqn{p} rows (one row for each significant gene set)
+  and the 3 following variables: \itemize{ \item GeneSet
+  the significant gene set name from the gmt object. \item
   AdjPval the adjusted p-value corresponding to the
   signicant gene set. \item desc the significant gene set
   description from the gmt object. }
+
+  The second element \code{multCorProc} passes along the
+  multiple testing procedure used (from the argument
+  \code{myproc}).
+
+  The third element \code{threshold} passes along the
+  significance threshold used (from the argument
+  \code{threshold}).
 }
 \description{
   A function that identifies the significant gene sets in

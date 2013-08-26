@@ -385,7 +385,8 @@ plot(x=tcgsa_sim_1grp, expr=tcgsa_sim_1grp$Estimations,
     Subject_ID=design$Patient_ID, TimePoint=design$TimePoint,
     baseline=1,
     B=100,
-    time_unit="H"
+    time_unit="H",
+    dendrogram.size=0.4, heatmap.width=0.8, heatmap.height=2, cex.main=0.7
     )
 
 
@@ -397,7 +398,7 @@ summary(tcgsa_sim_2grp)
 plot(x=tcgsa_sim_2grp, expr=expr_2grp,
     Subject_ID=design$Patient_ID, TimePoint=design$TimePoint,
     B=100,
-    time_unit="H"
+    time_unit="H",
     )
 }
 \author{
