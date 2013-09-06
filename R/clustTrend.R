@@ -231,6 +231,8 @@ function(x,
          verbose=TRUE
          ){
 #  library(cluster)
+	
+
   Fun_byIndex<-function(X, index, fun, ...){
     tapply(X, INDEX=index, FUN = fun, ...)
   }
@@ -365,20 +367,26 @@ function(x,
       }
     }
    
-    kmax <- ifelse(dim(data_stand_ByTP)[1]>4, max_trends, dim(data_stand_ByTP)[1]-1)
-    if(kmax>=2){
-    	if(clustering_metric!="sts"){
-    		cG <- clusGap(x=data_stand_ByTP, FUNcluster=FUNcluster, K.max=kmax, B=B, verbose=FALSE)
-    		nc <- maxSE(f = cG$Tab[, "gap"], SE.f = cG$Tab[, "SE.sim"], method = methodOptiClust)
-    		clust <- FUNcluster(data_stand_ByTP, k=nc)$cluster
-    	}else{
-    		cG <- clusGap(x=data_stand_ByTP, FUNcluster=FUNcluster, K.max=kmax, B=B, verbose=FALSE, time=as.numeric(colnames(data_stand_ByTP)))
-    		nc <- maxSE(f = cG$Tab[, "gap"], SE.f = cG$Tab[, "SE.sim"], method = methodOptiClust)
-    		clust <- FUNcluster(data_stand_ByTP, k=nc, time=as.numeric(colnames(data_stand_ByTP)))$cluster
-    	}
-    }else{
-      nc <- 1
-      clust <- rep(1, dim(data_stand_ByTP)[1])
+    if(sum(apply(data_stand_ByTP, MARGIN=2, FUN=var))==0){
+    	nc <- 1
+    	clust <- rep(1, dim(data_stand_ByTP)[1])
+    } 
+    else{
+	    kmax <- ifelse(dim(data_stand_ByTP)[1]>4, max_trends, dim(data_stand_ByTP)[1]-1)
+	    if(kmax>=2){
+	    	if(clustering_metric!="sts"){
+	    		cG <- clusGap(x=data_stand_ByTP, FUNcluster=FUNcluster, K.max=kmax, B=B, verbose=FALSE)
+	    		nc <- maxSE(f = cG$Tab[, "gap"], SE.f = cG$Tab[, "SE.sim"], method = methodOptiClust)
+	    		clust <- FUNcluster(data_stand_ByTP, k=nc)$cluster
+	    	}else{
+	    		cG <- clusGap(x=data_stand_ByTP, FUNcluster=FUNcluster, K.max=kmax, B=B, verbose=FALSE, time=as.numeric(colnames(data_stand_ByTP)))
+	    		nc <- maxSE(f = cG$Tab[, "gap"], SE.f = cG$Tab[, "SE.sim"], method = methodOptiClust)
+	    		clust <- FUNcluster(data_stand_ByTP, k=nc, time=as.numeric(colnames(data_stand_ByTP)))$cluster
+	    	}
+	    }else{
+	      nc <- 1
+	      clust <- rep(1, dim(data_stand_ByTP)[1])
+	    }
     }
     
     medoids <- as.data.frame(t(apply(X=data_stand_ByTP, MARGIN=2, FUN=Fun_byIndex, index=clust, fun=trend.fun)))

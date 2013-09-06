@@ -94,10 +94,14 @@ function(tcgsa, threshold=0.05, myproc="BY", nbsimu_pval = 1000000){
       theodist <-rmixchisq(nbsimu_pval, time_DF*(nbgp-1), 0)
     }
   }
- 
+  
   emp$raw_pval <- unlist(lapply(emp$LR, FUN=pval_simu, theo_dist=theodist))
-  adj_pval <- mt.rawp2adjp(emp$raw_pval, proc=c(myproc),alpha=threshold)
-  emp$adj_pval <- adj_pval$adjp[order(adj_pval$index),2]
-
+  if(length(emp$raw_pval)==1){
+  	emp$adj_pval <- emp$raw_pval
+  }
+  else{
+  	adj_pval <- mt.rawp2adjp(emp$raw_pval, proc=c(myproc),alpha=threshold)
+  	emp$adj_pval <- adj_pval$adjp[order(adj_pval$index),2]
+  }
   return(emp)
 }
