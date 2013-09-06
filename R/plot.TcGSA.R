@@ -386,9 +386,16 @@ plot.TcGSA <-
     gmt <- x[["GeneSets_gmt"]]
     
     if(!is.null(baseline)){
-      if(!(baseline %in% unique(TimePoint))){
-        stop("The 'baseline' value used is not one of the time points in 'TimePoint'...\n\n")
-      }
+    	if(is.data.frame(expr) | is.matrix(expr)){
+	      if(!(baseline %in% unique(TimePoint))){
+	        stop("The 'baseline' value used is not one of the time points in 'TimePoint'...\n\n")
+	      }
+    	}
+    	else if(is.list(expr)){
+    		if(!(baseline %in% dimnames(expr[[1]])[[3]])){
+    			stop("The 'baseline' value used is not one of the time points in 'TimePoint'...\n\n")
+    		}
+    	}
     }
     
     if(is.null(main)){
@@ -441,6 +448,7 @@ plot.TcGSA <-
     	if (length(which(!is.na(x$fit$LR)))<1){
     		stop ("SERIOUS PROBLEM\n Was not able to compute any likelihood ratios...")
     	}
+    	browser()
       clust_trends <- clustTrend(x=x, expr=expr, Subject_ID=Subject_ID, TimePoint=TimePoint, baseline=baseline, only.signif=only.signif,
                                  group.var=group.var, Group_ID_paired=Group_ID_paired, ref=ref, group_of_interest=group_of_interest,
                                  FUNcluster=FUNcluster, clustering_metric=clustering_metric, clustering_method=clustering_method, B=B,
