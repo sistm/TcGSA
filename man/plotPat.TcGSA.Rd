@@ -126,7 +126,7 @@
   \code{"manhattan"}.  Default is \code{"euclidean"}.  See
   \code{\link[cluster:agnes]{agnes}}.  Also, a \code{"sts"}
   option is available in TcGSA.  It implements the 'Short
-  Time Series' distance [Möller-Levet et al., Fuzzy
+  Time Series' distance [Moller-Levet et al., Fuzzy
   CLustering of short time series and unevenly distributed
   sampling points, \emph{Advances in Intelligent Data
   Analysis V}:330-340 Springer, 2003] designed specifically
@@ -322,7 +322,8 @@
 }
 \description{
   This function plots a series of gene sets dynamic trends
-  heatmaps.  One heatmap is drawned for each patient.
+  heatmaps.  One heatmap is drawned for each patient. NOT
+  IMPLEMENTED TODO
 }
 \details{
   On the heatmap, each line corresponds to a gene set, and

@@ -1,7 +1,7 @@
 #'Plot a Gene Set Trends Heatmap for each Patient.
 #'
 #'This function plots a series of gene sets dynamic trends heatmaps.  One
-#'heatmap is drawned for each patient.
+#'heatmap is drawned for each patient. NOT IMPLEMENTED TODO
 #'
 #'On the heatmap, each line corresponds to a gene set, and each column to a
 #'timepoint.
@@ -119,7 +119,7 @@
 #'options are \code{"euclidean"} and \code{"manhattan"}.  Default is
 #'\code{"euclidean"}.  See \code{\link[cluster:agnes]{agnes}}.  Also, a \code{"sts"} option 
 #'is available in TcGSA.  It implements the 'Short Time Series' distance 
-#'[Möller-Levet et al., Fuzzy CLustering of short time series and unevenly distributed 
+#'[Moller-Levet et al., Fuzzy CLustering of short time series and unevenly distributed 
 #'sampling points, \emph{Advances in Intelligent Data Analysis V}:330-340 Springer, 2003]
 #'designed specifically for clustering time series.
 #'
@@ -355,7 +355,9 @@ function(x, threshold=0.05, myproc="BY", nbsimu_pval=1e+06,
          ...){
   
 #  library(gplots)
-  
+  cat("NOT IMPLEMENTED YET")
+	
+if(FALSE){
   Fun_byIndex<-function(X, index, fun){
     tapply(X, INDEX=index, FUN = fun)
   }
@@ -558,4 +560,5 @@ function(x, threshold=0.05, myproc="BY", nbsimu_pval=1e+06,
     }           
   }
   return(hc)
+}
 }

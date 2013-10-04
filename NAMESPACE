@@ -1,6 +1,5 @@
+importFrom("lme4", lmer)
 import("ggplot2")
-
-import("lme4")
 importFrom("GSA", GSA.read.gmt)
 importFrom("multtest", mt.rawp2adjp)
 importFrom("gplots", balloonplot,

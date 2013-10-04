@@ -1,7 +1,7 @@
-#'Plotting a Specific Gene Set
+#'Plotting a Specific Gene Set Stratifying on Patients
 #'
 #'This function can plot different representations of the gene expression in a
-#'specific gene set.
+#'specific gene set, stratified on all subjects.
 #'
 #'If \code{expr} is a matrix or a dataframe, then the "original" data are
 #'plotted.  On the other hand, if \code{expr} is a list returned in the
@@ -102,7 +102,7 @@
 #'options are \code{"euclidean"} and \code{"manhattan"}.  Default is
 #'\code{"euclidean"}.  See \code{\link[cluster:agnes]{agnes}}.  Also, a \code{"sts"} option 
 #'is available in TcGSA.  It implements the 'Short Time Series' distance 
-#'[Möller-Levet et al., Fuzzy CLustering of short time series and unevenly distributed 
+#'[Moller-Levet et al., Fuzzy CLustering of short time series and unevenly distributed 
 #'sampling points, \emph{Advances in Intelligent Data Analysis V}:330-340 Springer, 2003]
 #'designed specifically for clustering time series.
 #'

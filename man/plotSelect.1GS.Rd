@@ -1,10 +1,11 @@
-\name{plotPat.1GS}
-\alias{plotPat.1GS}
-\title{Plotting a Specific Gene Set Stratifying on Patients}
+\name{plotSelect.1GS}
+\alias{plotSelect.1GS}
+\title{Plotting a Selected Gene Sets in Selected Subjects}
 \usage{
-  plotPat.1GS(expr, gmt, Subject_ID, TimePoint,
-    geneset.name, baseline = NULL, group.var = NULL,
-    Group_ID_paired = NULL, ref = NULL,
+  plotSelect.1GS(expr, gmt, Subject_ID, TimePoint,
+    geneset.names.select, Subject_ID.select,
+    display = "one subject per page", baseline = NULL,
+    group.var = NULL, Group_ID_paired = NULL, ref = NULL,
     group_of_interest = NULL, FUNcluster = NULL,
     clustering_metric = "euclidian",
     clustering_method = "ward", B = 500, max_trends = 4,
@@ -45,9 +46,19 @@
   that contains the time points at which gene expression
   was measured.}
 
-  \item{geneset.name}{a character string containing the
-  name of the gene set to be plotted, that must appear in
-  the \code{"geneset.names"} element of \code{gmt}.}
+  \item{geneset.names.select}{a character vector containing
+  the names of the gene sets to be plotted, that must
+  appear in the \code{"geneset.names"} element of
+  \code{gmt}.}
+
+  \item{Subject_ID.select}{a character vector containing
+  the names of the subjects to be plotted, that must appear
+  in the \code{Subject_ID} vector.}
+
+  \item{display}{How to display the resulting graphs.  One
+  of the following : \code{"one GS per page"}, \code{"one
+  subject per page"}, \code{"median over selected
+  patients"}. Default is \code{"one subject per page"}.}
 
   \item{baseline}{a character string which is the value of
   \code{TimePoint} that can be used as a baseline.  Default
@@ -225,8 +236,8 @@
 }
 \description{
   This function can plot different representations of the
-  gene expression in a specific gene set, stratified on all
-  subjects.
+  gene expression in selected gene sets, among a subset of
+  selected subjects.
 }
 \details{
   If \code{expr} is a matrix or a dataframe, then the
@@ -252,49 +263,19 @@ tcgsa_sim_1grp <- TcGSA.LR(expr=expr_1grp, gmt=gmt_sim, design=design,
 													 subject_name="Patient_ID", time_name="TimePoint",
                           time_func="linear", crossedRandom=FALSE)
 
-plotPat.1GS(expr=expr_1grp, TimePoint=design$TimePoint, Subject_ID=design$Patient_ID, gmt=gmt_sim,
-       geneset.name="Gene set 4",
-       clustering=FALSE,
+
+plotSelect.1GS(expr=tcgsa_sim_1grp$Estimations, TimePoint=design$TimePoint, Subject_ID=design$Patient_ID, gmt=gmt_sim,
+       geneset.names.select=c("Gene set 3", "Gene set 4", "Gene set 5"),
+       Subject_ID.select=c("P1", "P2"),
+       display="one GS per page",
        time_unit="H",
-       lab.cex=0.7)
-
-plotPat.1GS(expr=expr_1grp, TimePoint=design$TimePoint, Subject_ID=design$Patient_ID, gmt=gmt_sim,
-       geneset.name="Gene set 4",
-       clustering=FALSE, baseline=1,
-       time_unit="H",
-       lab.cex=0.7)
-
-
-
-colval <- c(hsv(0.56, 0.9, 1),
-           hsv(0, 0.27, 1),
-           hsv(0.52, 1, 0.5),
-           hsv(0, 0.55, 0.97),
-           hsv(0.66, 0.15, 1),
-           hsv(0, 0.81, 0.55),
-           hsv(0.7, 1, 0.7),
-           hsv(0.42, 0.33, 1)
-)
-n <- length(colval);  y <- 1:n
-op <- par(mar=rep(1.5,4))
-plot(y, axes = FALSE, frame.plot = TRUE,
-		 xlab = "", ylab = "", pch = 21, cex = 8,
-		 bg = colval, ylim=c(-1,n+1), xlim=c(-1,n+1),
-		 main = "Color scale"
-)
-par(op)
-
-
-plotPat.1GS(expr=expr_1grp, TimePoint=design$TimePoint, Subject_ID=design$Patient_ID, gmt=gmt_sim,
-       geneset.name="Gene set 5",
-       time_unit="H",
-       title="",
-       gg.add=list(scale_color_manual(values=colval)),
        lab.cex=0.7
 )
 
-plotPat.1GS(expr=tcgsa_sim_1grp$Estimations, TimePoint=design$TimePoint, Subject_ID=design$Patient_ID, gmt=gmt_sim,
-       geneset.name="Gene set 3",
+plotSelect.1GS(expr=tcgsa_sim_1grp$Estimations, TimePoint=design$TimePoint, Subject_ID=design$Patient_ID, gmt=gmt_sim,
+       geneset.names.select=c("Gene set 3", "Gene set 4", "Gene set 5"),
+       Subject_ID.select=c("P1", "P2"),
+       display="one subject per page",
        time_unit="H",
        lab.cex=0.7
 )
