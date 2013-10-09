@@ -367,9 +367,9 @@ function(x,
       }
     }
    
-    if(sum(apply(data_stand_ByTP, MARGIN=2, FUN=var))==0){
+    if(sum(apply(data_stand_ByTP, MARGIN=2, FUN=var))<1.e-25){
     	nc <- 1
-    	clust <- rep(1, dim(data_stand_ByTP)[1])
+    	clust <- rep(1, dim(data_stand)[1])
     } 
     else{
 	    kmax <- ifelse(dim(data_stand_ByTP)[1]>4, max_trends, dim(data_stand_ByTP)[1]-1)
@@ -385,7 +385,7 @@ function(x,
 	    	}
 	    }else{
 	      nc <- 1
-	      clust <- rep(1, dim(data_stand_ByTP)[1])
+	      clust <- rep(1, dim(data_stand)[1])
 	    }
     }
     

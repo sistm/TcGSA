@@ -8,8 +8,8 @@
 }
 \details{
   \tabular{ll}{ Package: \tab TcGSA\cr Type: \tab
-  Package\cr Version: \tab 0.9.6\cr Date: \tab
-  2013-10-01\cr License:\tab
+  Package\cr Version: \tab 0.9.61\cr Date: \tab
+  2013-10-09\cr License:\tab
   \href{http://www.gnu.org/licenses/lgpl.txt}{LGPL-3}\cr }
   The main function in this package is
   \code{\link{TcGSA.LR}} which performs Time-course Gene

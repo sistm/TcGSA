@@ -1,0 +1,85 @@
+\name{plotFit.GS}
+\alias{plotFit.GS}
+\title{Plotting a Selected Gene Sets in Selected Subjects}
+\usage{
+  plotFit.GS(x, expr, design, subject_name = "Patient_ID",
+    time_name = "TimePoint", colnames_ID,
+    plot_type = c("Fit", "Residuals"), GeneSetsList)
+}
+\arguments{
+  \item{x}{a \bold{tcgsa} object for \code{clustTrend}, or
+  a \bold{ClusteredTrends} object for
+  \code{print.ClusteredTrends} and
+  \code{plot.ClusteredTrends}.}
+
+  \item{expr}{a matrix or dataframe of gene expression.
+  Its dimension are \eqn{n}x\eqn{p}, with the \eqn{p}
+  samples in column and the \eqn{n} genes in row.}
+
+  \item{design}{a matrix or dataframe containing the
+  experimental variables that used in the model, namely
+  \code{subject_name}, \code{time_name}, and
+  \code{covariates_fixed} and \code{time_covariates} if
+  applicable.  Its dimension are \eqn{p}x\eqn{m} and its
+  row are is in the same order as the columns of
+  \code{expr}.}
+
+  \item{subject_name}{the name of the factor variable from
+  \code{design} that contains the information on the
+  repetition units used in the mixed model, such as the
+  patient identifiers for instance. Default is
+  \code{'Patient_ID'}.  See Details.}
+
+  \item{time_name}{the name of a numeric variable from
+  \code{design} that contains the information on the time
+  replicates (the time points at which gene expression was
+  measured).  Default is \code{'TimePoint'}.  See Details.}
+
+  \item{colnames_ID}{the name of the variable from
+  \code{design} that contains the columnames of the
+  \code{expr} expression data matrix.  See Details.}
+
+  \item{plot_type}{a character string indicating the type
+  of plot to be drawn.  The 2 options are either
+  \code{'Fit'} or \code{'Residuals'}.}
+
+  \item{GeneSetsList}{a character string containing the
+  names of the gene set whose fit is being checked. If
+  several gene sets are being checked, can be a character
+  list or vector of the names of those gene sets.}
+}
+\description{
+  This function plots graphs informing on the fit of the
+  mixed modeling of the gene expression performed in TcGSA,
+  for 1 or several gene sets.
+}
+\details{
+  #'
+}
+\examples{
+data(data_simu_TcGSA)
+
+tcgsa_sim_1grp <- TcGSA.LR(expr=expr_1grp, gmt=gmt_sim, design=design,
+													 subject_name="Patient_ID", time_name="TimePoint",
+                          time_func="linear", crossedRandom=FALSE)
+
+plotFit.GS(x=tcgsa_sim_1grp, expr=expr_1grp, design=design,
+					 subject_name="Patient_ID", time_name="TimePoint",
+					 colnames_ID="Sample_name",
+					 plot_type="Residuals",
+					 GeneSetsList=c("Gene set 1", "Gene set 2", "Gene set 3",
+					 "Gene set 4", "Gene set 5")
+)
+}
+\author{
+  Boris P. Hejblum
+}
+\references{
+  Hejblum, B.P., Skinner, J., Thiebaut, R., 2013, TcGSA: a
+  gene set approach for longitudinal gene expression data
+  analysis, \bold{submitted}.
+}
+\seealso{
+  \code{\link{plot1GS}}, \code{\link{plotSelect.GS}}
+}
+

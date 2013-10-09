@@ -448,7 +448,6 @@ plot.TcGSA <-
     	if (length(which(!is.na(x$fit$LR)))<1){
     		stop ("SERIOUS PROBLEM\n Was not able to compute any likelihood ratios...")
     	}
-    	browser()
       clust_trends <- clustTrend(x=x, expr=expr, Subject_ID=Subject_ID, TimePoint=TimePoint, baseline=baseline, only.signif=only.signif,
                                  group.var=group.var, Group_ID_paired=Group_ID_paired, ref=ref, group_of_interest=group_of_interest,
                                  FUNcluster=FUNcluster, clustering_metric=clustering_metric, clustering_method=clustering_method, B=B,
@@ -496,8 +495,10 @@ plot.TcGSA <-
     	}
     }
     
-    
     map2heat <- medoids2clust
+    # browser()
+    # map2heat <- t(apply(X=medoids2clust, MARGIN=1, FUN=scale, center=FALSE)) # scales each rows
+    # dimnames(map2heat) <- dimnames(medoids2clust)
     # map2heat <-  map2heat[grep("]:", rownames(map2heat)), ] # selects only annotated gene sets
     
     if(is.null(prev_rowCL)){
