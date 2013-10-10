@@ -34,13 +34,25 @@
 #'expression data matrix.  See Details.
 #'
 #'@param plot_type
-#'a character string indicating the type of plot to be drawn.  The 2 options are either 
-#'\code{'Fit'} or \code{'Residuals'}.
+#'a character string indicating the type of plot to be drawn.  The options are 
+#'\code{'Fit'}, \code{'Residuals Obs'}, \code{'Residuals Est'} or \code{'Histogram Obs'}.
 #'
 #'@param GeneSetsList
 #'a character string containing the names of the gene set whose fit is being checked. 
 #'If several gene sets are being checked, can be a character list or vector of the 
 #'names of those gene sets. 
+#'
+#'@param color
+#'a character string indicating which color scale should be used. One of the 3 : 
+#'\code{'genes'}, \code{'time'}, \code{'subjects'}, otherwise, no coloring is used.
+#'
+#'@param marginal_hist
+#'a logical flag indicating wether marginal histograms should be drawn. 
+#'Only used for \code{'Fit'} plot type. Default is \code{'TRUE'}
+#'
+#'@param gg.add 
+#'A list of instructions to add to the ggplot2 instruction.  See \link{+.gg}.  Default is \code{list(theme())}, which adds nothing
+#'to the plot.
 #'
 #'@author Boris P. Hejblum
 #'
@@ -61,15 +73,19 @@
 #'					 colnames_ID="Sample_name", 
 #'					 plot_type="Residuals", 
 #'					 GeneSetsList=c("Gene set 1", "Gene set 2", "Gene set 3",
-#'					 "Gene set 4", "Gene set 5")
+#'					 "Gene set 4", "Gene set 5"),
+#'					 color=c("genes", "time", "subjects")
 #')
 #'
 
 plotFit.GS <- function(x, expr, 
 											 design, subject_name = "Patient_ID", time_name = "TimePoint",
 											 colnames_ID, 
-											 plot_type=c("Fit", "Residuals"),
-											 GeneSetsList){
+											 plot_type=c("Fit", "Residuals Obs", "Residuals Est", "Histogram Obs"),
+											 GeneSetsList,
+											 color=c("genes", "time", "subjects"),
+											 marginal_hist=TRUE,
+											 gg.add=list(theme())){
 	
 	gmt <- x[["GeneSets_gmt"]]
 	
@@ -102,43 +118,111 @@ plotFit.GS <- function(x, expr,
 	}
 	
 	data2plot <- merge(Xfinal,Yfinal, by=c("Probe_ID", subject_name, time_name, "GS"))
-	colnames(data2plot) <- c("Probe_ID", subject_name, "Time", "GS", "Observed", "Estimated")
+	colnames(data2plot) <- c("Probe_ID", "Subject", "Time", "GS", "Observed", "Estimated")
 	data2plot[, "Time"] <- as.factor(data2plot[, "Time"])
 	data2plot$Residuals <- data2plot$Observed - data2plot$Estimated
 	
-	if(plot_type=="Fit"){
-		plotmin <- min(c(data2plot$Estimated, data2plot$Observed))
-		plotmax <- max(c(data2plot$Estimated, data2plot$Observed))
-		p <- (ggplot(aes(x=Observed, y=Estimated), data=data2plot) 
-					+ geom_point(aes(color=Time))
-					+ scale_color_discrete(name="Time point")
-					+ geom_smooth(method=lm)
-					+ labs(title=paste(gs, ": ", gmt$geneset.descriptions[interest],"\n Fit", sep=""),
-								 x="Observed expression", y="Fitted expression")
-					+ geom_abline(intercept=0, slope=1, color="black")
-					+ xlim(plotmin, plotmax)
-					+ ylim(plotmin, plotmax)
-					+ theme_bw()	
+	
+	if(plot_type=="Histogram Obs"){
+		p <- (ggplot(aes(x=Observed), data=data2plot)
+					+ labs(x="Observed expression", y="Count")
+					+ theme_bw()
+					
 		)
-	}else if(plot_type=="Residuals"){
-		p <- (ggplot(aes(x=Estimated, y=Residuals), data=data2plot) 
-					+ geom_point(aes(color=Time))
-					+ scale_color_discrete(name="Time point")
-					+ geom_smooth(method=lm)
-					+ labs(title=paste(gs, ": ", gmt$geneset.descriptions[interest],"\n Residuals", sep=""),
-								 x="Estimated expression", y="Residuals")
-					+ geom_abline(intercept=0, slope=0, color="red")
-					+ xlim(min(data2plot$Estimated),max(data2plot$Estimated))
-					+ ylim(-max(abs(data2plot$Residuals)), max(abs(data2plot$Residuals)))
-					+ theme_bw()	
-		)
+		if(color=="time"){
+			p <- (p + geom_histogram(aes(fill=Time))
+						+ scale_fill_discrete(name="Time point")
+						+ ggtitle(paste(gs, ": ", gmt$geneset.descriptions[interest],"\n Histogram of observed expression", sep=""))
+			)
+		}else if(color=="genes"){
+			p <- (p + geom_histogram(aes(fill=Probe_ID))			
+						+ scale_fill_discrete(name="Genes")
+						+ ggtitle(paste(gs, ": ", gmt$geneset.descriptions[interest],"\n Histogram of observed expression colored by genes", sep=""))
+			)
+		}else if(color=="subjects"){
+			p <- (p + geom_histogram(aes(fill=Subject))			
+						+ scale_fill_discrete(name="Subjects")
+						+ ggtitle(paste(gs, ": ", gmt$geneset.descriptions[interest],"\n Histogram of observed expression", sep=""))
+			)
+		}
+		else{
+			warning("'color' argument must be 'genes' in 'Histogram Obs'")
+			p <- p + geom_histogram()
+		}
+	}else{
+		if(plot_type=="Fit"){
+			plotmin <- min(c(data2plot$Estimated, data2plot$Observed))
+			plotmax <- max(c(data2plot$Estimated, data2plot$Observed))
+			p <- (ggplot(aes(x=Observed, y=Estimated), data=data2plot) 
+						+ geom_smooth(method=lm)
+						+ labs(title=paste(gs, ": ", gmt$geneset.descriptions[interest],"\n Fit", sep=""),
+									 x="Observed expression", y="Fitted expression")
+						+ xlim(plotmin, plotmax)
+						+ ylim(plotmin, plotmax)
+						+ theme_bw()	
+			)
+			if(color=="genes"){
+				p <- p + ggtitle(paste(gs, ": ", gmt$geneset.descriptions[interest],"\n Fit colored by genes", sep=""))
+			}
+		}else if(plot_type=="Residuals Obs"){
+			p <- (ggplot(aes(x=Observed, y=Residuals), data=data2plot) 
+						+ geom_smooth(method=lm)
+						+ labs(title=paste(gs, ": ", gmt$geneset.descriptions[interest],"\n Residuals", sep=""),
+									 x="Observed expression", y="Residuals")
+						+ xlim(min(data2plot$Estimated),max(data2plot$Estimated))
+						+ ylim(-max(abs(data2plot$Residuals)), max(abs(data2plot$Residuals)))
+						+ theme_bw()
+			)
+			if(color=="genes"){
+				p <- p + ggtitle(paste(gs, ": ", gmt$geneset.descriptions[interest],"\n Residuals colored by genes", sep=""))
+			}
+		}else if(plot_type=="Residuals Est"){
+			p <- (ggplot(aes(x=Estimated, y=Residuals), data=data2plot) 
+						+ geom_smooth(method=lm)
+						+ labs(title=paste(gs, ": ", gmt$geneset.descriptions[interest],"\n Residuals", sep=""),
+									 x="Estimated expression", y="Residuals")
+						+ xlim(min(data2plot$Estimated),max(data2plot$Estimated))
+						+ ylim(-max(abs(data2plot$Residuals)), max(abs(data2plot$Residuals)))
+						+ theme_bw()	
+			)
+			if(color=="genes"){
+				p <- p + ggtitle(paste(gs, ": ", gmt$geneset.descriptions[interest],"\n Residuals colored by genes", sep=""))
+			}
+		}
+		# geom_histogram(aes(fill=Probe_ID)))
+		if(color=="time"){
+			p <- (p + geom_point(aes(color=Time))
+						+ scale_color_discrete(name="Time point")
+			)
+		}else if(color=="genes"){
+			p <- (p + geom_point(aes(color=Probe_ID))
+						+ scale_color_discrete(name="Genes")
+			)
+		}else if(color=="subjects"){
+			p <- (p + geom_point(aes(color=Subject))
+						+ scale_color_discrete(name="Subjects")
+			)
+		}else{
+			warning("wrong 'color' argument")
+			p <- p + geom_point()
+		}
 	}
-
-	if(length(GeneSetsList>1)){
+	
+	if(length(GeneSetsList)>1){
 		p <- (p + facet_wrap( ~GS, ncol=floor(sqrt(length(unique(data2plot$GS)))))
 					+ ggtitle(plot_type)
 		)
 	}
+	
+	if(plot_type=="Fit"){
+		p <- p + geom_abline(intercept=0, slope=1, color="black")
+		if(marginal_hist){
+			p <- p + geom_rug(, col=rgb(0,0,0,alpha=.3))
+		}
+	}else if(plot_type=="Residuals Obs" | plot_type=="Residuals Est" ){
+		p <- p + geom_abline(intercept=0, slope=0, color="red")
+	}
+	
 	return(p)
 
 }

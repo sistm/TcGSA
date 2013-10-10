@@ -4,7 +4,9 @@
 \usage{
   plotFit.GS(x, expr, design, subject_name = "Patient_ID",
     time_name = "TimePoint", colnames_ID,
-    plot_type = c("Fit", "Residuals"), GeneSetsList)
+    plot_type = c("Fit", "Residuals Obs", "Residuals Est", "Histogram Obs"),
+    GeneSetsList, color = c("genes", "time", "subjects"),
+    marginal_hist = TRUE, gg.add = list(theme()))
 }
 \arguments{
   \item{x}{a \bold{tcgsa} object for \code{clustTrend}, or
@@ -40,13 +42,27 @@
   \code{expr} expression data matrix.  See Details.}
 
   \item{plot_type}{a character string indicating the type
-  of plot to be drawn.  The 2 options are either
-  \code{'Fit'} or \code{'Residuals'}.}
+  of plot to be drawn.  The options are \code{'Fit'},
+  \code{'Residuals Obs'}, \code{'Residuals Est'} or
+  \code{'Histogram Obs'}.}
 
   \item{GeneSetsList}{a character string containing the
   names of the gene set whose fit is being checked. If
   several gene sets are being checked, can be a character
   list or vector of the names of those gene sets.}
+
+  \item{color}{a character string indicating which color
+  scale should be used. One of the 3 : \code{'genes'},
+  \code{'time'}, \code{'subjects'}, otherwise, no coloring
+  is used.}
+
+  \item{marginal_hist}{a logical flag indicating wether
+  marginal histograms should be drawn. Only used for
+  \code{'Fit'} plot type. Default is \code{'TRUE'}}
+
+  \item{gg.add}{A list of instructions to add to the
+  ggplot2 instruction.  See \link{+.gg}.  Default is
+  \code{list(theme())}, which adds nothing to the plot.}
 }
 \description{
   This function plots graphs informing on the fit of the
@@ -68,7 +84,8 @@ plotFit.GS(x=tcgsa_sim_1grp, expr=expr_1grp, design=design,
 					 colnames_ID="Sample_name",
 					 plot_type="Residuals",
 					 GeneSetsList=c("Gene set 1", "Gene set 2", "Gene set 3",
-					 "Gene set 4", "Gene set 5")
+					 "Gene set 4", "Gene set 5"),
+					 color=c("genes", "time", "subjects")
 )
 }
 \author{
