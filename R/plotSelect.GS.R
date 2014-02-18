@@ -256,7 +256,7 @@
 #'                           time_func="linear", crossedRandom=FALSE)
 #'
 #'
-#'plotSelect.1GS(expr=tcgsa_sim_1grp$Estimations, TimePoint=design$TimePoint, Subject_ID=design$Patient_ID, gmt=gmt_sim,
+#'plotSelect.GS(expr=tcgsa_sim_1grp$Estimations, TimePoint=design$TimePoint, Subject_ID=design$Patient_ID, gmt=gmt_sim,
 #'        geneset.names.select=c("Gene set 3", "Gene set 4", "Gene set 5"),
 #'        Subject_ID.select=c("P1", "P2"),
 #'        display="one GS per page", 
@@ -264,7 +264,7 @@
 #'        lab.cex=0.7
 #')
 #'
-#'plotSelect.1GS(expr=tcgsa_sim_1grp$Estimations, TimePoint=design$TimePoint, Subject_ID=design$Patient_ID, gmt=gmt_sim,
+#'plotSelect.GS(expr=tcgsa_sim_1grp$Estimations, TimePoint=design$TimePoint, Subject_ID=design$Patient_ID, gmt=gmt_sim,
 #'        geneset.names.select=c("Gene set 3", "Gene set 4", "Gene set 5"),
 #'        Subject_ID.select=c("P1", "P2"),
 #'        display="one subject per page", 
@@ -272,7 +272,7 @@
 #'        lab.cex=0.7
 #')
 #'
-plotSelect.1GS <- 
+plotSelect.GS <- 
 	function(expr, gmt, Subject_ID, TimePoint, 
 					 geneset.names.select, Subject_ID.select,
 					 display="one subject per page",

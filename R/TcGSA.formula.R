@@ -27,7 +27,7 @@ TcGSA.formula <-
 		}
 		
 		if(time_func %in% c("linear", "cubic", "splines")){
-			time_split <- trim(str_split(paste("+", time, collapse=" "), "\\+")[[1]])
+			time_split <- str_trim(str_split(paste("+", time, collapse=" "), "\\+")[[1]])
 			if(length(which(time_split==""))>0){time_split <- time_split[-which(time_split=="")]}
 			time_DF <- length(time_split)
 		}

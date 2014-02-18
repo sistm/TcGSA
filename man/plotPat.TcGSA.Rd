@@ -2,26 +2,21 @@
 \alias{plotPat.TcGSA}
 \title{Plot a Gene Set Trends Heatmap for each Patient.}
 \usage{
-  plotPat.TcGSA(x, threshold = 0.05, myproc = "BY",
-    nbsimu_pval = 1e+06, expr, Subject_ID, TimePoint,
-    baseline = NULL, only.signif = TRUE, group.var = NULL,
-    Group_ID_paired = NULL, ref = NULL,
-    group_of_interest = NULL, FUNcluster = NULL,
-    clustering_metric = "euclidian",
-    clustering_method = "ward", B = 500, max_trends = 4,
-    aggreg.fun = "median", methodOptiClust = "firstSEmax",
-    verbose = TRUE, clust_trends = NULL, N_clusters = NULL,
-    myclusters = NULL, label.clusters = NULL,
-    prev_rowCL = NULL, descript = TRUE, plotAll = TRUE,
-    color.vec = c("darkred", "#D73027", "#FC8D59", "snow", "#91BFDB", "#4575B4", "darkblue"),
-    legend.breaks = NULL, label.column = NULL,
-    time_unit = "", cex.label.row = 1,
-    cex.label.column = 1, margins = c(5, 25),
-    heatKey.size = 1, dendrogram.size = 1,
-    heatmap.height = 1, heatmap.width = 1,
-    cex.clusterKey = 1, cex.main = 1,
-    horiz.clusterKey = TRUE, main = NULL, subtitle = NULL,
-    ...)
+plotPat.TcGSA(x, threshold = 0.05, myproc = "BY", nbsimu_pval = 1e+06,
+  expr, Subject_ID, TimePoint, baseline = NULL, only.signif = TRUE,
+  group.var = NULL, Group_ID_paired = NULL, ref = NULL,
+  group_of_interest = NULL, FUNcluster = NULL,
+  clustering_metric = "euclidian", clustering_method = "ward", B = 500,
+  max_trends = 4, aggreg.fun = "median", methodOptiClust = "firstSEmax",
+  verbose = TRUE, clust_trends = NULL, N_clusters = NULL,
+  myclusters = NULL, label.clusters = NULL, prev_rowCL = NULL,
+  descript = TRUE, plotAll = TRUE, color.vec = c("darkred", "#D73027",
+  "#FC8D59", "snow", "#91BFDB", "#4575B4", "darkblue"), legend.breaks = NULL,
+  label.column = NULL, time_unit = "", cex.label.row = 1,
+  cex.label.column = 1, margins = c(5, 25), heatKey.size = 1,
+  dendrogram.size = 1, heatmap.height = 1, heatmap.width = 1,
+  cex.clusterKey = 1, cex.main = 1, horiz.clusterKey = TRUE,
+  main = NULL, subtitle = NULL, ...)
 }
 \arguments{
   \item{x}{a \bold{tcgsa} object.}
@@ -35,7 +30,8 @@
   include any of the following: "\code{Bonferroni}",
   "\code{Holm}", "\code{Hochberg}", "\code{SidakSS}",
   "\code{SidakSD}", "\code{BH}", "\code{BY}", "\code{ABH}",
-  "\code{TSBH}". See
+  "\code{TSBH}" or "\code{none}". "\code{none}" indicates
+  no adjustement for multiple testing. See
   \code{\link[multtest:mt.rawp2adjp]{mt.rawp2adjp}} for
   details.  Default is "\code{BY}", the Benjamini &
   Yekutieli (2001) step-up FDR-controlling procedure
@@ -281,76 +277,74 @@
   plotting functions.}
 }
 \value{
-  An object of class \bold{\link{hclust}} which describes
-  the tree produced by the clustering process.  The object
-  is a list with components: \itemize{ \item merge an
-  \eqn{n-1} by \eqn{2} matrix.  Row \eqn{i} of \code{merge}
-  describes the merging of clusters at step i of the
-  clustering. If an element \eqn{j} in the row is negative,
-  then observation -\eqn{j} was merged at this stage.  If
-  \eqn{j} is positive then the merge was with the cluster
-  formed at the (earlier) stage \eqn{j} of the algorithm.
-  Thus negative entries in merge indicate agglomerations of
-  singletons, and positive entries indicate agglomerations
-  of non-singletons. \item height a set of \eqn{n-1} real
-  values (non-decreasing for ultrametric trees).  The
-  clustering height: that is, the value of the criterion
-  associated with the Ward clustering method. \item order a
-  vector giving the permutation of the original
-  observations suitable for plotting, in the sense that a
-  cluster plot using this ordering and matrix merge will
-  not have crossings of the branches. \item labels the gene
-  sets name. \item call the call which produced the result
-  clustering: \cr\code{hclust(d = dist(map2heat, method =
-  "euclidean"), method = "ward")} \item method "ward", as
-  it is the cluster method that is used. \item dist.method
-  "euclidean", as it is the distance that has been used.
-  \item legend.breaks a numeric vector giving the splitting
-  points used for coloring the heatmap.  If \code{plot} is
-  \code{FALSE}, then it is \code{NULL}. \item myclusters a
-  character vector of colors for clusters of the
-  represented genesets, with as many levels as the value of
-  \code{N_clusters}. If no clusters were represented, than
-  this is \code{NULL}. \item ddr a \bold{dendrogram} object
-  with the reordering used for the heatmap.  See
-  \code{\link{heatmap.2}}. \item clustersExport a data
-  frame with 2 variables containing the two following
-  variables : \itemize{ \item \code{GeneSet}: the gene sets
-  clustered.  \item \code{Cluster}: the cluster they belong
-  to.  } The data frame is order by the variable
-  \code{Cluster}. }
+An object of class \bold{\link{hclust}} which describes the
+tree produced by the clustering process.  The object is a
+list with components: \itemize{ \item merge an \eqn{n-1} by
+\eqn{2} matrix.  Row \eqn{i} of \code{merge} describes the
+merging of clusters at step i of the clustering. If an
+element \eqn{j} in the row is negative, then observation
+-\eqn{j} was merged at this stage.  If \eqn{j} is positive
+then the merge was with the cluster formed at the (earlier)
+stage \eqn{j} of the algorithm.  Thus negative entries in
+merge indicate agglomerations of singletons, and positive
+entries indicate agglomerations of non-singletons. \item
+height a set of \eqn{n-1} real values (non-decreasing for
+ultrametric trees).  The clustering height: that is, the
+value of the criterion associated with the Ward clustering
+method. \item order a vector giving the permutation of the
+original observations suitable for plotting, in the sense
+that a cluster plot using this ordering and matrix merge
+will not have crossings of the branches. \item labels the
+gene sets name. \item call the call which produced the
+result clustering: \cr\code{hclust(d = dist(map2heat,
+method = "euclidean"), method = "ward")} \item method
+"ward", as it is the cluster method that is used. \item
+dist.method "euclidean", as it is the distance that has
+been used. \item legend.breaks a numeric vector giving the
+splitting points used for coloring the heatmap.  If
+\code{plot} is \code{FALSE}, then it is \code{NULL}. \item
+myclusters a character vector of colors for clusters of the
+represented genesets, with as many levels as the value of
+\code{N_clusters}. If no clusters were represented, than
+this is \code{NULL}. \item ddr a \bold{dendrogram} object
+with the reordering used for the heatmap.  See
+\code{\link{heatmap.2}}. \item clustersExport a data frame
+with 2 variables containing the two following variables :
+\itemize{ \item \code{GeneSet}: the gene sets clustered.
+\item \code{Cluster}: the cluster they belong to.  } The
+data frame is order by the variable \code{Cluster}. }
 }
 \description{
-  This function plots a series of gene sets dynamic trends
-  heatmaps.  One heatmap is drawned for each patient. NOT
-  IMPLEMENTED TODO
+This function plots a series of gene sets dynamic trends
+heatmaps.  One heatmap is drawned for each patient. NOT
+IMPLEMENTED TODO
 }
 \details{
-  On the heatmap, each line corresponds to a gene set, and
-  each column to a timepoint.
+On the heatmap, each line corresponds to a gene set, and
+each column to a timepoint.
 
-  First a heatmap is computed on all the patients (see
-  \code{\link{plot.TcGSA}} and \code{\link{clustTrend}}) to
-  define the clustering. Then, the clustering and coloring
-  thus defined on all the patients are consistently used in
-  the separate heatmaps that are plotted by patient.
+First a heatmap is computed on all the patients (see
+\code{\link{plot.TcGSA}} and \code{\link{clustTrend}}) to
+define the clustering. Then, the clustering and coloring
+thus defined on all the patients are consistently used in
+the separate heatmaps that are plotted by patient.
 
-  If \code{expr} is a matrix or a dataframe, then the
-  "original" data are plotted.  On the other hand, if
-  \code{expr} is a list returned in the
-  \code{'Estimations'} element of \code{\link{TcGSA.LR}},
-  then it is those "estimations" made by the
-  \code{\link{TcGSA.LR}} function that are plotted.
+If \code{expr} is a matrix or a dataframe, then the
+"original" data are plotted.  On the other hand, if
+\code{expr} is a list returned in the \code{'Estimations'}
+element of \code{\link{TcGSA.LR}}, then it is those
+"estimations" made by the \code{\link{TcGSA.LR}} function
+that are plotted.
 
-  If \code{descript} is \code{FALSE}, the second element of
-  \code{margins} can be reduced (for instance use
-  \code{margins = c(5, 10)}), as there is not so much need
-  for space in order to display only the gene set names,
-  without their description.
+If \code{descript} is \code{FALSE}, the second element of
+\code{margins} can be reduced (for instance use
+\code{margins = c(5, 10)}), as there is not so much need
+for space in order to display only the gene set names,
+without their description.
 
-  The median shown in the heatmap uses the respectively
-  standardized (reduced and centered) expression of the
-  genes over the patients.
+The median shown in the heatmap uses the respectively
+standardized (reduced and centered) expression of the genes
+over the patients.
 }
 \examples{
 data(data_simu_TcGSA)
@@ -373,16 +367,16 @@ plotPat.TcGSA(x=tcgsa_sim_1grp, expr=tcgsa_sim_1grp$Estimations,
     )
 }
 \author{
-  Boris P. Hejblum
+Boris P. Hejblum
 }
 \references{
-  Hejblum, B.P., Skinner, J., Thiebaut, R., 2013, TcGSA: a
-  gene set approach for longitudinal gene expression data
-  analysis, \bold{submitted}.
+Hejblum, B.P., Skinner, J., Thiebaut, R., 2013, TcGSA: a
+gene set approach for longitudinal gene expression data
+analysis, \bold{submitted}.
 }
 \seealso{
-  \code{\link{plot.TcGSA}},
-  \code{\link[gplots:heatmap.2]{heatmap.2}},
-  \code{\link{TcGSA.LR}}, \code{\link{hclust}}
+\code{\link{plot.TcGSA}},
+\code{\link[gplots:heatmap.2]{heatmap.2}},
+\code{\link{TcGSA.LR}}, \code{\link{hclust}}
 }
 

@@ -10,4 +10,4 @@
 #'
 #'@keywords internal
 #'
-NA
+NULL

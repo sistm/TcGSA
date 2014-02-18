@@ -2,11 +2,11 @@
 \alias{plotFit.GS}
 \title{Plotting a Selected Gene Sets in Selected Subjects}
 \usage{
-  plotFit.GS(x, expr, design, subject_name = "Patient_ID",
-    time_name = "TimePoint", colnames_ID,
-    plot_type = c("Fit", "Residuals Obs", "Residuals Est", "Histogram Obs"),
-    GeneSetsList, color = c("genes", "time", "subjects"),
-    marginal_hist = TRUE, gg.add = list(theme()))
+plotFit.GS(x, expr, design, subject_name = "Patient_ID",
+  time_name = "TimePoint", colnames_ID, plot_type = c("Fit",
+  "Residuals Obs", "Residuals Est", "Histogram Obs"), GeneSetsList,
+  color = c("genes", "time", "subjects"), marginal_hist = TRUE,
+  gg.add = list(theme()))
 }
 \arguments{
   \item{x}{a \bold{tcgsa} object for \code{clustTrend}, or
@@ -65,12 +65,12 @@
   \code{list(theme())}, which adds nothing to the plot.}
 }
 \description{
-  This function plots graphs informing on the fit of the
-  mixed modeling of the gene expression performed in TcGSA,
-  for 1 or several gene sets.
+This function plots graphs informing on the fit of the
+mixed modeling of the gene expression performed in TcGSA,
+for 1 or several gene sets.
 }
 \details{
-  #'
+#'
 }
 \examples{
 data(data_simu_TcGSA)
@@ -89,14 +89,14 @@ plotFit.GS(x=tcgsa_sim_1grp, expr=expr_1grp, design=design,
 )
 }
 \author{
-  Boris P. Hejblum
+Boris P. Hejblum
 }
 \references{
-  Hejblum, B.P., Skinner, J., Thiebaut, R., 2013, TcGSA: a
-  gene set approach for longitudinal gene expression data
-  analysis, \bold{submitted}.
+Hejblum, B.P., Skinner, J., Thiebaut, R., 2013, TcGSA: a
+gene set approach for longitudinal gene expression data
+analysis, \bold{submitted}.
 }
 \seealso{
-  \code{\link{plot1GS}}, \code{\link{plotSelect.GS}}
+\code{\link{plot1GS}}, \code{\link{plotSelect.GS}}
 }
 

@@ -35,7 +35,8 @@
 #'multiple testing procedures for which adjusted p-values are to be computed.
 #'This vector should include any of the following: "\code{Bonferroni}",
 #'"\code{Holm}", "\code{Hochberg}", "\code{SidakSS}", "\code{SidakSD}",
-#'"\code{BH}", "\code{BY}", "\code{ABH}", "\code{TSBH}". See
+#'"\code{BH}", "\code{BY}", "\code{ABH}", "\code{TSBH}" or "\code{none}".  
+#'"\code{none}" indicates no adjustement for multiple testing. See
 #'\code{\link[multtest:mt.rawp2adjp]{mt.rawp2adjp}} for details.  Default is
 #'"\code{BY}", the Benjamini & Yekutieli (2001) step-up FDR-controlling
 #'procedure (general dependency structures).  In order to control the FWER(in

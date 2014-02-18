@@ -2,20 +2,16 @@
 \alias{plot1GS}
 \title{Plotting a Specific Gene Set}
 \usage{
-  plot1GS(expr, gmt, Subject_ID, TimePoint, geneset.name,
-    baseline = NULL, group.var = NULL,
-    Group_ID_paired = NULL, ref = NULL,
-    group_of_interest = NULL, FUNcluster = NULL,
-    clustering_metric = "euclidian",
-    clustering_method = "ward", B = 500, max_trends = 4,
-    aggreg.fun = "median", trend.fun = "median",
-    methodOptiClust = "firstSEmax", indiv = "genes",
-    verbose = TRUE, clustering = TRUE, showTrend = TRUE,
-    smooth = TRUE, time_unit = "", title = NULL,
-    y.lab = NULL, desc = TRUE, lab.cex = 1, axis.cex = 1,
-    main.cex = 1, y.lab.angle = 90, x.axis.angle = 45,
-    y.lim = NULL, x.lim = NULL, gg.add = list(theme()),
-    plot = TRUE)
+plot1GS(expr, gmt, Subject_ID, TimePoint, geneset.name, baseline = NULL,
+  group.var = NULL, Group_ID_paired = NULL, ref = NULL,
+  group_of_interest = NULL, FUNcluster = NULL,
+  clustering_metric = "euclidian", clustering_method = "ward", B = 500,
+  max_trends = 4, aggreg.fun = "median", trend.fun = "median",
+  methodOptiClust = "firstSEmax", indiv = "genes", verbose = TRUE,
+  clustering = TRUE, showTrend = TRUE, smooth = TRUE, time_unit = "",
+  title = NULL, y.lab = NULL, desc = TRUE, lab.cex = 1, axis.cex = 1,
+  main.cex = 1, y.lab.angle = 90, x.axis.angle = 45, y.lim = NULL,
+  x.lim = NULL, gg.add = list(theme()), plot = TRUE)
 }
 \arguments{
   \item{expr}{either a matrix or dataframe of gene
@@ -240,34 +236,34 @@
   drawn.  Default is \code{TRUE}.}
 }
 \value{
-  A dataframe the 2 following variables: \itemize{ \item
-  \code{ProbeID} which contains the IDs of the probes of
-  the plotted gene set. \item \code{Cluster} which to which
-  cluster the probe belongs to. } If \code{clustering} is
-  \code{FALSE}, then \code{Cluster} is \code{NA} for all
-  the probes.
+A dataframe the 2 following variables: \itemize{ \item
+\code{ProbeID} which contains the IDs of the probes of the
+plotted gene set. \item \code{Cluster} which to which
+cluster the probe belongs to. } If \code{clustering} is
+\code{FALSE}, then \code{Cluster} is \code{NA} for all the
+probes.
 }
 \description{
-  This function can plot different representations of the
-  gene expression in a specific gene set.
+This function can plot different representations of the
+gene expression in a specific gene set.
 }
 \details{
-  If \code{expr} is a matrix or a dataframe, then the
-  "original" data are plotted.  On the other hand, if
-  \code{expr} is a list returned in the
-  \code{'Estimations'} element of \code{\link{TcGSA.LR}},
-  then it is those "estimations" made by the
-  \code{\link{TcGSA.LR}} function that are plotted.
+If \code{expr} is a matrix or a dataframe, then the
+"original" data are plotted.  On the other hand, if
+\code{expr} is a list returned in the \code{'Estimations'}
+element of \code{\link{TcGSA.LR}}, then it is those
+"estimations" made by the \code{\link{TcGSA.LR}} function
+that are plotted.
 
-  If \code{indiv} is 'genes', then each line of the plot is
-  the median of a gene expression over the patients. On the
-  other hand, if \code{indiv} is 'patients', then each line
-  of the plot is the median of a patient genes expression
-  in this gene set.
+If \code{indiv} is 'genes', then each line of the plot is
+the median of a gene expression over the patients. On the
+other hand, if \code{indiv} is 'patients', then each line
+of the plot is the median of a patient genes expression in
+this gene set.
 
-  This function uses the Gap statistics to determine the
-  optimal number of clusters in the plotted gene set.  See
-  \code{\link[cluster:clusGap]{clusGap}}.
+This function uses the Gap statistics to determine the
+optimal number of clusters in the plotted gene set.  See
+\code{\link[cluster:clusGap]{clusGap}}.
 }
 \examples{
 data(data_simu_TcGSA)
@@ -324,17 +320,17 @@ plot1GS(expr=expr_1grp, TimePoint=design$TimePoint, Subject_ID=design$Patient_ID
 )
 }
 \author{
-  Boris P. Hejblum
+Boris P. Hejblum
 }
 \references{
-  Tibshirani, R., Walther, G. and Hastie, T., 2001,
-  Estimating the number of data clusters via the Gap
-  statistic, \emph{Journal of the Royal Statistical
-  Society, Series B (Statistical Methodology)}, \bold{63},
-  2: 411--423.
+Tibshirani, R., Walther, G. and Hastie, T., 2001,
+Estimating the number of data clusters via the Gap
+statistic, \emph{Journal of the Royal Statistical Society,
+Series B (Statistical Methodology)}, \bold{63}, 2:
+411--423.
 }
 \seealso{
-  \code{\link{ggplot2}},
-  \code{\link[cluster:clusGap]{clusGap}}
+\code{\link{ggplot2}},
+\code{\link[cluster:clusGap]{clusGap}}
 }
 

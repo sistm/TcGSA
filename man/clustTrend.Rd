@@ -5,20 +5,17 @@
 \alias{print.ClusteredTrends}
 \title{Cluster the genes dynamics into different dominant trends.}
 \usage{
-  clustTrend(x, expr, Subject_ID, TimePoint,
-    threshold = 0.05, myproc = "BY", nbsimu_pval = 1e+06,
-    baseline = NULL, only.signif = TRUE, group.var = NULL,
-    Group_ID_paired = NULL, ref = NULL,
-    group_of_interest = NULL, FUNcluster = NULL,
-    clustering_metric = "euclidian",
-    clustering_method = "ward", B = 100, max_trends = 4,
-    aggreg.fun = "median", trend.fun = "median",
-    methodOptiClust = "firstSEmax", indiv = "genes",
-    verbose = TRUE)
+clustTrend(x, expr, Subject_ID, TimePoint, threshold = 0.05, myproc = "BY",
+  nbsimu_pval = 1e+06, baseline = NULL, only.signif = TRUE,
+  group.var = NULL, Group_ID_paired = NULL, ref = NULL,
+  group_of_interest = NULL, FUNcluster = NULL,
+  clustering_metric = "euclidian", clustering_method = "ward", B = 100,
+  max_trends = 4, aggreg.fun = "median", trend.fun = "median",
+  methodOptiClust = "firstSEmax", indiv = "genes", verbose = TRUE)
 
-  \method{print}{ClusteredTrends} (x, ...)
+\method{print}{ClusteredTrends}(x, ...)
 
-  \method{plot}{ClusteredTrends} (x, ...)
+\method{plot}{ClusteredTrends}(x, ...)
 }
 \arguments{
   \item{x}{a \bold{tcgsa} object for \code{clustTrend}, or
@@ -193,42 +190,41 @@
   methods.}
 }
 \value{
-  An object of class \bold{\link{ClusteredTrends}} which is
-  a list with the 4 following components: \itemize{ \item
-  NbClust a vector that contains the optimal number of
-  clusters for each analysed gene sets. \item ClustsMeds a
-  list of the same length as \code{NsClust} (the number of
-  analysed gene sets). Each element of the list is a data
-  frame, in which there is as many column as the optimal
-  number of clusters for the corresponding gene setsfor
-  each cluster.  Each column of the data frame contains the
-  median trend values for the corresponding cluster. \item
-  GenesPartition a list of the same length as
-  \code{NsClust} (the number of analysed gene sets).  Each
-  element of the list is a vector which gives the partition
-  of the genes inside the corresponding gene set. \item
-  MaxNbClust an integer storing the maximum number of
-  different clusters tested, as given by the argument
-  \code{'max_trends'}. }
+An object of class \bold{\link{ClusteredTrends}} which is a
+list with the 4 following components: \itemize{ \item
+NbClust a vector that contains the optimal number of
+clusters for each analysed gene sets. \item ClustsMeds a
+list of the same length as \code{NsClust} (the number of
+analysed gene sets). Each element of the list is a data
+frame, in which there is as many column as the optimal
+number of clusters for the corresponding gene setsfor each
+cluster.  Each column of the data frame contains the median
+trend values for the corresponding cluster. \item
+GenesPartition a list of the same length as \code{NsClust}
+(the number of analysed gene sets).  Each element of the
+list is a vector which gives the partition of the genes
+inside the corresponding gene set. \item MaxNbClust an
+integer storing the maximum number of different clusters
+tested, as given by the argument \code{'max_trends'}. }
 }
 \description{
-  This function clusters the genes dynamics of one gene
-  sets into different dominant trends.  The optimal number
-  of custers is computed thanks to the gap statistics.  See
-  \code{\link[cluster:clusGap]{clusGap}}.
+This function clusters the genes dynamics of one gene sets
+into different dominant trends.  The optimal number of
+custers is computed thanks to the gap statistics.  See
+\code{\link[cluster:clusGap]{clusGap}}.
 }
 \details{
-  If \code{expr} is a matrix or a dataframe, then the genes
-  dynamics are clustered on the "original" data.  On the
-  other hand, if \code{expr} is a list returned in the
-  \code{'Estimations'} element of \code{\link{TcGSA.LR}},
-  then the dynamics are computed on the estimations made by
-  the \code{\link{TcGSA.LR}} function.
+If \code{expr} is a matrix or a dataframe, then the genes
+dynamics are clustered on the "original" data.  On the
+other hand, if \code{expr} is a list returned in the
+\code{'Estimations'} element of \code{\link{TcGSA.LR}},
+then the dynamics are computed on the estimations made by
+the \code{\link{TcGSA.LR}} function.
 
-  This function uses the Gap statistics to determine the
-  optimal number of clusters in the plotted gene set.  See
-  \code{\link[cluster:clusGap]{clusGap}}. %TODO group.var
-  and baseline
+This function uses the Gap statistics to determine the
+optimal number of clusters in the plotted gene set.  See
+\code{\link[cluster:clusGap]{clusGap}}. %TODO group.var and
+baseline
 }
 \examples{
 data(data_simu_TcGSA)
@@ -248,17 +244,16 @@ CT$ClustMeds[["Gene set 4"]]
 CT$ClustMeds[["Gene set 5"]]
 }
 \author{
-  Boris P. Hejblum
+Boris P. Hejblum
 }
 \references{
-  Tibshirani, R., Walther, G. and Hastie, T., 2001,
-  Estimating the number of data clusters via the Gap
-  statistic, \emph{Journal of the Royal Statistical
-  Society, Series B (Statistical Methodology)}, \bold{63},
-  2: 41--423.
+Tibshirani, R., Walther, G. and Hastie, T., 2001,
+Estimating the number of data clusters via the Gap
+statistic, \emph{Journal of the Royal Statistical Society,
+Series B (Statistical Methodology)}, \bold{63}, 2: 41--423.
 }
 \seealso{
-  \code{\link{plot1GS}}, \code{\link{TcGSA.LR}},
-  \code{\link[cluster:clusGap]{clusGap}}
+\code{\link{plot1GS}}, \code{\link{TcGSA.LR}},
+\code{\link[cluster:clusGap]{clusGap}}
 }
 

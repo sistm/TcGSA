@@ -1,17 +1,15 @@
 \name{TcGSA.LR}
+\alias{TcGSA.LR}
 \alias{print.TcGSA}
 \alias{print.TcGSA.LR}
-\alias{TcGSA.LR}
 \title{Computing the Likelihood Ratios for the Gene Sets under Scrutiny}
 \usage{
-  TcGSA.LR(expr, gmt, design, subject_name = "Patient_ID",
-    time_name = "TimePoint", crossedRandom = FALSE,
-    covariates_fixed = "", time_covariates = "",
-    time_func = "linear", group_name = "",
-    separateSubjects = FALSE, minGSsize = 10,
-    maxGSsize = 500)
+TcGSA.LR(expr, gmt, design, subject_name = "Patient_ID",
+  time_name = "TimePoint", crossedRandom = FALSE, covariates_fixed = "",
+  time_covariates = "", time_func = "linear", group_name = "",
+  separateSubjects = FALSE, minGSsize = 10, maxGSsize = 500)
 
-  \method{print}{TcGSA} (x, ...)
+\method{print}{TcGSA}(x, ...)
 }
 \arguments{
   \item{expr}{a matrix or dataframe of gene expression.
@@ -113,50 +111,49 @@
   methods.}
 }
 \value{
-  \code{TcGSA.LR} returns a \code{tcgsa} object, which is a
-  list with the 5 following elements: \itemize{ \item fit a
-  data frame that contains the 3 following variables:
-  \itemize{ \item \code{LR}: the likelihood ratio between
-  the model under the null hypothesis and the model under
-  the alternative hypothesis. \item \code{CVG_H0}:
-  convergence status of the model under the null
-  hypothesis. \item \code{CVG_H1}: convergence status of
-  the model under the alternative hypothesis. } \item
-  \code{time_func}: a character string passing along the
-  value of the \code{time_func} argument used in the call.
-  \item \code{GeneSets_gmt}: a \code{gmt} object passing
-  along the value of the \code{gmt} argument used in the
-  call. \item \code{group.var}: a factor passing along the
-  \code{group_name} variable from the \code{design} matrix.
-  \item \code{separateSubjects}: a logical flag passing
-  along the value of the \code{separateSubjects} argument
-  used in the call. \item \code{Estimations}: a list of 3
-  dimensions arrays.  Each element of the list (i.e. each
-  array) corresponds to the estimations of gene expression
-  dynamics for each of the gene sets under scrutiny
-  (obtained from mixed models).  The first dimension of
-  those arrays is the genes included in the concerned gene
-  set, the second dimension is the \code{Patient_ID}, and
-  the third dimension is the \code{TimePoint}.  The values
-  inside those arrays are estimated gene expressions. \item
-  \code{time_DF}: the degree of freedom of the natural
-  splines functions }
+\code{TcGSA.LR} returns a \code{tcgsa} object, which is a
+list with the 5 following elements: \itemize{ \item fit a
+data frame that contains the 3 following variables:
+\itemize{ \item \code{LR}: the likelihood ratio between the
+model under the null hypothesis and the model under the
+alternative hypothesis. \item \code{CVG_H0}: convergence
+status of the model under the null hypothesis. \item
+\code{CVG_H1}: convergence status of the model under the
+alternative hypothesis. } \item \code{time_func}: a
+character string passing along the value of the
+\code{time_func} argument used in the call. \item
+\code{GeneSets_gmt}: a \code{gmt} object passing along the
+value of the \code{gmt} argument used in the call. \item
+\code{group.var}: a factor passing along the
+\code{group_name} variable from the \code{design} matrix.
+\item \code{separateSubjects}: a logical flag passing along
+the value of the \code{separateSubjects} argument used in
+the call. \item \code{Estimations}: a list of 3 dimensions
+arrays.  Each element of the list (i.e. each array)
+corresponds to the estimations of gene expression dynamics
+for each of the gene sets under scrutiny (obtained from
+mixed models).  The first dimension of those arrays is the
+genes included in the concerned gene set, the second
+dimension is the \code{Patient_ID}, and the third dimension
+is the \code{TimePoint}.  The values inside those arrays
+are estimated gene expressions. \item \code{time_DF}: the
+degree of freedom of the natural splines functions }
 }
 \description{
-  This function computes the Likelihood Ratios for the gene
-  sets under scrutiny, as well as estimations of genes
-  dynamics inside those gene sets through mixed models.
+This function computes the Likelihood Ratios for the gene
+sets under scrutiny, as well as estimations of genes
+dynamics inside those gene sets through mixed models.
 }
 \details{
-  This Time-course Gene Set Analysis aims at identifying
-  gene sets that are not stable over time, either
-  homogeneously or heterogeneously (see \emph{Hejblum et
-  al, 2012})in terms of their probes.  And when the
-  argument \code{separateSubjects} is \code{TRUE}, instead
-  of identifying gene sets that have a significant trend
-  over time, \emph{TcGSA} identifies gene sets that have
-  significantly different trends over time depending on the
-  patient.
+This Time-course Gene Set Analysis aims at identifying gene
+sets that are not stable over time, either homogeneously or
+heterogeneously (see \emph{Hejblum et al, 2012})in terms of
+their probes.  And when the argument
+\code{separateSubjects} is \code{TRUE}, instead of
+identifying gene sets that have a significant trend over
+time, \emph{TcGSA} identifies gene sets that have
+significantly different trends over time depending on the
+patient.
 }
 \examples{
 data(data_simu_TcGSA)
@@ -181,14 +178,14 @@ tcgsa_sim_2grp <- TcGSA.LR(expr=expr_2grp, gmt=gmt_sim, design=design,
 tcgsa_sim_2grp
 }
 \author{
-  Boris P. Hejblum
+Boris P. Hejblum
 }
 \references{
-  Hejblum, B.P., Skinner, J., Thiebaut, R., 2013, TcGSA: a
-  gene set approach for longitudinal gene expression data
-  analysis, \bold{submitted}.
+Hejblum, B.P., Skinner, J., Thiebaut, R., 2013, TcGSA: a
+gene set approach for longitudinal gene expression data
+analysis, \bold{submitted}.
 }
 \seealso{
-  \code{\link{summary.TcGSA}}, \code{\link{plot.TcGSA}}
+\code{\link{summary.TcGSA}}, \code{\link{plot.TcGSA}}
 }
 

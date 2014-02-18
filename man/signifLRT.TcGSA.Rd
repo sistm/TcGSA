@@ -2,9 +2,8 @@
 \alias{signifLRT.TcGSA}
 \title{Identifiying the Significant Gene Sets}
 \usage{
-  signifLRT.TcGSA(tcgsa, threshold = 0.05, myproc = "BY",
-    nbsimu_pval = 1e+06, write = F, txtfilename = NULL,
-    directory = NULL)
+signifLRT.TcGSA(tcgsa, threshold = 0.05, myproc = "BY",
+  nbsimu_pval = 1e+06, write = F, txtfilename = NULL, directory = NULL)
 }
 \arguments{
   \item{tcgsa}{a \code{tcgsa} object.}
@@ -18,7 +17,8 @@
   include any of the following: "\code{Bonferroni}",
   "\code{Holm}", "\code{Hochberg}", "\code{SidakSS}",
   "\code{SidakSD}", "\code{BH}", "\code{BY}", "\code{ABH}",
-  "\code{TSBH}". See
+  "\code{TSBH}" or "\code{none}". "\code{none}" indicates
+  no adjustement for multiple testing. See
   \code{\link[multtest:mt.rawp2adjp]{mt.rawp2adjp}} for
   details.  Default is "\code{BY}", the Benjamini &
   Yekutieli (2001) step-up FDR-controlling procedure
@@ -48,27 +48,27 @@
   is \code{TRUE}. Default is \code{NULL}.}
 }
 \value{
-  \code{signifLRT.TcGSA} returns a list.
+\code{signifLRT.TcGSA} returns a list.
 
-  The fisrt element \code{mixedLRTadjRes} is data frame
-  with \eqn{p} rows (one row for each significant gene set)
-  and the 3 following variables: \itemize{ \item GeneSet
-  the significant gene set name from the gmt object. \item
-  AdjPval the adjusted p-value corresponding to the
-  signicant gene set. \item desc the significant gene set
-  description from the gmt object. }
+The fisrt element \code{mixedLRTadjRes} is data frame with
+\eqn{p} rows (one row for each significant gene set) and
+the 3 following variables: \itemize{ \item GeneSet the
+significant gene set name from the gmt object. \item
+AdjPval the adjusted p-value corresponding to the signicant
+gene set. \item desc the significant gene set description
+from the gmt object. }
 
-  The second element \code{multCorProc} passes along the
-  multiple testing procedure used (from the argument
-  \code{myproc}).
+The second element \code{multCorProc} passes along the
+multiple testing procedure used (from the argument
+\code{myproc}).
 
-  The third element \code{threshold} passes along the
-  significance threshold used (from the argument
-  \code{threshold}).
+The third element \code{threshold} passes along the
+significance threshold used (from the argument
+\code{threshold}).
 }
 \description{
-  A function that identifies the significant gene sets in
-  an object of class '\code{TcGSA}'.
+A function that identifies the significant gene sets in an
+object of class '\code{TcGSA}'.
 }
 \examples{
 data(data_simu_TcGSA)
@@ -82,14 +82,14 @@ sgnifs <- signifLRT.TcGSA(tcgsa_sim_1grp, threshold = 0.05, myproc = "BY",
 sgnifs
 }
 \author{
-  Boris P. Hejblum
+Boris P. Hejblum
 }
 \references{
-  Hejblum, B.P., Skinner, J., Thiebaut, R., 2013, TcGSA: a
-  gene set approach for longitudinal gene expression data
-  analysis, \bold{submitted}.
+Hejblum, B.P., Skinner, J., Thiebaut, R., 2013, TcGSA: a
+gene set approach for longitudinal gene expression data
+analysis, \bold{submitted}.
 }
 \seealso{
-  \code{\link{multtest.TcGSA}}, \code{\link{TcGSA.LR}}
+\code{\link{multtest.TcGSA}}, \code{\link{TcGSA.LR}}
 }
 

@@ -3,9 +3,9 @@
 \alias{summary.TcGSA}
 \title{Summarizing TcGSA}
 \usage{
-  \method{summary}{TcGSA} (object, ...)
+\method{summary}{TcGSA}(object, ...)
 
-  \method{print}{summary.TcGSA} (x, ...)
+\method{print}{summary.TcGSA}(x, ...)
 }
 \arguments{
   \item{object}{an object of class'\code{TcGSA}'.}
@@ -16,19 +16,18 @@
   \item{x}{an object of class '\code{summary.TcGSA}'.}
 }
 \value{
-  The function summary.TcGSA returns a list with the
-  following components (list elements):\itemize{ \item
-  time_func the chosen form for the time trend. \item
-  separateSubjects a logical flag indicating wether gene
-  sets tested for discriminating among patients, or for
-  time trends over time. \item ntg the number of treatment
-  groups. \item ngs the number of tested gene sets. \item
-  nsignif the number of significant gene sets at a 5\% FDR
-  (using the default Benjamini & Yekutieli step-up
-  procedure). }
+The function summary.TcGSA returns a list with the
+following components (list elements):\itemize{ \item
+time_func the chosen form for the time trend. \item
+separateSubjects a logical flag indicating wether gene sets
+tested for discriminating among patients, or for time
+trends over time. \item ntg the number of treatment groups.
+\item ngs the number of tested gene sets. \item nsignif the
+number of significant gene sets at a 5\% FDR (using the
+default Benjamini & Yekutieli step-up procedure). }
 }
 \description{
-  \code{summary} method for class '\code{TcGSA}'
+\code{summary} method for class '\code{TcGSA}'
 }
 \examples{
 data(data_simu_TcGSA)
@@ -45,9 +44,9 @@ tcgsa_sim_2grp <- TcGSA.LR(expr=expr_2grp, gmt=gmt_sim, design=design,
 summary(tcgsa_sim_2grp)
 }
 \author{
-  Boris P. Hejblum
+Boris P. Hejblum
 }
 \seealso{
-  \code{\link{TcGSA.LR}}
+\code{\link{TcGSA.LR}}
 }
 

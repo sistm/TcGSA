@@ -190,7 +190,6 @@ function(expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", cr
   	
   for (gs in 1:length(gmt$genesets)){
     probes <- intersect(gmt$genesets[[gs]], rownames(expr))
-    #browser()
     if(length(probes)>0 && length(probes)<=maxGSsize && length(probes)>=minGSsize){                                                       
     	expr_temp <- t(expr[probes, ])
     	rownames(expr_temp) <- NULL
@@ -262,7 +261,6 @@ function(expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", cr
 	    estim_expr[[gs]] <- NA
 	    cat("The size of the gene set ",  gmt$geneset.names[[gs]], "is problematic (too many or too few genes)\n")
 	}
-    
     cat(paste(gs,"/", length(gmt$genesets)," gene sets analyzed\n", sep=""))
   }
   

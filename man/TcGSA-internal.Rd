@@ -6,10 +6,10 @@
 \alias{TcGSA.formula}
 \title{Internal TcGSA Functions}
 \description{
-  Internal TcGSA functions
+Internal TcGSA functions
 }
 \details{
-  These are not to be called by the user.
+These are not to be called by the user.
 }
 \keyword{internal}
 
