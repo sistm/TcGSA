@@ -51,7 +51,7 @@
 #'data(data_simu_TcGSA)
 #'
 #'tcgsa_sim_1grp <- TcGSA.LR(expr=expr_1grp, gmt=gmt_sim, design=design, 
-#'													 subject_name="Patient_ID", time_name="TimePoint",
+#'                           subject_name="Patient_ID", time_name="TimePoint",
 #'                           time_func="linear", crossedRandom=FALSE)
 #'                           
 #'mtt <- multtest.TcGSA(tcgsa_sim_1grp, threshold = 0.05, 

@@ -244,7 +244,7 @@
 #'
 #'data(data_simu_TcGSA)
 #'tcgsa_sim_1grp <- TcGSA.LR(expr=expr_1grp, gmt=gmt_sim, design=design, 
-#'													 subject_name="Patient_ID", time_name="TimePoint",
+#'                           subject_name="Patient_ID", time_name="TimePoint",
 #'                           time_func="linear", crossedRandom=FALSE)
 #'
 #'plotPat.1GS(expr=expr_1grp, TimePoint=design$TimePoint, Subject_ID=design$Patient_ID, gmt=gmt_sim,
@@ -279,7 +279,7 @@
 #')
 #'par(op)
 #'
-#'
+#'require(ggplot2)
 #'plotPat.1GS(expr=expr_1grp, TimePoint=design$TimePoint, Subject_ID=design$Patient_ID, gmt=gmt_sim,
 #'        geneset.name="Gene set 5",
 #'        time_unit="H",
@@ -288,7 +288,8 @@
 #'        lab.cex=0.7
 #')
 #'
-#'plotPat.1GS(expr=tcgsa_sim_1grp$Estimations, TimePoint=design$TimePoint, Subject_ID=design$Patient_ID, gmt=gmt_sim,
+#'plotPat.1GS(expr=tcgsa_sim_1grp$Estimations, TimePoint=design$TimePoint, 
+#'        Subject_ID=design$Patient_ID, gmt=gmt_sim,
 #'        geneset.name="Gene set 3",
 #'        time_unit="H",
 #'        lab.cex=0.7

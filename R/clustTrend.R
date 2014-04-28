@@ -205,7 +205,7 @@
 #'data(data_simu_TcGSA)
 #'
 #'tcgsa_sim_1grp <- TcGSA.LR(expr=expr_1grp, gmt=gmt_sim, design=design, 
-#'													 subject_name="Patient_ID", time_name="TimePoint",
+#'                           subject_name="Patient_ID", time_name="TimePoint",
 #'                           time_func="linear", crossedRandom=FALSE)
 #'  
 #'CT <- clustTrend(tcgsa_sim_1grp,
@@ -254,7 +254,7 @@ function(x,
   			return(list("cluster"=clus))
   		}
   	}
-# Kmeans: what about missing data?
+# Kmeans: (be careful about about missing data)
 #     FUNcluster <- function(x, k, ...){
 #     	clus <- kmeans(x, centers=k, nstart=1)$cluster
 #     	return(list("cluster"=clus))

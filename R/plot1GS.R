@@ -249,7 +249,7 @@
 #'
 #'data(data_simu_TcGSA)
 #'tcgsa_sim_1grp <- TcGSA.LR(expr=expr_1grp, gmt=gmt_sim, design=design, 
-#'													 subject_name="Patient_ID", time_name="TimePoint",
+#'                           subject_name="Patient_ID", time_name="TimePoint",
 #'                           time_func="linear", crossedRandom=FALSE)
 #'
 #'plot1GS(expr=expr_1grp, TimePoint=design$TimePoint, Subject_ID=design$Patient_ID, gmt=gmt_sim,
@@ -259,13 +259,14 @@
 #'        lab.cex=0.7)
 #'
 #'plot1GS(expr=expr_1grp, TimePoint=design$TimePoint, Subject_ID=design$Patient_ID, gmt=gmt_sim,
-#'        geneset.name="Gene set 4",
+#'        geneset.name="Gene set 5",
 #'        indiv="patients", clustering=FALSE, baseline=1,
 #'        time_unit="H",
 #'        lab.cex=0.7)
 #'        
-#'plot1GS(expr=tcgsa_sim_1grp$Estimations, TimePoint=design$TimePoint, Subject_ID=design$Patient_ID, gmt=gmt_sim,
-#'        geneset.name="Gene set 3",
+#'plot1GS(expr=tcgsa_sim_1grp$Estimations, TimePoint=design$TimePoint, 
+#'        Subject_ID=design$Patient_ID, gmt=gmt_sim,
+#'        geneset.name="Gene set 5",
 #'        indiv="genes",
 #'        time_unit="H",
 #'        lab.cex=0.7
@@ -290,7 +291,7 @@
 #')
 #'par(op)
 #'
-#'
+#'require(ggplot2)
 #'plot1GS(expr=expr_1grp, TimePoint=design$TimePoint, Subject_ID=design$Patient_ID, gmt=gmt_sim,
 #'        geneset.name="Gene set 5",
 #'        indiv="genes",
@@ -529,6 +530,7 @@ plot1GS <-
     )
   }
   for(a in gg.add){
+  	browser()
     p <- p + a
   }
   if(plot){

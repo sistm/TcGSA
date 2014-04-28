@@ -226,7 +226,7 @@ optimal number of clusters in the plotted gene set.  See
 data(data_simu_TcGSA)
 
 tcgsa_sim_1grp <- TcGSA.LR(expr=expr_1grp, gmt=gmt_sim, design=design,
-													 subject_name="Patient_ID", time_name="TimePoint",
+                          subject_name="Patient_ID", time_name="TimePoint",
                           time_func="linear", crossedRandom=FALSE)
 
 CT <- clustTrend(tcgsa_sim_1grp,

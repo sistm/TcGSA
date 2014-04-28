@@ -254,11 +254,12 @@ optimal number of clusters in the plotted gene set.  See
 \examples{
 data(data_simu_TcGSA)
 tcgsa_sim_1grp <- TcGSA.LR(expr=expr_1grp, gmt=gmt_sim, design=design,
-													 subject_name="Patient_ID", time_name="TimePoint",
+                          subject_name="Patient_ID", time_name="TimePoint",
                           time_func="linear", crossedRandom=FALSE)
 
 
-plotSelect.GS(expr=tcgsa_sim_1grp$Estimations, TimePoint=design$TimePoint, Subject_ID=design$Patient_ID, gmt=gmt_sim,
+plotSelect.GS(expr=tcgsa_sim_1grp$Estimations, TimePoint=design$TimePoint,
+       Subject_ID=design$Patient_ID, gmt=gmt_sim,
        geneset.names.select=c("Gene set 3", "Gene set 4", "Gene set 5"),
        Subject_ID.select=c("P1", "P2"),
        display="one GS per page",
@@ -266,7 +267,8 @@ plotSelect.GS(expr=tcgsa_sim_1grp$Estimations, TimePoint=design$TimePoint, Subje
        lab.cex=0.7
 )
 
-plotSelect.GS(expr=tcgsa_sim_1grp$Estimations, TimePoint=design$TimePoint, Subject_ID=design$Patient_ID, gmt=gmt_sim,
+plotSelect.GS(expr=tcgsa_sim_1grp$Estimations, TimePoint=design$TimePoint,
+       Subject_ID=design$Patient_ID, gmt=gmt_sim,
        geneset.names.select=c("Gene set 3", "Gene set 4", "Gene set 5"),
        Subject_ID.select=c("P1", "P2"),
        display="one subject per page",

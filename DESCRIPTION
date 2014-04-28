@@ -5,10 +5,10 @@ Version: 0.9.7
 Date: 2014-04-27
 Authors@R: c(person("Boris P.", "Hejblum", role = c("aut", "cre"),
 		     email = "boris.hejblum@isped.u-bordeaux2.fr"))
-Author: Boris P. Hejblum
-Maintainer: "Boris P. Hejblum" <boris.hejblum@isped.u-bordeaux2.fr>
+Author: Boris P. Hejblum [aut, cre]
+Maintainer: Boris P. Hejblum <boris.hejblum@isped.u-bordeaux2.fr>
 Depends: R (>= 3.1), lme4 (>= 1.0-4)
-Imports: ggplot2, GSA, multtest, reshape2, gplots, cluster, stringr, splines
+Imports: ggplot2, GSA, multtest, reshape2, gtools, gplots, cluster, stringr, splines, grid
 Suggests: doSNOW
 Description: This package implements the TcGSA, an algorithm to analyze longitudinal gene-expression data at the gene set level.
 License: LGPL-3 | file LICENSE

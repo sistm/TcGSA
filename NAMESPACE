@@ -8,8 +8,10 @@ import("gplots")
 importFrom("gtools", mixedorder, invalid)
 import("reshape2")
 import(cluster)
-importFrom("stringr", str_split)
+importFrom("stringr", str_split, str_trim)
 importFrom("splines", ns)
+importFrom("grid", unit)
+
 
 S3method(plot, TcGSA)
 
