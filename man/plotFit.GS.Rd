@@ -1,6 +1,6 @@
 \name{plotFit.GS}
 \alias{plotFit.GS}
-\title{Plotting a Selected Gene Sets in Selected Subjects}
+\title{Plotting function for exploring the fittness of the mixed modeling used in TcGSA}
 \usage{
 plotFit.GS(x, expr, design, subject_name = "Patient_ID",
   time_name = "TimePoint", colnames_ID, plot_type = c("Fit",
@@ -76,23 +76,23 @@ for 1 or several gene sets.
 data(data_simu_TcGSA)
 
 tcgsa_sim_1grp <- TcGSA.LR(expr=expr_1grp, gmt=gmt_sim, design=design,
-													 subject_name="Patient_ID", time_name="TimePoint",
+							 subject_name="Patient_ID", time_name="TimePoint",
                           time_func="linear", crossedRandom=FALSE)
 
 plotFit.GS(x=tcgsa_sim_1grp, expr=expr_1grp, design=design,
 					 subject_name="Patient_ID", time_name="TimePoint",
 					 colnames_ID="Sample_name",
-					 plot_type="Residuals",
+					 plot_type="Residuals Obs",
 					 GeneSetsList=c("Gene set 1", "Gene set 2", "Gene set 3",
 					 "Gene set 4", "Gene set 5"),
-					 color=c("genes", "time", "subjects")
+					 color="genes", gg.add=list(guides(color=FALSE))
 )
 }
 \author{
 Boris P. Hejblum
 }
 \references{
-Hejblum, B.P., Skinner, J., Thiebaut, R., 2013, TcGSA: a
+Hejblum, B.P., Skinner, J., Thiebaut, R., 2014, TcGSA: a
 gene set approach for longitudinal gene expression data
 analysis, \bold{submitted}.
 }

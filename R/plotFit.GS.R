@@ -1,4 +1,4 @@
-#'Plotting a Selected Gene Sets in Selected Subjects
+#'Plotting function for exploring the fittness of the mixed modeling used in TcGSA
 #'
 #'This function plots graphs informing on the fit of the mixed modeling
 #'of the gene expression performed in TcGSA, for 1 or several gene sets.
@@ -58,34 +58,33 @@
 #'
 #'@seealso \code{\link{plot1GS}}, \code{\link{plotSelect.GS}}
 #'
-#'@references Hejblum, B.P., Skinner, J., Thiebaut, R., 2013, TcGSA: a gene set approach for longitudinal gene expression data analysis, \bold{submitted}.
+#'@references Hejblum, B.P., Skinner, J., Thiebaut, R., 2014, TcGSA: a gene set approach for longitudinal gene expression data analysis, \bold{submitted}.
 #'
 #'@examples
 #'
 #'data(data_simu_TcGSA)
 #'
 #'tcgsa_sim_1grp <- TcGSA.LR(expr=expr_1grp, gmt=gmt_sim, design=design, 
-#'													 subject_name="Patient_ID", time_name="TimePoint",
+#'							 subject_name="Patient_ID", time_name="TimePoint",
 #'                           time_func="linear", crossedRandom=FALSE)
 #'                           
 #'plotFit.GS(x=tcgsa_sim_1grp, expr=expr_1grp, design=design,
 #'					 subject_name="Patient_ID", time_name="TimePoint",
 #'					 colnames_ID="Sample_name", 
-#'					 plot_type="Residuals", 
+#'					 plot_type="Residuals Obs", 
 #'					 GeneSetsList=c("Gene set 1", "Gene set 2", "Gene set 3",
 #'					 "Gene set 4", "Gene set 5"),
-#'					 color=c("genes", "time", "subjects")
+#'					 color="genes", gg.add=list(guides(color=FALSE))
 #')
 #'
 
-plotFit.GS <- function(x, expr, 
-											 design, subject_name = "Patient_ID", time_name = "TimePoint",
-											 colnames_ID, 
-											 plot_type=c("Fit", "Residuals Obs", "Residuals Est", "Histogram Obs"),
-											 GeneSetsList,
-											 color=c("genes", "time", "subjects"),
-											 marginal_hist=TRUE,
-											 gg.add=list(theme())){
+plotFit.GS <- function(x, expr, design, subject_name = "Patient_ID", time_name = "TimePoint",
+					   colnames_ID, 
+					   plot_type=c("Fit", "Residuals Obs", "Residuals Est", "Histogram Obs"),
+					   GeneSetsList,
+					   color=c("genes", "time", "subjects"),
+					   marginal_hist=TRUE,
+					   gg.add=list(theme())){
 	
 	gmt <- x[["GeneSets_gmt"]]
 	
@@ -125,28 +124,30 @@ plotFit.GS <- function(x, expr,
 	
 	if(plot_type=="Histogram Obs"){
 		p <- (ggplot(aes(x=Observed), data=data2plot)
-					+ labs(x="Observed expression", y="Count")
-					+ theme_bw()
-					
+			  + labs(x="Observed expression", y="Count")
+			  + theme_bw()
+			  
 		)
 		if(color=="time"){
 			p <- (p + geom_histogram(aes(fill=Time))
-						+ scale_fill_discrete(name="Time point")
-						+ ggtitle(paste(gs, ": ", gmt$geneset.descriptions[interest],"\n Histogram of observed expression", sep=""))
+				  + scale_fill_discrete(name="Time point")
+				  + ggtitle(paste(gs, ": ", gmt$geneset.descriptions[interest],"\n Histogram of observed expression", sep=""))
 			)
 		}else if(color=="genes"){
-			p <- (p + geom_histogram(aes(fill=Probe_ID))			
-						+ scale_fill_discrete(name="Genes")
-						+ ggtitle(paste(gs, ": ", gmt$geneset.descriptions[interest],"\n Histogram of observed expression colored by genes", sep=""))
+			browser()
+			p <- (p + geom_histogram(aes(fill=as.factor(Probe_ID)))			
+				  + scale_fill_discrete(name="Genes")
+				  + ggtitle(paste(gs, ": ", gmt$geneset.descriptions[interest],"\n Histogram of observed expression colored by genes", sep=""))
 			)
 		}else if(color=="subjects"){
 			p <- (p + geom_histogram(aes(fill=Subject))			
-						+ scale_fill_discrete(name="Subjects")
-						+ ggtitle(paste(gs, ": ", gmt$geneset.descriptions[interest],"\n Histogram of observed expression", sep=""))
+				  + scale_fill_discrete(name="Subjects")
+				  + ggtitle(paste(gs, ": ", gmt$geneset.descriptions[interest],"\n Histogram of observed expression", sep=""))
 			)
 		}
 		else{
-			warning("'color' argument must be 'genes' in 'Histogram Obs'")
+			warning("'color' argument must be either 'genes', 'time', 
+					or 'subject' when 'Histogram Obs' are plotted")
 			p <- p + geom_histogram()
 		}
 	}else{
@@ -154,53 +155,50 @@ plotFit.GS <- function(x, expr,
 			plotmin <- min(c(data2plot$Estimated, data2plot$Observed))
 			plotmax <- max(c(data2plot$Estimated, data2plot$Observed))
 			p <- (ggplot(aes(x=Observed, y=Estimated), data=data2plot) 
-						+ geom_smooth(method=lm)
-						+ labs(title=paste(gs, ": ", gmt$geneset.descriptions[interest],"\n Fit", sep=""),
-									 x="Observed expression", y="Fitted expression")
-						+ xlim(plotmin, plotmax)
-						+ ylim(plotmin, plotmax)
-						+ theme_bw()	
+				  + geom_smooth(method=lm)
+				  + labs(title=paste(gs, ": ", gmt$geneset.descriptions[interest],"\n Fit", sep=""),
+				  	   x="Observed expression", y="Fitted expression")
+				  + xlim(plotmin, plotmax)
+				  + ylim(plotmin, plotmax)
+				  + theme_bw()	
 			)
 			if(color=="genes"){
 				p <- p + ggtitle(paste(gs, ": ", gmt$geneset.descriptions[interest],"\n Fit colored by genes", sep=""))
 			}
 		}else if(plot_type=="Residuals Obs"){
-			p <- (ggplot(aes(x=Observed, y=Residuals), data=data2plot) 
-						+ geom_smooth(method=lm)
-						+ labs(title=paste(gs, ": ", gmt$geneset.descriptions[interest],"\n Residuals", sep=""),
-									 x="Observed expression", y="Residuals")
-						+ xlim(min(data2plot$Estimated),max(data2plot$Estimated))
-						+ ylim(-max(abs(data2plot$Residuals)), max(abs(data2plot$Residuals)))
-						+ theme_bw()
+			p <- (ggplot(aes(x=Observed, y=Residuals), data=data2plot)
+				  + labs(title=paste(gs, ": ", gmt$geneset.descriptions[interest],"\n Residuals", sep=""),
+				  	   x="Observed expression", y="Residuals")
+				  #+ xlim(min(data2plot$Observed),max(data2plot$Observed))
+				  #+ ylim(-max(abs(data2plot$Residuals)), max(abs(data2plot$Residuals)))
+				  + theme_bw()
 			)
 			if(color=="genes"){
 				p <- p + ggtitle(paste(gs, ": ", gmt$geneset.descriptions[interest],"\n Residuals colored by genes", sep=""))
 			}
 		}else if(plot_type=="Residuals Est"){
-			p <- (ggplot(aes(x=Estimated, y=Residuals), data=data2plot) 
-						+ geom_smooth(method=lm)
-						+ labs(title=paste(gs, ": ", gmt$geneset.descriptions[interest],"\n Residuals", sep=""),
-									 x="Estimated expression", y="Residuals")
-						+ xlim(min(data2plot$Estimated),max(data2plot$Estimated))
-						+ ylim(-max(abs(data2plot$Residuals)), max(abs(data2plot$Residuals)))
-						+ theme_bw()	
+			p <- (ggplot(aes(x=Estimated, y=Residuals), data=data2plot)
+				  + labs(title=paste(gs, ": ", gmt$geneset.descriptions[interest],"\n Residuals", sep=""),
+				  	   x="Estimated expression", y="Residuals")
+				  #+ xlim(min(data2plot$Estimated),max(data2plot$Estimated))
+				  #+ ylim(-max(abs(data2plot$Residuals)), max(abs(data2plot$Residuals)))
+				  + theme_bw()	
 			)
 			if(color=="genes"){
 				p <- p + ggtitle(paste(gs, ": ", gmt$geneset.descriptions[interest],"\n Residuals colored by genes", sep=""))
 			}
 		}
-		# geom_histogram(aes(fill=Probe_ID)))
 		if(color=="time"){
 			p <- (p + geom_point(aes(color=Time))
-						+ scale_color_discrete(name="Time point")
+				  + scale_color_discrete(name="Time point")
 			)
 		}else if(color=="genes"){
-			p <- (p + geom_point(aes(color=Probe_ID))
-						+ scale_color_discrete(name="Genes")
+			p <- (p + geom_point(aes(color=as.factor(Probe_ID)))
+				  + scale_color_discrete(name="Genes")
 			)
 		}else if(color=="subjects"){
 			p <- (p + geom_point(aes(color=Subject))
-						+ scale_color_discrete(name="Subjects")
+				  + scale_color_discrete(name="Subjects")
 			)
 		}else{
 			warning("wrong 'color' argument")
@@ -209,8 +207,9 @@ plotFit.GS <- function(x, expr,
 	}
 	
 	if(length(GeneSetsList)>1){
-		p <- (p + facet_wrap( ~GS, ncol=floor(sqrt(length(unique(data2plot$GS)))))
-					+ ggtitle(plot_type)
+		p <- (p + facet_wrap( ~GS, ncol=floor(sqrt(length(unique(data2plot$GS)))),
+							  scales="free")
+			  + ggtitle(plot_type)
 		)
 	}
 	
@@ -220,11 +219,17 @@ plotFit.GS <- function(x, expr,
 			p <- p + geom_rug(, col=rgb(0,0,0,alpha=.3))
 		}
 	}else if(plot_type=="Residuals Obs" | plot_type=="Residuals Est" ){
-		p <- p + geom_abline(intercept=0, slope=0, color="red")
+		p <- (p + geom_abline(intercept=0, slope=0, color="red")
+			  + geom_smooth(method=lm))
+		
+	}
+	
+	for(a in gg.add){
+		p <- p + a
 	}
 	
 	return(p)
-
+	
 }
 
 

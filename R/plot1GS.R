@@ -15,8 +15,7 @@
 #'
 #'This function uses the Gap statistics to determine the optimal number of
 #'clusters in the plotted gene set.  See
-#'\code{\link[cluster:clusGap]{clusGap}}. 
-#'@TODO group.var and baseline
+#'\code{\link[cluster:clusGap]{clusGap}}.
 #'
 #'@param expr 
 #'either a matrix or dataframe of gene expression upon which
@@ -55,21 +54,24 @@
 #'a character string which is the value of \code{TimePoint}
 #'that can be used as a baseline.  Default is \code{NULL}, in which case no
 #'timepoint is used as a baseline value for gene expression.  Has to be
-#'\code{NULL} when comparing two treatment groups.  See Details.
+#'\code{NULL} when comparing two treatment groups.
+#'@TODO See Details.
 #'
 #'@param group.var 
 #'in the case of several treatment groups, this is a factor of
 #'length \eqn{p} that is in the same order as \code{Timepoint},
 #'\code{Subject_ID} and the columns of \code{expr}.  It indicates to which
 #'treatment group each sample belongs to.  Default is \code{NULL}, which means
-#'that there is only one treatment group.  See Details.
+#'that there is only one treatment group.  
+#'@TODO See Details.
 #'
 #'@param Group_ID_paired 
 #'a character vector of length \eqn{p} that is in the
 #'same order as \code{Timepoint}, \code{Subject_ID}, \code{group.var} and the
 #'columns of \code{expr}.  This argument must not be \code{NULL} in the case of
 #'a paired analysis, and must be \code{NULL} otherwise.  Default is
-#'\code{NULL}.  See Details.
+#'\code{NULL}.  
+#'@TODO See Details.
 #'
 #'@param ref 
 #'the group which is used as reference in the case of several
@@ -81,8 +83,8 @@
 #'the group of interest, for which dynamics are to be
 #'computed in the case of several treatment groups.  Default is \code{NULL},
 #'which means that group of interest is the second group in alphabetical order
-#'of the labels of \code{group.var}.  See Details.
-#'@TODO Describe \code{group_of_interest} here
+#'of the labels of \code{group.var}.  
+#'@TODO See Details.
 #'
 #'@param FUNcluster 
 #'a function which accepts as first argument a matrix

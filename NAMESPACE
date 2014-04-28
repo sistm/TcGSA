@@ -2,44 +2,14 @@ importFrom("lme4", lmer)
 import("ggplot2")
 importFrom("GSA", GSA.read.gmt)
 importFrom("multtest", mt.rawp2adjp)
-importFrom("gplots", balloonplot,
-					       bandplot,
-					       barplot2,
-					       bluered,
-					       boxplot.n,
-					       ci2d,
-					       col2hex,
-					       colorpanel,
-					       greenred,
-					       heatmap.2,
-					       hist2d,
-					       lowess,
-					       ooplot,
-					       overplot,
-					       panel.overplot,
-					       plot.lm2,
-					       plot.venn,
-					       plotCI,
-					       plotmeans,
-					       qqnorm.aov,
-					       redblue,
-					       redgreen,
-					       residplot,
-					       rich.colors,
-					       sinkplot,
-					       smartlegend,
-					       space,
-					       textplot,
-					       venn
-)
+import("gplots")
 # wapply already loaded in "multtest" 
 # so import("gplots") is incorrect
 importFrom("gtools", mixedorder, invalid)
 import("reshape2")
-import("grid")
-importFrom("splines", ns, bs)
-import("cluster")
+import(cluster)
 importFrom("stringr", str_split)
+importFrom("splines", ns)
 
 S3method(plot, TcGSA)
 

@@ -56,7 +56,7 @@ plotPat.TcGSA(x, threshold = 0.05, myproc = "BY", nbsimu_pval = 1e+06,
   scrutiny and each element should be an 3 dimension array
   of estimated gene expression, such as for the list
   returned in the \code{'Estimations'} element of
-  \code{\link{TcGSA.LR}}.  See details.}
+  \code{\link{TcGSA.LR}}.  See Details.}
 
   \item{Subject_ID}{a factor of length \eqn{p} that is in
   the same order as the columns of \code{expr} (when it is
@@ -70,7 +70,7 @@ plotPat.TcGSA(x, threshold = 0.05, myproc = "BY", nbsimu_pval = 1e+06,
   expression was measured.}
 
   \item{baseline}{a character string which is the value of
-  \code{TimePoint} used as baseline.  See Details.}
+  \code{TimePoint} used as baseline.}
 
   \item{only.signif}{logical flag for plotting only the
   significant gene sets. If \code{FALSE}, all the gene sets
@@ -90,8 +90,7 @@ plotPat.TcGSA(x, threshold = 0.05, myproc = "BY", nbsimu_pval = 1e+06,
   \code{Subject_ID}, \code{sample_name}, \code{group.var}
   and the columns of \code{expr}.  This argument must not
   be \code{NULL} in the case of a paired analysis, and must
-  be \code{NULL} otherwise.  Default is \code{NULL}.  See
-  Details.}
+  be \code{NULL} otherwise.  Default is \code{NULL}.}
 
   \item{ref}{the group which is used as reference in the
   case of several treatment groups.  Default is
@@ -103,8 +102,7 @@ plotPat.TcGSA(x, threshold = 0.05, myproc = "BY", nbsimu_pval = 1e+06,
   dynamics are to be computed in the case of several
   treatment groups.  Default is \code{NULL}, which means
   that group of interest is the second group in
-  alphabetical order of the labels of \code{group.var}.
-  See Details.}
+  alphabetical order of the labels of \code{group.var}.}
 
   \item{FUNcluster}{the clustering function used to
   agglomerate genes in trends.  Default is \code{NULL}, in
@@ -297,27 +295,29 @@ that a cluster plot using this ordering and matrix merge
 will not have crossings of the branches. \item labels the
 gene sets name. \item call the call which produced the
 result clustering: \cr\code{hclust(d = dist(map2heat,
-method = "euclidean"), method = "ward")} \item method
-"ward", as it is the cluster method that is used. \item
-dist.method "euclidean", as it is the distance that has
-been used. \item legend.breaks a numeric vector giving the
-splitting points used for coloring the heatmap.  If
-\code{plot} is \code{FALSE}, then it is \code{NULL}. \item
-myclusters a character vector of colors for clusters of the
-represented genesets, with as many levels as the value of
-\code{N_clusters}. If no clusters were represented, than
-this is \code{NULL}. \item ddr a \bold{dendrogram} object
-with the reordering used for the heatmap.  See
-\code{\link{heatmap.2}}. \item clustersExport a data frame
-with 2 variables containing the two following variables :
-\itemize{ \item \code{GeneSet}: the gene sets clustered.
-\item \code{Cluster}: the cluster they belong to.  } The
-data frame is order by the variable \code{Cluster}. }
+method = "euclidean"), method = "ward.D2")} \item method
+"ward.D2", as it is the clustering method that has been
+used for clustering the gene set trends. \item dist.method
+"euclidean", as it is the distance that has been used for
+clustering the gene set trends. \item legend.breaks a
+numeric vector giving the splitting points used for
+coloring the heatmap.  If \code{plot} is \code{FALSE}, then
+it is \code{NULL}. \item myclusters a character vector of
+colors for clusters of the represented genesets, with as
+many levels as the value of \code{N_clusters}. If no
+clusters were represented, than this is \code{NULL}. \item
+ddr a \bold{dendrogram} object with the reordering used for
+the heatmap.  See \code{\link{heatmap.2}}. \item
+clustersExport a data frame with 2 variables containing the
+two following variables : \itemize{ \item \code{GeneSet}:
+the gene sets clustered.  \item \code{Cluster}: the cluster
+they belong to.  } The data frame is order by the variable
+\code{Cluster}. }
 }
 \description{
 This function plots a series of gene sets dynamic trends
 heatmaps.  One heatmap is drawned for each patient. NOT
-IMPLEMENTED TODO
+IMPLEMENTED YET (TODO)
 }
 \details{
 On the heatmap, each line corresponds to a gene set, and
@@ -370,7 +370,7 @@ plotPat.TcGSA(x=tcgsa_sim_1grp, expr=tcgsa_sim_1grp$Estimations,
 Boris P. Hejblum
 }
 \references{
-Hejblum, B.P., Skinner, J., Thiebaut, R., 2013, TcGSA: a
+Hejblum, B.P., Skinner, J., Thiebaut, R., 2014, TcGSA: a
 gene set approach for longitudinal gene expression data
 analysis, \bold{submitted}.
 }

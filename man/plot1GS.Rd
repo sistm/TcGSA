@@ -51,23 +51,21 @@ plot1GS(expr, gmt, Subject_ID, TimePoint, geneset.name, baseline = NULL,
   \code{TimePoint} that can be used as a baseline.  Default
   is \code{NULL}, in which case no timepoint is used as a
   baseline value for gene expression.  Has to be
-  \code{NULL} when comparing two treatment groups.  See
-  Details.}
+  \code{NULL} when comparing two treatment groups.}
 
   \item{group.var}{in the case of several treatment groups,
   this is a factor of length \eqn{p} that is in the same
   order as \code{Timepoint}, \code{Subject_ID} and the
   columns of \code{expr}.  It indicates to which treatment
   group each sample belongs to.  Default is \code{NULL},
-  which means that there is only one treatment group.  See
-  Details.}
+  which means that there is only one treatment group.}
 
   \item{Group_ID_paired}{a character vector of length
   \eqn{p} that is in the same order as \code{Timepoint},
   \code{Subject_ID}, \code{group.var} and the columns of
   \code{expr}.  This argument must not be \code{NULL} in
   the case of a paired analysis, and must be \code{NULL}
-  otherwise.  Default is \code{NULL}.  See Details.}
+  otherwise.  Default is \code{NULL}.}
 
   \item{ref}{the group which is used as reference in the
   case of several treatment groups.  Default is
@@ -79,8 +77,7 @@ plot1GS(expr, gmt, Subject_ID, TimePoint, geneset.name, baseline = NULL,
   dynamics are to be computed in the case of several
   treatment groups.  Default is \code{NULL}, which means
   that group of interest is the second group in
-  alphabetical order of the labels of \code{group.var}.
-  See Details.}
+  alphabetical order of the labels of \code{group.var}.}
 
   \item{FUNcluster}{a function which accepts as first
   argument a matrix \code{x} and as second argument the

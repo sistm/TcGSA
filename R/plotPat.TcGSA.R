@@ -1,7 +1,7 @@
 #'Plot a Gene Set Trends Heatmap for each Patient.
 #'
 #'This function plots a series of gene sets dynamic trends heatmaps.  One
-#'heatmap is drawned for each patient. NOT IMPLEMENTED TODO
+#'heatmap is drawned for each patient. NOT IMPLEMENTED YET (TODO)
 #'
 #'On the heatmap, each line corresponds to a gene set, and each column to a
 #'timepoint.
@@ -56,7 +56,7 @@
 #'In the case of a list, its length should correspond to the number of gene
 #'sets under scrutiny and each element should be an 3 dimension array of
 #'estimated gene expression, such as for the list returned in the
-#'\code{'Estimations'} element of \code{\link{TcGSA.LR}}.  See details.
+#'\code{'Estimations'} element of \code{\link{TcGSA.LR}}.  See Details.
 #'
 #'@param Subject_ID 
 #'a factor of length \eqn{p} that is in the same order as the
@@ -73,7 +73,8 @@
 #'
 #'@param baseline 
 #'a character string which is the value of \code{TimePoint}
-#'used as baseline.  See Details.
+#'used as baseline.  
+#'@TODO See Details.
 #'
 #'@param only.signif 
 #'logical flag for plotting only the significant gene sets.
@@ -91,7 +92,8 @@
 #'same order as \code{Timepoint}, \code{Subject_ID}, \code{sample_name},
 #'\code{group.var} and the columns of \code{expr}.  This argument must not be
 #'\code{NULL} in the case of a paired analysis, and must be \code{NULL}
-#'otherwise.  Default is \code{NULL}.  See Details.
+#'otherwise.  Default is \code{NULL}.  
+#'@TODO See Details.
 #'
 #'@param ref 
 #'the group which is used as reference in the case of several
@@ -103,8 +105,8 @@
 #'the group of interest, for which dynamics are to be
 #'computed in the case of several treatment groups.  Default is \code{NULL},
 #'which means that group of interest is the second group in alphabetical order
-#'of the labels of \code{group.var}.  See Details.
-#'@TODO Describe \code{group_of_interest} here
+#'of the labels of \code{group.var}.  
+#'@TODO See Details.
 #'
 #'@param FUNcluster 
 #'the clustering function used to agglomerate genes in
@@ -286,10 +288,11 @@
 	#'this ordering and matrix merge will not have crossings of the branches.
 	#'\item labels the gene sets name.
 	#'\item call the call which produced the result clustering:
-	#'\cr\code{hclust(d = dist(map2heat, method = "euclidean"), method = "ward")}
-	#'\item method "ward", as it is the cluster method that is used.
-	#'\item dist.method "euclidean", as it is the distance that has been
-	#'used.
+	#'\cr\code{hclust(d = dist(map2heat, method = "euclidean"), method = "ward.D2")}
+	#'\item method "ward.D2", as it is the clustering method that has been used
+#'for clustering the gene set trends.
+	#'\item dist.method "euclidean", as it is the distance that has been used
+#'for clustering the gene set trends.
 	#'\item legend.breaks a numeric vector giving the splitting points used
 	#'for coloring the heatmap.  If \code{plot} is \code{FALSE}, then it is
 	#'\code{NULL}.
@@ -309,7 +312,7 @@
 #'@seealso \code{\link{plot.TcGSA}}, \code{\link[gplots:heatmap.2]{heatmap.2}},
 #'\code{\link{TcGSA.LR}}, \code{\link{hclust}}
 #'
-#'@references Hejblum, B.P., Skinner, J., Thiebaut, R., 2013, TcGSA: a gene set approach for longitudinal gene expression data analysis, \bold{submitted}.
+#'@references Hejblum, B.P., Skinner, J., Thiebaut, R., 2014, TcGSA: a gene set approach for longitudinal gene expression data analysis, \bold{submitted}.
 #'
 #'@examples
 #'

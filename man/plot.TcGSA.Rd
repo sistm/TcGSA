@@ -313,10 +313,10 @@ will not have crossings of the branches. \item
 \code{labels} the gene set trends name. \item \code{call}
 the call which produced the result clustering:
 \cr\code{hclust(d = dist(map2heat, method = "euclidean"),
-method = "ward")} \item \code{method} "ward", as it is the
-clustering method that has been used for clustering the
-gene set trends. \item \code{dist.method} "euclidean", as
-it is the distance that has been used for clustering the
+method = "ward.D2")} \item \code{method} "ward.D2", as it
+is the clustering method that has been used for clustering
+the gene set trends. \item \code{dist.method} "euclidean",
+as it is the distance that has been used for clustering the
 gene set trends. \item \code{legend.breaks} a numeric
 vector giving the splitting points used for coloring the
 heatmap.  If \code{plot} is \code{FALSE}, then it is
@@ -365,8 +365,6 @@ playing with the ploting parameters for having a nice plot,
 one can run the \code{clustTrend} function beforehand, and
 plug its results in the \code{plot.TcGSA} function via the
 \code{clust_trends} argument.
-
-%TODO
 }
 \examples{
 data(data_simu_TcGSA)
@@ -400,7 +398,7 @@ plot(x=tcgsa_sim_2grp, expr=expr_2grp,
 Boris P. Hejblum
 }
 \references{
-Hejblum, B.P., Skinner, J., Thiebaut, R., 2013, TcGSA: a
+Hejblum, B.P., Skinner, J., Thiebaut, R., 2014, TcGSA: a
 gene set approach for longitudinal gene expression data
 analysis, \bold{submitted}.
 }

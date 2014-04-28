@@ -1,5 +1,6 @@
 \docType{package}
 \name{TcGSA-package}
+\alias{TcGSA}
 \alias{TcGSA-package}
 \title{Time-course Gene Set Analysis}
 \description{
@@ -8,7 +9,7 @@ longitudinal gene-expression data at the gene set level.
 }
 \details{
 \tabular{ll}{ Package: \tab TcGSA\cr Type: \tab Package\cr
-Version: \tab 0.9.62\cr Date: \tab 2014-02-18\cr
+Version: \tab 0.9.7\cr Date: \tab 2014-04-27\cr
 License:\tab
 \href{http://www.gnu.org/licenses/lgpl.txt}{LGPL-3}\cr }
 The main function in this package is \code{\link{TcGSA.LR}}
@@ -17,10 +18,10 @@ nice representations of its results (see
 \code{\link{plot.TcGSA}} and \code{\link{plot1GS}}).
 }
 \author{
-Boris P. Hejblum Maintainer: Boris P. Hejblum
+Boris P. Hejblum --- Maintainer: Boris P. Hejblum
 }
 \references{
-Hejblum, B.P., Skinner, J., Thiebaut, R., 2013, TcGSA: a
+Hejblum, B.P., Skinner, J., Thiebaut, R., 2014, TcGSA: a
 gene set approach for longitudinal gene expression data
 analysis, \bold{submitted}.
 }

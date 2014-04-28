@@ -178,6 +178,7 @@ tcgsa_sim_1grp <- TcGSA.LR(expr=expr_1grp, gmt=gmt_sim, design=design,
                           time_func="linear", crossedRandom=FALSE)
 
 \dontrun{
+require(doSNOW)
 tcgsa_sim_1grp <- TcGSA.LR.parallel(Ncpus = 2, type_connec = 'SOCK',
 																		expr=expr_1grp, gmt=gmt_sim, design=design,
 													 					subject_name="Patient_ID", time_name="TimePoint",
@@ -190,7 +191,7 @@ summary(tcgsa_sim_1grp)
 Boris P. Hejblum
 }
 \references{
-Hejblum, B.P., Skinner, J., Thiebaut, R., 2013, TcGSA: a
+Hejblum, B.P., Skinner, J., Thiebaut, R., 2014, TcGSA: a
 gene set approach for longitudinal gene expression data
 analysis, \bold{submitted}.
 }

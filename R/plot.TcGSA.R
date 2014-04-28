@@ -21,7 +21,6 @@
 #'one can run the \code{clustTrend} function beforehand, and plug its results 
 #'in the \code{plot.TcGSA} function via the \code{clust_trends} argument.
 #'
-#'%TODO
 #'
 #'@method plot TcGSA
 #'
@@ -299,8 +298,8 @@
 #'this ordering and matrix merge will not have crossings of the branches.
 #'\item \code{labels} the gene set trends name.
 #'\item \code{call} the call which produced the result clustering:
-#'\cr\code{hclust(d = dist(map2heat, method = "euclidean"), method = "ward")}
-#'\item \code{method} "ward", as it is the clustering method that has been used
+#'\cr\code{hclust(d = dist(map2heat, method = "euclidean"), method = "ward.D2")}
+#'\item \code{method} "ward.D2", as it is the clustering method that has been used
 #'for clustering the gene set trends.
 #'\item \code{dist.method} "euclidean", as it is the distance that has been used
 #'for clustering the gene set trends.
@@ -328,7 +327,7 @@
 #'@seealso \code{\link[gplots:heatmap.2]{heatmap.2}}, \code{\link{TcGSA.LR}},
 #'\code{\link{hclust}}
 #'
-#'@references Hejblum, B.P., Skinner, J., Thiebaut, R., 2013, TcGSA: a gene set approach for longitudinal gene expression data analysis, \bold{submitted}.
+#'@references Hejblum, B.P., Skinner, J., Thiebaut, R., 2014, TcGSA: a gene set approach for longitudinal gene expression data analysis, \bold{submitted}.
 #'
 #'@examples
 #'
@@ -503,7 +502,7 @@ plot.TcGSA <-
     # map2heat <-  map2heat[grep("]:", rownames(map2heat)), ] # selects only annotated gene sets
     
     if(is.null(prev_rowCL)){
-      hc <- hclust(d=dist(map2heat, method = "euclidean"), method="ward")
+      hc <- hclust(d=dist(map2heat, method = "euclidean"), method="ward.D2")
       row_wt <- rowMeans(x=map2heat, na.rm = TRUE)
       ddr <- reorder(x=as.dendrogram(hc), wts=row_wt)
     }else{
@@ -533,8 +532,8 @@ plot.TcGSA <-
     
     if(plot){
       
-      myhclustward<- function(d, method = "ward", members=NULL){
-        hclust(d, method = "ward", members=NULL)
+      myhclustward<- function(d, method = "ward.D2", members=NULL){
+        hclust(d, method = "ward.D2", members=NULL)
       }
       
       if(is.null(N_clusters)){
@@ -660,5 +659,5 @@ plot.TcGSA <-
     
     hc$clusterExport <- clustersExport
     
-    return(hc)
+    invisible(hc)
   }
