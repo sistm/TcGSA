@@ -9,7 +9,7 @@ longitudinal gene-expression data at the gene set level.
 }
 \details{
 \tabular{ll}{ Package: \tab TcGSA\cr Type: \tab Package\cr
-Version: \tab 0.9.7\cr Date: \tab 2014-04-27\cr
+Version: \tab 0.9.8\cr Date: \tab 2014-04-28\cr
 License:\tab
 \href{http://www.gnu.org/licenses/lgpl.txt}{LGPL-3}\cr }
 The main function in this package is \code{\link{TcGSA.LR}}

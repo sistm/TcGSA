@@ -20,8 +20,7 @@ TcGSA.LR(expr, gmt, design, subject_name = "Patient_ID",
   definition.  See
   \code{\link[GSA:GSA.read.gmt]{GSA.read.gmt}} and
   definition on
-  \href{www.broadinstitute.org}{www.broadinstitute.org}
-  (\url{http://www.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#GMT:_Gene_Matrix_Transposed_file_format_.28.2A.gmt.29GMT}).}
+  \href{http://www.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats}{www.broadinstitute.org}.}
 
   \item{design}{a matrix or dataframe containing the
   experimental variables that used in the model, namely
@@ -163,19 +162,25 @@ tcgsa_sim_1grp <- TcGSA.LR(expr=expr_1grp, gmt=gmt_sim, design=design,
                           time_func="linear", crossedRandom=FALSE)
 tcgsa_sim_1grp
 summary(tcgsa_sim_1grp)
+
+
+\dontrun{
 plot(x=tcgsa_sim_1grp, expr=expr_1grp,
     Subject_ID=design$Patient_ID, TimePoint=design$TimePoint,
     baseline=1,
     B=100,
     time_unit="H"
     )
+}
 
-
+\dontrun{
 tcgsa_sim_2grp <- TcGSA.LR(expr=expr_2grp, gmt=gmt_sim, design=design,
                           subject_name="Patient_ID", time_name="TimePoint",
                           time_func="linear", crossedRandom=FALSE,
                           group_name="group.var")
 tcgsa_sim_2grp
+
+}
 }
 \author{
 Boris P. Hejblum
@@ -186,6 +191,8 @@ gene set approach for longitudinal gene expression data
 analysis, \bold{submitted}.
 }
 \seealso{
-\code{\link{summary.TcGSA}}, \code{\link{plot.TcGSA}}
+\code{\link{summary.TcGSA}}, \code{\link{plot.TcGSA}}, and
+\code{\link{TcGSA.LR.parallel}} for an implementation using
+parallel computing
 }
 

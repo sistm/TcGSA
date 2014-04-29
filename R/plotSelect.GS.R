@@ -30,7 +30,7 @@
 #'@param gmt 
 #'a \bold{gmt} object containing the gene sets definition.  See
 #'\code{\link[GSA:GSA.read.gmt]{GSA.read.gmt}} and
-#'definition on \href{http://www.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#GMT:_Gene_Matrix_Transposed_file_format_.28.2A.gmt.29}{www.broadinstitute.org}.
+#'definition on \href{http://www.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats}{www.broadinstitute.org}.
 #'
 #'@param Subject_ID 
 #'a factor of length \eqn{p} that is in the same order as the
@@ -252,12 +252,14 @@
 #'
 #'@examples
 #'
+#'\dontrun{ 
 #'data(data_simu_TcGSA)
 #'tcgsa_sim_1grp <- TcGSA.LR(expr=expr_1grp, gmt=gmt_sim, design=design, 
 #'                           subject_name="Patient_ID", time_name="TimePoint",
 #'                           time_func="linear", crossedRandom=FALSE)
+#'}
 #'
-#'
+#'\dontrun{ 
 #'plotSelect.GS(expr=tcgsa_sim_1grp$Estimations, TimePoint=design$TimePoint, 
 #'        Subject_ID=design$Patient_ID, gmt=gmt_sim,
 #'        geneset.names.select=c("Gene set 3", "Gene set 4", "Gene set 5"),
@@ -266,7 +268,9 @@
 #'        time_unit="H",
 #'        lab.cex=0.7
 #')
+#'}
 #'
+#'\dontrun{ 
 #'plotSelect.GS(expr=tcgsa_sim_1grp$Estimations, TimePoint=design$TimePoint, 
 #'        Subject_ID=design$Patient_ID, gmt=gmt_sim,
 #'        geneset.names.select=c("Gene set 3", "Gene set 4", "Gene set 5"),
@@ -275,33 +279,30 @@
 #'        time_unit="H",
 #'        lab.cex=0.7
 #')
+#'}
 #'
 plotSelect.GS <- 
 	function(expr, gmt, Subject_ID, TimePoint, 
-					 geneset.names.select, Subject_ID.select,
-					 display="one subject per page",
-					 baseline=NULL,
-					 group.var=NULL, Group_ID_paired=NULL, ref=NULL, group_of_interest=NULL,
-					 FUNcluster=NULL, clustering_metric="euclidian", clustering_method="ward", B=500,
-					 max_trends=4, aggreg.fun="median", trend.fun="median",
-					 methodOptiClust = "firstSEmax",
-					 #indiv="genes",
-					 verbose=TRUE,
-					 clustering=TRUE, 
-					 #showTrend=TRUE, smooth=TRUE,
-					 time_unit="", title=NULL, y.lab=NULL, desc=TRUE,
-					 lab.cex=1, axis.cex=1, main.cex=1, y.lab.angle=90, x.axis.angle=45,
-					 y.lim=NULL, x.lim=NULL, 
-					 gg.add=list(theme())
+			 geneset.names.select, Subject_ID.select,
+			 display="one subject per page",
+			 baseline=NULL,
+			 group.var=NULL, Group_ID_paired=NULL, ref=NULL, group_of_interest=NULL,
+			 FUNcluster=NULL, clustering_metric="euclidian", clustering_method="ward", B=500,
+			 max_trends=4, aggreg.fun="median", trend.fun="median",
+			 methodOptiClust = "firstSEmax",
+			 #indiv="genes",
+			 verbose=TRUE,
+			 clustering=TRUE, 
+			 #showTrend=TRUE, smooth=TRUE,
+			 time_unit="", title=NULL, y.lab=NULL, desc=TRUE,
+			 lab.cex=1, axis.cex=1, main.cex=1, y.lab.angle=90, x.axis.angle=45,
+			 y.lim=NULL, x.lim=NULL, 
+			 gg.add=list(theme())
 	){
-		
-		#   library(ggplot2)
-		#   library(cluster)
-		#   library(splines)
 		capwords <- function(s, strict = FALSE){
 			cap <- function(s){
 				paste(toupper(substring(s,1,1)),{s <- substring(s,2); if(strict) tolower(s) else s},
-							sep = "", collapse = " ")
+					  sep = "", collapse = " ")
 			}
 			sapply(strsplit(s, split = " "), cap, USE.NAMES = !is.null(names(s)))
 		}
@@ -310,20 +311,19 @@ plotSelect.GS <-
 			tapply(X, INDEX=index, FUN = fun)
 		}
 		
+		
 		if(is.null(FUNcluster)){
-			if(clustering_metric!="sts"){
-				FUNcluster <- function(x, k, ...){
-					clus <- cutree(agnes(x, method=clustering_method, metric=clustering_metric, ...), k=k)
-					return(list("cluster"=clus))
-				}
-			}
-			else{
-				FUNcluster <- function(x, k, time, ...){
-					d <- STSdist(m=x, time = time)
-					clus <- cutree(agnes(d, ...), k=k)
-					return(list("cluster"=clus))
-				}
-			}
+			FUNcluster <- switch(EXPR=clustering_metric,
+								 sts= function(x, k, time, ...){
+								 	d <- STSdist(m=x, time = time)
+								 	clus <- cutree(agnes(d, ...), k=k)
+								 	return(list("cluster"=clus))
+								 },
+								 function(x, k, ...){
+								 	clus <- cutree(agnes(x, method=clustering_method, metric=clustering_metric, ...), k=k)
+								 	return(list("cluster"=clus))
+								 }
+			)
 		}
 		if(!is.function(FUNcluster)){
 			stop("the 'FUNcluster' supplied is not a function")
@@ -338,7 +338,7 @@ plotSelect.GS <-
 			}
 		}
 		
-			
+		
 		interest <- match(geneset.names.select, gmt$geneset.names)
 		if(length(interest)==0){
 			stop("The 'geneset.name' supplied is not in the 'gmt'")
@@ -383,17 +383,17 @@ plotSelect.GS <-
 		subj_temp <- NULL
 		for(gs in geneset.names.select){
 			all_clust[[gs]] <- plot1GS(expr, gmt, Subject_ID,TimePoint, geneset.name=gs, 
-													 baseline, group.var, Group_ID_paired, ref, group_of_interest,
-													 FUNcluster, clustering_metric, clustering_method, B,
-													 max_trends, aggreg.fun, trend.fun,
-													 methodOptiClust,
-													 indiv="genes",
-													 verbose,
-													 clustering, showTrend=FALSE, smooth=FALSE,
-													 time_unit, title, y.lab, desc,
-													 lab.cex, axis.cex, main.cex, y.lab.angle, x.axis.angle,
-													 y.lim, x.lim, 
-													 gg.add, plot=FALSE)
+									   baseline, group.var, Group_ID_paired, ref, group_of_interest,
+									   FUNcluster, clustering_metric, clustering_method, B,
+									   max_trends, aggreg.fun, trend.fun,
+									   methodOptiClust,
+									   indiv="genes",
+									   verbose,
+									   clustering, showTrend=FALSE, smooth=FALSE,
+									   time_unit, title, y.lab, desc,
+									   lab.cex, axis.cex, main.cex, y.lab.angle, x.axis.angle,
+									   y.lim, x.lim, 
+									   gg.add, plot=FALSE)
 			rownames(all_clust[[gs]]) <- all_clust[[gs]]$ProbeID
 			clust[[gs]] <- all_clust[[gs]][rownames(data_stand[[gs]]), "Cluster"]
 			
@@ -401,11 +401,11 @@ plotSelect.GS <-
 			for (p in Subject_ID.select){
 				sample_sel <- which(Subject_ID==p)
 				data2melt <- cbind.data.frame("Probe_ID"=rownames(data_stand[[gs]][, sample_sel]), 
-																			"Cluster"=clust[[gs]], "GS"=rep(gs, dim(data_stand[[gs]])[1]), 
-																			data_stand[[gs]][, sample_sel])
+											  "Cluster"=clust[[gs]], "GS"=rep(gs, dim(data_stand[[gs]])[1]), 
+											  data_stand[[gs]][, sample_sel])
 				colnames(data2melt) <- c("Probe_ID", "Cluster", "GS", TimePoint[sample_sel])
 				melted_temp <- melt(data2melt, id.vars=c("Probe_ID", "Cluster", "GS"), 
-														variable.name="TimePoint")
+									variable.name="TimePoint")
 				meltedData <- rbind(meltedData, melted_temp)
 				subj_temp <- c(subj_temp, rep(p, dim(melted_temp)[1]))
 			}
@@ -417,7 +417,7 @@ plotSelect.GS <-
 		rm(list=c("melted_temp", "subj_temp"))
 		
 		
-
+		
 		
 		
 		
@@ -447,7 +447,7 @@ plotSelect.GS <-
 					lab.cex <- lab.cex*0.5
 					axis.cex <- axis.cex*0.5
 				}else{
-					mytitle <- paste(geneset.name, "\n genes \n", sep="")
+					mytitle <- paste(geneset.names.select, "\n genes \n", sep="")
 				}
 				mytitle <- as.list(mytitle)
 				names(mytitle) <- geneset.names.select			
@@ -461,39 +461,39 @@ plotSelect.GS <-
 			
 			for (gs in geneset.names.select){
 				meltedData2plot <- meltedData[which(meltedData$GS==gs),]
-				p <- (ggplot(meltedData2plot, aes(x=TimePoint, y=value)) 
-							+ geom_hline(aes(y = 0), linetype=1, colour='grey50', size=0.4)
-							+ facet_wrap( ~Subject_ID, ncol=floor(sqrt(length(unique(meltedData$Subject_ID)))))
+				p <- (ggplot(meltedData2plot, aes_string(x="TimePoint", y="value")) 
+					  + geom_hline(aes(y = 0), linetype=1, colour='grey50', size=0.4)
+					  + facet_wrap( ~Subject_ID, ncol=floor(sqrt(length(unique(meltedData$Subject_ID)))))
 				)
 				
 				if(!clustering){
 					p <- (p
-								+ geom_line(aes(group=Probe_ID, colour=Probe_ID), size=0.7)
-								+ scale_colour_manual(guide='none', name='probe ID', values=rainbow(length(select_probe)))
+						  + geom_line(aes_string(group="Probe_ID", colour="Probe_ID"), size=0.7)
+						  + scale_colour_manual(guide='none', name='probe ID', values=rainbow(length(select_probe)))
 					)
 				}else{
 					p <- (p
-								+ geom_line(aes(group=Probe_ID, colour=Cluster), size=0.7)
-								+ guides(colour = guide_legend(override.aes=list(size=1, fill="white"), keywidth=2*lab.cex, 
-																							 title.theme=element_text(size = 15*lab.cex, angle=0),
-																							 label.theme=element_text(size = 9*lab.cex, angle=0)
-								)
-								)
+						  + geom_line(aes_string(group="Probe_ID", colour="Cluster"), size=0.7)
+						  + guides(colour = guide_legend(override.aes=list(size=1, fill="white"), keywidth=2*lab.cex, 
+						  							   title.theme=element_text(size = 15*lab.cex, angle=0),
+						  							   label.theme=element_text(size = 9*lab.cex, angle=0)
+						  )
+						  )
 					)
 				}
 				
 				p <- (p
-							+ ylab(y.lab)
-							+ xlab('Time')
-							+ ggtitle(mytitle[[gs]])
-							+ theme(plot.title=element_text(size = 35*main.cex))
-							+ theme(panel.grid.minor = element_blank(), panel.grid.major = element_blank(), panel.background = element_rect(colour='grey40', fill = 'white'))
-							+ ylim(y.min, y.max)
-							+ xlim(x.lim)
-							+ theme(axis.title.y = element_text(size = 25*lab.cex, angle = y.lab.angle, vjust=0.3), axis.text.y = element_text(size=18*axis.cex, colour = 'grey40')) 
-							+ theme(axis.title.x = element_text(size = 25*lab.cex, angle = 0, vjust=-0.9), axis.text.x = element_text(size=18*axis.cex, colour = 'grey40', angle=x.axis.angle, vjust=0.5, hjust=0.5))
-							+ theme(plot.margin=unit(c(0.5, 0.5, 0.7, 1), 'lines'))
-							+ theme(legend.key=element_rect(fill="white"))
+					  + ylab(y.lab)
+					  + xlab('Time')
+					  + ggtitle(mytitle[[gs]])
+					  + theme(plot.title=element_text(size = 35*main.cex))
+					  + theme(panel.grid.minor = element_blank(), panel.grid.major = element_blank(), panel.background = element_rect(colour='grey40', fill = 'white'))
+					  + ylim(y.min, y.max)
+					  + xlim(x.lim)
+					  + theme(axis.title.y = element_text(size = 25*lab.cex, angle = y.lab.angle, vjust=0.3), axis.text.y = element_text(size=18*axis.cex, colour = 'grey40')) 
+					  + theme(axis.title.x = element_text(size = 25*lab.cex, angle = 0, vjust=-0.9), axis.text.x = element_text(size=18*axis.cex, colour = 'grey40', angle=x.axis.angle, vjust=0.5, hjust=0.5))
+					  + theme(plot.margin=unit(c(0.5, 0.5, 0.7, 1), 'lines'))
+					  + theme(legend.key=element_rect(fill="white"))
 				)
 				
 				for(a in gg.add){
@@ -523,39 +523,39 @@ plotSelect.GS <-
 			
 			for (sid in Subject_ID.select){
 				meltedData2plot <- meltedData[which(meltedData$Subject_ID==sid), ]
-				p <- (ggplot(meltedData2plot, aes(x=TimePoint, y=value)) 
-							+ geom_hline(aes(y = 0), linetype=1, colour='grey50', size=0.4)
-							+ facet_wrap( ~GS, ncol=floor(sqrt(length(unique(meltedData$GS)))))
+				p <- (ggplot(meltedData2plot, aes_string(x="TimePoint", y="value")) 
+					  + geom_hline(aes(y = 0), linetype=1, colour='grey50', size=0.4)
+					  + facet_wrap( ~GS, ncol=floor(sqrt(length(unique(meltedData$GS)))))
 				)
 				
 				if(!clustering){
 					p <- (p
-								+ geom_line(aes(group=Probe_ID, colour=Probe_ID), size=0.7)
-								+ scale_colour_manual(guide='none', name='probe ID', values=rainbow(length(select_probe)))
+						  + geom_line(aes_string(group="Probe_ID", colour="Probe_ID"), size=0.7)
+						  + scale_colour_manual(guide='none', name='probe ID', values=rainbow(length(select_probe)))
 					)
 				}else{
 					p <- (p
-								+ geom_line(aes(group=Probe_ID, colour=Cluster), size=0.7)
-								+ guides(colour = guide_legend(override.aes=list(size=1, fill="white"), keywidth=2*lab.cex, 
-																							 title.theme=element_text(size = 15*lab.cex, angle=0),
-																							 label.theme=element_text(size = 9*lab.cex, angle=0)
-								)
-								)
+						  + geom_line(aes_string(group="Probe_ID", colour="Cluster"), size=0.7)
+						  + guides(colour = guide_legend(override.aes=list(size=1, fill="white"), keywidth=2*lab.cex, 
+						  							   title.theme=element_text(size = 15*lab.cex, angle=0),
+						  							   label.theme=element_text(size = 9*lab.cex, angle=0)
+						  )
+						  )
 					)
 				}
 				
 				p <- (p
-							+ ylab(y.lab)
-							+ xlab('Time')
-							+ ggtitle(mytitle[[sid]])
-							+ theme(plot.title=element_text(size = 35*main.cex))
-							+ theme(panel.grid.minor = element_blank(), panel.grid.major = element_blank(), panel.background = element_rect(colour='grey40', fill = 'white'))
-							+ ylim(y.min, y.max)
-							+ xlim(x.lim)
-							+ theme(axis.title.y = element_text(size = 25*lab.cex, angle = y.lab.angle, vjust=0.3), axis.text.y = element_text(size=18*axis.cex, colour = 'grey40')) 
-							+ theme(axis.title.x = element_text(size = 25*lab.cex, angle = 0, vjust=-0.9), axis.text.x = element_text(size=18*axis.cex, colour = 'grey40', angle=x.axis.angle, vjust=0.5, hjust=0.5))
-							+ theme(plot.margin=unit(c(0.5, 0.5, 0.7, 1), 'lines'))
-							+ theme(legend.key=element_rect(fill="white"))
+					  + ylab(y.lab)
+					  + xlab('Time')
+					  + ggtitle(mytitle[[sid]])
+					  + theme(plot.title=element_text(size = 35*main.cex))
+					  + theme(panel.grid.minor = element_blank(), panel.grid.major = element_blank(), panel.background = element_rect(colour='grey40', fill = 'white'))
+					  + ylim(y.min, y.max)
+					  + xlim(x.lim)
+					  + theme(axis.title.y = element_text(size = 25*lab.cex, angle = y.lab.angle, vjust=0.3), axis.text.y = element_text(size=18*axis.cex, colour = 'grey40')) 
+					  + theme(axis.title.x = element_text(size = 25*lab.cex, angle = 0, vjust=-0.9), axis.text.x = element_text(size=18*axis.cex, colour = 'grey40', angle=x.axis.angle, vjust=0.5, hjust=0.5))
+					  + theme(plot.margin=unit(c(0.5, 0.5, 0.7, 1), 'lines'))
+					  + theme(legend.key=element_rect(fill="white"))
 				)
 				
 				for(a in gg.add){
@@ -581,14 +581,14 @@ plotSelect.GS <-
 		} else if(display=="median over selected patients"){
 			
 			stop("'median over selected patients' option for argument 'display' is not implemented yet'")
-		
+			
 		}else{
 			stop("argument 'display' is not one of the following:\n
 					 'one GS per page', 'one patient per page' or 'median over selected patients'")
 			
 		}
 		
-
+		
 		invisible(clust)
 	}
 

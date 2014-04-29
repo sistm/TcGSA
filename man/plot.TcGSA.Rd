@@ -382,7 +382,7 @@ plot(x=tcgsa_sim_1grp, expr=tcgsa_sim_1grp$Estimations,
     dendrogram.size=0.4, heatmap.width=0.8, heatmap.height=2, cex.main=0.7
     )
 
-
+\dontrun{
 tcgsa_sim_2grp <- TcGSA.LR(expr=expr_2grp, gmt=gmt_sim, design=design,
                           subject_name="Patient_ID", time_name="TimePoint",
                           time_func="linear", crossedRandom=FALSE,
@@ -393,6 +393,7 @@ plot(x=tcgsa_sim_2grp, expr=expr_2grp,
     B=100,
     time_unit="H",
     )
+}
 }
 \author{
 Boris P. Hejblum

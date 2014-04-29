@@ -25,7 +25,7 @@
 #'
 #'@param type_connec The type of connection between the processors. Supported
 #'cluster types are \code{"SOCK"}, \code{"PVM"}, \code{"MPI"}, and
-#'\code{"NWS"}. See also \code{\link{makeCluster}}.
+#'\code{"NWS"}. See also \code{\link[parallel:makeCluster]{makeCluster}}.
 #'
 #'@param expr 
 #'a matrix or dataframe of gene expression.  Its dimension are
@@ -35,8 +35,7 @@
 #'@param gmt 
 #'a \bold{gmt} object containing the gene sets definition.  See
 #'\code{\link[GSA:GSA.read.gmt]{GSA.read.gmt}} and definition on 
-#'\href{www.broadinstitute.org}{www.broadinstitute.org} 
-#'(\url{http://www.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#GMT:_Gene_Matrix_Transposed_file_format_.28.2A.gmt.29GMT}).
+#'\href{http://www.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats}{www.broadinstitute.org}.
 #'
 #'@param design
 #'a matrix or dataframe containing the experimental variables that used in the model,
@@ -110,7 +109,7 @@
 #'significant trend over time.  Default is \code{FALSE}.  See Details.
 #'
 #'@param monitorfile
-#'a writable \link{connection} or a character string naming a file to write into, 
+#'a writable \link{connections} or a character string naming a file to write into, 
 #'to monitor the progress of the analysis.  
 #'Default is \code{""} which is no monitoring.  See Details.
 #'
@@ -163,7 +162,8 @@
 #'tcgsa_sim_1grp <- TcGSA.LR.parallel(Ncpus = 2, type_connec = 'SOCK',
 #'                             expr=expr_1grp, gmt=gmt_sim, design=design, 
 #'                             subject_name="Patient_ID", time_name="TimePoint",
-#'                             time_func="linear", crossedRandom=FALSE, separateSubjects=TRUE)
+#'                             time_func="linear", crossedRandom=FALSE, 
+#'                             separateSubjects=TRUE)
 #'}
 #'tcgsa_sim_1grp
 #'summary(tcgsa_sim_1grp)

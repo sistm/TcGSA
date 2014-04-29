@@ -15,7 +15,7 @@ TcGSA.LR.parallel(Ncpus, type_connec, expr, gmt, design,
   \item{type_connec}{The type of connection between the
   processors. Supported cluster types are \code{"SOCK"},
   \code{"PVM"}, \code{"MPI"}, and \code{"NWS"}. See also
-  \code{\link{makeCluster}}.}
+  \code{\link[parallel:makeCluster]{makeCluster}}.}
 
   \item{expr}{a matrix or dataframe of gene expression.
   Its dimension are \eqn{n}x\eqn{p}, with the \eqn{p}
@@ -25,8 +25,7 @@ TcGSA.LR.parallel(Ncpus, type_connec, expr, gmt, design,
   definition.  See
   \code{\link[GSA:GSA.read.gmt]{GSA.read.gmt}} and
   definition on
-  \href{www.broadinstitute.org}{www.broadinstitute.org}
-  (\url{http://www.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#GMT:_Gene_Matrix_Transposed_file_format_.28.2A.gmt.29GMT}).}
+  \href{http://www.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats}{www.broadinstitute.org}.}
 
   \item{design}{a matrix or dataframe containing the
   experimental variables that used in the model, namely
@@ -110,7 +109,7 @@ TcGSA.LR.parallel(Ncpus, type_connec, expr, gmt, design,
   rather than gene sets than have a significant trend over
   time.  Default is \code{FALSE}.  See Details.}
 
-  \item{monitorfile}{a writable \link{connection} or a
+  \item{monitorfile}{a writable \link{connections} or a
   character string naming a file to write into, to monitor
   the progress of the analysis. Default is \code{""} which
   is no monitoring.  See Details.}
@@ -182,7 +181,8 @@ require(doSNOW)
 tcgsa_sim_1grp <- TcGSA.LR.parallel(Ncpus = 2, type_connec = 'SOCK',
                             expr=expr_1grp, gmt=gmt_sim, design=design,
                             subject_name="Patient_ID", time_name="TimePoint",
-                            time_func="linear", crossedRandom=FALSE, separateSubjects=TRUE)
+                            time_func="linear", crossedRandom=FALSE,
+                            separateSubjects=TRUE)
 }
 tcgsa_sim_1grp
 summary(tcgsa_sim_1grp)

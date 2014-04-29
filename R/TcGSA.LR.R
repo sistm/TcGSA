@@ -21,8 +21,7 @@
 #'@param gmt 
 #'a \bold{gmt} object containing the gene sets definition.  See
 #'\code{\link[GSA:GSA.read.gmt]{GSA.read.gmt}} and definition on 
-#'\href{www.broadinstitute.org}{www.broadinstitute.org} 
-#'(\url{http://www.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#GMT:_Gene_Matrix_Transposed_file_format_.28.2A.gmt.29GMT}).
+#'\href{http://www.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats}{www.broadinstitute.org}.
 #'
 #'@param design
 #'a matrix or dataframe containing the experimental variables that used in the model,
@@ -128,7 +127,9 @@
 #'
 #'@author Boris P. Hejblum
 #'
-#'@seealso \code{\link{summary.TcGSA}}, \code{\link{plot.TcGSA}}
+#'@seealso \code{\link{summary.TcGSA}}, \code{\link{plot.TcGSA}}, 
+#'and \code{\link{TcGSA.LR.parallel}} for an implementation using 
+#'parallel computing
 #'
 #'@references Hejblum, B.P., Skinner, J., Thiebaut, R., 2014, TcGSA: a gene set approach for longitudinal gene expression data analysis, \bold{submitted}.
 #'
@@ -141,20 +142,25 @@
 #'                           time_func="linear", crossedRandom=FALSE)
 #'tcgsa_sim_1grp
 #'summary(tcgsa_sim_1grp)
+#'
+#'
+#'\dontrun{ 
 #'plot(x=tcgsa_sim_1grp, expr=expr_1grp, 
 #'     Subject_ID=design$Patient_ID, TimePoint=design$TimePoint,
 #'     baseline=1, 
 #'     B=100,
 #'     time_unit="H"
 #'     )
-#'     
-#'     
+#'}     
+#' 
+#'\dontrun{    
 #'tcgsa_sim_2grp <- TcGSA.LR(expr=expr_2grp, gmt=gmt_sim, design=design,
 #'                           subject_name="Patient_ID", time_name="TimePoint",
 #'                           time_func="linear", crossedRandom=FALSE, 
 #'                           group_name="group.var")
 #'tcgsa_sim_2grp
 #'
+#'}
 
 TcGSA.LR <-
 function(expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", crossedRandom=FALSE,

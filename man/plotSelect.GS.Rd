@@ -30,7 +30,7 @@ plotSelect.GS(expr, gmt, Subject_ID, TimePoint, geneset.names.select,
   definition.  See
   \code{\link[GSA:GSA.read.gmt]{GSA.read.gmt}} and
   definition on
-  \href{http://www.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#GMT:_Gene_Matrix_Transposed_file_format_.28.2A.gmt.29}{www.broadinstitute.org}.}
+  \href{http://www.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats}{www.broadinstitute.org}.}
 
   \item{Subject_ID}{a factor of length \eqn{p} that is in
   the same order as the columns of \code{expr} (when it is
@@ -252,12 +252,14 @@ optimal number of clusters in the plotted gene set.  See
 \code{\link[cluster:clusGap]{clusGap}}.
 }
 \examples{
+\dontrun{
 data(data_simu_TcGSA)
 tcgsa_sim_1grp <- TcGSA.LR(expr=expr_1grp, gmt=gmt_sim, design=design,
                           subject_name="Patient_ID", time_name="TimePoint",
                           time_func="linear", crossedRandom=FALSE)
+}
 
-
+\dontrun{
 plotSelect.GS(expr=tcgsa_sim_1grp$Estimations, TimePoint=design$TimePoint,
        Subject_ID=design$Patient_ID, gmt=gmt_sim,
        geneset.names.select=c("Gene set 3", "Gene set 4", "Gene set 5"),
@@ -266,7 +268,9 @@ plotSelect.GS(expr=tcgsa_sim_1grp$Estimations, TimePoint=design$TimePoint,
        time_unit="H",
        lab.cex=0.7
 )
+}
 
+\dontrun{
 plotSelect.GS(expr=tcgsa_sim_1grp$Estimations, TimePoint=design$TimePoint,
        Subject_ID=design$Patient_ID, gmt=gmt_sim,
        geneset.names.select=c("Gene set 3", "Gene set 4", "Gene set 5"),
@@ -275,6 +279,7 @@ plotSelect.GS(expr=tcgsa_sim_1grp$Estimations, TimePoint=design$TimePoint,
        time_unit="H",
        lab.cex=0.7
 )
+}
 }
 \author{
 Boris P. Hejblum

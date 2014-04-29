@@ -58,7 +58,9 @@
 #'
 #'@seealso \code{\link{plot1GS}}, \code{\link{plotSelect.GS}}
 #'
-#'@references Hejblum, B.P., Skinner, J., Thiebaut, R., 2014, TcGSA: a gene set approach for longitudinal gene expression data analysis, \bold{submitted}.
+#'@references Hejblum, B.P., Skinner, J., Thiebaut, R., 2014, TcGSA: a
+#' gene set approach for longitudinal gene expression data analysis, 
+#' \bold{submitted}.
 #'
 #'@examples
 #'
@@ -73,9 +75,28 @@
 #'					 colnames_ID="Sample_name", 
 #'					 plot_type="Residuals Obs", 
 #'					 GeneSetsList=c("Gene set 1", "Gene set 2", "Gene set 3",
-#'					 "Gene set 4", "Gene set 5"),
+#'					                "Gene set 4", "Gene set 5"),
 #'					 color="genes", gg.add=list(guides(color=FALSE))
 #')
+#'
+#'\dontrun{
+#'plotFit.GS(x=tcgsa_sim_1grp, expr=expr_1grp, design=design,
+#'           subject_name="Patient_ID", time_name="TimePoint",
+#'           colnames_ID="Sample_name", 
+#'           plot_type="Histogram Obs", 
+#'           GeneSetsList=c("Gene set 1", "Gene set 5"),
+#'           color="genes", gg.add=list(guides(fill=FALSE))
+#'           )
+#'           
+#'plotFit.GS(x=tcgsa_sim_1grp, expr=expr_1grp, design=design,
+#'           subject_name="Patient_ID", time_name="TimePoint",
+#'           colnames_ID="Sample_name", 
+#'           plot_type="Histogram Obs", 
+#'           GeneSetsList=c(Gene set 1", "Gene set 2", "Gene set 3",
+#'			                "Gene set 4", "Gene set 5"),
+#'           color="genes")
+#'           )
+#'}
 #'
 
 plotFit.GS <- function(x, expr, design, subject_name = "Patient_ID", time_name = "TimePoint",
@@ -119,28 +140,28 @@ plotFit.GS <- function(x, expr, design, subject_name = "Patient_ID", time_name =
 	data2plot <- merge(Xfinal,Yfinal, by=c("Probe_ID", subject_name, time_name, "GS"))
 	colnames(data2plot) <- c("Probe_ID", "Subject", "Time", "GS", "Observed", "Estimated")
 	data2plot[, "Time"] <- as.factor(data2plot[, "Time"])
+	data2plot[, "Probe_ID"] <- as.factor(data2plot[, "Probe_ID"])
 	data2plot$Residuals <- data2plot$Observed - data2plot$Estimated
 	
 	
 	if(plot_type=="Histogram Obs"){
-		p <- (ggplot(aes(x=Observed), data=data2plot)
+		p <- (ggplot(aes_string(x="Observed"), data=data2plot)
 			  + labs(x="Observed expression", y="Count")
 			  + theme_bw()
 			  
 		)
 		if(color=="time"){
-			p <- (p + geom_histogram(aes(fill=Time))
+			p <- (p + geom_histogram(aes_string(fill="Time"))
 				  + scale_fill_discrete(name="Time point")
 				  + ggtitle(paste(gs, ": ", gmt$geneset.descriptions[interest],"\n Histogram of observed expression", sep=""))
 			)
 		}else if(color=="genes"){
-			browser()
-			p <- (p + geom_histogram(aes(fill=as.factor(Probe_ID)))			
+			p <- (p + geom_histogram(aes_string(fill="Probe_ID"))			
 				  + scale_fill_discrete(name="Genes")
 				  + ggtitle(paste(gs, ": ", gmt$geneset.descriptions[interest],"\n Histogram of observed expression colored by genes", sep=""))
 			)
 		}else if(color=="subjects"){
-			p <- (p + geom_histogram(aes(fill=Subject))			
+			p <- (p + geom_histogram(aes_string(fill="Subject"))			
 				  + scale_fill_discrete(name="Subjects")
 				  + ggtitle(paste(gs, ": ", gmt$geneset.descriptions[interest],"\n Histogram of observed expression", sep=""))
 			)
@@ -154,7 +175,7 @@ plotFit.GS <- function(x, expr, design, subject_name = "Patient_ID", time_name =
 		if(plot_type=="Fit"){
 			plotmin <- min(c(data2plot$Estimated, data2plot$Observed))
 			plotmax <- max(c(data2plot$Estimated, data2plot$Observed))
-			p <- (ggplot(aes(x=Observed, y=Estimated), data=data2plot) 
+			p <- (ggplot(aes_string(x="Observed", y="Estimated"), data="data2plot") 
 				  + geom_smooth(method=lm)
 				  + labs(title=paste(gs, ": ", gmt$geneset.descriptions[interest],"\n Fit", sep=""),
 				  	   x="Observed expression", y="Fitted expression")
@@ -166,7 +187,7 @@ plotFit.GS <- function(x, expr, design, subject_name = "Patient_ID", time_name =
 				p <- p + ggtitle(paste(gs, ": ", gmt$geneset.descriptions[interest],"\n Fit colored by genes", sep=""))
 			}
 		}else if(plot_type=="Residuals Obs"){
-			p <- (ggplot(aes(x=Observed, y=Residuals), data=data2plot)
+			p <- (ggplot(aes_string(x="Observed", y="Residuals"), data=data2plot)
 				  + labs(title=paste(gs, ": ", gmt$geneset.descriptions[interest],"\n Residuals", sep=""),
 				  	   x="Observed expression", y="Residuals")
 				  #+ xlim(min(data2plot$Observed),max(data2plot$Observed))
@@ -177,7 +198,7 @@ plotFit.GS <- function(x, expr, design, subject_name = "Patient_ID", time_name =
 				p <- p + ggtitle(paste(gs, ": ", gmt$geneset.descriptions[interest],"\n Residuals colored by genes", sep=""))
 			}
 		}else if(plot_type=="Residuals Est"){
-			p <- (ggplot(aes(x=Estimated, y=Residuals), data=data2plot)
+			p <- (ggplot(aes_string(x="Estimated", y="Residuals"), data=data2plot)
 				  + labs(title=paste(gs, ": ", gmt$geneset.descriptions[interest],"\n Residuals", sep=""),
 				  	   x="Estimated expression", y="Residuals")
 				  #+ xlim(min(data2plot$Estimated),max(data2plot$Estimated))
@@ -189,15 +210,15 @@ plotFit.GS <- function(x, expr, design, subject_name = "Patient_ID", time_name =
 			}
 		}
 		if(color=="time"){
-			p <- (p + geom_point(aes(color=Time))
+			p <- (p + geom_point(aes_string(color="Time"))
 				  + scale_color_discrete(name="Time point")
 			)
 		}else if(color=="genes"){
-			p <- (p + geom_point(aes(color=as.factor(Probe_ID)))
+			p <- (p + geom_point(aes_string(color="Probe_ID"))
 				  + scale_color_discrete(name="Genes")
 			)
 		}else if(color=="subjects"){
-			p <- (p + geom_point(aes(color=Subject))
+			p <- (p + geom_point(aes_string(color="Subject"))
 				  + scale_color_discrete(name="Subjects")
 			)
 		}else{

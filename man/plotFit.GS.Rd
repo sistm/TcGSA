@@ -84,9 +84,28 @@ plotFit.GS(x=tcgsa_sim_1grp, expr=expr_1grp, design=design,
 					 colnames_ID="Sample_name",
 					 plot_type="Residuals Obs",
 					 GeneSetsList=c("Gene set 1", "Gene set 2", "Gene set 3",
-					 "Gene set 4", "Gene set 5"),
+					                "Gene set 4", "Gene set 5"),
 					 color="genes", gg.add=list(guides(color=FALSE))
 )
+
+\dontrun{
+plotFit.GS(x=tcgsa_sim_1grp, expr=expr_1grp, design=design,
+          subject_name="Patient_ID", time_name="TimePoint",
+          colnames_ID="Sample_name",
+          plot_type="Histogram Obs",
+          GeneSetsList=c("Gene set 1", "Gene set 5"),
+          color="genes", gg.add=list(guides(fill=FALSE))
+          )
+
+plotFit.GS(x=tcgsa_sim_1grp, expr=expr_1grp, design=design,
+          subject_name="Patient_ID", time_name="TimePoint",
+          colnames_ID="Sample_name",
+          plot_type="Histogram Obs",
+          GeneSetsList=c(Gene set 1", "Gene set 2", "Gene set 3",
+			                "Gene set 4", "Gene set 5"),
+          color="genes")
+          )
+}
 }
 \author{
 Boris P. Hejblum

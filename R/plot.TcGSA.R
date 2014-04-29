@@ -346,7 +346,7 @@
 #'     dendrogram.size=0.4, heatmap.width=0.8, heatmap.height=2, cex.main=0.7
 #'     )
 #'
-#'               
+#'\dontrun{                
 #'tcgsa_sim_2grp <- TcGSA.LR(expr=expr_2grp, gmt=gmt_sim, design=design, 
 #'                           subject_name="Patient_ID", time_name="TimePoint",
 #'                           time_func="linear", crossedRandom=FALSE, 
@@ -357,7 +357,7 @@
 #'     B=100,
 #'     time_unit="H",
 #'     )
-#'
+#'}
 #'
 #'
 plot.TcGSA <-

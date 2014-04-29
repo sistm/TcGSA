@@ -1,13 +1,12 @@
-
 INSTALL
 =======
 
-In its current version, TcGSA imports the 'multtest' package which is not available on CRAN,
-but is available on the well-known bioconductor repository.
+In its current version, TcGSA imports the 'multtest' package which is not available on CRAN, but is available on the well-known bioconductor repository.
 Before installing TcGSA, be sure to have the 'multtest' package installed. If not, you can do so by typing:
 
 source("http://bioconductor.org/biocLite.R")
 biocLite("multtest")
+
 
 
 Documentation

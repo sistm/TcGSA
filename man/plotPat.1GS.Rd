@@ -29,7 +29,7 @@ plotPat.1GS(expr, gmt, Subject_ID, TimePoint, geneset.name, baseline = NULL,
   definition.  See
   \code{\link[GSA:GSA.read.gmt]{GSA.read.gmt}} and
   definition on
-  \href{http://www.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#GMT:_Gene_Matrix_Transposed_file_format_.28.2A.gmt.29}{www.broadinstitute.org}.}
+  \href{http://www.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats}{www.broadinstitute.org}.}
 
   \item{Subject_ID}{a factor of length \eqn{p} that is in
   the same order as the columns of \code{expr} (when it is
@@ -247,20 +247,23 @@ tcgsa_sim_1grp <- TcGSA.LR(expr=expr_1grp, gmt=gmt_sim, design=design,
                           subject_name="Patient_ID", time_name="TimePoint",
                           time_func="linear", crossedRandom=FALSE)
 
-plotPat.1GS(expr=expr_1grp, TimePoint=design$TimePoint, Subject_ID=design$Patient_ID, gmt=gmt_sim,
+plotPat.1GS(expr=expr_1grp, TimePoint=design$TimePoint,
+       Subject_ID=design$Patient_ID, gmt=gmt_sim,
        geneset.name="Gene set 4",
        clustering=FALSE,
        time_unit="H",
        lab.cex=0.7)
 
-plotPat.1GS(expr=expr_1grp, TimePoint=design$TimePoint, Subject_ID=design$Patient_ID, gmt=gmt_sim,
+\dontrun{
+plotPat.1GS(expr=expr_1grp, TimePoint=design$TimePoint,
+       Subject_ID=design$Patient_ID, gmt=gmt_sim,
        geneset.name="Gene set 4",
        clustering=FALSE, baseline=1,
        time_unit="H",
        lab.cex=0.7)
+}
 
-
-
+\dontrun{
 colval <- c(hsv(0.56, 0.9, 1),
            hsv(0, 0.27, 1),
            hsv(0.52, 1, 0.5),
@@ -280,20 +283,24 @@ plot(y, axes = FALSE, frame.plot = TRUE,
 par(op)
 
 require(ggplot2)
-plotPat.1GS(expr=expr_1grp, TimePoint=design$TimePoint, Subject_ID=design$Patient_ID, gmt=gmt_sim,
+plotPat.1GS(expr=expr_1grp, TimePoint=design$TimePoint,
+       Subject_ID=design$Patient_ID, gmt=gmt_sim,
        geneset.name="Gene set 5",
        time_unit="H",
        title="",
        gg.add=list(scale_color_manual(values=colval)),
        lab.cex=0.7
 )
+}
 
+\dontrun{
 plotPat.1GS(expr=tcgsa_sim_1grp$Estimations, TimePoint=design$TimePoint,
        Subject_ID=design$Patient_ID, gmt=gmt_sim,
        geneset.name="Gene set 3",
        time_unit="H",
        lab.cex=0.7
 )
+}
 }
 \author{
 Boris P. Hejblum
