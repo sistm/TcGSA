@@ -62,19 +62,19 @@
 #'a factor of length \eqn{p} that is in the same order as the
 #'columns of \code{expr} (when it is a dataframe) and that contains the patient
 #'identifier of each sample.
-#'@TODO See Details.
+#TODO See Details.
 #'
 #'@param TimePoint 
 #'a numeric vector or a factor of length \eqn{p} that is in
 #'the same order as \code{Subject_ID} and the columns of \code{expr} (when it
 #'is a dataframe), and that contains the time points at which gene expression
 #'was measured.
-#'@TODO See Details.
+#TODO See Details.
 #'
 #'@param baseline 
 #'a character string which is the value of \code{TimePoint}
 #'used as baseline.  
-#'@TODO See Details.
+#TODO See Details.
 #'
 #'@param only.signif 
 #'logical flag for plotting only the significant gene sets.
@@ -93,7 +93,7 @@
 #'\code{group.var} and the columns of \code{expr}.  This argument must not be
 #'\code{NULL} in the case of a paired analysis, and must be \code{NULL}
 #'otherwise.  Default is \code{NULL}.  
-#'@TODO See Details.
+#TODO See Details.
 #'
 #'@param ref 
 #'the group which is used as reference in the case of several
@@ -106,7 +106,7 @@
 #'computed in the case of several treatment groups.  Default is \code{NULL},
 #'which means that group of interest is the second group in alphabetical order
 #'of the labels of \code{group.var}.  
-#'@TODO See Details.
+#TODO See Details.
 #'
 #'@param FUNcluster 
 #'the clustering function used to agglomerate genes in
