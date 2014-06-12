@@ -63,14 +63,14 @@
 #'a factor of length \eqn{p} that is in the same order as the
 #'columns of \code{expr} (when it is a dataframe) and that contains the patient
 #'identifier of each sample. Ignored if \code{expr} is a list of estimations.
-#'@TODO See Details.
+#TODO See Details.
 #'
 #'@param TimePoint 
 #'a numeric vector or a factor of length \eqn{p} that is in
 #'the same order as \code{Subject_ID} and the columns of \code{expr} (when it
 #'is a dataframe), and that contains the time points at which gene expression
 #'was measured. Ignored if \code{expr} is a list of estimations.
-#'@TODO See Details.
+#TODO See Details.
 #'
 #'@param baseline 
 #'a character string which is the value of \code{TimePoint}

@@ -9,7 +9,7 @@
 #'et al, 2012})in terms of their probes.  And when the argument
 #'\code{separateSubjects} is \code{TRUE}, instead of identifying gene sets that
 #'have a significant trend over time, \emph{TcGSA} identifies gene sets that
-#'have significantly different trends over time depending on the patient.
+#'have significantly different trends over time depending on \code{Subjects}.
 #'
 #'@aliases TcGSA.LR print.TcGSA.LR
 #'
