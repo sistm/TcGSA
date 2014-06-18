@@ -469,6 +469,7 @@ plot1GS <-
 				}else{
 					medoids <- cbind.data.frame("TimePoint"= rownames(medoids), medoids)
 				}
+				colnames(medoids) <- c("TimePoint", levels(list_cluster$Group))
 			}
 			if(verbose){
 				cat("DONE\n")
@@ -484,7 +485,7 @@ plot1GS <-
 		if(!pre_clustering){
 			classif <- cbind.data.frame("ProbeID"=rownames(data_stand_MedianByTP), "Cluster"=clust)
 		}else{
-			classif <- cbind.data.frame("ProbeID"=list_cluster$Patient_ID, "Cluster"=as.numeric(list_cluster$Group))
+			classif <- cbind.data.frame("ProbeID"=list_cluster$Patient_ID, "Cluster"=list_cluster$Group)
 			rownames(classif) <- classif$ProbeID
 			classif <- classif[rownames(data_stand_MedianByTP), ]
 			#classif$Cluster <- clust
@@ -492,12 +493,12 @@ plot1GS <-
 		
 		meltedData <- melt(cbind.data.frame("Probe_ID"=rownames(data_stand_MedianByTP), "Cluster"=classif$Cluster, data_stand_MedianByTP), id.vars=c("Probe_ID", "Cluster"), variable.name="TimePoint")
 		meltedStats <- melt(medoids, id.vars="TimePoint", variable.name="Cluster")
-		meltedData$Cluster <- as.factor(meltedData$Cluster)
+		meltedData$Cluster <- as.character(meltedData$Cluster)
 		meltedData$TimePoint <- as.factor(meltedData$TimePoint)
 		
 		
 		
-		# 		if(pre_clustering && !clustering && indiv=="patients"){
+		#		if(pre_clustering && !clustering && indiv=="patients"){
 		# 			group_patient <- NULL
 		# 			for(i in 1:length(list_cluster$Patient_ID)){
 		# 				inter <- Subject_ID[Subject_ID==list_cluster$Patient_ID[i]]
@@ -561,7 +562,6 @@ plot1GS <-
 			  + geom_hline(aes(y = 0), linetype=1, colour='grey50', size=0.4)
 		)
 		
-		browser()
 		
 		if(clustering | pre_clustering){
 			p <- (p
@@ -571,7 +571,6 @@ plot1GS <-
 				  							   label.theme=element_text(size = 9*lab.cex, angle=0)
 				  )
 				  )
-				  # TODO scale_color_discrete(labels=)
 			)
 		}else{	
 			p <- (p
@@ -618,7 +617,7 @@ plot1GS <-
 					)
 				}else{
 					p <- (p 
-						  + geom_smooth(formula=y~poly(x,3), data=meltedStats, aes_string(x="TimePoint", y="value", group="Cluster", linetype="Cluster", size="3"), colour="black", se=FALSE, method="lm")
+						  + geom_smooth(formula=y~poly(x,3), data=meltedStats, aes_string(x="TimePoint", y="value", group="Cluster", linetype="Cluster",size="3"), colour="black", se=FALSE, method="lm")
 					)
 				}
 				if(length(unique(meltedStats$Cluster))==1 | length(unique(meltedStats$Group))==1){
