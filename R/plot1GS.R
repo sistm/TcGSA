@@ -36,14 +36,14 @@
 #'a factor of length \eqn{p} that is in the same order as the
 #'columns of \code{expr} (when it is a dataframe) and that contains the patient
 #'identifier of each sample.
-#'@TODO See Details.
+#TODO See Details.
 #'
 #'@param TimePoint 
 #'a numeric vector or a factor of length \eqn{p} that is in
 #'the same order as \code{TimePoint} and the columns of \code{expr} (when it is
 #'a dataframe), and that contains the time points at which gene expression was
 #'measured.
-#'@TODO See Details.
+#TODO See Details.
 #'
 #'@param geneset.name 
 #'a character string containing the name of the gene set to
@@ -55,7 +55,7 @@
 #'that can be used as a baseline.  Default is \code{NULL}, in which case no
 #'timepoint is used as a baseline value for gene expression.  Has to be
 #'\code{NULL} when comparing two treatment groups.
-#'@TODO See Details.
+#TODO See Details.
 #'
 #'@param group.var 
 #'in the case of several treatment groups, this is a factor of
@@ -63,7 +63,7 @@
 #'\code{Subject_ID} and the columns of \code{expr}.  It indicates to which
 #'treatment group each sample belongs to.  Default is \code{NULL}, which means
 #'that there is only one treatment group.  
-#'@TODO See Details.
+#TODO See Details.
 #'
 #'@param Group_ID_paired 
 #'a character vector of length \eqn{p} that is in the
@@ -71,7 +71,7 @@
 #'columns of \code{expr}.  This argument must not be \code{NULL} in the case of
 #'a paired analysis, and must be \code{NULL} otherwise.  Default is
 #'\code{NULL}.  
-#'@TODO See Details.
+#TODO See Details.
 #'
 #'@param ref 
 #'the group which is used as reference in the case of several
@@ -84,7 +84,7 @@
 #'computed in the case of several treatment groups.  Default is \code{NULL},
 #'which means that group of interest is the second group in alphabetical order
 #'of the labels of \code{group.var}.  
-#'@TODO See Details.
+#TODO See Details.
 #'
 #'@param FUNcluster 
 #'a function which accepts as first argument a matrix
@@ -319,6 +319,7 @@ plot1GS <-
 			 indiv="genes",
 			 verbose=TRUE,
 			 clustering=TRUE, showTrend=TRUE, smooth=TRUE,
+			 pre_clustering=FALSE, list_cluster, 
 			 time_unit="", title=NULL, y.lab=NULL, desc=TRUE,
 			 lab.cex=1, axis.cex=1, main.cex=1, y.lab.angle=90, x.axis.angle=45,
 			 y.lim=NULL, x.lim=NULL, 
@@ -403,15 +404,14 @@ plot1GS <-
 		}
 		
 		
-		
+		data_stand <- t(apply(X=data_sel, MARGIN=1, FUN=scale))
 		if(indiv=="genes"){
-			data_stand <- t(apply(X=data_sel, MARGIN=1, FUN=scale))
 			data_stand_MedianByTP <- t(apply(X=data_stand, MARGIN=1, FUN=Fun_byIndex, index=as.factor(TimePoint), fun=aggreg.fun))
 		}else if(indiv=="patients"){
-			data_stand <- t(apply(X=data_sel, MARGIN=1, FUN=scale))
 			data_tocast<-cbind.data.frame(TimePoint, Subject_ID, "M" = apply(X=data_stand, MARGIN=2, FUN=aggreg.fun))
 			data_stand_MedianByTP <- as.matrix(acast(data_tocast, formula="Subject_ID~TimePoint", value.var="M"))
 		}
+		
 		
 		if(!is.null(baseline)){
 			colbaseline <- which(sort(unique(TimePoint))==baseline)
@@ -441,11 +441,35 @@ plot1GS <-
 				clust <- rep(1, dim(data_stand_MedianByTP)[1])
 			}
 			
-			medoids <- as.data.frame(t(apply(X=data_stand_MedianByTP, MARGIN=2, FUN=Fun_byIndex, index=clust, fun=trend.fun)))
-			if(dim(medoids)[1]==1){
-				medoids <- cbind.data.frame("TimePoint"= colnames(medoids), "1"=t(medoids))
+			if(indiv=="patients"){
+				row_names <- (as.numeric(sub("P","",rownames(data_stand_MedianByTP))))
+				position<-NULL
+				for(i in 1:length(row_names)){
+					for(j in 1:length(row_names)){
+						if(row_names[i]==row_names[j]){
+							position<-c(position,j)
+						}
+					}
+				}
+				position<-order(as.character(position))
+			}
+			
+			
+			if(!pre_clustering){
+				medoids <- as.data.frame(t(apply(X=data_stand_MedianByTP, MARGIN=2, FUN=Fun_byIndex, index=clust, fun=trend.fun)))
+				if(dim(medoids)[1]==1){
+					medoids <- cbind.data.frame("TimePoint"= colnames(medoids), "1"=t(medoids))
+				}else{
+					medoids <- cbind.data.frame("TimePoint"= rownames(medoids), medoids)
+				}
 			}else{
-				medoids <- cbind.data.frame("TimePoint"= rownames(medoids), medoids)
+				medoids <- as.data.frame(t(apply(X=data_stand_MedianByTP, MARGIN=2, FUN=Fun_byIndex, index=as.factor(as.numeric(list_cluster$Group[position])), fun=trend.fun)))
+				if(nrow(medoids)==1){
+					medoids <- cbind.data.frame("TimePoint"= colnames(medoids), "1"=t(medoids))
+				}else{
+					medoids <- cbind.data.frame("TimePoint"= rownames(medoids), medoids)
+				}
+				colnames(medoids) <- c("TimePoint", levels(list_cluster$Group))
 			}
 			if(verbose){
 				cat("DONE\n")
@@ -454,17 +478,68 @@ plot1GS <-
 			medoids <- cbind.data.frame("TimePoint"=colnames(data_stand_MedianByTP), "1"='NA')
 			clust <- rep(NA, dim(data_stand_MedianByTP)[1])
 		}
-		classif <- cbind.data.frame("ProbeID"=rownames(data_stand_MedianByTP), "Cluster"=clust)
-		classif <- classif[order(classif$Cluster), ]
-		meltedData <- melt(cbind.data.frame("Probe_ID"=rownames(data_stand_MedianByTP), "Cluster"=clust, data_stand_MedianByTP), id.vars=c("Probe_ID", "Cluster"), variable.name="TimePoint")
+		
+		medoids$TimePoint <- as.numeric(as.character(medoids$TimePoint))
+		colnames(data_stand_MedianByTP) <- as.numeric(colnames(data_stand_MedianByTP))
+		
+		if(!pre_clustering){
+			classif <- cbind.data.frame("ProbeID"=rownames(data_stand_MedianByTP), "Cluster"=clust)
+		}else{
+			classif <- cbind.data.frame("ProbeID"=list_cluster$Patient_ID, "Cluster"=list_cluster$Group)
+			rownames(classif) <- classif$ProbeID
+			classif <- classif[rownames(data_stand_MedianByTP), ]
+			#classif$Cluster <- clust
+		}
+		
+		meltedData <- melt(cbind.data.frame("Probe_ID"=rownames(data_stand_MedianByTP), "Cluster"=classif$Cluster, data_stand_MedianByTP), id.vars=c("Probe_ID", "Cluster"), variable.name="TimePoint")
 		meltedStats <- melt(medoids, id.vars="TimePoint", variable.name="Cluster")
-		meltedData$Cluster <- as.factor(meltedData$Cluster)
+		meltedData$Cluster <- as.character(meltedData$Cluster)
+		meltedData$TimePoint <- as.factor(meltedData$TimePoint)
+		
+		
+		
+		#		if(pre_clustering && !clustering && indiv=="patients"){
+		# 			group_patient <- NULL
+		# 			for(i in 1:length(list_cluster$Patient_ID)){
+		# 				inter <- Subject_ID[Subject_ID==list_cluster$Patient_ID[i]]
+		# 				group_patient <- c(group_patient, rep(list_cluster$Group[position][i],length(inter)))
+		# 			}
+		# 			list_cluster_TimePoint <- cbind.data.frame(Subject_ID,"Group"=group_patient )
+		# 			colnames(list_cluster_TimePoint) <- c("Patient_ID","Group")
+		# 			col_name <- list_cluster_TimePoint$Patient_ID
+		# 			col_group <- list_cluster_TimePoint$Group
+		# 			list_cluster_mod <- data.frame(Patients=col_name, Group=col_group)
+		# 			list_cluster_mod <- list_cluster_mod[order(list_cluster_mod$Patients),]
+		# 			meltedData$TimePoint <- as.numeric(as.character((meltedData$TimePoint)))
+		# 			meltedData <- meltedData[order(meltedData$Probe_ID),]
+		# 			list_cluster_mod$Patients <- as.vector(list_cluster_mod$Patients)
+		# 			list_cluster_mod$Group <- as.vector(list_cluster_mod$Group)
+		# 			name<-NULL
+		# 			group<-NULL
+		# 			for(i in 1:length(levels(as.factor(meltedData$Probe_ID)))){
+		# 				sub_meltedData <- meltedData[meltedData$Probe_ID==levels(as.factor(meltedData$Probe_ID))[i],]
+		# 				sub_group <- list_cluster_mod[list_cluster_mod$Patients==levels(as.factor(list_cluster_mod$Patients))[i],]
+		# 				sub <- data.frame(sub_meltedData,sub_group)
+		# 				nb_TimePoint <- length(sub_meltedData[,1])
+		# 				name_inter<-as.vector(sub$Probe_ID)
+		# 				name <- c(name,name_inter)
+		# 				group_inter<-as.vector(sub$Group)
+		# 				group <- c(group,group_inter)
+		# 			}
+		# 			list_cluster_data <- data.frame(Patients = name, Group=group)
+		# 			list_cluster_data$Group <- as.vector(list_cluster_data$Group)
+		# 			list_cluster_data <- list_cluster_data[order(list_cluster_data$Patients),]
+		# 			meltedData <- meltedData[order(meltedData$Probe_ID),]
+		# 			meltedData <- cbind(meltedData, list_cluster_data)
+		# 			meltedData <- meltedData[order(meltedData$TimePoint),]
+		# 			meltedData$TimePoint <- as.factor(meltedData$TimePoint)
+		# 			meltedData$Group <- as.factor(meltedData$Group)			
+		# 		}
 		
 		if(time_unit!=""){
 			meltedData$TimePoint <- paste(time_unit, meltedData$TimePoint, sep="")
 			meltedStats$TimePoint <- paste(time_unit, meltedStats$TimePoint, sep="")
-		}
-		else{
+		}else{
 			meltedData$TimePoint <- as.numeric(meltedData$TimePoint)
 			meltedStats$TimePoint <- as.numeric(meltedStats$TimePoint)
 		}
@@ -487,12 +562,8 @@ plot1GS <-
 			  + geom_hline(aes(y = 0), linetype=1, colour='grey50', size=0.4)
 		)
 		
-		if(!clustering){
-			p <- (p
-				  + geom_line(aes_string(group="Probe_ID", colour="Probe_ID"), size=0.7)
-				  + scale_colour_manual(guide='none', name='probe ID', values=rainbow(length(select_probe)))
-			)
-		}else{
+		
+		if(clustering | pre_clustering){
 			p <- (p
 				  + geom_line(aes_string(group="Probe_ID", colour="Cluster"), size=0.7)
 				  + guides(colour = guide_legend(override.aes=list(size=1, fill="white"), keywidth=2*lab.cex, 
@@ -501,6 +572,14 @@ plot1GS <-
 				  )
 				  )
 			)
+		}else{	
+			p <- (p
+				  + geom_line(aes_string(group="Probe_ID", colour="Probe_ID"), size=0.7)
+			)
+			if(indiv=="patients"){
+				p <- (p + guides(colour=guide_legend(title='Subject')))
+				#+ scale_colour_manual(guide='none', name='Subject', values=rainbow(length(select_probe))))
+			}
 		}
 		
 		p <- (p
@@ -517,30 +596,59 @@ plot1GS <-
 			  + theme(legend.key=element_rect(fill="white"))
 		)
 		
+		
 		if(showTrend){
+			
 			if(!smooth){
-				p <- (p + geom_line(data=meltedStats, aes_string(x="TimePoint", y="value", group="Cluster", linetype="Cluster"), size=4))
+				if(pre_clustering){
+					p <- (p + geom_line(data=meltedStats, aes_string(x="TimePoint", y="value", group="Cluster", colour="Cluster"), size=3))
+				}else{
+					p <- (p + geom_line(data=meltedStats, aes_string(x="TimePoint", y="value", group="Cluster", linetype="Cluster"), colour="black", size=3))
+				}
 			}else{
 				if(length(unique(meltedStats$TimePoint))<4){
 					stop("Not enough time points to estimate a smoothed trend! 
     				 Set 'smooth' argument to 'FALSE'.\n")
 				}
-				p <- (p + stat_smooth(formula=y~poly(x,3), data=meltedStats, aes_string(x="TimePoint", y="value", group="Cluster", linetype="Cluster"), size=4, se=FALSE, method="lm", color="black"))
+				if(pre_clustering){
+					p <- (p 
+						  + geom_smooth(formula=y~poly(x,3), data=meltedStats, aes_string(x="TimePoint", y="value", group="Cluster", colour="Cluster", size="3"), se=FALSE, method="lm")
+						  + guides(size="none")
+					)
+				}else{
+					p <- (p 
+						  + geom_smooth(formula=y~poly(x,3), data=meltedStats, aes_string(x="TimePoint", y="value", group="Cluster", linetype="Cluster",size="3"), colour="black", se=FALSE, method="lm")
+					)
+				}
+				if(length(unique(meltedStats$Cluster))==1 | length(unique(meltedStats$Group))==1){
+					p <- (p + guides(linetype="none"))
+				}
+				
+				if(clustering){
+					p <- (p + guides(size="none")
+						  + scale_linetype_manual(name=paste("Cluster", capwords(trend.fun)), values=as.numeric(levels(meltedStats$Cluster))+1,#as.numeric(levels(meltedStats$Cluster))+1, 
+						  						guide=guide_legend(override.aes=list(size=1), keywidth=2*lab.cex, 
+						  										   title.theme=element_text(size = 17*lab.cex, angle=0),
+						  										   label.theme=element_text(size = 12*lab.cex, angle=0)
+						  						)
+						  )
+					)
+				}else{
+					p <- p + scale_size_continuous(name="", labels=capwords(trend.fun))
+				}	
 			}
-			p <- p + scale_linetype_manual(name=paste("Cluster", capwords(trend.fun)), values=as.numeric(levels(meltedStats$Cluster))+1, 
-										   guide=guide_legend(override.aes=list(size=1), keywidth=2*lab.cex, 
-										   				   title.theme=element_text(size = 17*lab.cex, angle=0),
-										   				   label.theme=element_text(size = 12*lab.cex, angle=0)
-										   )
-			)
 		}
+		
 		for(a in gg.add){
 			p <- p + a
 		}
 		if(plot){
 			print(p)
 		}
+		
+		classif <- classif[order(classif$Cluster), ]
 		invisible(classif)
+		
 	}
 
 

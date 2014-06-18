@@ -17,4 +17,3 @@ PackageInstallArgs: --no-multiarch --html
 PackageBuildArgs: --md5
 PackageBuildBinaryArgs: --html
 PackageCheckArgs: --as-cran --timings
-PackageRoxygenize: rd
