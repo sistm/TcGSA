@@ -208,8 +208,7 @@ function(expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", cr
                    error=function(e){NULL})
           lmm_H1 <- tryCatch(lmer(formula =my_formul[["H1"]]["reg"], REML=FALSE, data=data_lme),
                    error=function(e){NULL})
-      }
-    	else{
+      }else{
     		lmm_H0 <- tryCatch(lmer(formula =my_formul[["H0"]]["1probe"], REML=FALSE, data=data_lme),
     											 error=function(e){NULL})
     		lmm_H1 <- tryCatch(lmer(formula =my_formul[["H1"]]["1probe"], REML=FALSE, data=data_lme),
@@ -225,8 +224,7 @@ function(expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", cr
         # drop = FALSE by default, which means that missing combination will be kept in the estims_tab and filled with NA
         dimnames(estims_tab)[[3]] <- as.numeric(dimnames(estims_tab)[[3]])*10
         estim_expr[[gs]] <- estims_tab
-      } 
-      else {
+      }else {
         LR[gs] <- NA
         CVG_H0[gs] <- NA
         CVG_H1[gs] <- NA
@@ -258,8 +256,7 @@ function(expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", cr
       #       "65" = "gr cannot be computed at initial par (65)")
     	#
     	
-    }
-    else{
+    }else{
 	    LR[gs] <- NA
 	    CVG_H0[gs] <- NA
 	    CVG_H1[gs] <- NA
@@ -272,7 +269,7 @@ function(expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", cr
   
   if(group_name==""){
   	gv <- NULL
-  } else{
+  }else{
   	gv <- design[,group_name]
   }
   
