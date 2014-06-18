@@ -36,14 +36,14 @@
 #'a factor of length \eqn{p} that is in the same order as the
 #'columns of \code{expr} (when it is a dataframe) and that contains the patient
 #'identifier of each sample.
-#'@TODO See Details.
+#TODO See Details.
 #'
 #'@param TimePoint 
 #'a numeric vector or a factor of length \eqn{p} that is in
 #'the same order as \code{TimePoint} and the columns of \code{expr} (when it is
 #'a dataframe), and that contains the time points at which gene expression was
 #'measured.
-#'@TODO See Details.
+#TODO See Details.
 #'
 #'@param geneset.names.select 
 #'a character vector containing the names of the gene sets to
@@ -64,7 +64,7 @@
 #'that can be used as a baseline.  Default is \code{NULL}, in which case no
 #'timepoint is used as a baseline value for gene expression.  Has to be
 #'\code{NULL} when comparing two treatment groups.  
-#'@TODO See Details.
+#TODO See Details.
 #'
 #'@param group.var 
 #'in the case of several treatment groups, this is a factor of
@@ -72,7 +72,7 @@
 #'\code{Subject_ID} and the columns of \code{expr}.  It indicates to which
 #'treatment group each sample belongs to.  Default is \code{NULL}, which means
 #'that there is only one treatment group.  
-#'@TODO See Details.
+#TODO See Details.
 #'
 #'@param Group_ID_paired 
 #'a character vector of length \eqn{p} that is in the
@@ -80,7 +80,7 @@
 #'columns of \code{expr}.  This argument must not be \code{NULL} in the case of
 #'a paired analysis, and must be \code{NULL} otherwise.  Default is
 #'\code{NULL}.  
-#'@TODO See Details.
+#TODO See Details.
 #'
 #'@param ref 
 #'the group which is used as reference in the case of several
@@ -93,7 +93,7 @@
 #'computed in the case of several treatment groups.  Default is \code{NULL},
 #'which means that group of interest is the second group in alphabetical order
 #'of the labels of \code{group.var}.  
-#'@TODO See Details.
+#TODO See Details.
 #'
 #'@param FUNcluster 
 #'a function which accepts as first argument a matrix
