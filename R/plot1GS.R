@@ -40,7 +40,7 @@
 #'
 #'@param TimePoint 
 #'a numeric vector or a factor of length \eqn{p} that is in
-#'the same order as \code{TimePoint} and the columns of \code{expr} (when it is
+#'the same order as \code{Subject_ID} and the columns of \code{expr} (when it is
 #'a dataframe), and that contains the time points at which gene expression was
 #'measured.
 #TODO See Details.
@@ -170,7 +170,14 @@
 #'logical flag.  If \code{TRUE} and \code{showTrend} is also
 #'\code{TRUE}, the representation of each cluster \code{trend.fun} is smoothed
 #'using cubic polynoms (see \code{\link[ggplot2:stat_smooth]{stat_smooth}}.
-#'Default is \code{TRUE}.
+#'Default is \code{TRUE}. 
+#'At the moment, must accept parameter \code{'na.rm} (which is automatically set to \code{TRUE}). 
+#'This might change in future versions
+#'
+#'@param precluster 
+#'a vector of length \eqn{p} that is in
+#'the same order as \code{Subject_ID}, \code{TimePoint} and the columns of \code{expr} (when it is
+#'a dataframe), and that contains a prior clustering of the subjects. Default is \code{NULL}.
 #'
 #'@param time_unit 
 #'the time unit to be displayed (such as \code{"Y"},
@@ -318,8 +325,7 @@ plot1GS <-
 			 methodOptiClust = "firstSEmax",
 			 indiv="genes",
 			 verbose=TRUE,
-			 clustering=TRUE, showTrend=TRUE, smooth=TRUE,
-			 pre_clustering=FALSE, list_cluster, 
+			 clustering=TRUE, showTrend=TRUE, smooth=TRUE, precluster=NULL, 
 			 time_unit="", title=NULL, y.lab=NULL, desc=TRUE,
 			 lab.cex=1, axis.cex=1, main.cex=1, y.lab.angle=90, x.axis.angle=45,
 			 y.lim=NULL, x.lim=NULL, 
@@ -330,6 +336,9 @@ plot1GS <-
 		#   library(ggplot2)
 		#   library(cluster)
 		#   library(splines)
+		
+		pre_clustering <- !is.null(precluster)
+		
 		capwords <- function(s, strict = FALSE){
 			cap <- function(s){
 				paste(toupper(substring(s,1,1)),{s <- substring(s,2); if(strict) tolower(s) else s},
@@ -338,8 +347,8 @@ plot1GS <-
 			sapply(strsplit(s, split = " "), cap, USE.NAMES = !is.null(names(s)))
 		}
 		
-		Fun_byIndex<-function(X, index, fun){
-			tapply(X, INDEX=index, FUN = fun)
+		Fun_byIndex<-function(X, index, fun, ...){
+			tapply(X, INDEX=index, FUN = fun, ...)
 		}
 		
 		if(is.null(FUNcluster)){
@@ -422,24 +431,50 @@ plot1GS <-
 		}
 		
 		if(clustering | showTrend){
-			if(verbose){
-				cat("Optimally clustering...\n")
-			}
-			kmax <- ifelse(dim(data_stand_MedianByTP)[1]>4, max_trends, dim(data_stand_MedianByTP)[1]-1)
-			if(kmax>=2){
-				if(clustering_metric!="sts"){
-					cG <- clusGap(x=data_stand_MedianByTP, FUNcluster=FUNcluster, K.max=kmax, B=B, verbose=FALSE)
-					nc <- maxSE(f = cG$Tab[, "gap"], SE.f = cG$Tab[, "SE.sim"], method = methodOptiClust)
-					clust <- FUNcluster(data_stand_MedianByTP, k=nc)$cluster
+			if(!pre_clustering){
+				if(verbose){
+					cat("Optimally clustering...\n")
+				}
+				kmax <- ifelse(dim(data_stand_MedianByTP)[1]>4, max_trends, dim(data_stand_MedianByTP)[1]-1)
+				if(kmax>=2){
+					if(clustering_metric!="sts"){
+						cG <- clusGap(x=data_stand_MedianByTP, FUNcluster=FUNcluster, K.max=kmax, B=B, verbose=FALSE)
+						nc <- maxSE(f = cG$Tab[, "gap"], SE.f = cG$Tab[, "SE.sim"], method = methodOptiClust)
+						clust <- FUNcluster(data_stand_MedianByTP, k=nc)$cluster
+					}else{
+						cG <- clusGap(x=data_stand_MedianByTP, FUNcluster=FUNcluster, K.max=kmax, B=B, verbose=FALSE, time=as.numeric(colnames(data_stand_MedianByTP)))
+						nc <- maxSE(f = cG$Tab[, "gap"], SE.f = cG$Tab[, "SE.sim"], method = methodOptiClust)
+						clust <- FUNcluster(data_stand_MedianByTP, k=nc, time=as.numeric(colnames(data_stand_MedianByTP)))$cluster
+					}    
 				}else{
-					cG <- clusGap(x=data_stand_MedianByTP, FUNcluster=FUNcluster, K.max=kmax, B=B, verbose=FALSE, time=as.numeric(colnames(data_stand_MedianByTP)))
-					nc <- maxSE(f = cG$Tab[, "gap"], SE.f = cG$Tab[, "SE.sim"], method = methodOptiClust)
-					clust <- FUNcluster(data_stand_MedianByTP, k=nc, time=as.numeric(colnames(data_stand_MedianByTP)))$cluster
-				}    
+					nc <- 1
+					clust <- rep(1, dim(data_stand_MedianByTP)[1])
+				}
+				
+				
+				
+				medoids <- as.data.frame(t(apply(X=data_stand_MedianByTP, MARGIN=2, FUN=Fun_byIndex, index=clust, fun=trend.fun)))
+				if(dim(medoids)[1]==1){
+					medoids <- cbind.data.frame("TimePoint"= colnames(medoids), "1"=t(medoids))
+				}else{
+					medoids <- cbind.data.frame("TimePoint"= rownames(medoids), medoids)
+				}
 			}else{
-				nc <- 1
-				clust <- rep(1, dim(data_stand_MedianByTP)[1])
+				
+				clust <- precluster
+				medoids <- as.data.frame(t(apply(X=data_stand_MedianByTP, MARGIN=2, FUN=Fun_byIndex, 
+												 index=as.factor(as.numeric(precluster)), fun=trend.fun, na.rm=TRUE)))
+				if(nrow(medoids)==1){
+					medoids <- cbind.data.frame("TimePoint"= colnames(medoids), "1"=t(medoids))
+				}else{
+					medoids <- cbind.data.frame("TimePoint"= rownames(medoids), medoids)
+				}
+				colnames(medoids) <- c("TimePoint", levels(precluster))
 			}
+			if(verbose){
+				cat("DONE\n")
+			}
+			
 			
 			if(indiv=="patients"){
 				row_names <- (as.numeric(sub("P","",rownames(data_stand_MedianByTP))))
@@ -453,27 +488,6 @@ plot1GS <-
 				}
 				position<-order(as.character(position))
 			}
-			
-			
-			if(!pre_clustering){
-				medoids <- as.data.frame(t(apply(X=data_stand_MedianByTP, MARGIN=2, FUN=Fun_byIndex, index=clust, fun=trend.fun)))
-				if(dim(medoids)[1]==1){
-					medoids <- cbind.data.frame("TimePoint"= colnames(medoids), "1"=t(medoids))
-				}else{
-					medoids <- cbind.data.frame("TimePoint"= rownames(medoids), medoids)
-				}
-			}else{
-				medoids <- as.data.frame(t(apply(X=data_stand_MedianByTP, MARGIN=2, FUN=Fun_byIndex, index=as.factor(as.numeric(list_cluster$Group[position])), fun=trend.fun)))
-				if(nrow(medoids)==1){
-					medoids <- cbind.data.frame("TimePoint"= colnames(medoids), "1"=t(medoids))
-				}else{
-					medoids <- cbind.data.frame("TimePoint"= rownames(medoids), medoids)
-				}
-				colnames(medoids) <- c("TimePoint", levels(list_cluster$Group))
-			}
-			if(verbose){
-				cat("DONE\n")
-			}
 		}else{
 			medoids <- cbind.data.frame("TimePoint"=colnames(data_stand_MedianByTP), "1"='NA')
 			clust <- rep(NA, dim(data_stand_MedianByTP)[1])
@@ -482,59 +496,13 @@ plot1GS <-
 		medoids$TimePoint <- as.numeric(as.character(medoids$TimePoint))
 		colnames(data_stand_MedianByTP) <- as.numeric(colnames(data_stand_MedianByTP))
 		
-		if(!pre_clustering){
-			classif <- cbind.data.frame("ProbeID"=rownames(data_stand_MedianByTP), "Cluster"=clust)
-		}else{
-			classif <- cbind.data.frame("ProbeID"=list_cluster$Patient_ID, "Cluster"=list_cluster$Group)
-			rownames(classif) <- classif$ProbeID
-			classif <- classif[rownames(data_stand_MedianByTP), ]
-			#classif$Cluster <- clust
-		}
-		
+		classif <- cbind.data.frame("ProbeID"=rownames(data_stand_MedianByTP), "Cluster"=clust)
+				
 		meltedData <- melt(cbind.data.frame("Probe_ID"=rownames(data_stand_MedianByTP), "Cluster"=classif$Cluster, data_stand_MedianByTP), id.vars=c("Probe_ID", "Cluster"), variable.name="TimePoint")
 		meltedStats <- melt(medoids, id.vars="TimePoint", variable.name="Cluster")
 		meltedData$Cluster <- as.character(meltedData$Cluster)
 		meltedData$TimePoint <- as.factor(meltedData$TimePoint)
 		
-		
-		
-		#		if(pre_clustering && !clustering && indiv=="patients"){
-		# 			group_patient <- NULL
-		# 			for(i in 1:length(list_cluster$Patient_ID)){
-		# 				inter <- Subject_ID[Subject_ID==list_cluster$Patient_ID[i]]
-		# 				group_patient <- c(group_patient, rep(list_cluster$Group[position][i],length(inter)))
-		# 			}
-		# 			list_cluster_TimePoint <- cbind.data.frame(Subject_ID,"Group"=group_patient )
-		# 			colnames(list_cluster_TimePoint) <- c("Patient_ID","Group")
-		# 			col_name <- list_cluster_TimePoint$Patient_ID
-		# 			col_group <- list_cluster_TimePoint$Group
-		# 			list_cluster_mod <- data.frame(Patients=col_name, Group=col_group)
-		# 			list_cluster_mod <- list_cluster_mod[order(list_cluster_mod$Patients),]
-		# 			meltedData$TimePoint <- as.numeric(as.character((meltedData$TimePoint)))
-		# 			meltedData <- meltedData[order(meltedData$Probe_ID),]
-		# 			list_cluster_mod$Patients <- as.vector(list_cluster_mod$Patients)
-		# 			list_cluster_mod$Group <- as.vector(list_cluster_mod$Group)
-		# 			name<-NULL
-		# 			group<-NULL
-		# 			for(i in 1:length(levels(as.factor(meltedData$Probe_ID)))){
-		# 				sub_meltedData <- meltedData[meltedData$Probe_ID==levels(as.factor(meltedData$Probe_ID))[i],]
-		# 				sub_group <- list_cluster_mod[list_cluster_mod$Patients==levels(as.factor(list_cluster_mod$Patients))[i],]
-		# 				sub <- data.frame(sub_meltedData,sub_group)
-		# 				nb_TimePoint <- length(sub_meltedData[,1])
-		# 				name_inter<-as.vector(sub$Probe_ID)
-		# 				name <- c(name,name_inter)
-		# 				group_inter<-as.vector(sub$Group)
-		# 				group <- c(group,group_inter)
-		# 			}
-		# 			list_cluster_data <- data.frame(Patients = name, Group=group)
-		# 			list_cluster_data$Group <- as.vector(list_cluster_data$Group)
-		# 			list_cluster_data <- list_cluster_data[order(list_cluster_data$Patients),]
-		# 			meltedData <- meltedData[order(meltedData$Probe_ID),]
-		# 			meltedData <- cbind(meltedData, list_cluster_data)
-		# 			meltedData <- meltedData[order(meltedData$TimePoint),]
-		# 			meltedData$TimePoint <- as.factor(meltedData$TimePoint)
-		# 			meltedData$Group <- as.factor(meltedData$Group)			
-		# 		}
 		
 		if(time_unit!=""){
 			meltedData$TimePoint <- paste(time_unit, meltedData$TimePoint, sep="")
