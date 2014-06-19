@@ -430,12 +430,20 @@ plot1GS <-
 			data_stand_MedianByTP <- data_stand_MedianByTP-data_stand_MedianByTP[,colbaseline]
 		}
 		
+		if(!pre_clustering && (clustering | showTrend) && length(which(is.na(data_stand_MedianByTP)))>0){
+			warning("Unable to compute optimal number of clusters/trends due to missing values\n")
+			clustering <- FALSE
+			showTrend <- FALSE
+			
+		}
+		
 		if(clustering | showTrend){
 			if(!pre_clustering){
 				if(verbose){
 					cat("Optimally clustering...\n")
 				}
 				kmax <- ifelse(dim(data_stand_MedianByTP)[1]>4, max_trends, dim(data_stand_MedianByTP)[1]-1)
+				
 				if(kmax>=2){
 					if(clustering_metric!="sts"){
 						cG <- clusGap(x=data_stand_MedianByTP, FUNcluster=FUNcluster, K.max=kmax, B=B, verbose=FALSE)
@@ -513,7 +521,7 @@ plot1GS <-
 		}
 		
 		if(is.null(y.lim)){
-			y.max <- max(abs(meltedData$value))
+			y.max <- max(abs(meltedData$value), na.rm = TRUE)
 			y.min <- -y.max
 		}else{
 			y.max <- y.lim[2]
