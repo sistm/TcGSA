@@ -163,9 +163,9 @@
 #'}
 
 TcGSA.LR <-
-function(expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", crossedRandom=FALSE,
+function(expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", crossedRandom=FALSE, time_nasted_effect=FALSE,
 				 covariates_fixed="", time_covariates="",
-				 time_func = "linear", group_name="", separateSubjects=FALSE,
+				 time_func = "linear", group_name="", separateSubjects=FALSE, 
 				 minGSsize=10, maxGSsize=500){
   
   #DEBUG: data(data_simu_TcGSA);
@@ -184,6 +184,10 @@ function(expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", cr
 #   require(splines)
    
   LR <- numeric(length(gmt$genesets))
+  AIC_H0 <- numeric(length(gmt$genesets))
+  AIC_H1 <- numeric(length(gmt$genesets))
+  BIC_H0 <- numeric(length(gmt$genesets))
+  BIC_H1 <- numeric(length(gmt$genesets))
   CVG_H0 <- numeric(length(gmt$genesets))
   CVG_H1 <- numeric(length(gmt$genesets))
   estim_expr <- list()
@@ -191,7 +195,7 @@ function(expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", cr
   my_formul <- TcGSA.formula(design=design, subject_name=subject_name, time_name=time_name,  
   													 covariates_fixed=covariates_fixed, time_covariates=time_covariates, group_name=group_name,
   													 separateSubjects=separateSubjects, crossedRandom=crossedRandom,
-  													 time_func=time_func)
+  													 time_func=time_func,time_nasted_effect=time_nasted_effect)
   time_DF <- my_formul[["time_DF"]]
   	
   for (gs in 1:length(gmt$genesets)){
@@ -208,8 +212,7 @@ function(expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", cr
                    error=function(e){NULL})
           lmm_H1 <- tryCatch(lmer(formula =my_formul[["H1"]]["reg"], REML=FALSE, data=data_lme),
                    error=function(e){NULL})
-      }
-    	else{
+      }else{
     		lmm_H0 <- tryCatch(lmer(formula =my_formul[["H0"]]["1probe"], REML=FALSE, data=data_lme),
     											 error=function(e){NULL})
     		lmm_H1 <- tryCatch(lmer(formula =my_formul[["H1"]]["1probe"], REML=FALSE, data=data_lme),
@@ -218,6 +221,10 @@ function(expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", cr
 
       if (!is.null(lmm_H0) & !is.null(lmm_H1)) {
         LR[gs] <- deviance(lmm_H0, REML=FALSE) - deviance(lmm_H1, REML=FALSE)
+        AIC_H0[gs] <- AIC(lmm_H0)
+        AIC_H1[gs] <- AIC(lmm_H1)
+        BIC_H0[gs] <- BIC(lmm_H0)
+        BIC_H1[gs] <- BIC(lmm_H1)
   	    CVG_H0[gs] <- lmm_H0@optinfo["conv"]
   	    CVG_H1[gs] <- lmm_H1@optinfo["conv"]
         estims <- cbind.data.frame(data_lme, "fitted"=fitted(lmm_H1))
@@ -225,9 +232,12 @@ function(expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", cr
         # drop = FALSE by default, which means that missing combination will be kept in the estims_tab and filled with NA
         dimnames(estims_tab)[[3]] <- as.numeric(dimnames(estims_tab)[[3]])*10
         estim_expr[[gs]] <- estims_tab
-      } 
-      else {
+      }else {
         LR[gs] <- NA
+        AIC_H0[gs] <- NA
+        AIC_H1[gs] <- NA
+        BIC_H0[gs] <- NA
+        BIC_H1[gs] <- NA
         CVG_H0[gs] <- NA
         CVG_H1[gs] <- NA
         
@@ -258,9 +268,12 @@ function(expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", cr
       #       "65" = "gr cannot be computed at initial par (65)")
     	#
     	
-    }
-    else{
+    }else{
 	    LR[gs] <- NA
+	    AIC_H0[gs] <- NA
+	    AIC_H1[gs] <- NA
+	    BIC_H0[gs] <- NA
+	    BIC_H1[gs] <- NA
 	    CVG_H0[gs] <- NA
 	    CVG_H1[gs] <- NA
 	    
@@ -272,15 +285,24 @@ function(expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", cr
   
   if(group_name==""){
   	gv <- NULL
-  } else{
+  }else{
   	gv <- design[,group_name]
   }
   
-  tcgsa <- list("fit"=as.data.frame(cbind(LR, CVG_H0, CVG_H1)), "time_func"=time_func, "GeneSets_gmt"=gmt, 
+  tcgsa <- list("fit"=as.data.frame(cbind(LR, AIC_H0, AIC_H1, BIC_H0, BIC_H1, CVG_H0, CVG_H1)), "time_func"=time_func, "GeneSets_gmt"=gmt, 
   							"group.var"=gv, "separateSubjects"=separateSubjects, "Estimations"=estim_expr, 
   							"time_DF"=time_DF
   							)
   class(tcgsa) <- "TcGSA"
+  converge <- 0
+  for (i in 1 : length(tcgsa$fit$CVG_H0)){
+    if(!is.na(tcgsa$fit$CVG_H0[[i]][1])){
+	  if(tcgsa$fit$CVG_H0[[i]][1] == 0){
+	    converge <- converge + 1
+	  }
+	}
+  }
+  cat(converge, "models out of", length(gmt$genesets) , "have converged\n")
   return(tcgsa)
 }
 

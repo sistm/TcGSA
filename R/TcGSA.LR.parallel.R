@@ -173,7 +173,7 @@
 
 TcGSA.LR.parallel <-
 	function(Ncpus, type_connec, 
-					 expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", crossedRandom=FALSE,
+					 expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", crossedRandom=FALSE,time_nasted_effect=FALSE,
 					 covariates_fixed="", time_covariates="",
 					 time_func = "linear", group_name="", separateSubjects=FALSE,
 					 minGSsize=10, maxGSsize=500,
@@ -189,11 +189,18 @@ TcGSA.LR.parallel <-
 		#   library(lme4)
 		#   library(reshape2)
 		#   require(splines)
-		
+		LR <- numeric(length(gmt$genesets))
+		AIC_H0 <- numeric(length(gmt$genesets))
+		AIC_H1 <- numeric(length(gmt$genesets))
+		BIC_H0 <- numeric(length(gmt$genesets))
+		BIC_H1 <- numeric(length(gmt$genesets))
+		CVG_H0 <- numeric(length(gmt$genesets))
+		CVG_H1 <- numeric(length(gmt$genesets))
+		estim_expr <- list()
 		my_formul <- TcGSA.formula(design=design, subject_name=subject_name, time_name=time_name,  
 															 covariates_fixed=covariates_fixed, time_covariates=time_covariates, group_name=group_name,
 															 separateSubjects=separateSubjects, crossedRandom=crossedRandom,
-															 time_func=time_func)
+															 time_func=time_func,time_nasted_effect)
 		time_DF <- my_formul[["time_DF"]]
 		
 		
@@ -226,6 +233,10 @@ TcGSA.LR.parallel <-
 				
 				if (!is.null(lmm_H0) & !is.null(lmm_H1)) {
 					LR <- deviance(lmm_H0, REML=FALSE) - deviance(lmm_H1, REML=FALSE)
+					AIC_H0 <- AIC(lmm_H0)
+					AIC_H1 <- AIC(lmm_H1)
+					BIC_H0 <- BIC(lmm_H0)
+					BIC_H1 <- BIC(lmm_H1)
 					CVG_H0 <- lmm_H0@optinfo["conv"]
 					CVG_H1 <- lmm_H1@optinfo["conv"]
 					
@@ -237,6 +248,10 @@ TcGSA.LR.parallel <-
 				} 
 				else {
 					LR <- NA
+					AIC_H0 <- NA
+					AIC_H1 <- NA
+					BIC_H0 <- NA
+					BIC_H1 <- NA
 					CVG_H0 <- NA
 					CVG_H1 <- NA
 					
@@ -268,6 +283,10 @@ TcGSA.LR.parallel <-
 			}
 			else{
 				LR <- NA
+				AIC_H0 <- NA
+				AIC_H1 <- NA
+				BIC_H0 <- NA
+				BIC_H1 <- NA
 				CVG_H0 <- NA
 				CVG_H1 <- NA
         
@@ -279,17 +298,17 @@ TcGSA.LR.parallel <-
 			try(line_number <- length(readLines(monitorfile)), silent=TRUE)
 			cat(paste(line_number+1,"/", length(gmt$genesets)," gene sets analyzed (geneset ", gs, ")\n", sep=""), file=monitorfile, append = TRUE)
 			
-			res <- list("LR"=LR, "CVG_H0"=CVG_H0, "CVG_H1"=CVG_H1, "estim_expr"=estim_expr)
+			res <- list("LR"=LR, "AIC_H0"=AIC_H0, "AIC_H1"=AIC_H1, "BIC_H0"=BIC_H0, "BIC_H1"=BIC_H1, "CVG_H0"=CVG_H0, "CVG_H1"=CVG_H1, "estim_expr"=estim_expr)
 		}
 		
-		LR <- numeric(length(gmt$genesets))
-		CVG_H0 <- numeric(length(gmt$genesets))
-		CVG_H1 <- numeric(length(gmt$genesets))
-		estim_expr <- list()
 		
 		cat("Combining the results...")
 		for (gs in 1:length(gmt$genesets)){
 			LR[gs] <- res_par[[gs]][["LR"]]
+			AIC_H0[gs] <- res_par[[gs]][["AIC_H0"]]
+			AIC_H1[gs] <- res_par[[gs]][["AIC_H1"]]
+			BIC_H0[gs] <- res_par[[gs]][["BIC_H0"]]
+			BIC_H1[gs] <- res_par[[gs]][["BIC_H1"]]
 			CVG_H0[gs] <- res_par[[gs]][["CVG_H0"]]
 			CVG_H1[gs] <- res_par[[gs]][["CVG_H1"]]
 			estim_expr[[gs]] <- res_par[[gs]][["estim_expr"]]
@@ -301,13 +320,21 @@ TcGSA.LR.parallel <-
 			gv <- design[,group_name]
 		}
 		
-		tcgsa <- list("fit"=as.data.frame(cbind(LR, CVG_H0, CVG_H1)), "time_func"=time_func, "GeneSets_gmt"=gmt, 
+		tcgsa <- list("fit"=as.data.frame(cbind(LR, AIC_H0, AIC_H1, BIC_H0, BIC_H1, CVG_H0, CVG_H1)), "time_func"=time_func, "GeneSets_gmt"=gmt, 
 									"group.var"=gv, "separateSubjects"=separateSubjects, "Estimations"=estim_expr, 
 									"time_DF"=time_DF
 		)
 		class(tcgsa) <- "TcGSA"
 		stopCluster(cl)
-		
+		converge <- 0
+		for (i in 1 : length(tcgsa$fit$CVG_H0)){
+			if(!is.na(tcgsa$fit$CVG_H0[[i]][1])){
+				if(tcgsa$fit$CVG_H0[[i]][1] == 0){
+					converge <- converge + 1
+				}
+			}
+		}
+		cat(converge, "models out of", length(gmt$genesets) , "have converged\n")
 		return(tcgsa)
 	}
 
