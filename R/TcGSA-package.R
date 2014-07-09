@@ -6,13 +6,14 @@
 #'\tabular{ll}{
 #'Package: \tab TcGSA\cr
 #'Type: \tab Package\cr
-#'Version: \tab 0.9.8\cr
-#'Date: \tab 2014-04-28\cr
+#'Version: \tab 0.9.9\cr
+#'Date: \tab 2014-07-09\cr
 #'License:\tab \href{http://www.gnu.org/licenses/lgpl.txt}{LGPL-3}\cr
 #'}
 #'The main function in this package is \code{\link{TcGSA.LR}} which performs Time-course Gene Set Analysis, and provide nice representations of its results (see \code{\link{plot.TcGSA}} and \code{\link{plot1GS}}).
 #'
 #'@author Boris P. Hejblum
+#'@author Damien Chimits
 #'--- Maintainer: Boris P. Hejblum
 #'
 #'@references Hejblum, B.P., Skinner, J., Thiebaut, R., 2014, TcGSA: a gene set approach for longitudinal gene expression data analysis, \bold{submitted}.
