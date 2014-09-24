@@ -333,7 +333,7 @@ plot1GS <-
 			 plot=TRUE
 	){
 		
-		#   library(ggplot2)
+		library(ggplot2)
 		#   library(cluster)
 		#   library(splines)
 		
@@ -394,6 +394,8 @@ plot1GS <-
 				y.lab <- paste(capwords(aggreg.fun), 'of standardized estimate')
 			}
 		}
+		
+		
 		
 		interest <- which(gmt$geneset.names==geneset.name)
 		if(length(interest)==0){
@@ -505,20 +507,13 @@ plot1GS <-
 		colnames(data_stand_MedianByTP) <- as.numeric(colnames(data_stand_MedianByTP))
 		
 		classif <- cbind.data.frame("ProbeID"=rownames(data_stand_MedianByTP), "Cluster"=clust)
-				
+		
 		meltedData <- melt(cbind.data.frame("Probe_ID"=rownames(data_stand_MedianByTP), "Cluster"=classif$Cluster, data_stand_MedianByTP), id.vars=c("Probe_ID", "Cluster"), variable.name="TimePoint")
 		meltedStats <- melt(medoids, id.vars="TimePoint", variable.name="Cluster")
 		meltedData$Cluster <- as.character(meltedData$Cluster)
-		meltedData$TimePoint <- as.factor(meltedData$TimePoint)
-		
-		
-		if(time_unit!=""){
-			meltedData$TimePoint <- paste(time_unit, meltedData$TimePoint, sep="")
-			meltedStats$TimePoint <- paste(time_unit, meltedStats$TimePoint, sep="")
-		}else{
-			meltedData$TimePoint <- as.numeric(meltedData$TimePoint)
-			meltedStats$TimePoint <- as.numeric(meltedStats$TimePoint)
-		}
+		meltedData$TimePoint <- as.numeric(as.character(meltedData$TimePoint))
+		meltedStats$TimePoint <- as.numeric(as.character(meltedStats$TimePoint))
+		MeasPt <- unique(meltedData$TimePoint)
 		
 		if(is.null(y.lim)){
 			y.max <- max(abs(meltedData$value), na.rm = TRUE)
@@ -528,29 +523,30 @@ plot1GS <-
 			y.min <- y.lim[1]
 		}
 		if(is.null(x.lim)){
-			x.lim <- unique(meltedData$TimePoint)
-			if(time_unit==""){
-				x.lim <- c(min(x.lim), max(x.lim))
-			}
+			x.lim <- c(min(MeasPt), max(MeasPt))
 		}
 		
 		p <- (ggplot(meltedData, aes_string(x="TimePoint", y="value")) 
 			  + geom_hline(aes(y = 0), linetype=1, colour='grey50', size=0.4)
 		)
 		
+		myalpha <- 1 
+		if(showTrend){
+			myalpha <- 0.5
+		}
 		
 		if(clustering | pre_clustering){
 			p <- (p
-				  + geom_line(aes_string(group="Probe_ID", colour="Cluster"), size=0.7)
+				  + geom_line(aes_string(group="Probe_ID", colour="Cluster"), size=0.7, alpha=myalpha)
 				  + guides(colour = guide_legend(override.aes=list(size=1, fill="white"), keywidth=2*lab.cex, 
 				  							   title.theme=element_text(size = 15*lab.cex, angle=0),
 				  							   label.theme=element_text(size = 9*lab.cex, angle=0)
 				  )
 				  )
 			)
-		}else{	
+		}else{
 			p <- (p
-				  + geom_line(aes_string(group="Probe_ID", colour="Probe_ID"), size=0.7)
+				  + geom_line(aes_string(group="Probe_ID", colour="Probe_ID"), size=0.7, alpha=myalpha)
 			)
 			if(indiv=="patients"){
 				p <- (p + guides(colour=guide_legend(title='Subject')))
@@ -565,7 +561,9 @@ plot1GS <-
 			  + theme(plot.title=element_text(size = 35*main.cex))
 			  + theme(panel.grid.minor = element_blank(), panel.grid.major = element_blank(), panel.background = element_rect(colour='grey40', fill = 'white'))
 			  + ylim(y.min, y.max)
-			  + xlim(x.lim)
+			  + scale_x_continuous(breaks=MeasPt, 
+			  					 labels=paste(time_unit, MeasPt, sep="")
+			  )
 			  + theme(axis.title.y = element_text(size = 25*lab.cex, angle = y.lab.angle, vjust=0.3), axis.text.y = element_text(size=18*axis.cex, colour = 'grey40')) 
 			  + theme(axis.title.x = element_text(size = 25*lab.cex, angle = 0, vjust=-0.9), axis.text.x = element_text(size=18*axis.cex, colour = 'grey40', angle=x.axis.angle, vjust=0.5, hjust=0.5))
 			  + theme(plot.margin=unit(c(0.5, 0.5, 0.7, 1), 'lines'))
@@ -582,19 +580,25 @@ plot1GS <-
 					p <- (p + geom_line(data=meltedStats, aes_string(x="TimePoint", y="value", group="Cluster", linetype="Cluster"), colour="black", size=3))
 				}
 			}else{
-				if(length(unique(meltedStats$TimePoint))<4){
+				if(length(MeasPt)<4){
 					stop("Not enough time points to estimate a smoothed trend! 
     				 Set 'smooth' argument to 'FALSE'.\n")
 				}
+				# spline_knots <- ifelse(length(MeasPt)>6, 
+				# 						floor((length(MeasPt)-2)/2), 
+				# 						1
+				# )
 				if(pre_clustering){
 					p <- (p 
-						  + geom_smooth(formula=y~poly(x,3), data=meltedStats, aes_string(x="TimePoint", y="value", group="Cluster", colour="Cluster", size="3"), se=FALSE, method="lm")
+						  + geom_smooth(formula=y~poly(x, 3), data=meltedStats, aes_string(x="TimePoint", y="value", group="Cluster", colour="Cluster", size="3"), se=FALSE, method="lm")
 						  + guides(size="none")
 					)
 				}else{
 					p <- (p 
-						  + geom_smooth(formula=y~poly(x,3), data=meltedStats, aes_string(x="TimePoint", y="value", group="Cluster", linetype="Cluster",size="3"), colour="black", se=FALSE, method="lm")
+						  + geom_smooth(formula=y~poly(x, 3), data=meltedStats, aes_string(x="TimePoint", y="value", group="Cluster", linetype="Cluster",size="3"), colour="black", se=FALSE, method="lm")
+						  + scale_linetype_manual(name=paste("Cluster", capwords(trend.fun)), values=as.numeric(levels(meltedStats$Cluster))+1)
 					)
+					#y~ns(x, knots=spline_knots)
 				}
 				if(length(unique(meltedStats$Cluster))==1 | length(unique(meltedStats$Group))==1){
 					p <- (p + guides(linetype="none"))
