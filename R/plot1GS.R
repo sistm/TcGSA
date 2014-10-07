@@ -327,7 +327,7 @@ plot1GS <-
 			 verbose=TRUE,
 			 clustering=TRUE, showTrend=TRUE, smooth=TRUE, precluster=NULL, 
 			 time_unit="", title=NULL, y.lab=NULL, desc=TRUE,
-			 lab.cex=1, axis.cex=1, main.cex=1, y.lab.angle=90, x.axis.angle=45,
+			 lab.cex=1, axis.cex=1, main.cex=1, y.lab.angle=90, x.axis.angle=45, margins=1, line.size=1,
 			 y.lim=NULL, x.lim=NULL, 
 			 gg.add=list(theme()),
 			 plot=TRUE
@@ -527,7 +527,9 @@ plot1GS <-
 		}
 		
 		p <- (ggplot(meltedData, aes_string(x="TimePoint", y="value")) 
-			  + geom_hline(aes(y = 0), linetype=1, colour='grey50', size=0.4)
+			  + geom_hline(aes(y = 0), linetype=1, colour='grey50', size=0.4*line.size)
+			  + theme(panel.border=element_rect(fill=NA, size=0.1*line.size, colour='grey50'),
+			  		axis.ticks=element_line(size=0.4*line.size, colour='grey50'))
 		)
 		
 		myalpha <- 1 
@@ -537,7 +539,7 @@ plot1GS <-
 		
 		if(clustering | pre_clustering){
 			p <- (p
-				  + geom_line(aes_string(group="Probe_ID", colour="Cluster"), size=0.7, alpha=myalpha)
+				  + geom_line(aes_string(group="Probe_ID", colour="Cluster"), size=0.5*line.size, alpha=myalpha)
 				  + guides(colour = guide_legend(override.aes=list(size=1, fill="white"), keywidth=2*lab.cex, 
 				  							   title.theme=element_text(size = 15*lab.cex, angle=0),
 				  							   label.theme=element_text(size = 9*lab.cex, angle=0)
@@ -546,7 +548,7 @@ plot1GS <-
 			)
 		}else{
 			p <- (p
-				  + geom_line(aes_string(group="Probe_ID", colour="Probe_ID"), size=0.7, alpha=myalpha)
+				  + geom_line(aes_string(group="Probe_ID", colour="Probe_ID"), size=0.5*line.size, alpha=myalpha)
 			)
 			if(indiv=="patients"){
 				p <- (p + guides(colour=guide_legend(title='Subject')))
@@ -564,9 +566,9 @@ plot1GS <-
 			  + scale_x_continuous(breaks=MeasPt, 
 			  					 labels=paste(time_unit, MeasPt, sep="")
 			  )
-			  + theme(axis.title.y = element_text(size = 25*lab.cex, angle = y.lab.angle, vjust=0.3), axis.text.y = element_text(size=18*axis.cex, colour = 'grey40')) 
-			  + theme(axis.title.x = element_text(size = 25*lab.cex, angle = 0, vjust=-0.9), axis.text.x = element_text(size=18*axis.cex, colour = 'grey40', angle=x.axis.angle, vjust=0.5, hjust=0.5))
-			  + theme(plot.margin=unit(c(0.5, 0.5, 0.7, 1), 'lines'))
+			  + theme(axis.title.y = element_text(size = 25*lab.cex, angle = y.lab.angle, vjust=0.8), axis.text.y = element_text(size=18*axis.cex, colour = 'grey40')) 
+			  + theme(axis.title.x = element_text(size = 25*lab.cex, angle = 0, vjust=0.5), axis.text.x = element_text(size=18*axis.cex, colour = 'grey40', angle=x.axis.angle, vjust=0.5, hjust=0.5))
+			  + theme(plot.margin=unit(margins*c(0.5, 0.7, 0.1, 0.5), 'lines'))
 			  + theme(legend.key=element_rect(fill="white"))
 		)
 		
@@ -590,12 +592,12 @@ plot1GS <-
 				# )
 				if(pre_clustering){
 					p <- (p 
-						  + geom_smooth(formula=y~poly(x, 3), data=meltedStats, aes_string(x="TimePoint", y="value", group="Cluster", colour="Cluster", size="3"), se=FALSE, method="lm")
+						  + geom_smooth(formula=y~poly(x, 3), data=meltedStats, aes_string(x="TimePoint", y="value", group="Cluster", colour="Cluster", size="1.5"), se=FALSE, method="lm")
 						  + guides(size="none")
 					)
 				}else{
 					p <- (p 
-						  + geom_smooth(formula=y~poly(x, 3), data=meltedStats, aes_string(x="TimePoint", y="value", group="Cluster", linetype="Cluster",size="3"), colour="black", se=FALSE, method="lm")
+						  + geom_smooth(formula=y~poly(x, 3), data=meltedStats, aes_string(x="TimePoint", y="value", group="Cluster", linetype="Cluster"), size=1.7*line.size, colour="black", se=FALSE, method="lm")
 						  + scale_linetype_manual(name=paste("Cluster", capwords(trend.fun)), values=as.numeric(levels(meltedStats$Cluster))+1)
 					)
 					#y~ns(x, knots=spline_knots)
