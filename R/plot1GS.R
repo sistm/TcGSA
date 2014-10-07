@@ -422,10 +422,9 @@ plot1GS <-
 			Subject_ID <- rep(dimnames(expr_sel)[[2]], dim(expr_sel)[3])
 		}
 		
-		
 		data_stand <- t(apply(X=data_sel, MARGIN=1, FUN=scale))
 		if(indiv=="genes"){
-			data_stand_MedianByTP <- t(apply(X=data_stand, MARGIN=1, FUN=Fun_byIndex, index=as.factor(TimePoint), fun=aggreg.fun))
+			data_stand_MedianByTP <- t(apply(X=data_stand, MARGIN=1, FUN=Fun_byIndex, index=as.factor(TimePoint), fun=aggreg.fun, na.rm=T))
 		}else if(indiv=="patients"){
 			data_tocast<-cbind.data.frame(TimePoint, Subject_ID, "M" = apply(X=data_stand, MARGIN=2, FUN=aggreg.fun))
 			data_stand_MedianByTP <- as.matrix(acast(data_tocast, formula="Subject_ID~TimePoint", value.var="M"))
