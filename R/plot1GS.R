@@ -171,7 +171,7 @@
 #'\code{TRUE}, the representation of each cluster \code{trend.fun} is smoothed
 #'using cubic polynoms (see \code{\link[ggplot2:stat_smooth]{stat_smooth}}.
 #'Default is \code{TRUE}. 
-#'At the moment, must accept parameter \code{'na.rm} (which is automatically set to \code{TRUE}). 
+#'At the moment, must accept parameter \code{"na.rm"} (which is automatically set to \code{TRUE}). 
 #'This might change in future versions
 #'
 #'@param precluster 
