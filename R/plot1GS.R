@@ -575,7 +575,6 @@ plot1GS <-
 			  + scale_x_continuous(breaks=MeasPt, 
 			  					 labels=paste(time_unit, MeasPt, sep="")
 			  )
-<<<<<<< HEAD
 			  + theme(axis.title.y = element_text(size = 25*lab.cex, angle = y.lab.angle, vjust=0.8), axis.text.y = element_text(size=18*axis.cex, colour = 'grey40')) 
 			  + theme(axis.title.x = element_text(size = 25*lab.cex, angle = 0, vjust=0.5), axis.text.x = element_text(size=18*axis.cex, colour = 'grey40', angle=x.axis.angle, vjust=0.5, hjust=0.5))
 			  + theme(plot.margin=unit(margins*c(0.5, 0.7, 0.1, 0.5), 'lines'))
