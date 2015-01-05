@@ -251,7 +251,6 @@ plotFit.GS <- function(x, expr, design, subject_name = "Patient_ID", time_name =
 	
 	return(p)
 	
-}
-
+	}
 
 

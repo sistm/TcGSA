@@ -68,6 +68,11 @@
 #'the information on the time replicates (the time points at which gene 
 #'expression was measured).  Default is \code{'TimePoint'}.  See Details.
 #'
+#'@param time_crossedRandom
+#'logical flag indicating wether the random coefficients of the subjects and of the time points
+#'should be modeled as one crossed random coefficient or as two separated random coefficients
+#'in the time function.  
+#'Default is \code{FALSE}.
 #'
 #'@param time_func 
 #'the form of the time trend. Can be either one of \code{"linear"},
@@ -116,12 +121,15 @@
 #'@return \code{TcGSA.LR} returns a \code{tcgsa} object, which is a list with
 #'the 5 following elements:
 #'\itemize{
-#'\item fit a data frame that contains the 3 following variables:
+#'\item fit a data frame that contains the 7 following variables:
 #'\itemize{ 
 #'\item \code{LR}: the likelihood ratio between the model under the
 #'null hypothesis and the model under the alternative hypothesis.  
-#'\item
-#'\code{CVG_H0}: convergence status of the model under the null hypothesis.
+#'\item \code{AIC_H0}: AIC criterion for the model under the null hypothesis.
+#'\item \code{AIC_H1}: AIC criterion for the model under the alternative hypothesis.
+#'\item \code{BIC_H0}: BIC criterion for the model under the null hypothesis.
+#'\item \code{BIC_H1}: BIC criterion for the model the alternative hypothesis.
+#'\item \code{CVG_H0}: convergence status of the model under the null hypothesis.
 #'\item \code{CVG_H1}: convergence status of the model under the alternative
 #'hypothesis.
 #'}
@@ -143,7 +151,7 @@
 #'\item \code{time_DF}: the degree of freedom of the natural splines functions
 #'}
 #'
-#'@author Boris P. Hejblum
+#'@author Boris P. Hejblum, Damien Chimits
 #'
 #'@seealso \code{\link{summary.TcGSA}}, \code{\link{plot.TcGSA}}
 #'
@@ -173,11 +181,11 @@
 
 TcGSA.LR.parallel <-
 	function(Ncpus, type_connec, 
-					 expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", crossedRandom=FALSE,time_nasted_effect=FALSE,
-					 covariates_fixed="", time_covariates="",
-					 time_func = "linear", group_name="", separateSubjects=FALSE,
-					 minGSsize=10, maxGSsize=500,
-					 monitorfile=""){
+			 expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", crossedRandom_fixed=FALSE,time_crossedRandom=FALSE,
+			 covariates_fixed="", time_covariates="",
+			 time_func = "linear", group_name="", separateSubjects=FALSE,
+			 minGSsize=10, maxGSsize=500,
+			 monitorfile=""){
 		
 		library(doSNOW)
 		
@@ -197,10 +205,12 @@ TcGSA.LR.parallel <-
 		CVG_H0 <- numeric(length(gmt$genesets))
 		CVG_H1 <- numeric(length(gmt$genesets))
 		estim_expr <- list()
+		
 		my_formul <- TcGSA.formula(design=design, subject_name=subject_name, time_name=time_name,  
-															 covariates_fixed=covariates_fixed, time_covariates=time_covariates, group_name=group_name,
-															 separateSubjects=separateSubjects, crossedRandom=crossedRandom,
-															 time_func=time_func,time_nasted_effect)
+								   covariates_fixed=covariates_fixed, time_covariates=time_covariates, group_name=group_name,
+								   separateSubjects=separateSubjects, crossedRandom_fixed=crossedRandom_fixed,
+								   time_func=time_func,time_crossedRandom)
+		
 		time_DF <- my_formul[["time_DF"]]
 		
 		
@@ -215,20 +225,20 @@ TcGSA.LR.parallel <-
 				expr_temp <- t(expr[probes, ])
 				rownames(expr_temp) <- NULL
 				data_lme  <- TcGSA.dataLME(expr=expr_temp, design=design, subject_name=subject_name, time_name=time_name, 
-																	 covariates_fixed=covariates_fixed, time_covariates=time_covariates,
-																	 group_name=group_name, time_func=time_func)
+										   covariates_fixed=covariates_fixed, time_covariates=time_covariates,
+										   group_name=group_name, time_func=time_func)
 				
 				if(length(levels(data_lme$probe))>1){
 					lmm_H0 <- tryCatch(lmer(formula =my_formul[["H0"]]["reg"], REML=FALSE, data=data_lme),
-														 error=function(e){NULL})
+									   error=function(e){NULL})
 					lmm_H1 <- tryCatch(lmer(formula =my_formul[["H1"]]["reg"], REML=FALSE, data=data_lme),
-														 error=function(e){NULL})
+									   error=function(e){NULL})
 				}
 				else{
 					lmm_H0 <- tryCatch(lmer(formula =my_formul[["H0"]]["1probe"], REML=FALSE, data=data_lme),
-														 error=function(e){NULL})
+									   error=function(e){NULL})
 					lmm_H1 <- tryCatch(lmer(formula =my_formul[["H1"]]["1probe"], REML=FALSE, data=data_lme),
-														 error=function(e){NULL})
+									   error=function(e){NULL})
 				}
 				
 				if (!is.null(lmm_H0) & !is.null(lmm_H1)) {
@@ -243,7 +253,12 @@ TcGSA.LR.parallel <-
 					estims <- cbind.data.frame(data_lme, "fitted"=fitted(lmm_H1))
 					estims_tab <- acast(data=estims, formula = as.formula(paste("probe", subject_name, "t1", sep="~")), value.var="fitted")
 					# drop = FALSE by default, which means that missing combination will be kept in the estims_tab and filled with NA
-					dimnames(estims_tab)[[3]] <- as.numeric(dimnames(estims_tab)[[3]])*10
+					
+					if(time_name %in% colnames(estims)){
+						time_points <- levels(as.factor(design[,which(colnames(design)==time_name)]))
+					}
+					dimnames(estims_tab)[[3]] <- as.numeric(levels(as.factor(design[,which(colnames(design)==time_name)])))
+					# dimnames(estims_tab)[[3]] <- as.numeric(dimnames(estims_tab)[[3]])*10
 					estim_expr <- estims_tab
 				} 
 				else {
@@ -257,7 +272,11 @@ TcGSA.LR.parallel <-
 					
 					estims <- cbind.data.frame(data_lme, "fitted"=NA)
 					estims_tab <- acast(data=estims, formula = as.formula(paste("probe", subject_name, "t1", sep="~")), value.var="fitted")
-					dimnames(estims_tab)[[3]] <- as.numeric(dimnames(estims_tab)[[3]])*10
+					if(time_name %in% colnames(estims)){
+						time_points <- levels(as.factor(design[,which(colnames(design)==time_name)]))
+					}
+					dimnames(estims_tab)[[3]] <- as.numeric(levels(as.factor(design[,which(colnames(design)==time_name)])))
+					# dimnames(estims_tab)[[3]] <- as.numeric(dimnames(estims_tab)[[3]])*10
 					estim_expr <- estims_tab
 					cat("Unable to fit the mixed models for this gene set\n")
 				}
@@ -289,7 +308,7 @@ TcGSA.LR.parallel <-
 				BIC_H1 <- NA
 				CVG_H0 <- NA
 				CVG_H1 <- NA
-        
+				
 				estim_expr <- NA
 				cat("The size of the gene set",  gmt$geneset.names[[gs]], "is problematic (too many or too few genes)\n")
 			}
@@ -321,21 +340,32 @@ TcGSA.LR.parallel <-
 		}
 		
 		tcgsa <- list("fit"=as.data.frame(cbind(LR, AIC_H0, AIC_H1, BIC_H0, BIC_H1, CVG_H0, CVG_H1)), "time_func"=time_func, "GeneSets_gmt"=gmt, 
-									"group.var"=gv, "separateSubjects"=separateSubjects, "Estimations"=estim_expr, 
-									"time_DF"=time_DF
+					  "group.var"=gv, "separateSubjects"=separateSubjects, "Estimations"=estim_expr, 
+					  "time_DF"=time_DF
 		)
 		class(tcgsa) <- "TcGSA"
 		stopCluster(cl)
-		converge <- 0
+		converge_H0 <- 0
+		converge_H1 <- 0
+		nb_models_H0 <- 0
+		nb_models_H1 <- 0
 		for (i in 1 : length(tcgsa$fit$CVG_H0)){
 			if(!is.na(tcgsa$fit$CVG_H0[[i]][1])){
+				nb_models_H0 <- nb_models_H0 + 1
 				if(tcgsa$fit$CVG_H0[[i]][1] == 0){
-					converge <- converge + 1
+					converge_H0 <- converge_H0 + 1
 				}
 			}
 		}
-		cat(converge, "models out of", length(gmt$genesets) , "have converged\n")
+		for (i in 1 : length(tcgsa$fit$CVG_H1)){
+			if(!is.na(tcgsa$fit$CVG_H1[[i]][1])){
+				nb_models_H1 <- nb_models_H1 + 1
+				if(tcgsa$fit$CVG_H1[[i]][1] == 0){
+					converge_H1 <- converge_H1 + 1
+				}
+			}
+		}
+		cat(converge_H0, "models out of", nb_models_H0 , "have converged under H0\n", "and", converge_H1, "models out of", nb_models_H1, "have converged under H1\n")
 		return(tcgsa)
 	}
-
 

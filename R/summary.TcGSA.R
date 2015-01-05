@@ -46,16 +46,16 @@
 #'
 summary.TcGSA <-function(object, ...){
 	signifRes <- signifLRT.TcGSA(object, ...)
-  nsignif <- dim(signifRes$mixedLRTadjRes)[1]
-  time_func <- object[["time_func"]]
-  separateSubjects <- object[["separateSubjects"]]
-  ntg <- ifelse(is.null(object[["group.var"]]),1,length(levels(object[["group.var"]])))
-  ngs <- length(object[["GeneSets_gmt"]]$geneset.name)
-  res  <- list("time_func"=time_func, "separateSubjects"=separateSubjects, "ntg"=ntg, "ngs"=ngs, 
-  						 "nsignif"=nsignif, "threshold"=signifRes$threshold, "multCorProc"=signifRes$multCorProc)
-  class(res) <- "summary.TcGSA"
-  
-  return(res)
+	nsignif <- dim(signifRes$mixedLRTadjRes)[1]
+	time_func <- object[["time_func"]]
+	separateSubjects <- object[["separateSubjects"]]
+	ntg <- ifelse(is.null(object[["group.var"]]),1,length(levels(object[["group.var"]])))
+	ngs <- length(object[["GeneSets_gmt"]]$geneset.name)
+	res  <- list("time_func"=time_func, "separateSubjects"=separateSubjects, "ntg"=ntg, "ngs"=ngs, 
+				 "nsignif"=nsignif, "threshold"=signifRes$threshold, "multCorProc"=signifRes$multCorProc)
+	class(res) <- "summary.TcGSA"
+	
+	return(res)
 }
 
 #'@rdname summary.TcGSA

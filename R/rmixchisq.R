@@ -7,7 +7,7 @@
 #'The approximate null distribution of a likelihood ratio for 2 nested mixed
 #'models, where both fixed and random effects are tested simultaneously, is a
 #'very specific mixture of \eqn{\chi^2}{\chi^2} distributions [\cite{Self & Liang
-#'(1987), Stram & Lee (1994) and Stram & Lee (1995)}].  It depends on both the
+																		  #'(1987), Stram & Lee (1994) and Stram & Lee (1995)}].  It depends on both the
 #'number of random effects and the number of fixed effects to be tested
 #'simultaneously: 
 #'\deqn{LRT_{H_0}\sim\sum_{k=q}^{q+r}{{r}\choose{k-q}}2^{-r}\chi^2_{(k)}}{LRT_H0~\sum k=q..q+r combination(r,k-q) 2^(-r) \chi^2 (k)}
@@ -42,22 +42,22 @@
 #'
 #'
 rmixchisq <-
-function(n,s,q){
-  if(q>0){
-    mixprobs <- numeric(q+1)
-    for(k in (s:(q+s))){
-      mixprobs[k-s+1] <- choose(q,k-s)*2^(-q)
-    }
-    mix <- n*mixprobs
-    #s <- s + q*(q-1)/2 #conservative corrections for the covariances terms
-  }else{
-    mix=n
-  }
-  
-  sample <- NULL
-  for(k in (s:(q+s))){
-    sample <- c(sample, rchisq(mix[k-s+1],df=k))
-  }
-  
-  return(sample) 
-}
+	function(n,s,q){
+		if(q>0){
+			mixprobs <- numeric(q+1)
+			for(k in (s:(q+s))){
+				mixprobs[k-s+1] <- choose(q,k-s)*2^(-q)
+			}
+			mix <- n*mixprobs
+			#s <- s + q*(q-1)/2 #conservative corrections for the covariances terms
+		}else{
+			mix=n
+		}
+		
+		sample <- NULL
+		for(k in (s:(q+s))){
+			sample <- c(sample, rchisq(mix[k-s+1],df=k))
+		}
+		
+		return(sample) 
+	}
