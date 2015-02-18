@@ -1,4 +1,4 @@
-#'@keywords internalSTSdist <- function(m, time){
+#'@keywords internal
 
 STSdist <- function(m, time){
 	nr <- dim(m)[1]
