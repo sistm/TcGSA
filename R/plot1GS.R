@@ -521,7 +521,19 @@ plot1GS <-
 		meltedData$TimePoint <- as.numeric(as.character(meltedData$TimePoint))
 		meltedStats$TimePoint <- as.numeric(as.character(meltedStats$TimePoint))
 		MeasPt <- unique(meltedData$TimePoint)
+		
 
+# 		browser()
+# 		pca_data <- acast(meltedData, formula=TimePoint~Probe_ID)
+# 		pca_res <- dudi.pca(pca_data)
+# 		1
+# 		pdf(width=5, height=4, file="~/PCAc1_M6_7.pdf")
+# 		plot(y=-pca_res$l1[,1], x=rownames(pca_res$l1), type="l",
+# 			 ylab="PCA 1st comp", xlab="Time (weeks)", main=g,
+# 			 lwd=3, col="blue")
+# 		dev.off()
+		
+		
 		
 		if(is.null(y.lim)){
 			y.max <- max(abs(meltedData$value), na.rm = TRUE)
