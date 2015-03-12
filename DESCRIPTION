@@ -4,12 +4,12 @@ Title: Time-course Gene Set Analysis
 Version: 0.9.91
 Date: 2015-03-11
 Authors@R: c(person("Boris P.", "Hejblum", role = c("aut", "cre"),
-		     email = "boris.hejblum@isped.u-bordeaux2.fr"), 
+		     email = "boris.hejblum@isped.fr"), 
 		     person("Damien", "Chimits", role = c("aut"),
-		     email = "boris.hejblum@isped.u-bordeaux2.fr")
+		     email = "damien.chimits@isped.fr")
 		    )
 Author: Boris P. Hejblum [aut, cre] and Damien Chimits [aut]
-Maintainer: Boris P. Hejblum <boris.hejblum@isped.u-bordeaux2.fr>
+Maintainer: Boris P. Hejblum <boris.hejblum@isped.fr>
 Depends: R (>= 3.0.2), lme4 (>= 1.0-4)
 Imports: ggplot2, GSA, multtest, reshape2, gtools, gplots, cluster, stringr, splines, grid
 Suggests: doSNOW
