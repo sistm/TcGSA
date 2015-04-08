@@ -20,8 +20,13 @@ TcGSA.dataLME<-
 		data_lm$t2 <- (data_lm$t1)^2
 		data_lm$t3 <- (data_lm$t1)^3
 		
-		nk = ceiling(length(unique(design[,time_name]))/4)
-		noeuds = quantile(design[,time_name], probs=c(1:(nk))/(nk+1))
+		nk <- ceiling(length(unique(design[,time_name]))/4)
+		if(length(unique(design[,time_name]))==2){
+			noeuds <- min(design[,time_name])
+			cat("Only 2 time-points here:\n longitudinal analysis is probably not the best idea...")
+		}else{
+			noeuds <- quantile(design[,time_name], probs=c(1:(nk))/(nk+1))
+		}
 		NCsplines <- as.data.frame(ns(design[,time_name], knots = noeuds, Boundary.knots = range(design[,time_name]), intercept = FALSE))
 		colnames(NCsplines) <- paste("spline_t",colnames(NCsplines) , sep="")
 		NCsplines <- NCsplines*10
