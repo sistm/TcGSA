@@ -260,6 +260,14 @@
 #'Statistical Society, Series B (Statistical Methodology)}, \bold{63}, 2:
 #'411--423.
 #'
+#'@import ggplot2
+#'
+#'@importFrom grid unit
+#'
+#'@importFrom cluster agnes clusGap maxSE
+#'
+#'@export
+#'
 #'@examples
 #'
 #'data(data_simu_TcGSA)
@@ -325,7 +333,7 @@
 #'}
 #'
 plot1GS <- 
-	function(expr, gmt, Subject_ID,TimePoint, geneset.name, 
+	function(expr, gmt, Subject_ID, TimePoint, geneset.name, 
 			 baseline=NULL,
 			 group.var=NULL, Group_ID_paired=NULL, ref=NULL, group_of_interest=NULL,
 			 FUNcluster=NULL, clustering_metric="euclidian", clustering_method="ward", B=500,
@@ -340,10 +348,6 @@ plot1GS <-
 			 gg.add=list(theme()),
 			 plot=TRUE
 	){
-		
-		library(ggplot2)
-		#   library(cluster)
-		#   library(splines)
 		
 		pre_clustering <- !is.null(precluster)
 		
@@ -402,7 +406,6 @@ plot1GS <-
 				y.lab <- paste(capwords(aggreg.fun), 'of standardized estimate')
 			}
 		}
-		
 		
 		
 		interest <- which(gmt$geneset.names==geneset.name)

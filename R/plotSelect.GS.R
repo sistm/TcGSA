@@ -250,6 +250,16 @@
 #'Statistical Society, Series B (Statistical Methodology)}, \bold{63}, 2:
 #'411--423.
 #'
+#'@import ggplot2
+#'
+#'@import reshape2
+#'
+#'@importFrom grid unit
+#'
+#'@importFrom cluster agnes
+#'
+#'@export
+#'
 #'@examples
 #'
 #'\dontrun{ 

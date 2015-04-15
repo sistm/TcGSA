@@ -35,6 +35,8 @@
 #'testing in the longitudinal mixed effects model" by Stram, D. O. and Lee, J.
 #'W.; 50: 1171--1177 (1994), \emph{Biometrics} 51: 1196.
 #'
+#'@export
+#'
 #'@examples
 #'
 #'sample_mixt <- rmixchisq(n=1000, s=3, q=3)

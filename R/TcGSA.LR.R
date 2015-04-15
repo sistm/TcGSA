@@ -133,6 +133,12 @@
 #'
 #'@references Hejblum, B.P., Skinner, J., Thiebaut, R., 2014, TcGSA: a gene set approach for longitudinal gene expression data analysis, \bold{submitted}.
 #'
+#'@importFrom GSA GSA.read.gmt
+#'
+#'@importFrom lme4 lmer
+#'
+#'@export TcGSA.LR
+#'
 #'@examples
 #'
 #'data(data_simu_TcGSA)
@@ -178,10 +184,6 @@ function(expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", cr
     stop("'separateSubjects' is TRUE while 'group_name' is not \"\".\n This is an attempt to separate subjects in a multiple group setting.\n This is not handled by the TcGSA.LR function.\n\n")
   }
 
-#   library(GSA)
-#   library(lme4)
-#   library(reshape2)
-#   require(splines)
    
   LR <- numeric(length(gmt$genesets))
   CVG_H0 <- numeric(length(gmt$genesets))
@@ -283,10 +285,13 @@ function(expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", cr
 
 
 #'@rdname TcGSA.LR
-#'@method print TcGSA
 #'
 #'@param x an object of class '\code{TcGSA}'.
 #'@param ...  further arguments passed to or from other methods.
+#'
+#'@method print TcGSA
+#'
+#'@export
 
 print.TcGSA <- function(x, ...){
 	cat("\t\tA TcGSA object")

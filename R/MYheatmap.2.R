@@ -3,7 +3,11 @@
 #under the GPL-2 license.
 
 #'@keywords internal
-
+#'
+#'@import gplots
+#'
+#'@importFrom gtools invalid
+#'
 MYheatmap.2 <- function (x, Rowv = TRUE, Colv = if (symm) "Rowv" else TRUE, 
                          distfun = dist, hclustfun = hclust, dendrogram = c("both", 
                                                                             "row", "column", "none"), symm = FALSE, scale = c("none", 

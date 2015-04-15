@@ -7,10 +7,10 @@
 \alias{print.ClusteredTrends}
 \title{Cluster the genes dynamics into different dominant trends.}
 \usage{
-clustTrend(x, expr, Subject_ID, TimePoint, threshold = 0.05, myproc = "BY",
-  nbsimu_pval = 1e+06, baseline = NULL, only.signif = TRUE,
-  group.var = NULL, Group_ID_paired = NULL, ref = NULL,
-  group_of_interest = NULL, FUNcluster = NULL,
+clustTrend(tcgs, expr, Subject_ID, TimePoint, threshold = 0.05,
+  myproc = "BY", nbsimu_pval = 1e+06, baseline = NULL,
+  only.signif = TRUE, group.var = NULL, Group_ID_paired = NULL,
+  ref = NULL, group_of_interest = NULL, FUNcluster = NULL,
   clustering_metric = "euclidian", clustering_method = "ward", B = 100,
   max_trends = 4, aggreg.fun = "median", trend.fun = "median",
   methodOptiClust = "firstSEmax", indiv = "genes", verbose = TRUE)
@@ -20,7 +20,7 @@ clustTrend(x, expr, Subject_ID, TimePoint, threshold = 0.05, myproc = "BY",
 \method{plot}{ClusteredTrends}(x, ...)
 }
 \arguments{
-\item{x}{a \bold{tcgsa} object for \code{clustTrend}, or a
+\item{tcgs}{a \bold{tcgsa} object for \code{clustTrend}, or a
 \bold{ClusteredTrends} object for \code{print.ClusteredTrends} and
 \code{plot.ClusteredTrends}.}
 
@@ -149,6 +149,8 @@ values are \code{"genes"} or \code{"patients"}.  Default is \code{"genes"}.}
 
 \item{verbose}{logical flag enabling verbose messages to track the computing
 status of the function.  Default is \code{TRUE}.}
+
+\item{x}{an object of class '\code{ClusteredTrends}'.}
 
 \item{\dots}{further arguments passed to or from other methods.}
 }

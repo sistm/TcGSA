@@ -66,6 +66,10 @@
 #'
 #'@references Hejblum, B.P., Skinner, J., Thiebaut, R., 2014, TcGSA: a gene set approach for longitudinal gene expression data analysis, \bold{submitted}.
 #'
+#'@importFrom gtools mixedorder
+#'
+#'@export signifLRT.TcGSA
+#'
 #'@examples
 #'
 #'data(data_simu_TcGSA)

@@ -10,7 +10,7 @@
 \method{print}{summary.TcGSA}(x, ...)
 }
 \arguments{
-\item{object}{an object of class'\code{TcGSA}'.}
+\item{object}{an object of class '\code{TcGSA}'.}
 
 \item{x}{an object of class '\code{summary.TcGSA}'.}
 

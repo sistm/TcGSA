@@ -1,4 +1,6 @@
 #'@keywords internal
+#'
+#'@importFrom stringr str_split str_trim
 
 TcGSA.formula <- 
 	function(design, subject_name="Patient_ID", time_name="TimePoint", 

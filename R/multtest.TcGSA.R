@@ -46,6 +46,10 @@
 #'\code{\link[multtest:mt.rawp2adjp]{mt.rawp2adjp}},
 #'\code{\link{signifLRT.TcGSA}}
 #'
+#'@importFrom multtest mt.rawp2adjp
+#'
+#'@export multtest.TcGSA
+#'
 #'@examples
 #'
 #'data(data_simu_TcGSA)

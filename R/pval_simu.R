@@ -17,12 +17,16 @@
 #'
 #'@seealso \code{\link{rmixchisq}}
 #'
+#'@keywords internal
+#'
+#'
 #'@examples
 #'
+#'\dontrun{ 
 #'theo_dist <- rnorm(n=10000, mean=0, sd=1)
-#'pval_simu(s=1.96, theo_dist)
+#'TcGSA:::pval_simu(s=1.96, theo_dist)
 #'1-pnorm(q=1.96, mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE)
-#'
+#'}
 #'
 pval_simu <-
 function(s,theo_dist){

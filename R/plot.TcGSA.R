@@ -329,6 +329,14 @@
 #'
 #'@references Hejblum, B.P., Skinner, J., Thiebaut, R., 2014, TcGSA: a gene set approach for longitudinal gene expression data analysis, \bold{submitted}.
 #'
+#'@import ggplot2
+#'
+#'@import gplots
+#'
+#'@import reshape2
+#'
+#'@export
+#'
 #'@examples
 #'
 #'data(data_simu_TcGSA)
@@ -382,7 +390,7 @@ plot.TcGSA <-
            horiz.clusterKey=TRUE,
            main=NULL, subtitle=NULL, 
            ...){
-#		library(gplots)
+  	
     gmt <- x[["GeneSets_gmt"]]
     
     if(!is.null(baseline)){

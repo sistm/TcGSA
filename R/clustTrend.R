@@ -17,7 +17,7 @@
 #'@aliases clustTrend ClusteredTrends print.ClusteredTrends
 #'plot.ClusteredTrends
 #'
-#'@param x a \bold{tcgsa} object for \code{clustTrend}, or a
+#'@param tcgs a \bold{tcgsa} object for \code{clustTrend}, or a
 #'\bold{ClusteredTrends} object for \code{print.ClusteredTrends} and
 #'\code{plot.ClusteredTrends}.
 #'
@@ -200,6 +200,10 @@
 #'Statistical Society, Series B (Statistical Methodology)}, \bold{63}, 2:
 #'41--423.
 #'
+#'@importFrom cluster agnes clusGap maxSE
+#'
+#'@export
+#'
 #'@examples
 #'
 #'data(data_simu_TcGSA)
@@ -223,7 +227,7 @@
 
 
 clustTrend <- 
-	function(x,
+	function(tcgs,
 			 expr, Subject_ID, TimePoint, threshold = 0.05, 
 			 myproc = "BY", nbsimu_pval = 1e+06, baseline=NULL, 
 			 only.signif=TRUE, group.var=NULL, Group_ID_paired=NULL, 
@@ -233,7 +237,6 @@ clustTrend <-
 			 trend.fun="median", methodOptiClust = "firstSEmax",
 			 indiv="genes", verbose=TRUE
 	){
-		#  library(cluster)
 		
 		
 		Fun_byIndex<-function(X, index, fun, ...){
@@ -262,10 +265,10 @@ clustTrend <-
 			stop("the 'FUNcluster' supplied is not a function")
 		}
 		
-		gmt <- x[["GeneSets_gmt"]]
-		separateSubjects <- x[["separateSubjects"]]
+		gmt <- tcgs[["GeneSets_gmt"]]
+		separateSubjects <- tcgs[["separateSubjects"]]
 		if(only.signif){
-			GSsig <- signifLRT.TcGSA(tcgsa=x, threshold=threshold, myproc = "BY", nbsimu_pval = 1e+06)$mixedLRTadjRes
+			GSsig <- signifLRT.TcGSA(tcgsa=tcgs, threshold=threshold, myproc = "BY", nbsimu_pval = 1e+06)$mixedLRTadjRes
 			GeneSetsList <- GSsig$GeneSet
 			if(length(GeneSetsList)<1){
 				stop("NO SIGNIFICANT GENE SETS\n No gene sets to be plotted: set 'only.signif' argument to 'FALSE' in order to plot all the investigated gene sets")
@@ -418,9 +421,15 @@ clustTrend <-
 
 
 #'@rdname clustTrend
-#'@method print ClusteredTrends
+#'
+#'@param x an object of class '\code{ClusteredTrends}'.
 #'
 #'@param \dots further arguments passed to or from other methods.
+#'
+#'@method print ClusteredTrends
+#'
+#'@export
+#'
 #'
 print.ClusteredTrends <- function(x, ...){
 	maxK <- x$MaxNbClust
@@ -451,7 +460,10 @@ print.ClusteredTrends <- function(x, ...){
 
 
 #'@rdname clustTrend
+#'
 #'@method plot ClusteredTrends
+#'
+#'@export
 #'
 plot.ClusteredTrends <- function(x, ...){
 	maxK <- x$MaxNbClust

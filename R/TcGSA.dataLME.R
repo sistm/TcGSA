@@ -1,4 +1,7 @@
 #'@keywords internal
+#'
+#'@importFrom stringr str_split
+#'@importFrom splines ns
 
 TcGSA.dataLME<-
 	function(expr, design, subject_name="Patient_ID", time_name="TimePoint", 

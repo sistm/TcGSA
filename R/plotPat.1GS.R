@@ -240,6 +240,14 @@
 #'Statistical Society, Series B (Statistical Methodology)}, \bold{63}, 2:
 #'411--423.
 #'
+#'@import ggplot2
+#'
+#'@importFrom grid unit
+#'
+#'@importFrom cluster agnes
+#'
+#'@export
+#'
 #'@examples
 #'
 #'data(data_simu_TcGSA)
@@ -319,9 +327,6 @@ plotPat.1GS <-
 			 gg.add=list(theme())
 	){
 		
-		#   library(ggplot2)
-		#   library(cluster)
-		#   library(splines)
 		capwords <- function(s, strict = FALSE){
 			cap <- function(s){
 				paste(toupper(substring(s,1,1)),{s <- substring(s,2); if(strict) tolower(s) else s},
@@ -395,18 +400,20 @@ plotPat.1GS <-
 			Subject_ID <- rep(dimnames(expr_sel)[[2]], dim(expr_sel)[3])
 		}
 		
-		all_clust <- plot1GS(expr, gmt, Subject_ID,TimePoint, geneset.name, 
-							 baseline, group.var, Group_ID_paired, ref, group_of_interest,
+		all_clust <- plot1GS(expr, gmt, Subject_ID, TimePoint, geneset.name, 
+							 baseline, 
+							 group.var, Group_ID_paired, ref, group_of_interest,
 							 FUNcluster, clustering_metric, clustering_method, B,
 							 max_trends, aggreg.fun, trend.fun,
 							 methodOptiClust,
 							 indiv="genes",
 							 verbose,
-							 clustering, showTrend=FALSE, smooth=FALSE,
-							 time_unit, title, y.lab, desc,
+							 clustering, showTrend=FALSE, smooth=FALSE, precluster=NULL,
+							 time_unit, title, y.lab, desc, margins=1, line.size=1,
 							 lab.cex, axis.cex, main.cex, y.lab.angle, x.axis.angle,
 							 y.lim, x.lim, 
-							 gg.add, plot=FALSE)
+							 gg.add, 
+							 plot=FALSE)
 		data_stand <- t(apply(X=data_sel, MARGIN=1, FUN=scale))
 		
 		if(!is.null(baseline)){

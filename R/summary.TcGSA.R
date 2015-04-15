@@ -5,10 +5,9 @@
 #'
 #'@aliases summary.TcGSA print.summary.TcGSA
 #'
-#'@method summary TcGSA
 #'
 #'@param object 
-#'an object of class'\code{TcGSA}'.
+#'an object of class '\code{TcGSA}'.
 #'
 #'@param \dots further arguments passed to or from other methods.
 #'
@@ -26,6 +25,10 @@
 #'@author Boris P. Hejblum
 #'
 #'@seealso \code{\link{TcGSA.LR}}
+#'
+#'@method summary TcGSA
+#'
+#'@export
 #'
 #'@examples
 #'
@@ -59,9 +62,13 @@ summary.TcGSA <-function(object, ...){
 }
 
 #'@rdname summary.TcGSA
-#'@method print summary.TcGSA
 #'
 #'@param x an object of class '\code{summary.TcGSA}'.
+#'
+#'@method print summary.TcGSA
+#'
+#'@export
+#'
 print.summary.TcGSA <-function(x, ...){
 	cat("\t\tA TcGSA object")
 	cat("\n")

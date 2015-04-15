@@ -62,6 +62,12 @@
 #' gene set approach for longitudinal gene expression data analysis, 
 #' \bold{submitted}.
 #'
+#'@import ggplot2
+#'
+#'@import reshape2
+#'
+#'@export plotFit.GS
+#'
 #'@examples
 #'
 #'data(data_simu_TcGSA)
