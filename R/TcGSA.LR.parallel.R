@@ -248,23 +248,12 @@ TcGSA.LR.parallel <-
 						cat("Unable to fit the mixed models for this gene set\n")
 					}
 					
-					#		CONVERGENCE DIAGNOSTICS IN LME4
-					#       "3" = "X-convergence (3)",
-					#       "4" = "relative convergence (4)",
-					#       "5" = "both X-convergence and relative convergence (5)",
-					#       "6" = "absolute function convergence (6)",
-					# 
-					#       "7" = "singular convergence (7)",
-					#       "8" = "false convergence (8)",
-					#       "9" = "function evaluation limit reached without convergence (9)",
-					#       "10" = "iteration limit reached without convergence (9)",
-					#       "14" = "storage has been allocated (?) (14)",
-					# 
-					#       "15" = "LIV too small (15)",
-					#       "16" = "LV too small (16)",
-					#       "63" = "fn cannot be computed at initial par (63)",
-					#       "65" = "gr cannot be computed at initial par (65)")
-					#
+
+					# CONVERGENCE DIAGNOSTICS IN lme4 v1.1-7 (from Nelder Mead optimizer)
+					# -3: "nm_forced"
+					# -2: "cannot generate a feasible simplex"
+					# -1: "initial x is not feasible"
+					#  0: "converged"
 					
 				}
 				else{
