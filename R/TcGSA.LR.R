@@ -219,8 +219,8 @@ function(expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", cr
 
       if (!is.null(lmm_H0) & !is.null(lmm_H1)) {
         LR[gs] <- deviance(lmm_H0, REML=FALSE) - deviance(lmm_H1, REML=FALSE)
-  	    CVG_H0[gs] <- lmm_H0@optinfo[["conv"]]$opt
-  	    CVG_H1[gs] <- lmm_H1@optinfo[["conv"]]$opt
+  	    CVG_H0[gs] <- lmm_H0@optinfo[["conv"]]
+  	    CVG_H1[gs] <- lmm_H1@optinfo[["conv"]]
         estims <- cbind.data.frame(data_lme, "fitted"=fitted(lmm_H1))
         estims_tab <- acast(data=estims, formula = as.formula(paste("probe", subject_name, "t1", sep="~")), value.var="fitted")
         # drop = FALSE by default, which means that missing combination will be kept in the estims_tab and filled with NA
@@ -231,6 +231,13 @@ function(expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", cr
         CVG_H0[gs] <- NA
         CVG_H1[gs] <- NA
         
+        
+        # CONVERGENCE DIAGNOSTICS IN lme4 v1.1-7 (from Nelder Mead optimizer)
+        # -3: "nm_forced"
+        # -2: "cannot generate a feasible simplex"
+        # -1: "initial x is not feasible"
+        #  0: "converged"
+        
         estims <- cbind.data.frame(data_lme, "fitted"=NA)
         estims_tab <- acast(data=estims, formula = as.formula(paste("probe", subject_name, "t1", sep="~")), value.var="fitted")
         if(is.numeric(design[, time_name])){
@@ -239,12 +246,6 @@ function(expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", cr
         estim_expr[[gs]] <- estims_tab
         cat("Unable to fit the mixed models for this gene set\n")
       }
-      
-      # CONVERGENCE DIAGNOSTICS IN lme4 v1.1-7 (from Nelder Mead optimizer)
-      # -3: "nm_forced"
-      # -2: "cannot generate a feasible simplex"
-      # -1: "initial x is not feasible"
-      #  0: "converged"
     	
     }else{
 	    LR[gs] <- NA
