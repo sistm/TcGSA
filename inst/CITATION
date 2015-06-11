@@ -3,11 +3,14 @@ citHeader("To cite TcGSA in publications, please use:")
 citEntry(entry = "Article",
    title  = "TcGSA: a gene set approach for longitudinal gene expression data analysis",
    author = c(person("Boris P. Hejblum"), person("Jason Skinner"), person("Rodolphe Thiebaut")),
-	journal = "submitted",
-   year   = "2013",
+	journal = "PLOS Computational Biology",
+   year   = "2015",
+   volume ="",
+   number ="",
+   doi    ="",
    note   = "R package version 0.9.3",
 
-	 textVersion = "Boris P. Hejblum, Jason Skinner, Rodolphe Thiebaut 2013, TcGSA: a gene set approach for longitudinal gene expression data analysis, submitted."
+	 textVersion = "Boris P. Hejblum, Jason Skinner, Rodolphe Thiebaut 2015, TcGSA: a gene set approach for longitudinal gene expression data analysis, PLOS Computational Biology, in press. »
 )
 
 citFooter("We have invested a lot of time and effort in implementing TcGSA, ", "please cite it when using it for data analysis.")

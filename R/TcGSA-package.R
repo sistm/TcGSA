@@ -16,7 +16,9 @@
 #'@author Damien Chimits
 #'--- Maintainer: Boris P. Hejblum
 #'
-#'@references Hejblum, B.P., Skinner, J., Thiebaut, R., 2014, TcGSA: a gene set approach for longitudinal gene expression data analysis, \bold{submitted}.
+#'@references Hejblum, B.P., Skinner, J., Thiebaut, R., 2015, 
+#'TcGSA: a gene set approach for longitudinal gene expression data analysis, 
+#'\emph{PLOS Computational Biology}, \bold{in press}.
 #'
 #'@seealso \code{\link[GSA:GSA]{GSA}}
 #'
