@@ -336,7 +336,6 @@ plot1GS <-
 		# library(ggplot2)
 		# library(cluster)
 		# library(splines)
-		
 		pre_clustering <- !is.null(precluster)
 		
 		capwords <- function(s, strict = FALSE){
@@ -478,7 +477,6 @@ plot1GS <-
 					medoids <- cbind.data.frame("TimePoint"= rownames(medoids), medoids)
 				}
 			}else{
-				
 				clust <- precluster
 				medoids <- as.data.frame(t(apply(X=data_stand_MedianByTP, MARGIN=2, FUN=Fun_byIndex,
 												 index=as.factor(as.numeric(precluster)), fun=trend.fun, na.rm=TRUE)))
@@ -590,9 +588,7 @@ plot1GS <-
 			  + theme(legend.key=element_rect(fill="white"))
 		)
 		
-		
 		if(showTrend){
-			
 			if(!smooth){
 				if(pre_clustering){
 					p <- (p + geom_line(data=meltedStats, aes_string(x="TimePoint", y="value", group="Cluster", colour="Cluster"), size=3))

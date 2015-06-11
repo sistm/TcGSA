@@ -12,4 +12,3 @@ STSdist <- function(m, time){
 	}
 	return(as.dist(mm))
 }
-

@@ -39,7 +39,7 @@
 #'the information on the time replicates (the time points at which gene 
 #'expression was measured).  Default is \code{'TimePoint'}.  See Details.
 #'
-#'@param crossedRandom
+#'@param crossedRandom_fixed
 #'logical flag indicating wether the random effects of the subjects and of the time points
 #'should be modeled as one crossed random effect or as two separated random effects.  
 #'Default is \code{FALSE}. See details.
@@ -55,6 +55,11 @@
 #'variable in the model.  See details.  Default is \code{""}, which corresponds 
 #'to no covariates in the model.
 #'
+#'@param time_crossedRandom
+#'logical flag indicating wether the random coefficients of the subjects and of the time points
+#'should be modeled as one crossed random coefficient or as two separated random coefficients
+#'in the time function.  
+#'Default is \code{FALSE}.
 #'
 #'@param time_func 
 #'the form of the time trend. Can be either one of \code{"linear"},
@@ -98,34 +103,37 @@
 #'@return \code{TcGSA.LR} returns a \code{tcgsa} object, which is a list with
 #'the 5 following elements:
 #'\itemize{
-	#'\item fit a data frame that contains the 3 following variables:
+	#'\item fit a data frame that contains the 7 following variables:
 	#'\itemize{ 
-	#'\item \code{LR}: the likelihood ratio between the model under the
-	#'null hypothesis and the model under the alternative hypothesis.  
-	#'\item
-	#'\code{CVG_H0}: convergence status of the model under the null hypothesis.
-	#'\item \code{CVG_H1}: convergence status of the model under the alternative
-	#'hypothesis.
-#'}
-#'\item \code{time_func}: a character string passing along the value of the
-#'\code{time_func} argument used in the call.
-#'\item \code{GeneSets_gmt}: a \code{gmt} object passing along the value of the
-#'\code{gmt} argument used in the call.
-#'\item \code{group.var}: a factor passing along the \code{group_name} variable
-#'from the \code{design} matrix.
-#'\item \code{separateSubjects}: a logical flag passing along the value of the
-#'\code{separateSubjects} argument used in the call.
-#'\item \code{Estimations}: a list of 3 dimensions arrays.  Each element of the
-#'list (i.e. each array) corresponds to the estimations of gene expression
-#'dynamics for each of the gene sets under scrutiny (obtained from mixed
-#'models).  The first dimension of those arrays is the genes included in the
-#'concerned gene set, the second dimension is the \code{Patient_ID}, and the
-#'third dimension is the \code{TimePoint}.  The values inside those arrays are
-#'estimated gene expressions.
-#'\item \code{time_DF}: the degree of freedom of the natural splines functions
+		#'\item \code{LR}: the likelihood ratio between the model under the
+		#'null hypothesis and the model under the alternative hypothesis.  
+		#'\item \code{AIC_H0}: AIC criterion for the model under the null hypothesis.
+		#'\item \code{AIC_H1}: AIC criterion for the model under the alternative hypothesis.
+		#'\item \code{BIC_H0}: BIC criterion for the model under the null hypothesis.
+		#'\item \code{BIC_H1}: BIC criterion for the model the alternative hypothesis.
+		#'\item \code{CVG_H0}: convergence status of the model under the null hypothesis.
+		#'\item \code{CVG_H1}: convergence status of the model under the alternative
+		#'hypothesis.
+	#'}
+	#'\item \code{time_func}: a character string passing along the value of the
+	#'\code{time_func} argument used in the call.
+	#'\item \code{GeneSets_gmt}: a \code{gmt} object passing along the value of the
+	#'\code{gmt} argument used in the call.
+	#'\item \code{group.var}: a factor passing along the \code{group_name} variable
+	#'from the \code{design} matrix.
+	#'\item \code{separateSubjects}: a logical flag passing along the value of the
+	#'\code{separateSubjects} argument used in the call.
+	#'\item \code{Estimations}: a list of 3 dimensions arrays.  Each element of the
+	#'list (i.e. each array) corresponds to the estimations of gene expression
+	#'dynamics for each of the gene sets under scrutiny (obtained from mixed
+	#'models).  The first dimension of those arrays is the genes included in the
+	#'concerned gene set, the second dimension is the \code{Patient_ID}, and the
+	#'third dimension is the \code{TimePoint}.  The values inside those arrays are
+	#'estimated gene expressions.
+	#'\item \code{time_DF}: the degree of freedom of the natural splines functions
 #'}
 #'
-#'@author Boris P. Hejblum
+#'@author Boris P. Hejblum, Damien Chimits
 #'
 #'@seealso \code{\link{summary.TcGSA}}, \code{\link{plot.TcGSA}}, 
 #'and \code{\link{TcGSA.LR.parallel}} for an implementation using 
@@ -163,7 +171,7 @@
 #'}
 
 TcGSA.LR <-
-function(expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", crossedRandom=FALSE, time_nasted_effect=FALSE,
+function(expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", crossedRandom_fixed=FALSE, time_crossedRandom=FALSE,
 				 covariates_fixed="", time_covariates="",
 				 time_func = "linear", group_name="", separateSubjects=FALSE, 
 				 minGSsize=10, maxGSsize=500){
@@ -194,10 +202,10 @@ function(expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", cr
   
   my_formul <- TcGSA.formula(design=design, subject_name=subject_name, time_name=time_name,  
   													 covariates_fixed=covariates_fixed, time_covariates=time_covariates, group_name=group_name,
-  													 separateSubjects=separateSubjects, crossedRandom=crossedRandom,
-  													 time_func=time_func,time_nasted_effect=time_nasted_effect)
+  													 separateSubjects=separateSubjects, crossedRandom_fixed=crossedRandom_fixed,
+  													 time_func=time_func,time_crossedRandom=time_crossedRandom)
   time_DF <- my_formul[["time_DF"]]
-  	
+
   for (gs in 1:length(gmt$genesets)){
     probes <- intersect(gmt$genesets[[gs]], rownames(expr))
     if(length(probes)>0 && length(probes)<=maxGSsize && length(probes)>=minGSsize){                                                       
@@ -230,7 +238,11 @@ function(expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", cr
         estims <- cbind.data.frame(data_lme, "fitted"=fitted(lmm_H1))
         estims_tab <- acast(data=estims, formula = as.formula(paste("probe", subject_name, "t1", sep="~")), value.var="fitted")
         # drop = FALSE by default, which means that missing combination will be kept in the estims_tab and filled with NA
-        dimnames(estims_tab)[[3]] <- as.numeric(dimnames(estims_tab)[[3]])*10
+        if(time_name %in% colnames(estims)){
+        	time_points <- levels(as.factor(design[,which(colnames(design)==time_name)]))
+        }
+        dimnames(estims_tab)[[3]] <- as.numeric(levels(as.factor(design[,which(colnames(design)==time_name)])))
+        #dimnames(estims_tab)[[3]] <- as.numeric(dimnames(estims_tab)[[3]])*10
         estim_expr[[gs]] <- estims_tab
       }else {
         LR[gs] <- NA
@@ -243,9 +255,11 @@ function(expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", cr
         
         estims <- cbind.data.frame(data_lme, "fitted"=NA)
         estims_tab <- acast(data=estims, formula = as.formula(paste("probe", subject_name, "t1", sep="~")), value.var="fitted")
-        if(is.numeric(design[, time_name])){
-        	dimnames(estims_tab)[[3]] <- as.numeric(dimnames(estims_tab)[[3]])*10
+        if(time_name %in% colnames(estims)){
+        	time_points <- levels(as.factor(design[,which(colnames(design)==time_name)]))
         }
+        dimnames(estims_tab)[[3]] <- as.numeric(levels(as.factor(design[,which(colnames(design)==time_name)])))
+	 #dimnames(estims_tab)[[3]] <- as.numeric(dimnames(estims_tab)[[3]])*10
         estim_expr[[gs]] <- estims_tab
         cat("Unable to fit the mixed models for this gene set\n")
       }
@@ -294,15 +308,30 @@ function(expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", cr
   							"time_DF"=time_DF
   							)
   class(tcgsa) <- "TcGSA"
-  converge <- 0
+
+
+
+  converge_H0 <- 0
+  converge_H1 <- 0
+  nb_models_H0 <- 0
+  nb_models_H1 <- 0
   for (i in 1 : length(tcgsa$fit$CVG_H0)){
-    if(!is.na(tcgsa$fit$CVG_H0[[i]][1])){
-	  if(tcgsa$fit$CVG_H0[[i]][1] == 0){
-	    converge <- converge + 1
-	  }
+  	if(!is.na(tcgsa$fit$CVG_H0[[i]][1])){
+  		nb_models_H0 <- nb_models_H0 + 1
+		if(tcgsa$fit$CVG_H0[[i]][1] == 0){
+			converge_H0 <- converge_H0 + 1
+		}
 	}
   }
-  cat(converge, "models out of", length(gmt$genesets) , "have converged\n")
+  for (i in 1 : length(tcgsa$fit$CVG_H1)){
+	if(!is.na(tcgsa$fit$CVG_H1[[i]][1])){
+		nb_models_H1 <- nb_models_H1 + 1
+		if(tcgsa$fit$CVG_H1[[i]][1] == 0){
+			converge_H1 <- converge_H1 + 1
+		}
+	}
+  }
+  cat(converge_H0, "models out of", nb_models_H0 , "have converged under H0\n", "and", converge_H1, "models out of", nb_models_H1, "have converged under H1\n")
   return(tcgsa)
 }
 

@@ -60,49 +60,53 @@
 #'
 #'
 multtest.TcGSA <-
-function(tcgsa, threshold=0.05, myproc="BY", nbsimu_pval = 1000000){
-  emp <- tcgsa[["fit"]]
-  func <- tcgsa[["time_func"]]
-  group.var <- tcgsa[["group.var"]]
-  separateSubjects <- tcgsa[["separateSubjects"]]
-	time_DF <- tcgsa[["time_DF"]]
-  
-  if(is.null(group.var)){
-    if(!separateSubjects){
-      if(func=="linear"){
-        theodist <- c(rchisq(nbsimu_pval/2,df=1), rchisq(nbsimu_pval/2,df=2))
-      }else if(func=="cubic"){
-        theodist <- rmixchisq(nbsimu_pval,3,3)
-      }else{
-        theodist <-rmixchisq(nbsimu_pval,time_DF,time_DF)
-      }
-    }else{
-      if(func=="linear"){
-        theodist <- c(rchisq(nbsimu_pval/2,df=0), rchisq(nbsimu_pval/2,df=1) )
-      }else if(func=="cubic"){
-        theodist <- rmixchisq(nbsimu_pval,0,3)
-      }else{
-        theodist <-rmixchisq(nbsimu_pval,0,time_DF)
-      }
-    }
-  }else{
-    nbgp <- length(levels(group.var))
-    if(func=="linear"){
-      theodist <- rmixchisq(nbsimu_pval, 1*(nbgp-1), 0)
-    }else if(func=="cubic"){
-      theodist <- rmixchisq(nbsimu_pval, 3*(nbgp-1), 0)
-    }else{
-      theodist <-rmixchisq(nbsimu_pval, time_DF*(nbgp-1), 0)
-    }
-  }
-  
-  emp$raw_pval <- unlist(lapply(emp$LR, FUN=pval_simu, theo_dist=theodist))
-  if(myproc=="none" | length(emp$raw_pval)==1){
-  	emp$adj_pval <- emp$raw_pval
-  }
-  else{
-  	adj_pval <- mt.rawp2adjp(emp$raw_pval, proc=c(myproc),alpha=threshold)
-  	emp$adj_pval <- adj_pval$adjp[order(adj_pval$index),2]
-  }
-  return(emp)
-}
+	function(tcgsa, threshold=0.05, myproc="BY", nbsimu_pval = 1000000){
+		emp <- tcgsa[["fit"]]
+		func <- tcgsa[["time_func"]]
+		group.var <- tcgsa[["group.var"]]
+		separateSubjects <- tcgsa[["separateSubjects"]]
+		time_DF <- tcgsa[["time_DF"]]
+		
+		if(is.null(group.var)){
+			if(!separateSubjects){
+				if(func=="linear"){
+					theodist <- c(rchisq(nbsimu_pval/2,df=1), rchisq(nbsimu_pval/2,df=2))
+				}else if(func=="cubic"){
+					theodist <- rmixchisq(nbsimu_pval,3,3)
+				}else{
+					theodist <-rmixchisq(nbsimu_pval,time_DF,time_DF)
+				}
+			}else{
+				if(func=="linear"){
+					theodist <- c(rchisq(nbsimu_pval/2,df=0), rchisq(nbsimu_pval/2,df=1) )
+				}else if(func=="cubic"){
+					theodist <- rmixchisq(nbsimu_pval,0,3)
+				}else{
+					theodist <-rmixchisq(nbsimu_pval,0,time_DF)
+				}
+			}
+		}else{
+			if(is.factor(group.var)){
+				nbgp <- length(levels(group.var))
+			}else{
+				stop("group.var is not a factor")
+			}
+			if(func=="linear"){
+				theodist <- rmixchisq(nbsimu_pval, 1*(nbgp-1), 0)
+			}else if(func=="cubic"){
+				theodist <- rmixchisq(nbsimu_pval, 3*(nbgp-1), 0)
+			}else{
+				theodist <-rmixchisq(nbsimu_pval, time_DF*(nbgp-1), 0)
+			}
+		}
+		
+		emp$raw_pval <- unlist(lapply(emp$LR, FUN=pval_simu, theo_dist=theodist))
+		if(myproc=="none" | length(emp$raw_pval)==1){
+			emp$adj_pval <- emp$raw_pval
+		}
+		else{
+			adj_pval <- mt.rawp2adjp(emp$raw_pval, proc=c(myproc),alpha=threshold)
+			emp$adj_pval <- adj_pval$adjp[order(adj_pval$index),2]
+		}
+		return(emp)
+	}
