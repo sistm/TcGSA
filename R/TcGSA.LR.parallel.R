@@ -229,8 +229,8 @@ TcGSA.LR.parallel <-
 					
 					if (!is.null(lmm_H0) & !is.null(lmm_H1)) {
 						LR <- deviance(lmm_H0, REML=FALSE) - deviance(lmm_H1, REML=FALSE)
-						CVG_H0 <- lmm_H0@optinfo["conv"]
-						CVG_H1 <- lmm_H1@optinfo["conv"]
+						CVG_H0 <- lmm_H0@optinfo["conv"]$opt
+						CVG_H1 <- lmm_H1@optinfo["conv"]$opt
 						
 						estims <- cbind.data.frame(data_lme, "fitted"=fitted(lmm_H1))
 						estims_tab <- acast(data=estims, formula = as.formula(paste("probe", subject_name, "t1", sep="~")), value.var="fitted")
