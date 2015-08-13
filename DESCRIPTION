@@ -4,14 +4,12 @@ Title: Time-course Gene Set Analysis
 Version: 0.9.93
 Date: 2015-06-11
 Authors@R: c(person("Boris P.", "Hejblum", role = c("aut", "cre"),
-		     email = "boris.hejblum@isped.fr"), 
-		     person("Damien", "Chimits", role = c("aut"),
-		     email = "damien.chimits@isped.fr")
+		     email = "bhejblum@hsph.harvard.edu"), 
+		     person("Damien", "Chimits", role = c("aut"))
 		    )
-Author: Boris P. Hejblum [aut, cre], Damien Chimits [aut]
-Maintainer: Boris P. Hejblum <boris.hejblum@isped.fr>
-Depends: R (>= 3.0.2), lme4 (>= 1.0-4)
-Imports: ggplot2, GSA, multtest, reshape2, gtools, gplots, cluster, stringr, splines, grid
+Depends: R (>= 3.0.2)
+Imports: lme4 (>= 1.0-4), ggplot2, GSA, multtest, reshape2, gtools, gplots, cluster, stringr, splines, grid
 Suggests: foreach, parallel, doParallel
 Description: This package implements the TcGSA, an algorithm to analyze longitudinal gene-expression data at the gene set level.
 License: LGPL-3 | file LICENSE
+BugReports: https://github.com/borishejblum/TcGSA/issues

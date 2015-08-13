@@ -14,7 +14,6 @@ Documentation
 
 TcGSA is a package which performs Time-course Gene Set Analysis, and provide nice representations of its results. 
 On top of the CRAN help pdf-file, the following article explains what TcGSA is about:
-Hejblum, B.P., Skinner, J., Thiebaut, R., 2015, TcGSA: a gene set approach for longitudinal gene expression data analysis, submitted.
-
+Hejblum, B. P., Skinner, J., & Thiébaut, R. (2015). Time-Course Gene Set Analysis for Longitudinal Gene Expression Data. PLOS Comput Biol, 11(6), e1004310.
 
    -- Boris Hejblum

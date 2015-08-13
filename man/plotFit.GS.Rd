@@ -97,9 +97,10 @@ plotFit.GS(x=tcgsa_sim_1grp, expr=expr_1grp, design=design,
 Boris P. Hejblum
 }
 \references{
-Hejblum, B.P., Skinner, J., Thiebaut, R., 2014, TcGSA: a
-gene set approach for longitudinal gene expression data analysis,
-\bold{submitted}.
+Hejblum BP, Skinner J, Thiébaut R, (2015)
+Time-Course Gene Set Analysis for Longitudinal Gene Expression Data.
+\emph{PLoS Computat Biol} 11(6): e1004310.
+doi: 10.1371/journal.pcbi.1004310
 }
 \seealso{
 \code{\link{plot1GS}}, \code{\link{plotSelect.GS}}
