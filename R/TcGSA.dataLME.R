@@ -2,6 +2,7 @@
 #'
 #'@importFrom stringr str_split
 #'@importFrom splines ns
+#'@import reshape2
 
 TcGSA.dataLME<-
 	function(expr, design, subject_name="Patient_ID", time_name="TimePoint", 
@@ -17,7 +18,7 @@ TcGSA.dataLME<-
 		}
 		if(length(which(ID_vars==""))>0){ID_vars <- ID_vars[-which(ID_vars=="")]}
 		
-		data_lm <- melt(data_temp, id.vars=ID_vars, variable.name ="probe", value.name="expression", measure.vars=colnames(expr))
+		data_lm <- reshape2::melt(data_temp, id.vars=ID_vars, variable.name ="probe", value.name="expression", measure.vars=colnames(expr))
 		data_lm$t1 <- data_lm[, time_name]
 		data_lm$t1 <- data_lm$t1/10 # fixed effect estimations reduction in order to better estimate the variances (that are otherwise too small in regards of fixed effects)
 		data_lm$t2 <- (data_lm$t1)^2
