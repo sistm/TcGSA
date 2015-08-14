@@ -525,16 +525,16 @@ plot1GS <-
 		meltedStats$TimePoint <- as.numeric(as.character(meltedStats$TimePoint))
 		MeasPt <- unique(meltedData$TimePoint)
 		
-
-# 		browser()
-# 		pca_data <- acast(meltedData, formula=TimePoint~Probe_ID)
-# 		pca_res <- dudi.pca(pca_data)
-# 		1
-# 		pdf(width=5, height=4, file="~/PCAc1_M6_7.pdf")
-# 		plot(y=-pca_res$l1[,1], x=rownames(pca_res$l1), type="l",
-# 			 ylab="PCA 1st comp", xlab="Time (weeks)", main=g,
-# 			 lwd=3, col="blue")
-# 		dev.off()
+		
+		# 		browser()
+		# 		pca_data <- acast(meltedData, formula=TimePoint~Probe_ID)
+		# 		pca_res <- dudi.pca(pca_data)
+		# 		1
+		# 		pdf(width=5, height=4, file="~/PCAc1_M6_7.pdf")
+		# 		plot(y=-pca_res$l1[,1], x=rownames(pca_res$l1), type="l",
+		# 			 ylab="PCA 1st comp", xlab="Time (weeks)", main=g,
+		# 			 lwd=3, col="blue")
+		# 		dev.off()
 		
 		
 		
@@ -546,7 +546,7 @@ plot1GS <-
 			y.min <- y.lim[1]
 		}
 		if(is.null(x.lim)){
-		    x.lim <- c(min(MeasPt), max(MeasPt))
+			x.lim <- c(min(MeasPt), max(MeasPt))
 		}
 		
 		p <- (ggplot(meltedData, aes_string(x="TimePoint", y="value")) 
@@ -616,15 +616,16 @@ plot1GS <-
 				if(pre_clustering){
 					p <- (p 
 						  + geom_smooth(formula=y~poly(x, 3), data=meltedStats, aes_string(x="TimePoint", y="value", group="Cluster", colour="Cluster", size="1.5"), se=FALSE, method="lm")
-						 # + geom_smooth(data=meltedStats, aes_string(x="TimePoint", y="value", group="Cluster", colour="Cluster"), size=1.7*line.size, se=FALSE, method="loess")
+						  # + geom_smooth(data=meltedStats, aes_string(x="TimePoint", y="value", group="Cluster", colour="Cluster"), size=1.7*line.size, se=FALSE, method="loess")
 						  + guides(size="none")
 					)
 				}else{
-					p <- (p 
-						  + geom_smooth(formula=y~poly(x, 3), data=meltedStats, aes_string(x="TimePoint", y="value", group="Cluster", linetype="Cluster"), size=1.7*line.size, colour="black", se=FALSE, method="lm")
-						 # + geom_smooth(data=meltedStats, aes_string(x="TimePoint", y="value", group="Cluster", linetype="Cluster"), size=1.7*line.size, colour="black", se=FALSE, method="loess")
-						  + scale_linetype_manual(name=paste("Cluster", capwords(trend.fun)), values=as.numeric(levels(meltedStats$Cluster))+1)
-					)
+					p <- p + geom_smooth(formula=y~poly(x, 3), data=meltedStats, aes_string(x="TimePoint", y="value", group="Cluster", linetype="Cluster"), size=1.7*line.size, colour="black", se=FALSE, method="lm")
+						  # + geom_smooth(data=meltedStats, aes_string(x="TimePoint", y="value", group="Cluster", linetype="Cluster"), size=1.7*line.size, colour="black", se=FALSE, method="loess")
+					if(!clustering){
+						p <- p + scale_linetype_manual(name=paste("Cluster", capwords(trend.fun)), values=as.numeric(levels(meltedStats$Cluster))+1)
+						
+					}
 					#y~ns(x, knots=spline_knots)
 				}
 				if(length(unique(meltedStats$Cluster))==1 | length(unique(meltedStats$Group))==1){
