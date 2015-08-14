@@ -414,7 +414,7 @@ plotSelect.GS <-
 											  "Cluster"=clust[[gs]], "GS"=rep(gs, dim(data_stand[[gs]])[1]), 
 											  data_stand[[gs]][, sample_sel])
 				colnames(data2melt) <- c("Probe_ID", "Cluster", "GS", TimePoint[sample_sel])
-				melted_temp <- melt(data2melt, id.vars=c("Probe_ID", "Cluster", "GS"), 
+				melted_temp <- reshape2::melt(data2melt, id.vars=c("Probe_ID", "Cluster", "GS"), 
 									variable.name="TimePoint")
 				meltedData <- rbind(meltedData, melted_temp)
 				subj_temp <- c(subj_temp, rep(p, dim(melted_temp)[1]))

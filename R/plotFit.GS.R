@@ -58,7 +58,7 @@
 #'
 #'@seealso \code{\link{plot1GS}}, \code{\link{plotSelect.GS}}
 #'
-#'@references Hejblum BP, Skinner J, Thiébaut R, (2015) 
+#'@references Hejblum BP, Skinner J, Thiebaut R, (2015) 
 #'Time-Course Gene Set Analysis for Longitudinal Gene Expression Data. 
 #'\emph{PLoS Computat Biol} 11(6): e1004310.
 #'doi: 10.1371/journal.pcbi.1004310
@@ -131,14 +131,14 @@ plotFit.GS <- function(x, expr, design, subject_name = "Patient_ID", time_name =
 		rownames(xx) <- select_probe
 		TimePoint <- design$TimePoint
 		Subject_ID <- design$Patient_ID
-		xxx <- melt(xx, varnames=c("Probe_ID", colnames_ID))
+		xxx <- reshape2::melt(xx, varnames=c("Probe_ID", colnames_ID))
 		xxxx <- merge(xxx, design, by=colnames_ID)[, c("Probe_ID", subject_name, time_name, "value")]
 		X <- xxxx[order(xxxx$Probe_ID, xxxx[, subject_name], xxxx[, time_name]),]
 		X$GS <- gs
 		Xfinal <- rbind.data.frame(Xfinal, X)
 		
 		y <- x[["Estimations"]][[interest]]
-		yy <- melt(y, varnames=c("Probe_ID", subject_name, time_name))
+		yy <- reshape2::melt(y, varnames=c("Probe_ID", subject_name, time_name))
 		Y <- yy[order(yy$Probe_ID, yy[ ,subject_name], yy[, time_name]),]
 		Y$GS <- gs
 		Yfinal <- rbind.data.frame(Yfinal, Y)

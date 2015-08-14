@@ -147,7 +147,7 @@
 #'
 #'@seealso \code{\link{summary.TcGSA}}, \code{\link{plot.TcGSA}}
 #'
-#'@references Hejblum BP, Skinner J, Thiébaut R, (2015) 
+#'@references Hejblum BP, Skinner J, Thiebaut R, (2015) 
 #'Time-Course Gene Set Analysis for Longitudinal Gene Expression Data. 
 #'\emph{PLoS Computat Biol} 11(6): e1004310.
 #'doi: 10.1371/journal.pcbi.1004310
@@ -234,7 +234,7 @@ TcGSA.LR.parallel <-
 						CVG_H1 <- lmm_H1@optinfo["conv"]$opt
 						
 						estims <- cbind.data.frame(data_lme, "fitted"=fitted(lmm_H1))
-						estims_tab <- acast(data=estims, formula = as.formula(paste("probe", subject_name, "t1", sep="~")), value.var="fitted")
+						estims_tab <- reshape2::acast(data=estims, formula = as.formula(paste("probe", subject_name, "t1", sep="~")), value.var="fitted")
 						# drop = FALSE by default, which means that missing combination will be kept in the estims_tab and filled with NA
 						dimnames(estims_tab)[[3]] <- as.numeric(dimnames(estims_tab)[[3]])*10
 						estim_expr <- estims_tab
@@ -245,7 +245,7 @@ TcGSA.LR.parallel <-
 						CVG_H1 <- NA
 						
 						estims <- cbind.data.frame(data_lme, "fitted"=NA)
-						estims_tab <- acast(data=estims, formula = as.formula(paste("probe", subject_name, "t1", sep="~")), value.var="fitted")
+						estims_tab <- reshape2::acast(data=estims, formula = as.formula(paste("probe", subject_name, "t1", sep="~")), value.var="fitted")
 						dimnames(estims_tab)[[3]] <- as.numeric(dimnames(estims_tab)[[3]])*10
 						estim_expr <- estims_tab
 						cat("Unable to fit the mixed models for this gene set\n")
@@ -302,7 +302,7 @@ TcGSA.LR.parallel <-
 			parallel::stopCluster(cl)
 			
 		} else {
-			stop("Package 'doSNOW' is not available.\n  -> Try running 'install.packages(\"doSNOW\")'\n   or use non parallel version of the function: 'TcGSA.LR'")
+			stop("Package 'doParallel' is not available.\n  -> Try running 'install.packages(\"doParallel\")'\n   or use non parallel version of the function: 'TcGSA.LR'")
 		}
 		
 		return(tcgsa)

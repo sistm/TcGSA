@@ -311,7 +311,7 @@
 #'\code{N_clusters}.  If no dynamic clusters were represented, than this is
 #'\code{NULL}.
 #'\item \code{ddr} a \bold{dendrogram} object with the reordering used for the
-#'heatmap.  See \code{\link{heatmap.2}}.
+#'heatmap.  See \code{\link[gplots:heatmap.2]{heatmap.2}}.
 #'\item geneset.names character vector with the names of the gene sets
 #'used in the heatmap.
 #'\item \code{clust.trends} a \bold{\link{ClusteredTrends}} object.
@@ -327,14 +327,12 @@
 #'@seealso \code{\link[gplots:heatmap.2]{heatmap.2}}, \code{\link{TcGSA.LR}},
 #'\code{\link{hclust}}
 #'
-#'@references Hejblum BP, Skinner J, Thiébaut R, (2015) 
+#'@references Hejblum BP, Skinner J, Thiebaut R, (2015) 
 #'Time-Course Gene Set Analysis for Longitudinal Gene Expression Data. 
 #'\emph{PLoS Computat Biol} 11(6): e1004310.
 #'doi: 10.1371/journal.pcbi.1004310
 #'
 #'@import ggplot2
-#'
-#'@import gplots
 #'
 #'@import reshape2
 #'
@@ -459,7 +457,7 @@ plot.TcGSA <-
     	if (length(which(!is.na(x$fit$LR)))<1){
     		stop ("SERIOUS PROBLEM\n Was not able to compute any likelihood ratios...")
     	}
-      clust_trends <- clustTrend(x=x, expr=expr, Subject_ID=Subject_ID, TimePoint=TimePoint, baseline=baseline, only.signif=only.signif,
+      clust_trends <- clustTrend(tcgs=x, expr=expr, Subject_ID=Subject_ID, TimePoint=TimePoint, baseline=baseline, only.signif=only.signif,
                                  group.var=group.var, Group_ID_paired=Group_ID_paired, ref=ref, group_of_interest=group_of_interest,
                                  FUNcluster=FUNcluster, clustering_metric=clustering_metric, clustering_method=clustering_method, B=B,
                                  max_trends=max_trends, aggreg.fun=aggreg.fun,
@@ -471,7 +469,7 @@ plot.TcGSA <-
       stop("The 'clust_trends' argument is not of the class 'ClusteredTrends', see the clustTrend function")
     }
     
-    medoids2clust <- acast(melt(clust_trends[["ClustMeds"]], variable.name="Cluster", id.vars="TimePoint"),
+    medoids2clust <- reshape2::acast(reshape2::melt(clust_trends[["ClustMeds"]], variable.name="Cluster", id.vars="TimePoint"),
                    formula="L1 + Cluster~ TimePoint", value.var="value")
     gsNames <- gsub("_.*$", "", rownames(medoids2clust))
     ncl <- gsub("^.*?_", "", rownames(medoids2clust))

@@ -26,7 +26,7 @@ TcGSA.dataLME<-
 		nk <- ceiling(length(unique(design[,time_name]))/4)
 		if(length(unique(design[,time_name]))==2){
 			noeuds <- min(design[,time_name])
-			cat("Only 2 time-points here:\n longitudinal analysis is probably not the best idea...")
+			cat("Only 2 time-points here:\n longitudinal analysis is probably not the best idea...\n")
 		}else{
 			noeuds <- quantile(design[,time_name], probs=c(1:(nk))/(nk+1))
 		}

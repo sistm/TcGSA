@@ -131,7 +131,7 @@
 #'and \code{\link{TcGSA.LR.parallel}} for an implementation using 
 #'parallel computing
 #'
-#'@references Hejblum BP, Skinner J, Thiébaut R, (2015) 
+#'@references Hejblum BP, Skinner J, Thiebaut R, (2015) 
 #'Time-Course Gene Set Analysis for Longitudinal Gene Expression Data. 
 #'\emph{PLoS Computat Biol} 11(6): e1004310.
 #'doi: 10.1371/journal.pcbi.1004310
@@ -207,7 +207,11 @@ function(expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", cr
     	data_lme  <- TcGSA.dataLME(expr=expr_temp, design=design, subject_name=subject_name, time_name=time_name, 
     														 covariates_fixed=covariates_fixed, time_covariates=time_covariates,
     														 group_name=group_name, time_func=time_func)
-    	
+#     	if(gs==12){
+#     		browser()
+#     		# data_lme$t1 <- ifelse(data_lme$t1==0.1, 0.2, 0.1)
+#     		# deviance(lmer(formula =my_formul[["H1"]]["reg"], REML=FALSE, data=data_lme), REML=FALSE)
+#     	}
       if(length(levels(data_lme$probe))>1){
           lmm_H0 <- tryCatch(lmer(formula =my_formul[["H0"]]["reg"], REML=FALSE, data=data_lme),
                    error=function(e){NULL})

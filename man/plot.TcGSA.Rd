@@ -262,7 +262,7 @@ of the represented gene set trends, with as many levels as the value of
 \code{N_clusters}.  If no dynamic clusters were represented, than this is
 \code{NULL}.
 \item \code{ddr} a \bold{dendrogram} object with the reordering used for the
-heatmap.  See \code{\link{heatmap.2}}.
+heatmap.  See \code{\link[gplots:heatmap.2]{heatmap.2}}.
 \item geneset.names character vector with the names of the gene sets
 used in the heatmap.
 \item \code{clust.trends} a \bold{\link{ClusteredTrends}} object.
@@ -329,7 +329,7 @@ plot(x=tcgsa_sim_2grp, expr=expr_2grp,
 Boris P. Hejblum
 }
 \references{
-Hejblum BP, Skinner J, Thiébaut R, (2015)
+Hejblum BP, Skinner J, Thiebaut R, (2015)
 Time-Course Gene Set Analysis for Longitudinal Gene Expression Data.
 \emph{PLoS Computat Biol} 11(6): e1004310.
 doi: 10.1371/journal.pcbi.1004310

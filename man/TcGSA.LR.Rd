@@ -162,7 +162,7 @@ tcgsa_sim_2grp
 Boris P. Hejblum
 }
 \references{
-Hejblum BP, Skinner J, Thiébaut R, (2015)
+Hejblum BP, Skinner J, Thiebaut R, (2015)
 Time-Course Gene Set Analysis for Longitudinal Gene Expression Data.
 \emph{PLoS Computat Biol} 11(6): e1004310.
 doi: 10.1371/journal.pcbi.1004310
