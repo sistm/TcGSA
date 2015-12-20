@@ -70,7 +70,6 @@
 #'@export plotFit.GS
 #'
 #'@examples
-#'
 #'data(data_simu_TcGSA)
 #'
 #'tcgsa_sim_1grp <- TcGSA.LR(expr=expr_1grp, gmt=gmt_sim, design=design, 
@@ -99,10 +98,9 @@
 #'           subject_name="Patient_ID", time_name="TimePoint",
 #'           colnames_ID="Sample_name", 
 #'           plot_type="Histogram Obs", 
-#'           GeneSetsList=c(Gene set 1", "Gene set 2", "Gene set 3",
+#'           GeneSetsList=c("Gene set 1", "Gene set 2", "Gene set 3",
 #'			                "Gene set 4", "Gene set 5"),
 #'           color="genes")
-#'           )
 #'}
 #'
 
