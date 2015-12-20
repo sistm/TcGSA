@@ -169,7 +169,7 @@
 #'@param smooth 
 #'logical flag.  If \code{TRUE} and \code{showTrend} is also
 #'\code{TRUE}, the representation of each cluster \code{trend.fun} is smoothed
-#'using cubic polynoms (see \code{\link[ggplot2:stat_smooth]{stat_smooth}}.
+#'using cubic polynoms (see \code{\link[ggplot2:geom_smooth]{geom_smooth}}.
 #'Default is \code{TRUE}. 
 #'At the moment, must accept parameter \code{"na.rm"} (which is automatically set to \code{TRUE}). 
 #'This might change in future versions
@@ -253,7 +253,7 @@
 #'
 #'@author Boris P. Hejblum
 #'
-#'@seealso \code{\link{ggplot2}}, \code{\link[cluster:clusGap]{clusGap}}
+#'@seealso \code{\link[ggplot2:ggplot]{ggplot}}, \code{\link[cluster:clusGap]{clusGap}}
 #'
 #'@references Tibshirani, R., Walther, G. and Hastie, T., 2001, Estimating the
 #'number of data clusters via the Gap statistic, \emph{Journal of the Royal
@@ -261,8 +261,6 @@
 #'411--423.
 #'
 #'@import ggplot2
-#'
-#'@importFrom grid unit
 #'
 #'@importFrom cluster agnes clusGap maxSE
 #'

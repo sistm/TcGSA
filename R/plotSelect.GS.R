@@ -243,7 +243,7 @@
 #'
 #'@author Boris P. Hejblum
 #'
-#'@seealso \code{\link{ggplot2}}, \code{\link[cluster:clusGap]{clusGap}}
+#'@seealso \code{\link[ggplot2:ggplot]{ggplot}}, \code{\link[cluster:clusGap]{clusGap}}
 #'
 #'@references Tibshirani, R., Walther, G. and Hastie, T., 2001, Estimating the
 #'number of data clusters via the Gap statistic, \emph{Journal of the Royal
@@ -253,8 +253,6 @@
 #'@import ggplot2
 #'
 #'@import reshape2
-#'
-#'@importFrom grid unit
 #'
 #'@importFrom cluster agnes
 #'
