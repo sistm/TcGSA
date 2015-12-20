@@ -233,7 +233,7 @@
 #'
 #'@author Boris P. Hejblum
 #'
-#'@seealso \code{\link{ggplot2}}, \code{\link[cluster:clusGap]{clusGap}}
+#'@seealso \code{\link[ggplot2:ggplot]{ggplot}}, \code{\link[cluster:clusGap]{clusGap}}
 #'
 #'@references Tibshirani, R., Walther, G. and Hastie, T., 2001, Estimating the
 #'number of data clusters via the Gap statistic, \emph{Journal of the Royal
@@ -241,8 +241,6 @@
 #'411--423.
 #'
 #'@import ggplot2
-#'
-#'@importFrom grid unit
 #'
 #'@importFrom cluster agnes
 #'
@@ -290,7 +288,6 @@
 #')
 #'par(op)
 #'
-#'require(ggplot2)
 #'plotPat.1GS(expr=expr_1grp, TimePoint=design$TimePoint, 
 #'        Subject_ID=design$Patient_ID, gmt=gmt_sim,
 #'        geneset.name="Gene set 5",
@@ -464,7 +461,7 @@ plotPat.1GS <-
 			x.lim <- unique(meltedData$TimePoint)
 		}
 		p <- (ggplot(meltedData, aes_string(x="TimePoint", y="value")) 
-			  + geom_hline(aes(y = 0), linetype=1, colour='grey50', size=0.4)
+			  + geom_hline(aes(yintercept = 0), linetype=1, colour='grey50', size=0.4)
 			  + facet_wrap( ~Subject_ID, ncol=floor(sqrt(length(unique(meltedData$Subject_ID)))))
 		)
 		

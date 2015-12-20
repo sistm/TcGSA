@@ -238,7 +238,6 @@ plot(y, axes = FALSE, frame.plot = TRUE,
 )
 par(op)
 
-require(ggplot2)
 plotPat.1GS(expr=expr_1grp, TimePoint=design$TimePoint, 
        Subject_ID=design$Patient_ID, gmt=gmt_sim,
        geneset.name="Gene set 5",
@@ -269,6 +268,6 @@ Statistical Society, Series B (Statistical Methodology)}, \bold{63}, 2:
 411--423.
 }
 \seealso{
-\code{\link{ggplot2}}, \code{\link[cluster:clusGap]{clusGap}}
+\code{\link[ggplot2:ggplot]{ggplot}}, \code{\link[cluster:clusGap]{clusGap}}
 }
 

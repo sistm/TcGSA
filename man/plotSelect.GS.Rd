@@ -246,6 +246,6 @@ Statistical Society, Series B (Statistical Methodology)}, \bold{63}, 2:
 411--423.
 }
 \seealso{
-\code{\link{ggplot2}}, \code{\link[cluster:clusGap]{clusGap}}
+\code{\link[ggplot2:ggplot]{ggplot}}, \code{\link[cluster:clusGap]{clusGap}}
 }
 
