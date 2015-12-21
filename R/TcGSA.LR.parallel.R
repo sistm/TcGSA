@@ -200,7 +200,6 @@ TcGSA.LR.parallel <-
 			time_DF <- my_formul[["time_DF"]]
 			
 			
-			
 			cl <- parallel::makeCluster(Ncpus, type = type_connec)
 			doParallel::registerDoParallel(cl)
 			
@@ -230,8 +229,8 @@ TcGSA.LR.parallel <-
 					
 					if (!is.null(lmm_H0) & !is.null(lmm_H1)) {
 						LR <- deviance(lmm_H0, REML=FALSE) - deviance(lmm_H1, REML=FALSE)
-						CVG_H0 <- lmm_H0@optinfo["conv"]$opt
-						CVG_H1 <- lmm_H1@optinfo["conv"]$opt
+						CVG_H0 <- lmm_H0@optinfo[["conv"]]$opt
+						CVG_H1 <- lmm_H1@optinfo[["conv"]]$opt
 						
 						estims <- cbind.data.frame(data_lme, "fitted"=fitted(lmm_H1))
 						estims_tab <- reshape2::acast(data=estims, formula = as.formula(paste("probe", subject_name, "t1", sep="~")), value.var="fitted")
@@ -275,17 +274,17 @@ TcGSA.LR.parallel <-
 				res <- list("LR"=LR, "CVG_H0"=CVG_H0, "CVG_H1"=CVG_H1, "estim_expr"=estim_expr)
 			})
 			
-			LR <- numeric(length(gmt$genesets))
-			CVG_H0 <- numeric(length(gmt$genesets))
-			CVG_H1 <- numeric(length(gmt$genesets))
-			estim_expr <- list()
+			# LR <- numeric(length(gmt$genesets))
+			# CVG_H0 <- numeric(length(gmt$genesets))
+			# CVG_H1 <- numeric(length(gmt$genesets))
+			# estim_expr <- list()
 			
 			cat("Combining the results...")
 			for (gs in 1:length(gmt$genesets)){
-				LR[gs] <- res_par[[gs]][["LR"]]
-				CVG_H0[gs] <- res_par[[gs]][["CVG_H0"]]
-				CVG_H1[gs] <- res_par[[gs]][["CVG_H1"]]
-				estim_expr[[gs]] <- res_par[[gs]][["estim_expr"]]
+				LR[gs] <- sapply(res_par, "[[", "LR") #res_par[[gs]][["LR"]]
+				CVG_H0[gs] <- sapply(res_par, "[[", "CVG_H0") #res_par[[gs]][["CVG_H0"]]
+				CVG_H1[gs] <- sapply(res_par, "[[", "CVG_H1") #res_par[[gs]][["CVG_H1"]]
+				estim_expr[[gs]] <- lapply(res_par, "[[", "estim_expr") #res_par[[gs]][["estim_expr"]]
 			}
 			
 			if(group_name==""){
