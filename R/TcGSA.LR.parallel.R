@@ -274,18 +274,24 @@ TcGSA.LR.parallel <-
 				res <- list("LR"=LR, "CVG_H0"=CVG_H0, "CVG_H1"=CVG_H1, "estim_expr"=estim_expr)
 			})
 			
+			
+			cat("Combining the results...")
+			
+			LR <- sapply(res_par, "[[", "LR") #res_par[[gs]][["LR"]]
+			CVG_H0 <- sapply(res_par, "[[", "CVG_H0") #res_par[[gs]][["CVG_H0"]]
+			CVG_H1 <- sapply(res_par, "[[", "CVG_H1") #res_par[[gs]][["CVG_H1"]]
+			estim_expr <- lapply(res_par, "[[", "estim_expr") #res_par[[gs]][["estim_expr"]]
+			
 			# LR <- numeric(length(gmt$genesets))
 			# CVG_H0 <- numeric(length(gmt$genesets))
 			# CVG_H1 <- numeric(length(gmt$genesets))
 			# estim_expr <- list()
-			
-			cat("Combining the results...")
-			for (gs in 1:length(gmt$genesets)){
-				LR[gs] <- sapply(res_par, "[[", "LR") #res_par[[gs]][["LR"]]
-				CVG_H0[gs] <- sapply(res_par, "[[", "CVG_H0") #res_par[[gs]][["CVG_H0"]]
-				CVG_H1[gs] <- sapply(res_par, "[[", "CVG_H1") #res_par[[gs]][["CVG_H1"]]
-				estim_expr[[gs]] <- lapply(res_par, "[[", "estim_expr") #res_par[[gs]][["estim_expr"]]
-			}
+			# for (gs in 1:length(gmt$genesets)){
+			# 	LR[gs] <- res_par[[gs]][["LR"]]
+			# 	CVG_H0[gs] <- res_par[[gs]][["CVG_H0"]]
+			# 	CVG_H1[gs] <- res_par[[gs]][["CVG_H1"]]
+			# 	estim_expr[[gs]] <- res_par[[gs]][["estim_expr"]]
+			# }
 			
 			if(group_name==""){
 				gv <- NULL
