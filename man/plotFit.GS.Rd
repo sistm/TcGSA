@@ -11,6 +11,10 @@ plotFit.GS(x, expr, design, subject_name = "Patient_ID",
   gg.add = list(theme()))
 }
 \arguments{
+\item{x}{a \bold{tcgsa} object for \code{clustTrend}, or a
+\bold{ClusteredTrends} object for \code{print.ClusteredTrends} and
+\code{plot.ClusteredTrends}.}
+
 \item{expr}{a matrix or dataframe of gene expression.  Its dimension are
 \eqn{n}x\eqn{p}, with the \eqn{p} samples in column and the \eqn{n} genes in
 row.}
@@ -50,11 +54,6 @@ to the plot.}
 \description{
 This function plots graphs informing on the fit of the mixed modeling
 of the gene expression performed in TcGSA, for 1 or several gene sets.
-}
-\details{
-#'@param x a \bold{tcgsa} object for \code{clustTrend}, or a
-\bold{ClusteredTrends} object for \code{print.ClusteredTrends} and
-\code{plot.ClusteredTrends}.
 }
 \examples{
 data(data_simu_TcGSA)

@@ -48,7 +48,7 @@
 #'the threshold at which the FDR or the FWER should be
 #'controlled.
 #'
-#'#'@param myproc 
+#'@param myproc 
 #'a vector of character strings containing the names of the
 #'multiple testing procedures for which adjusted p-values are to be computed.
 #'This vector should include any of the following: "\code{Bonferroni}",

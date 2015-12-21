@@ -43,10 +43,9 @@ is a dataframe), and that contains the time points at which gene expression
 was measured.}
 
 \item{threshold}{the threshold at which the FDR or the FWER should be
-controlled.
+controlled.}
 
-#'@param myproc 
-a vector of character strings containing the names of the
+\item{myproc}{a vector of character strings containing the names of the
 multiple testing procedures for which adjusted p-values are to be computed.
 This vector should include any of the following: "\code{Bonferroni}",
 "\code{Holm}", "\code{Hochberg}", "\code{SidakSS}", "\code{SidakSD}",

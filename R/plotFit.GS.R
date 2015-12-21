@@ -3,7 +3,7 @@
 #'This function plots graphs informing on the fit of the mixed modeling
 #'of the gene expression performed in TcGSA, for 1 or several gene sets.
 #'
-#'#'@param x a \bold{tcgsa} object for \code{clustTrend}, or a
+#'@param x a \bold{tcgsa} object for \code{clustTrend}, or a
 #'\bold{ClusteredTrends} object for \code{print.ClusteredTrends} and
 #'\code{plot.ClusteredTrends}.
 #'
