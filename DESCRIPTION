@@ -19,7 +19,11 @@ Imports:
     cluster,
     stringr,
     splines,
-    gplots
+    gplots,
+    stats,
+    graphics,
+    grDevices,
+    utils
 Suggests:
     foreach,
     parallel,
