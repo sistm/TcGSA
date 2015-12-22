@@ -203,6 +203,8 @@ TcGSA.LR.parallel <-
 			cl <- parallel::makeCluster(Ncpus, type = type_connec)
 			doParallel::registerDoParallel(cl)
 			
+			
+			gs <- NULL # This is just to prevent R CMD check to issue a NOTE reanding "TcGSA.LR.parallel: no visible binding for global variable 'gs'". It is extremely ANNOYING !
 			res_par <- foreach::"%dopar%"(foreach::foreach(gs=1:length(gmt$genesets), .packages=c("lme4", "reshape2", "splines"), .export=c("TcGSA.dataLME")),
 										  {
 				probes <- intersect(gmt$genesets[[gs]], rownames(expr))

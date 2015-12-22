@@ -12,7 +12,7 @@ This package implements TcGSA, an algorithm to analyze longitudinal gene-express
 \tabular{ll}{
 Package: \tab TcGSA\cr
 Type: \tab Package\cr
-Version: \tab 0.9.94\cr
+Version: \tab 0.10.0\cr
 Date: \tab 2015-12-21\cr
 License:\tab \href{http://www.gnu.org/licenses/lgpl.txt}{LGPL-3}\cr
 }
