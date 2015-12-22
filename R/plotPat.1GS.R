@@ -244,6 +244,10 @@
 #'
 #'@importFrom cluster agnes
 #'
+#'@importFrom grDevices rainbow
+#'
+#'@importFrom stats cutree
+#'
 #'@export
 #'
 #'@examples
@@ -340,11 +344,11 @@ plotPat.1GS <-
 			FUNcluster <- switch(EXPR=clustering_metric,
 								 sts= function(x, k, time, ...){
 								 	d <- STSdist(m=x, time = time)
-								 	clus <- cutree(agnes(d, ...), k=k)
+								 	clus <- stats::cutree(agnes(d, ...), k=k)
 								 	return(list("cluster"=clus))
 								 },
 								 function(x, k, ...){
-								 	clus <- cutree(agnes(x, method=clustering_method, metric=clustering_metric, ...), k=k)
+								 	clus <- stats::cutree(agnes(x, method=clustering_method, metric=clustering_metric, ...), k=k)
 								 	return(list("cluster"=clus))
 								 }
 			)
@@ -468,7 +472,8 @@ plotPat.1GS <-
 		if(!clustering){
 			p <- (p
 				  + geom_line(aes_string(group="Probe_ID", colour="Probe_ID"), size=0.7)
-				  + scale_colour_manual(guide='none', name='probe ID', values=rainbow(length(select_probe)))
+				  + scale_colour_manual(guide='none', name='probe ID', 
+				  					  values=grDevices::rainbow(length(select_probe)))
 			)
 		}else{
 			p <- (p

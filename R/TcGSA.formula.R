@@ -1,6 +1,7 @@
 #'@keywords internal
 #'
 #'@importFrom stringr str_split str_trim
+#'@importFrom stats quantile
 
 TcGSA.formula <- 
 	function(design, subject_name="Patient_ID", time_name="TimePoint", 
@@ -15,7 +16,7 @@ TcGSA.formula <-
 			time <- "t1 + t2 + t3"
 		}else if(time_func=="splines"){
 			nk = ceiling(length(unique(design[,time_name]))/4)
-			noeuds = quantile(design[,time_name], probs=c(1:(nk))/(nk+1))
+			noeuds = stats::quantile(design[,time_name], probs=c(1:(nk))/(nk+1))
 			NCsplines <- as.data.frame(ns(design[,time_name], knots = noeuds, Boundary.knots = range(design[,time_name]), intercept = FALSE))
 			time <- paste(" + spline_t", colnames(NCsplines), collapse="", sep="")
 			#time <- paste(" + spline_t",1:(nk+1) , sep="", collapse="")

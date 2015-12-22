@@ -158,7 +158,7 @@ the dendrogram is not cut and no clusters are identified.}
 \item{myclusters}{a character vector of colors for predefined clusters of the
 represented genesets, with as many levels as the value of \code{N_clusters}.
 Default is \code{NULL}, in which case the clusters are automatically
-identified and colored via the \code{\link{cutree}} function and the
+identified and colored via the \code{\link[stats:cutree]{cutree}} function and the
 \code{N_clusters} argument only.}
 
 \item{label.clusters}{if \code{N_clusters} is not \code{NULL}, a character
@@ -231,7 +231,7 @@ clusters horizontally rather than vertically.  Only used if the
 \item{\dots}{other parameters to be passed through to plotting functions.}
 }
 \value{
-An object of class \bold{\link{hclust}} which describes the tree
+An object of class \bold{\link[stats:hclust]{hclust}} which describes the tree
 produced by the clustering process.  The object is a list with components:
 \itemize{
 \item \code{merge} an \eqn{n-1} by \eqn{2} matrix.  Row \eqn{i} of
@@ -339,6 +339,6 @@ doi: 10.1371/journal.pcbi.1004310
 }
 \seealso{
 \code{\link[gplots:heatmap.2]{heatmap.2}}, \code{\link{TcGSA.LR}},
-\code{\link{hclust}}
+\code{\link[stats:hclust]{hclust}}
 }
 

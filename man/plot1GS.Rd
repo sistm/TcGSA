@@ -260,6 +260,8 @@ plot1GS(expr=tcgsa_sim_1grp$Estimations, TimePoint=design$TimePoint,
 }
 
 \dontrun{
+library(grDevices)
+library(graphics)
 colval <- c(hsv(0.56, 0.9, 1),
            hsv(0, 0.27, 1),
            hsv(0.52, 1, 0.5),

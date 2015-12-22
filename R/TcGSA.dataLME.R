@@ -1,8 +1,9 @@
 #'@keywords internal
 #'
+#'@import reshape2
 #'@importFrom stringr str_split
 #'@importFrom splines ns
-#'@import reshape2
+#'@importFrom stats quantile
 
 TcGSA.dataLME<-
 	function(expr, design, subject_name="Patient_ID", time_name="TimePoint", 
@@ -29,7 +30,7 @@ TcGSA.dataLME<-
 			noeuds <- min(design[,time_name])
 			cat("Only 2 time-points here:\n longitudinal analysis is probably not the best idea...\n")
 		}else{
-			noeuds <- quantile(design[,time_name], probs=c(1:(nk))/(nk+1))
+			noeuds <- stats::quantile(design[,time_name], probs=c(1:(nk))/(nk+1))
 		}
 		NCsplines <- as.data.frame(ns(design[,time_name], knots = noeuds, Boundary.knots = range(design[,time_name]), intercept = FALSE))
 		colnames(NCsplines) <- paste("spline_t",colnames(NCsplines) , sep="")

@@ -1,4 +1,5 @@
 #'@keywords internal
+#'@importFrom stats as.dist
 
 STSdist <- function(m, time){
 	nr <- dim(m)[1]
@@ -10,6 +11,6 @@ STSdist <- function(m, time){
 			mm[j,i] <- sqrt(sum((mdiff[i,] -mdiff[j,])^2))
 		}
 	}
-	return(as.dist(mm))
+	return(stats::as.dist(mm))
 }
 

@@ -35,9 +35,14 @@
 #'testing in the longitudinal mixed effects model" by Stram, D. O. and Lee, J.
 #'W.; 50: 1171--1177 (1994), \emph{Biometrics} 51: 1196.
 #'
+#'
+#'@importFrom stats rchisq
+#'
 #'@export
 #'
 #'@examples
+#'library(graphics)
+#'library(stats)
 #'
 #'sample_mixt <- rmixchisq(n=1000, s=3, q=3)
 #'plot(density(sample_mixt))
@@ -58,7 +63,7 @@ function(n,s,q){
   
   sample <- NULL
   for(k in (s:(q+s))){
-    sample <- c(sample, rchisq(mix[k-s+1],df=k))
+    sample <- c(sample, stats::rchisq(mix[k-s+1],df=k))
   }
   
   return(sample) 

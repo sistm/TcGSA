@@ -148,7 +148,7 @@ the dendrogram is not cut and no clusters are identified.}
 \item{myclusters}{a character vector of colors for predefined clusters of the
 represented genesets, with as many levels as the value of \code{N_clusters}.
 Default is \code{NULL}, in which case the clusters are automatically
-identified and colored via the \code{\link{cutree}} function and the
+identified and colored via the \code{\link[stats:cutree]{cutree}} function and the
 \code{N_clusters} argument only.}
 
 \item{label.clusters}{if \code{N_clusters} is not \code{NULL}, a character
@@ -156,7 +156,7 @@ vector of length \code{N_clusterss}.  Default is \code{NULL}, in which case
 if \code{N_clusters} is not \code{NULL}, clusters are simply labelled with
 numbers.}
 
-\item{prev_rowCL}{a \bold{hclust} object, such as the one return by the
+\item{prev_rowCL}{a \bold{\link[stats:hclust]{hclust}} object, such as the one return by the
 present plotting funstion (see Value) for instance.  If not \code{NULL}, no
 clustering is calculated by the present plotting function and this tree is
 used to represent the gene sets dynamics.  Default is \code{NULL}.}
@@ -224,7 +224,7 @@ clusters horizontally rather than vertically.  Only used if the
 \item{\dots}{other parameters to be passed through to plotting functions.}
 }
 \value{
-An object of class \bold{\link{hclust}} which describes the tree
+An object of class \bold{\link[stats:hclust]{hclust}} which describes the tree
 produced by the clustering process.  The object is a list with components:
 \itemize{
 \item merge an \eqn{n-1} by \eqn{2} matrix.  Row \eqn{i} of
@@ -321,6 +321,6 @@ doi: 10.1371/journal.pcbi.1004310
 }
 \seealso{
 \code{\link{plot.TcGSA}}, \code{\link[gplots:heatmap.2]{heatmap.2}},
-\code{\link{TcGSA.LR}}, \code{\link{hclust}}
+\code{\link{TcGSA.LR}}, \code{\link[stats:hclust]{hclust}}
 }
 

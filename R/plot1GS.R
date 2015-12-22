@@ -264,6 +264,8 @@
 #'
 #'@importFrom cluster agnes clusGap maxSE
 #'
+#'@importFrom stats cutree lm
+#'
 #'@export
 #'
 #'@examples
@@ -299,6 +301,8 @@
 #'}
 #'
 #'\dontrun{
+#'library(grDevices)
+#'library(graphics)
 #'colval <- c(hsv(0.56, 0.9, 1),
 #'            hsv(0, 0.27, 1),
 #'            hsv(0.52, 1, 0.5),
@@ -365,11 +369,11 @@ plot1GS <-
 			FUNcluster <- switch(EXPR=clustering_metric,
 								 sts= function(x, k, time, ...){
 								 	d <- STSdist(m=x, time = time)
-								 	clus <- cutree(agnes(d, ...), k=k)
+								 	clus <- stats::cutree(agnes(d, ...), k=k)
 								 	return(list("cluster"=clus))
 								 },
 								 function(x, k, ...){
-								 	clus <- cutree(agnes(x, method=clustering_method, metric=clustering_metric, ...), k=k)
+								 	clus <- stats::cutree(agnes(x, method=clustering_method, metric=clustering_metric, ...), k=k)
 								 	return(list("cluster"=clus))
 								 }
 			)

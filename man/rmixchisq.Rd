@@ -32,6 +32,8 @@ simultaneously:
 \deqn{LRT_{H_0}\sim\sum_{k=q}^{q+r}{{r}\choose{k-q}}2^{-r}\chi^2_{(k)}}{LRT_H0~\sum k=q..q+r combination(r,k-q) 2^(-r) \chi^2 (k)}
 }
 \examples{
+library(graphics)
+library(stats)
 
 sample_mixt <- rmixchisq(n=1000, s=3, q=3)
 plot(density(sample_mixt))

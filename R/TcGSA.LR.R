@@ -140,6 +140,8 @@
 #'
 #'@importFrom lme4 lmer
 #'
+#'@importFrom stats as.formula deviance fitted
+#'
 #'@export TcGSA.LR
 #'
 #'@examples
@@ -207,11 +209,7 @@ function(expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", cr
     	data_lme  <- TcGSA.dataLME(expr=expr_temp, design=design, subject_name=subject_name, time_name=time_name, 
     														 covariates_fixed=covariates_fixed, time_covariates=time_covariates,
     														 group_name=group_name, time_func=time_func)
-#     	if(gs==12){
-#     		browser()
-#     		# data_lme$t1 <- ifelse(data_lme$t1==0.1, 0.2, 0.1)
-#     		# deviance(lmer(formula =my_formul[["H1"]]["reg"], REML=FALSE, data=data_lme), REML=FALSE)
-#     	}
+
       if(length(levels(data_lme$probe))>1){
           lmm_H0 <- tryCatch(lmer(formula =my_formul[["H0"]]["reg"], REML=FALSE, data=data_lme),
                    error=function(e){NULL})
@@ -225,11 +223,11 @@ function(expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", cr
       }
 
       if (!is.null(lmm_H0) & !is.null(lmm_H1)) {
-        LR[gs] <- deviance(lmm_H0, REML=FALSE) - deviance(lmm_H1, REML=FALSE)
+        LR[gs] <- stats::deviance(lmm_H0, REML=FALSE) - stats::deviance(lmm_H1, REML=FALSE)
   	    CVG_H0[gs] <- lmm_H0@optinfo[["conv"]]$opt
   	    CVG_H1[gs] <- lmm_H1@optinfo[["conv"]]$opt
-        estims <- cbind.data.frame(data_lme, "fitted"=fitted(lmm_H1))
-        estims_tab <- acast(data=estims, formula = as.formula(paste("probe", subject_name, "t1", sep="~")), value.var="fitted")
+        estims <- cbind.data.frame(data_lme, "fitted"=stats::fitted(lmm_H1))
+        estims_tab <- acast(data=estims, formula = stats::as.formula(paste("probe", subject_name, "t1", sep="~")), value.var="fitted")
         # drop = FALSE by default, which means that missing combination will be kept in the estims_tab and filled with NA
         dimnames(estims_tab)[[3]] <- as.numeric(dimnames(estims_tab)[[3]])*10
         estim_expr[[gs]] <- estims_tab
@@ -246,7 +244,7 @@ function(expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", cr
         #  0: "converged"
         
         estims <- cbind.data.frame(data_lme, "fitted"=NA)
-        estims_tab <- acast(data=estims, formula = as.formula(paste("probe", subject_name, "t1", sep="~")), value.var="fitted")
+        estims_tab <- acast(data=estims, formula = stats::as.formula(paste("probe", subject_name, "t1", sep="~")), value.var="fitted")
         if(is.numeric(design[, time_name])){
         	dimnames(estims_tab)[[3]] <- as.numeric(dimnames(estims_tab)[[3]])*10
         }

@@ -174,7 +174,7 @@
 #'a character vector of colors for predefined clusters of the
 #'represented genesets, with as many levels as the value of \code{N_clusters}.
 #'Default is \code{NULL}, in which case the clusters are automatically
-#'identified and colored via the \code{\link{cutree}} function and the
+#'identified and colored via the \code{\link[stats:cutree]{cutree}} function and the
 #'\code{N_clusters} argument only.
 #'
 #'@param label.clusters 
@@ -184,7 +184,7 @@
 #'numbers.
 #'
 #'@param prev_rowCL 
-#'a \bold{hclust} object, such as the one return by the
+#'a \bold{\link[stats:hclust]{hclust}} object, such as the one return by the
 #'present plotting funstion (see Value) for instance.  If not \code{NULL}, no
 #'clustering is calculated by the present plotting function and this tree is
 #'used to represent the gene sets dynamics.  Default is \code{NULL}.
@@ -270,7 +270,7 @@
 #'@param \dots 
 #'other parameters to be passed through to plotting functions.
 #'
-#'@return An object of class \bold{\link{hclust}} which describes the tree
+#'@return An object of class \bold{\link[stats:hclust]{hclust}} which describes the tree
 #'produced by the clustering process.  The object is a list with components:
 #'\itemize{
 	#'\item merge an \eqn{n-1} by \eqn{2} matrix.  Row \eqn{i} of
@@ -310,7 +310,7 @@
 #'@author Boris P. Hejblum
 #'
 #'@seealso \code{\link{plot.TcGSA}}, \code{\link[gplots:heatmap.2]{heatmap.2}},
-#'\code{\link{TcGSA.LR}}, \code{\link{hclust}}
+#'\code{\link{TcGSA.LR}}, \code{\link[stats:hclust]{hclust}}
 #'
 #'@references Hejblum BP, Skinner J, Thiebaut R, (2015) 
 #'Time-Course Gene Set Analysis for Longitudinal Gene Expression Data. 
@@ -318,6 +318,8 @@
 #'doi: 10.1371/journal.pcbi.1004310
 #'
 #'@import ggplot2
+#'
+#'@importFrom stats as.dendrogram
 #'
 #'@export plotPat.TcGSA
 #'
@@ -441,7 +443,7 @@ if(FALSE){
     if(!is.null(prev_rowCL$ddr)){
       clRows=prev_rowCL$ddr
     }else{
-      clRows=as.dendrogram(prev_rowCL)
+      clRows=stats::as.dendrogram(prev_rowCL)
     }
     
     select <- match(prev_rowCL$labels, gmt$geneset.names)

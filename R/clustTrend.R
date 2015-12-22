@@ -202,6 +202,12 @@
 #'
 #'@importFrom cluster agnes clusGap maxSE
 #'
+#'@importFrom graphics barplot
+#'
+#'@importFrom grDevices rainbow
+#'
+#'@importFrom stats cutree var
+#'
 #'@export
 #'
 #'@examples
@@ -247,11 +253,11 @@ clustTrend <-
 			FUNcluster <- switch(EXPR=clustering_metric,
 								 sts= function(x, k, time, ...){
 								 	d <- STSdist(m=x, time = time)
-								 	clus <- cutree(agnes(d, ...), k=k)
+								 	clus <- stats::cutree(agnes(d, ...), k=k)
 								 	return(list("cluster"=clus))
 								 },
 								 function(x, k, ...){
-								 	clus <- cutree(agnes(x, method=clustering_method, metric=clustering_metric, ...), k=k)
+								 	clus <- stats::cutree(agnes(x, method=clustering_method, metric=clustering_metric, ...), k=k)
 								 	return(list("cluster"=clus))
 								 }
 			)
@@ -468,10 +474,10 @@ print.ClusteredTrends <- function(x, ...){
 plot.ClusteredTrends <- function(x, ...){
 	maxK <- x$MaxNbClust
 	f <- factor(x$NbClust, levels=c(1:maxK))
-	barplot(height=summary(f),
-			xlab="Number of distinct trends", ylab= "Number of gene sets",
-			col=rainbow(maxK),
-			main=paste(formatC(mean(x$NbClust), digits=3), "trends by significant gene set (on average)"),
-			ylim=c(0, sum(summary(f)))  				
+	graphics::barplot(height=summary(f),
+					  xlab="Number of distinct trends", ylab= "Number of gene sets",
+					  col=grDevices::rainbow(maxK),
+					  main=paste(formatC(mean(x$NbClust), digits=3), "trends by significant gene set (on average)"),
+					  ylim=c(0, sum(summary(f)))  				
 	)      
 }

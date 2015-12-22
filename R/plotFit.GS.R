@@ -67,6 +67,10 @@
 #'
 #'@import reshape2
 #'
+#'@importFrom grDevices rgb
+#'
+#'@importFrom stats lm
+#'
 #'@export plotFit.GS
 #'
 #'@examples
@@ -241,7 +245,7 @@ plotFit.GS <- function(x, expr, design, subject_name = "Patient_ID", time_name =
 	if(plot_type=="Fit"){
 		p <- p + geom_abline(intercept=0, slope=1, color="black")
 		if(marginal_hist){
-			p <- p + geom_rug(, col=rgb(0,0,0,alpha=.3))
+			p <- p + geom_rug(, col=grDevices::rgb(0,0,0,alpha=.3))
 		}
 	}else if(plot_type=="Residuals Obs" | plot_type=="Residuals Est" ){
 		p <- (p + geom_abline(intercept=0, slope=0, color="red")

@@ -48,6 +48,8 @@
 #'
 #'@importFrom multtest mt.rawp2adjp
 #'
+#'@importFrom stats rchisq
+#'
 #'@export multtest.TcGSA
 #'
 #'@examples
@@ -74,7 +76,7 @@ function(tcgsa, threshold=0.05, myproc="BY", nbsimu_pval = 1000000){
   if(is.null(group.var)){
     if(!separateSubjects){
       if(func=="linear"){
-        theodist <- c(rchisq(nbsimu_pval/2,df=1), rchisq(nbsimu_pval/2,df=2))
+        theodist <- c(stats::rchisq(nbsimu_pval/2,df=1), stats::rchisq(nbsimu_pval/2,df=2))
       }else if(func=="cubic"){
         theodist <- rmixchisq(nbsimu_pval,3,3)
       }else{
@@ -82,7 +84,7 @@ function(tcgsa, threshold=0.05, myproc="BY", nbsimu_pval = 1000000){
       }
     }else{
       if(func=="linear"){
-        theodist <- c(rchisq(nbsimu_pval/2,df=0), rchisq(nbsimu_pval/2,df=1) )
+        theodist <- c(stats::rchisq(nbsimu_pval/2,df=0), stats::rchisq(nbsimu_pval/2,df=1) )
       }else if(func=="cubic"){
         theodist <- rmixchisq(nbsimu_pval,0,3)
       }else{
