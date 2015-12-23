@@ -268,7 +268,7 @@ MYheatmap.2 <- function (x, Rowv = TRUE, Colv = if (symm) "Rowv" else TRUE,
 	if (!is.null(ylab)) 
 		graphics::mtext(ylab, side = 4, line = margins[2] - 1.25)
 	if (!missing(add.expr)) 
-		eval(substitute(add.expr))
+		eval.parent(substitute(add.expr))
 	if (!missing(colsep)) 
 		for (csep in colsep) graphics::rect(xleft = csep + 0.5, ybottom = rep(0, 
 																			  length(csep)), xright = csep + 0.5 + sepwidth[1], 
