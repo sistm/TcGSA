@@ -10,7 +10,7 @@ citEntry(entry = "Article",
    pages  = "e1004310",
    doi    = "10.1371/journal.pcbi.1004310",
    url    = "http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004310",
-   note   = "R package version 0.10.1 »,
+   note   = "R package version 0.10.1",
    textVersion = "Hejblum BP, Skinner J, and Thiebaut R (2015) Time-Course Gene Set Analysis for Longitudinal Gene Expression Data. PLoS Comput Biol 11(6): e1004310. doi: 10.1371/journal.pcbi.1004310"
 )
 
