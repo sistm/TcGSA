@@ -1,7 +1,7 @@
 language: R
 r: devel
 bioc_packages: 
-	- multtest
+- multtest
 repos:
   CRAN: https://cloud.r-project.org
 r_build_args: "--html"
