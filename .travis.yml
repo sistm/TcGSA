@@ -2,7 +2,7 @@ language: R
 r: devel
 bioc_packages: 
 - multtest
-repos:
-  CRAN: https://cloud.r-project.org
+r-packages:
+- nlme
 r_build_args: "--html"
 r_check_args: "--as-cran --timings"
