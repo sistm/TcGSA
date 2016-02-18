@@ -5,6 +5,6 @@ bioc_packages:
 r_packages:
 - nlme
 r_github_packages:
-- ggplot2
+- hadley/ggplot2
 r_build_args: "--html"
 r_check_args: "--as-cran --timings"
