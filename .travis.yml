@@ -2,7 +2,9 @@ language: R
 r: devel
 bioc_packages: 
 - multtest
-r-packages:
+r_packages:
 - nlme
+r_github_packages:
+- ggplot2
 r_build_args: "--html"
 r_check_args: "--as-cran --timings"
