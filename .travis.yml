@@ -1,2 +1,7 @@
 language: R
 r: devel
+bioc_packages: multtest
+repos:
+  CRAN: https://cloud.r-project.org
+r_build_args: "--html"
+r_check_args: "--as-cran --timings"
