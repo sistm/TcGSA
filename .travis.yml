@@ -1,10 +1,12 @@
 language: R
 r: devel
+cache: packages
 bioc_packages: 
 - multtest
 r_packages:
 - nlme
 r_github_packages:
 - hadley/ggplot2
+- lme4/lme4
 r_build_args: "--html"
 r_check_args: "--as-cran --timings"
