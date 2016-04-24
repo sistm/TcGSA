@@ -11,7 +11,7 @@ TcGSA.LR.parallel(Ncpus, type_connec, expr, gmt, design,
   minGSsize = 10, maxGSsize = 500, monitorfile = "")
 }
 \arguments{
-\item{Ncpus}{The number of processors available on the cluster.}
+\item{Ncpus}{The number of processors available.}
 
 \item{type_connec}{The type of connection between the processors. Supported
 cluster types are \code{"SOCK"}, \code{"PVM"}, \code{"MPI"}, and
