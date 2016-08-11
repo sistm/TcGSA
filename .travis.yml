@@ -4,9 +4,19 @@ cache: packages
 bioc_packages: 
 - multtest
 r_packages:
-- nlme
+- reshape2
+- GSA
+- gtools
+- cluster
+- splines
+- gplots
+- stats
+- graphics
+- grDevices
+- utils
 r_github_packages:
 - hadley/ggplot2
+- hadley/stringr
 - lme4/lme4
 r_build_args: "--html"
 r_check_args: "--as-cran --timings"
