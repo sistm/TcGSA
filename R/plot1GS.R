@@ -425,6 +425,8 @@ plot1GS <-
 			select_probe <- dimnames(expr_sel)[[1]]
 			TimePoint <- sort(as.numeric(rep(dimnames(expr_sel)[[3]], dim(expr_sel)[2])))
 			Subject_ID <- rep(dimnames(expr_sel)[[2]], dim(expr_sel)[3])
+		}else{
+			stop("'expr' is neither a data.frame nor a list.")	
 		}
 		
 		data_stand <- t(apply(X=data_sel, MARGIN=1, FUN=scale))
