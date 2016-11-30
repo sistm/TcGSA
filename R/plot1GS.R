@@ -409,7 +409,6 @@ plot1GS <-
 			}
 		}
 		
-		
 		interest <- which(gmt$geneset.names==geneset.name)
 		if(length(interest)==0){
 			stop("The 'geneset.name' supplied is not in the 'gmt'")
@@ -429,6 +428,7 @@ plot1GS <-
 			stop("'expr' is neither a data.frame nor a list.")	
 		}
 		
+
 		data_stand <- t(apply(X=data_sel, MARGIN=1, FUN=scale))
 		if(indiv=="genes"){
 			data_stand_MedianByTP <- t(apply(X=data_stand, MARGIN=1, FUN=Fun_byIndex, index=as.factor(TimePoint), fun=aggreg.fun, na.rm=T))
@@ -436,7 +436,6 @@ plot1GS <-
 			data_tocast<-cbind.data.frame(TimePoint, Subject_ID, "M" = apply(X=data_stand, MARGIN=2, FUN=aggreg.fun))
 			data_stand_MedianByTP <- as.matrix(acast(data_tocast, formula="Subject_ID~TimePoint", value.var="M"))
 		}
-		
 		
 		if(!is.null(baseline)){
 			colbaseline <- which(sort(unique(TimePoint))==baseline)
@@ -657,7 +656,6 @@ plot1GS <-
 		if(plot){
 			print(p)
 		}
-		
 		classif <- classif[order(classif$Cluster), ]
 		invisible(classif)
 		

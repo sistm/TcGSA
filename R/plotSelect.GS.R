@@ -268,13 +268,13 @@
 #'data(data_simu_TcGSA)
 #'tcgsa_sim_1grp <- TcGSA.LR(expr=expr_1grp, gmt=gmt_sim, design=design, 
 #'                           subject_name="Patient_ID", time_name="TimePoint",
-#'                           time_func="linear", crossedRandom=FALSE)
+#'                           time_func="linear", crossedRandom=TRUE)
 #'}
 #'
 #'\dontrun{ 
-#'plotSelect.GS(expr=tcgsa_sim_1grp$Estimations, TimePoint=design$TimePoint, 
+#'plotSelect.GS(expr=expr_1grp, TimePoint=design$TimePoint, 
 #'        Subject_ID=design$Patient_ID, gmt=gmt_sim,
-#'        geneset.names.select=c("Gene set 3", "Gene set 4", "Gene set 5"),
+#'        geneset.names.select=c("Gene set 4", "Gene set 5"),
 #'        Subject_ID.select=c("P1", "P2"),
 #'        display="one GS per page", 
 #'        time_unit="H",
@@ -285,7 +285,23 @@
 #'\dontrun{ 
 #'plotSelect.GS(expr=tcgsa_sim_1grp$Estimations, TimePoint=design$TimePoint, 
 #'        Subject_ID=design$Patient_ID, gmt=gmt_sim,
-#'        geneset.names.select=c("Gene set 3", "Gene set 4", "Gene set 5"),
+#'        geneset.names.select=c("Gene set 4", "Gene set 5"),
+#'        Subject_ID.select=c("P1", "P2"),
+#'        display="one subject per page", 
+#'        time_unit="H",
+#'        lab.cex=0.7
+#')
+#'}
+#'
+#'
+#'\dontrun{
+#'tcgsa_sim_1grp <- TcGSA.LR(expr=expr_1grp, gmt=gmt_sim, design=design, 
+#'                           subject_name="Patient_ID", time_name="TimePoint",
+#'                           time_func="linear", crossedRandom=FALSE)
+#'                           
+#'plotSelect.GS(expr=tcgsa_sim_1grp$Estimations, TimePoint=design$TimePoint, 
+#'        Subject_ID=design$Patient_ID, gmt=gmt_sim,
+#'        geneset.names.select=c("Gene set 4", "Gene set 5"),
 #'        Subject_ID.select=c("P1", "P2"),
 #'        display="one subject per page", 
 #'        time_unit="H",
@@ -394,18 +410,18 @@ plotSelect.GS <-
 		meltedData <- NULL
 		subj_temp <- NULL
 		for(gs in geneset.names.select){
-			all_clust[[gs]] <- plot1GS(expr, gmt, Subject_ID,TimePoint, geneset.name=gs, 
+			all_clust[[gs]] <- plot1GS(expr, gmt, Subject_ID, TimePoint, geneset.name=gs, 
 									   baseline, group.var, Group_ID_paired, ref, group_of_interest,
 									   FUNcluster, clustering_metric, clustering_method, B,
 									   max_trends, aggreg.fun, trend.fun,
 									   methodOptiClust,
 									   indiv="genes",
-									   verbose,
-									   clustering, showTrend=FALSE, smooth=FALSE,
-									   time_unit, title, y.lab, desc,
-									   lab.cex, axis.cex, main.cex, y.lab.angle, x.axis.angle,
-									   y.lim, x.lim, 
-									   gg.add, plot=FALSE)
+									   verbose=verbose,
+									   clustering=clustering, showTrend=FALSE, smooth=FALSE, precluster=NULL,
+									   time_unit=time_unit, title=title, y.lab=y.lab, desc=desc,
+									   lab.cex=lab.cex, axis.cex=axis.cex, main.cex=main.cex, y.lab.angle=y.lab.angle, x.axis.angle=x.axis.angle,
+									   y.lim=y.lim, x.lim=x.lim, 
+									   gg.add=gg.add, plot=FALSE)
 			rownames(all_clust[[gs]]) <- all_clust[[gs]]$ProbeID
 			clust[[gs]] <- all_clust[[gs]][rownames(data_stand[[gs]]), "Cluster"]
 			
@@ -423,6 +439,7 @@ plotSelect.GS <-
 			}
 			
 		}
+		
 		meltedData$Subject_ID <- as.factor(subj_temp)
 		meltedData$Cluster <- as.factor(meltedData$Cluster)
 		meltedData$TimePoint <- paste(time_unit, meltedData$TimePoint, sep="")
@@ -537,7 +554,7 @@ plotSelect.GS <-
 			for (sid in Subject_ID.select){
 				meltedData2plot <- meltedData[which(meltedData$Subject_ID==sid), ]
 				p <- (ggplot(meltedData2plot, aes_string(x="TimePoint", y="value")) 
-					  + geom_hline(aes(y = 0), linetype=1, colour='grey50', size=0.4)
+					  + geom_hline(aes(yintercept = 0), linetype=1, colour='grey50', size=0.4)
 					  + facet_wrap( ~GS, ncol=floor(sqrt(length(unique(meltedData$GS)))))
 				)
 				
@@ -545,7 +562,7 @@ plotSelect.GS <-
 					p <- (p
 						  + geom_line(aes_string(group="Probe_ID", colour="Probe_ID"), size=0.7)
 						  + scale_colour_manual(guide='none', name='probe ID', 
-						  					  values=grDevices::rainbow(length(select_probe)))
+						  					  values=grDevices::rainbow(length(unlist(select_probe))))
 					)
 				}else{
 					p <- (p
