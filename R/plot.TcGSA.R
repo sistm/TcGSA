@@ -73,8 +73,8 @@
 #TODO See Details.
 #'
 #'@param baseline 
-#'a character string which is the value of \code{TimePoint}
-#'used as baseline.  See Details.
+#'the value of \code{TimePoint} to be used as baseline. Default is \code{NULL} 
+#'in which case expression is centered and no baseline is used.
 #'
 #'@param only.signif 
 #'logical flag for plotting only the significant gene sets.
@@ -479,8 +479,8 @@ plot.TcGSA <-
 		
 		medoids2clust <- reshape2::acast(reshape2::melt(clust_trends[["ClustMeds"]], variable.name="Cluster", id.vars="TimePoint"),
 										 formula="L1 + Cluster~ TimePoint", value.var="value")
-		gsNames <- gsub("_.*$", "", rownames(medoids2clust))
-		ncl <- gsub("^.*?_", "", rownames(medoids2clust))
+		gsNames <- gsub("_[123456789]?[123456789]$", "", rownames(medoids2clust))
+		ncl <- gsub("^.*_+", "", rownames(medoids2clust))
 		medoids2clust <- medoids2clust[,order(as.numeric(colnames(medoids2clust)))]
 		
 		if(ranking){
