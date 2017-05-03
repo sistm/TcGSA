@@ -407,7 +407,9 @@ plot.TcGSA <-
 				}
 			}
 			else if(is.list(expr)){
-				if(!(baseline %in% dimnames(expr[[1]])[[3]])){
+				sel <- which(!is.na(expr))
+				if(length(sel)<1){stop("All tested gene sets have NA results...\n\n")}
+				if(!(baseline %in% dimnames(expr[[sel[1]]])[[3]])){
 					stop("The 'baseline' value used is not one of the time points in 'TimePoint'...\n\n")
 				}
 			}
