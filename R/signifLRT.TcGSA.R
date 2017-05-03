@@ -76,7 +76,7 @@
 #'@export signifLRT.TcGSA
 #'
 #'@examples
-#'
+#'\dontrun{
 #'data(data_simu_TcGSA)
 #'
 #'tcgsa_sim_1grp <- TcGSA.LR(expr=expr_1grp, gmt=gmt_sim, design=design, 
@@ -86,7 +86,7 @@
 #'sgnifs <- signifLRT.TcGSA(tcgsa_sim_1grp, threshold = 0.05, myproc = "BY",
 #'                          nbsimu_pval = 1000, write=FALSE)
 #'sgnifs
-#'
+#'}
 #'
 signifLRT.TcGSA <-
 function(tcgsa, threshold=0.05, myproc="BY", nbsimu_pval = 1e+06, write=F, txtfilename=NULL, directory=NULL){  

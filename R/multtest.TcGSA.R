@@ -54,6 +54,7 @@
 #'
 #'@examples
 #'
+#'\dontrun{
 #'data(data_simu_TcGSA)
 #'
 #'tcgsa_sim_1grp <- TcGSA.LR(expr=expr_1grp, gmt=gmt_sim, design=design, 
@@ -63,7 +64,7 @@
 #'mtt <- multtest.TcGSA(tcgsa_sim_1grp, threshold = 0.05, 
 #'                      myproc = "BY", nbsimu_pval = 1000)
 #'mtt
-#'
+#'}
 #'
 multtest.TcGSA <-
 function(tcgsa, threshold=0.05, myproc="BY", nbsimu_pval = 1000000){

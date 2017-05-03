@@ -189,6 +189,7 @@ clusters in the plotted gene set.  See
 }
 \examples{
 
+\dontrun{
 data(data_simu_TcGSA)
 
 tcgsa_sim_1grp <- TcGSA.LR(expr=expr_1grp, gmt=gmt_sim, design=design, 
@@ -204,6 +205,7 @@ CT$NbClust
 CT$NbClust["Gene set 5"]
 CT$ClustMeds[["Gene set 4"]]
 CT$ClustMeds[["Gene set 5"]]
+}
 
 }
 \references{

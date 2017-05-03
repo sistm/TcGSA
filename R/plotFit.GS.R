@@ -74,6 +74,9 @@
 #'@export plotFit.GS
 #'
 #'@examples
+#'
+#'\dontrun{
+#'
 #'data(data_simu_TcGSA)
 #'
 #'tcgsa_sim_1grp <- TcGSA.LR(expr=expr_1grp, gmt=gmt_sim, design=design, 
@@ -88,7 +91,6 @@
 #'					 color="genes", gg.add=list(guides(color=FALSE))
 #')
 #'
-#'\dontrun{
 #'plotFit.GS(x=tcgsa_sim_1grp, expr=expr_1grp, design=design,
 #'           subject_name="Patient_ID", time_name="TimePoint",
 #'           colnames_ID="Sample_name", 

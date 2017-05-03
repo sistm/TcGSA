@@ -132,6 +132,7 @@ have significantly different trends over time depending on \code{Subjects}.
 }
 \examples{
 
+\dontrun{ 
 data(data_simu_TcGSA)
 
 tcgsa_sim_1grp <- TcGSA.LR(expr=expr_1grp, gmt=gmt_sim, design=design, 
@@ -140,17 +141,13 @@ tcgsa_sim_1grp <- TcGSA.LR(expr=expr_1grp, gmt=gmt_sim, design=design,
 tcgsa_sim_1grp
 summary(tcgsa_sim_1grp)
 
-
-\dontrun{ 
 plot(x=tcgsa_sim_1grp, expr=expr_1grp, 
     Subject_ID=design$Patient_ID, TimePoint=design$TimePoint,
     baseline=1, 
     B=100,
     time_unit="H"
     )
-}     
-
-\dontrun{    
+       
 tcgsa_sim_2grp <- TcGSA.LR(expr=expr_2grp, gmt=gmt_sim, design=design,
                           subject_name="Patient_ID", time_name="TimePoint",
                           time_func="linear", crossedRandom=FALSE, 

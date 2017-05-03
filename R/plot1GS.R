@@ -270,6 +270,7 @@
 #'
 #'@examples
 #'
+#'\dontrun{
 #'data(data_simu_TcGSA)
 #'tcgsa_sim_1grp <- TcGSA.LR(expr=expr_1grp, gmt=gmt_sim, design=design, 
 #'                           subject_name="Patient_ID", time_name="TimePoint",
@@ -282,7 +283,6 @@
 #'        time_unit="H",
 #'        lab.cex=0.7)
 #'
-#'\dontrun{ 
 #'plot1GS(expr=expr_1grp, TimePoint=design$TimePoint, 
 #'        Subject_ID=design$Patient_ID, gmt=gmt_sim,
 #'        geneset.name="Gene set 5",

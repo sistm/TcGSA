@@ -325,6 +325,7 @@
 #'
 #'@examples
 #'
+#'\dontrun{
 #'data(data_simu_TcGSA)
 #'
 #'tcgsa_sim_1grp <- TcGSA.LR(expr=expr_1grp, gmt=gmt_sim, design=design, 
@@ -343,7 +344,7 @@
 #'     B=100,
 #'     time_unit="H"
 #'     )
-#'     
+#'}
 #'
 plotPat.TcGSA <-
 function(x, threshold=0.05, myproc="BY", nbsimu_pval=1e+06, 

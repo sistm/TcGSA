@@ -252,6 +252,7 @@
 #'
 #'@examples
 #'
+#'\dontrun{
 #'data(data_simu_TcGSA)
 #'tcgsa_sim_1grp <- TcGSA.LR(expr=expr_1grp, gmt=gmt_sim, design=design, 
 #'                           subject_name="Patient_ID", time_name="TimePoint",
@@ -264,16 +265,13 @@
 #'        time_unit="H",
 #'        lab.cex=0.7)
 #'
-#'\dontrun{
 #'plotPat.1GS(expr=expr_1grp, TimePoint=design$TimePoint, 
 #'        Subject_ID=design$Patient_ID, gmt=gmt_sim,
 #'        geneset.name="Gene set 4",
 #'        clustering=FALSE, baseline=1,
 #'        time_unit="H",
 #'        lab.cex=0.7)
-#'}        
-#'
-#'\dontrun{
+#'        
 #'colval <- c(hsv(0.56, 0.9, 1),
 #'            hsv(0, 0.27, 1),
 #'            hsv(0.52, 1, 0.5),
@@ -300,9 +298,7 @@
 #'        gg.add=list(scale_color_manual(values=colval)),
 #'        lab.cex=0.7
 #')
-#'}
 #'
-#'\dontrun{
 #'plotPat.1GS(expr=tcgsa_sim_1grp$Estimations, TimePoint=design$TimePoint, 
 #'        Subject_ID=design$Patient_ID, gmt=gmt_sim,
 #'        geneset.name="Gene set 3",

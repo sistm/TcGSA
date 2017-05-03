@@ -6,7 +6,7 @@
 #'\tabular{ll}{
 #'Package: \tab TcGSA\cr
 #'Type: \tab Package\cr
-#'Version: \tab 0.10.4\cr
+#'Version: \tab 0.10.5\cr
 #'Date: \tab 2017-05-03\cr
 #'License:\tab \href{http://www.gnu.org/licenses/lgpl.txt}{LGPL-3}\cr
 #'}

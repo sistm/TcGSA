@@ -289,6 +289,7 @@ and centered) expression of the genes over the patients.
 }
 \examples{
 
+\dontrun{
 data(data_simu_TcGSA)
 
 tcgsa_sim_1grp <- TcGSA.LR(expr=expr_1grp, gmt=gmt_sim, design=design, 
@@ -307,7 +308,7 @@ plotPat.TcGSA(x=tcgsa_sim_1grp, expr=tcgsa_sim_1grp$Estimations,
     B=100,
     time_unit="H"
     )
-    
+}
 
 }
 \references{

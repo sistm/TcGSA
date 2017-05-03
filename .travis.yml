@@ -20,5 +20,8 @@ r_packages:
 r_github_packages:
 - hadley/ggplot2
 - hadley/stringr
+os:
+- linux
+- osx
 r_build_args: "--html"
 r_check_args: "--as-cran --timings"

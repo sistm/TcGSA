@@ -161,24 +161,24 @@
 #'@export TcGSA.LR.parallel
 #'
 #'@examples
-#'
+#'                
+#'\dontrun{ 
 #'data(data_simu_TcGSA)
 #'
 #'tcgsa_sim_1grp <- TcGSA.LR(expr=expr_1grp, gmt=gmt_sim, design=design, 
 #'                           subject_name="Patient_ID", time_name="TimePoint",
 #'                           time_func="linear", crossedRandom=FALSE)
-#'                           
-#'\dontrun{ 
+#'           
 #'library(doParallel)
-#'tcgsa_sim_1grp <- TcGSA.LR.parallel(Ncpus = 2, type_connec = 'SOCK',
+#'tcgsa_sim_1grp_par <- TcGSA.LR.parallel(Ncpus = 2, type_connec = 'SOCK',
 #'                             expr=expr_1grp, gmt=gmt_sim, design=design, 
 #'                             subject_name="Patient_ID", time_name="TimePoint",
 #'                             time_func="linear", crossedRandom=FALSE, 
 #'                             separateSubjects=TRUE)
-#'}
-#'tcgsa_sim_1grp
+#'
 #'summary(tcgsa_sim_1grp)
-#'     
+#'summary(tcgsa_sim_1grp_par)
+#'}     
 #'
 #'
 
