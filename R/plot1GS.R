@@ -321,7 +321,6 @@
 #')
 #'par(op)
 #'
-#'require(ggplot2)
 #'plot1GS(expr=expr_1grp, TimePoint=design$TimePoint, 
 #'        Subject_ID=design$Patient_ID, gmt=gmt_sim,
 #'        geneset.name="Gene set 5",

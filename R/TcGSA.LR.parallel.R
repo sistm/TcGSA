@@ -169,7 +169,7 @@
 #'                           time_func="linear", crossedRandom=FALSE)
 #'                           
 #'\dontrun{ 
-#'require(doParallel)
+#'library(doParallel)
 #'tcgsa_sim_1grp <- TcGSA.LR.parallel(Ncpus = 2, type_connec = 'SOCK',
 #'                             expr=expr_1grp, gmt=gmt_sim, design=design, 
 #'                             subject_name="Patient_ID", time_name="TimePoint",
