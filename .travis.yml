@@ -1,5 +1,7 @@
 language: R
-r: devel
+r: 
+- current 
+- devel
 cache: packages
 bioc_packages: 
 - multtest
