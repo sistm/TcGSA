@@ -28,11 +28,10 @@ TcGSA:::pval_simu(s=1.96, theo_dist)
 }
 
 }
-\author{
-Boris P. Hejblum
-}
 \seealso{
 \code{\link{rmixchisq}}
 }
+\author{
+Boris P. Hejblum
+}
 \keyword{internal}
-

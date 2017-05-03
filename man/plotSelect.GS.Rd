@@ -163,7 +163,7 @@ should be magnified relative to the default \code{1}.}
 
 \item{y.lab.angle}{a numerical value (in [0, 360]) giving the orientation by
 which y-label text should be turned (anti-clockwise).  Default is \code{90}.
-See \code{\link[ggplot2:element_text]{element_text}}.}
+See \code{\link{element_text}}.}
 
 \item{x.axis.angle}{a numerical value (in [0, 360]) giving the orientation by
 which x-axis annotation text should be turned (anti-clockwise).  Default is
@@ -210,13 +210,13 @@ clusters in the plotted gene set.  See
 data(data_simu_TcGSA)
 tcgsa_sim_1grp <- TcGSA.LR(expr=expr_1grp, gmt=gmt_sim, design=design, 
                           subject_name="Patient_ID", time_name="TimePoint",
-                          time_func="linear", crossedRandom=FALSE)
+                          time_func="linear", crossedRandom=TRUE)
 }
 
 \dontrun{ 
-plotSelect.GS(expr=tcgsa_sim_1grp$Estimations, TimePoint=design$TimePoint, 
+plotSelect.GS(expr=expr_1grp, TimePoint=design$TimePoint, 
        Subject_ID=design$Patient_ID, gmt=gmt_sim,
-       geneset.names.select=c("Gene set 3", "Gene set 4", "Gene set 5"),
+       geneset.names.select=c("Gene set 4", "Gene set 5"),
        Subject_ID.select=c("P1", "P2"),
        display="one GS per page", 
        time_unit="H",
@@ -227,7 +227,7 @@ plotSelect.GS(expr=tcgsa_sim_1grp$Estimations, TimePoint=design$TimePoint,
 \dontrun{ 
 plotSelect.GS(expr=tcgsa_sim_1grp$Estimations, TimePoint=design$TimePoint, 
        Subject_ID=design$Patient_ID, gmt=gmt_sim,
-       geneset.names.select=c("Gene set 3", "Gene set 4", "Gene set 5"),
+       geneset.names.select=c("Gene set 4", "Gene set 5"),
        Subject_ID.select=c("P1", "P2"),
        display="one subject per page", 
        time_unit="H",
@@ -235,9 +235,22 @@ plotSelect.GS(expr=tcgsa_sim_1grp$Estimations, TimePoint=design$TimePoint,
 )
 }
 
+
+\dontrun{
+tcgsa_sim_1grp <- TcGSA.LR(expr=expr_1grp, gmt=gmt_sim, design=design, 
+                          subject_name="Patient_ID", time_name="TimePoint",
+                          time_func="linear", crossedRandom=FALSE)
+                          
+plotSelect.GS(expr=tcgsa_sim_1grp$Estimations, TimePoint=design$TimePoint, 
+       Subject_ID=design$Patient_ID, gmt=gmt_sim,
+       geneset.names.select=c("Gene set 4", "Gene set 5"),
+       Subject_ID.select=c("P1", "P2"),
+       display="one subject per page", 
+       time_unit="H",
+       lab.cex=0.7
+)
 }
-\author{
-Boris P. Hejblum
+
 }
 \references{
 Tibshirani, R., Walther, G. and Hastie, T., 2001, Estimating the
@@ -248,4 +261,6 @@ Statistical Society, Series B (Statistical Methodology)}, \bold{63}, 2:
 \seealso{
 \code{\link[ggplot2:ggplot]{ggplot}}, \code{\link[cluster:clusGap]{clusGap}}
 }
-
+\author{
+Boris P. Hejblum
+}

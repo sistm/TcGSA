@@ -76,9 +76,6 @@ sgnifs
 
 
 }
-\author{
-Boris P. Hejblum
-}
 \references{
 Hejblum BP, Skinner J, Thiebaut R, (2015) 
 Time-Course Gene Set Analysis for Longitudinal Gene Expression Data. 
@@ -88,4 +85,6 @@ doi: 10.1371/journal.pcbi.1004310
 \seealso{
 \code{\link{multtest.TcGSA}}, \code{\link{TcGSA.LR}}
 }
-
+\author{
+Boris P. Hejblum
+}

@@ -155,7 +155,7 @@ should be magnified relative to the default \code{1}.}
 
 \item{y.lab.angle}{a numerical value (in [0, 360]) giving the orientation by
 which y-label text should be turned (anti-clockwise).  Default is \code{90}.
-See \code{\link[ggplot2:element_text]{element_text}}.}
+See \code{\link{element_text}}.}
 
 \item{x.axis.angle}{a numerical value (in [0, 360]) giving the orientation by
 which x-axis annotation text should be turned (anti-clockwise).  Default is
@@ -258,9 +258,6 @@ plotPat.1GS(expr=tcgsa_sim_1grp$Estimations, TimePoint=design$TimePoint,
 }
 
 }
-\author{
-Boris P. Hejblum
-}
 \references{
 Tibshirani, R., Walther, G. and Hastie, T., 2001, Estimating the
 number of data clusters via the Gap statistic, \emph{Journal of the Royal
@@ -270,4 +267,6 @@ Statistical Society, Series B (Statistical Methodology)}, \bold{63}, 2:
 \seealso{
 \code{\link[ggplot2:ggplot]{ggplot}}, \code{\link[cluster:clusGap]{clusGap}}
 }
-
+\author{
+Boris P. Hejblum
+}

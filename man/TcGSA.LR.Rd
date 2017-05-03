@@ -2,8 +2,8 @@
 % Please edit documentation in R/TcGSA.LR.R
 \name{TcGSA.LR}
 \alias{TcGSA.LR}
-\alias{print.TcGSA}
 \alias{print.TcGSA.LR}
+\alias{print.TcGSA}
 \title{Computing the Likelihood Ratios for the Gene Sets under Scrutiny}
 \usage{
 TcGSA.LR(expr, gmt, design, subject_name = "Patient_ID",
@@ -159,9 +159,6 @@ tcgsa_sim_2grp
 
 }
 }
-\author{
-Boris P. Hejblum
-}
 \references{
 Hejblum BP, Skinner J, Thiebaut R, (2015) 
 Time-Course Gene Set Analysis for Longitudinal Gene Expression Data. 
@@ -173,4 +170,6 @@ doi: 10.1371/journal.pcbi.1004310
 and \code{\link{TcGSA.LR.parallel}} for an implementation using 
 parallel computing
 }
-
+\author{
+Boris P. Hejblum
+}

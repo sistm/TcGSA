@@ -223,7 +223,7 @@
 #'@param y.lab.angle 
 #'a numerical value (in [0, 360]) giving the orientation by
 #'which y-label text should be turned (anti-clockwise).  Default is \code{90}.
-#'See \code{\link[ggplot2:element_text]{element_text}}.
+#'See \code{\link{element_text}}.
 #'
 #'@param x.axis.angle 
 #'a numerical value (in [0, 360]) giving the orientation by
@@ -240,7 +240,7 @@
 #'be dropped.  See \code{\link{xlim}}.
 #'
 #'@param gg.add 
-#'A list of instructions to add to the ggplot2 instruction.  See \link{+.gg}.  Default is \code{list(theme())}, which adds nothing
+#'A list of instructions to add to the ggplot2 instruction.  See \code{\link{+.gg}}.  Default is \code{list(theme())}, which adds nothing
 #'to the plot.
 #'
 #'@param plot 

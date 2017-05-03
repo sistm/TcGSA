@@ -149,7 +149,7 @@ tcgsa_sim_1grp <- TcGSA.LR(expr=expr_1grp, gmt=gmt_sim, design=design,
                           time_func="linear", crossedRandom=FALSE)
                           
 \dontrun{ 
-require(doParallel)
+library(doParallel)
 tcgsa_sim_1grp <- TcGSA.LR.parallel(Ncpus = 2, type_connec = 'SOCK',
                             expr=expr_1grp, gmt=gmt_sim, design=design, 
                             subject_name="Patient_ID", time_name="TimePoint",
@@ -162,9 +162,6 @@ summary(tcgsa_sim_1grp)
 
 
 }
-\author{
-Boris P. Hejblum
-}
 \references{
 Hejblum BP, Skinner J, Thiebaut R, (2015) 
 Time-Course Gene Set Analysis for Longitudinal Gene Expression Data. 
@@ -174,4 +171,6 @@ doi: 10.1371/journal.pcbi.1004310
 \seealso{
 \code{\link{summary.TcGSA}}, \code{\link{plot.TcGSA}}
 }
-
+\author{
+Boris P. Hejblum
+}

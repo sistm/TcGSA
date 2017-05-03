@@ -310,9 +310,6 @@ plotPat.TcGSA(x=tcgsa_sim_1grp, expr=tcgsa_sim_1grp$Estimations,
     
 
 }
-\author{
-Boris P. Hejblum
-}
 \references{
 Hejblum BP, Skinner J, Thiebaut R, (2015) 
 Time-Course Gene Set Analysis for Longitudinal Gene Expression Data. 
@@ -323,4 +320,6 @@ doi: 10.1371/journal.pcbi.1004310
 \code{\link{plot.TcGSA}}, \code{\link[gplots:heatmap.2]{heatmap.2}},
 \code{\link{TcGSA.LR}}, \code{\link[stats:hclust]{hclust}}
 }
-
+\author{
+Boris P. Hejblum
+}

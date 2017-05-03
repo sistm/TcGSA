@@ -61,8 +61,8 @@ the same order as \code{Subject_ID} and the columns of \code{expr} (when it
 is a dataframe), and that contains the time points at which gene expression
 was measured. Ignored if \code{expr} is a list of estimations.}
 
-\item{baseline}{a character string which is the value of \code{TimePoint}
-used as baseline.  See Details.}
+\item{baseline}{the value of \code{TimePoint} to be used as baseline. Default is \code{NULL} 
+in which case expression is centered and no baseline is used.}
 
 \item{only.signif}{logical flag for plotting only the significant gene sets.
 If \code{FALSE}, all the gene sets from the \bold{gmt} object contained in
@@ -328,9 +328,6 @@ plot(x=tcgsa_sim_2grp, expr=expr_2grp,
 
 
 }
-\author{
-Boris P. Hejblum
-}
 \references{
 Hejblum BP, Skinner J, Thiebaut R, (2015) 
 Time-Course Gene Set Analysis for Longitudinal Gene Expression Data. 
@@ -341,4 +338,6 @@ doi: 10.1371/journal.pcbi.1004310
 \code{\link[gplots:heatmap.2]{heatmap.2}}, \code{\link{TcGSA.LR}},
 \code{\link[stats:hclust]{hclust}}
 }
-
+\author{
+Boris P. Hejblum
+}

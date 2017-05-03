@@ -58,12 +58,11 @@ mtt
 
 
 }
-\author{
-Boris P. Hejblum
-}
 \seealso{
 \code{\link{TcGSA.LR}}, 
 \code{\link[multtest:mt.rawp2adjp]{mt.rawp2adjp}},
 \code{\link{signifLRT.TcGSA}}
 }
-
+\author{
+Boris P. Hejblum
+}

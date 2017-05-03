@@ -40,9 +40,6 @@ plot(density(sample_mixt))
 
 
 }
-\author{
-Boris P. Hejblum
-}
 \references{
 Self, S. G. and Liang, K., 1987, Asymptotic properties of maximum
 likelihood estimators and likelihood ratio tests under nonstandard
@@ -59,4 +56,6 @@ W.; 50: 1171--1177 (1994), \emph{Biometrics} 51: 1196.
 \seealso{
 \code{\link{pval_simu}}
 }
-
+\author{
+Boris P. Hejblum
+}

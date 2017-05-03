@@ -178,7 +178,7 @@ should be magnified relative to the default \code{1}.}
 
 \item{y.lab.angle}{a numerical value (in [0, 360]) giving the orientation by
 which y-label text should be turned (anti-clockwise).  Default is \code{90}.
-See \code{\link[ggplot2:element_text]{element_text}}.}
+See \code{\link{element_text}}.}
 
 \item{x.axis.angle}{a numerical value (in [0, 360]) giving the orientation by
 which x-axis annotation text should be turned (anti-clockwise).  Default is
@@ -197,7 +197,7 @@ See \code{\link{plot.default}}.}
 character, will create a discrete scale.  Observations not in this range will
 be dropped.  See \code{\link{xlim}}.}
 
-\item{gg.add}{A list of instructions to add to the ggplot2 instruction.  See \link{+.gg}.  Default is \code{list(theme())}, which adds nothing
+\item{gg.add}{A list of instructions to add to the ggplot2 instruction.  See \code{\link{+.gg}}.  Default is \code{list(theme())}, which adds nothing
 to the plot.}
 
 \item{plot}{logical flag.  If \code{FALSE}, no plot is drawn.  Default is \code{TRUE}.}
@@ -280,7 +280,6 @@ plot(y, axes = FALSE, frame.plot = TRUE,
 )
 par(op)
 
-require(ggplot2)
 plot1GS(expr=expr_1grp, TimePoint=design$TimePoint, 
        Subject_ID=design$Patient_ID, gmt=gmt_sim,
        geneset.name="Gene set 5",
@@ -294,9 +293,6 @@ plot1GS(expr=expr_1grp, TimePoint=design$TimePoint,
 }
 
 }
-\author{
-Boris P. Hejblum
-}
 \references{
 Tibshirani, R., Walther, G. and Hastie, T., 2001, Estimating the
 number of data clusters via the Gap statistic, \emph{Journal of the Royal
@@ -306,4 +302,6 @@ Statistical Society, Series B (Statistical Methodology)}, \bold{63}, 2:
 \seealso{
 \code{\link[ggplot2:ggplot]{ggplot}}, \code{\link[cluster:clusGap]{clusGap}}
 }
-
+\author{
+Boris P. Hejblum
+}
