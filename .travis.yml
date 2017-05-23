@@ -1,14 +1,18 @@
 language: r
 cache: packages
-sudo: required
+sudo: false
+
 r: 
 - current 
 - devel
+
 os:
 - linux
 - osx
+
 bioc_packages: 
 - multtest
+
 r_packages:
 - reshape2
 - GSA
@@ -25,8 +29,11 @@ r_packages:
 - scales
 - tibble
 - lazyeval
+
 r_github_packages:
 - hadley/ggplot2
 - hadley/stringr
+
 r_build_args: "--html"
+
 r_check_args: "--as-cran --timings"
