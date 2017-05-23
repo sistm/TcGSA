@@ -1,8 +1,12 @@
-language: R
+language: r
+cache: packages
+sudo: required
 r: 
 - current 
 - devel
-cache: packages
+os:
+- linux
+- osx
 bioc_packages: 
 - multtest
 r_packages:
@@ -17,11 +21,12 @@ r_packages:
 - grDevices
 - utils
 - lme4
+- gtable
+- scales
+- tibble
+- lazyeval
 r_github_packages:
 - hadley/ggplot2
 - hadley/stringr
-os:
-- linux
-- osx
 r_build_args: "--html"
 r_check_args: "--as-cran --timings"
