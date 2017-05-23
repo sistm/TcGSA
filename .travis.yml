@@ -1,9 +1,9 @@
-language: r
+language: R
 cache: packages
-sudo: required
+sudo: false
 
 r: 
-- current 
+- release 
 - devel
 
 os:
