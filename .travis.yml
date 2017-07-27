@@ -32,6 +32,8 @@ r_packages:
 - foreach
 - doParallel
 - tcgsaseq
+- knitr
+- rmarkdown
 
 r_github_packages:
 - hadley/ggplot2

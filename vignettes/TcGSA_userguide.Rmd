@@ -1,0 +1,19 @@
+---
+title: "Userguide for performing Gene Set Analysis of longitudinal gene expression measurements with `TcGSA`"
+author: "Boris Hejblum"
+date: "`r Sys.Date()`"
+output: 
+  rmarkdown::html_vignette:
+    fig_caption: yes
+    toc: yes
+vignette: >
+  %\VignetteIndexEntry{Userguide for performing Gene Set Analysis of longitudinal gene expression measurements with `TcGSA`}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Introduction
+
+# Gene Set Analysis of longitudinal gene expression data with `TcGSA`
+
+# Graphical outputs from `TcGSA`
