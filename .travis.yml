@@ -37,6 +37,7 @@ r_packages:
 - viridisLite
 
 r_github_packages:
+- hadley/scales
 - hadley/ggplot2
 - hadley/stringr
 
