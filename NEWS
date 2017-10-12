@@ -1,5 +1,0 @@
-News about the R package TcGSA:
---------------------------------
-
-Main changes in Version 0.10.5 (2017-05-03):
-* Bug fix: plot.TcGSA better handles more various geneses names
