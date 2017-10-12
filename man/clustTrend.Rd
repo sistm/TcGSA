@@ -23,7 +23,7 @@ clustTrend(tcgs, expr, Subject_ID, TimePoint, threshold = 0.05,
 }
 \arguments{
 \item{tcgs}{a \bold{tcgsa} object for \code{clustTrend}, or a
-\bold{ClusteredTrends} object for \code{print.ClusteredTrends} and
+\bold{\link{ClusteredTrends}} object for \code{print.ClusteredTrends} and
 \code{plot.ClusteredTrends}.}
 
 \item{expr}{either a matrix or dataframe of gene expression upon which
@@ -56,7 +56,7 @@ This vector should include any of the following: "\code{Bonferroni}",
 "\code{BY}", the Benjamini & Yekutieli (2001) step-up FDR-controlling
 procedure (general dependency structures).  In order to control the FWER(in
 case of an analysis that is more a hypothesis confirmation than an
-exploration of the expression data), we recommand to use "\code{Holm}", the
+exploration of the expression data), we recommend to use "\code{Holm}", the
 Holm (1979) step-down adjusted p-values for strong control of the FWER.}
 
 \item{nbsimu_pval}{the number of observations under the null distribution to
@@ -64,10 +64,10 @@ be generated in order to compute the p-values.  Default is \code{1e+06}.}
 
 \item{baseline}{a character string which is the value of \code{TimePoint}
 that can be used as a baseline.  Default is \code{NULL}, in which case no
-timepoint is used as a baseline value for gene expression.  Has to be
+time point is used as a baseline value for gene expression.  Has to be
 \code{NULL} when comparing two treatment groups.}
 
-\item{only.signif}{logical flag for analysing the trends in only the
+\item{only.signif}{logical flag for analyzing the trends in only the
 significant gene sets.  If \code{FALSE}, all the gene sets from the
 \bold{gmt} object contained in \code{x} are clustered.  Default is
 \code{TRUE}.}
@@ -94,7 +94,7 @@ which means that group of interest is the second group in alphabetical order
 of the labels of \code{group.var}.}
 
 \item{FUNcluster}{the clustering function used to agglomerate genes in
-trends.  Default is \code{NULL}, in which a hierachical clustering is
+trends.  Default is \code{NULL}, in which a hierarchical clustering is
 performed via the function \code{\link[cluster:agnes]{agnes}}, using the
 metric \code{clustering_metric} and the method \code{clustering_method}.  See
 \code{\link[cluster:clusGap]{clusGap}}}
@@ -105,7 +105,7 @@ clustering when \code{FUNcluster} is \code{NULL}.  The currently available
 options are \code{"euclidean"} and \code{"manhattan"}.  Default is
 \code{"euclidean"}.  See \code{\link[cluster:agnes]{agnes}}.  Also, a \code{"sts"} option 
 is available in TcGSA.  It implements the 'Short Time Series' distance 
-[Moller-Levet et al., Fuzzy CLustering of short time series and unevenly distributed 
+[Moller-Levet et al., Fuzzy Clustering of short time series and unevenly distributed 
 sampling points, \emph{Advances in Intelligent Data Analysis V}:330-340 Springer, 2003]
 designed specifically for clustering time series.}
 
@@ -157,23 +157,23 @@ status of the function.  Default is \code{TRUE}.}
 \value{
 An object of class \bold{\link{ClusteredTrends}} which is a list with
 the 4 following components: \itemize{
-\item NbClust a vector that contains the optimal number of clusters for
-each analysed gene sets.
-\item ClustsMeds a list of the same length as \code{NsClust} (the
-number of analysed gene sets). Each element of the list is a data frame, in
+\item \code{NbClust} a vector that contains the optimal number of clusters for
+each analyzed gene sets.
+\item \code{ClustsMeds} a list of the same length as \code{NsClust} (the
+number of analyzed gene sets). Each element of the list is a data frame, in
 which there is as many column as the optimal number of clusters for the
-corresponding gene setsfor each cluster.  Each column of the data frame
+corresponding gene sets for each cluster.  Each column of the data frame
 contains the median trend values for the corresponding cluster.
-\item GenesPartition a list of the same length as \code{NsClust} (the
-number of analysed gene sets).  Each element of the list is a vector which
+\item \code{GenesPartition} a list of the same length as \code{NsClust} (the
+number of analyzed gene sets).  Each element of the list is a vector which
 gives the partition of the genes inside the corresponding gene set.
-\item MaxNbClust an integer storing the maximum number of different
+\item \code{MaxNbClust} an integer storing the maximum number of different
 clusters tested, as given by the argument \code{'max_trends'}.
 }
 }
 \description{
 This function clusters the genes dynamics of one gene sets into different
-dominant trends.  The optimal number of custers is computed thanks to the gap
+dominant trends.  The optimal number of clusters is computed thanks to the gap
 statistics.  See \code{\link[cluster:clusGap]{clusGap}}.
 }
 \details{

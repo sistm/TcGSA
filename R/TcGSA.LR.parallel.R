@@ -16,7 +16,7 @@
 #'If the \code{monitorfile} argument is a character string naming a file to
 #'write into, in the case of a new file that does not exist yet, such a new
 #'file will be created. A line is written each time one of the gene sets under
-#'scrutiny has been analysed (i.e. the two mixed models have been fitted, see
+#'scrutiny has been analyzed (i.e. the two mixed models have been fitted, see
 #'\code{\link{TcGSA.LR}}) by one of the parallelized processors.
 #'
 #'@aliases TcGSA.LR.parallel
@@ -54,7 +54,7 @@
 #'expression was measured).  Default is \code{'TimePoint'}.  See Details.
 #'
 #'@param crossedRandom
-#'logical flag indicating wether the random effects of the subjects and of the time points
+#'logical flag indicating whether the random effects of the subjects and of the time points
 #'should be modeled as one crossed random effect or as two separated random effects.  
 #'Default is \code{FALSE}. See details.
 #'
@@ -86,13 +86,13 @@
 #'
 #'@param minGSsize 
 #'the minimum number of genes in a gene set.  If there are
-#'less genes than this number in one of the gene sets under scrutinity, the
+#'less genes than this number in one of the gene sets under scrutiny, the
 #'Likelihood Ratio of this gene set is not computed (the mixed model are not
 #'fitted). Default is \code{10} genes as the minimum.
 #'
 #'@param maxGSsize 
 #'the maximum number of genes in a gene set.  If there are
-#'more genes than this number in one of the gene sets under scrutinity, the
+#'more genes than this number in one of the gene sets under scrutiny, the
 #'Likelihood Ratio of this gene set is not computed (the mixed model are not
 #'fitted).  This is to avoid very long computation times.  Default is
 #'\code{500} genes as the maximum.
@@ -149,7 +149,7 @@
 #'
 #'@references Hejblum BP, Skinner J, Thiebaut R, (2015) 
 #'Time-Course Gene Set Analysis for Longitudinal Gene Expression Data. 
-#'\emph{PLoS Computat Biol} 11(6): e1004310.
+#'\emph{PLoS Computat. Biol.} 11(6): e1004310.
 #'doi: 10.1371/journal.pcbi.1004310
 #'
 #'@importFrom GSA GSA.read.gmt

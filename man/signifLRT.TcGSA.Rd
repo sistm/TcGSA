@@ -2,7 +2,7 @@
 % Please edit documentation in R/signifLRT.TcGSA.R
 \name{signifLRT.TcGSA}
 \alias{signifLRT.TcGSA}
-\title{Identifiying the Significant Gene Sets}
+\title{Identifying the Significant Gene Sets}
 \usage{
 signifLRT.TcGSA(tcgsa, threshold = 0.05, myproc = "BY",
   nbsimu_pval = 1e+06, write = F, txtfilename = NULL, directory = NULL)
@@ -18,12 +18,12 @@ multiple testing procedures for which adjusted p-values are to be computed.
 This vector should include any of the following: "\code{Bonferroni}",
 "\code{Holm}", "\code{Hochberg}", "\code{SidakSS}", "\code{SidakSD}",
 "\code{BH}", "\code{BY}", "\code{ABH}", "\code{TSBH}" or "\code{none}".  
-"\code{none}" indicates no adjustement for multiple testing. See
+"\code{none}" indicates no adjustment for multiple testing. See
 \code{\link[multtest:mt.rawp2adjp]{mt.rawp2adjp}} for details.  Default is
 "\code{BY}", the Benjamini & Yekutieli (2001) step-up FDR-controlling
 procedure (general dependency structures).  In order to control the FWER(in
 case of an analysis that is more a hypothesis confirmation than an
-exploration of the expression data), we recommand to use "\code{Holm}", the
+exploration of the expression data), we recommend to use "\code{Holm}", the
 Holm (1979) step-down adjusted p-values for strong control of the FWER.}
 
 \item{nbsimu_pval}{the number of observations under the null distribution to
@@ -43,13 +43,13 @@ directory of the .txt file in which the results table is to be written, if
 \value{
 \code{signifLRT.TcGSA} returns a list. 
 
-The fisrt element \code{mixedLRTadjRes} is data frame with \eqn{p} rows (one
+The first element \code{mixedLRTadjRes} is data frame with \eqn{p} rows (one
 row for each significant gene set) and the 3 following variables:
 \itemize{
-\item GeneSet the significant gene set name from the gmt object.
-\item AdjPval the adjusted p-value corresponding to the signicant gene
+\item \code{GeneSet} the significant gene set name from the gmt object.
+\item \code{AdjPval} the adjusted p-value corresponding to the significant gene
 set.
-\item desc the significant gene set description from the gmt object.
+\item \code{desc} the significant gene set description from the gmt object.
 }
 
 The second element \code{multCorProc} passes along the multiple testing 
@@ -79,7 +79,7 @@ sgnifs
 \references{
 Hejblum BP, Skinner J, Thiebaut R, (2015) 
 Time-Course Gene Set Analysis for Longitudinal Gene Expression Data. 
-\emph{PLoS Computat Biol} 11(6): e1004310.
+\emph{PLoS Computat. Biol.} 11(6): e1004310.
 doi: 10.1371/journal.pcbi.1004310
 }
 \seealso{

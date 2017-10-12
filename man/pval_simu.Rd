@@ -17,7 +17,7 @@ The p-value associated to the observation \code{s}.
 }
 \description{
 This function computes the p-value of a statistic using a simulated sample
-from its therotical null distribution.
+from its theoretical null distribution.
 }
 \examples{
 

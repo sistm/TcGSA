@@ -1,10 +1,10 @@
 #'Plot a Gene Set Trends Heatmap for each Patient.
 #'
 #'This function plots a series of gene sets dynamic trends heatmaps.  One
-#'heatmap is drawned for each patient. NOT IMPLEMENTED YET (TODO)
+#'heatmap is drawn for each patient. NOT IMPLEMENTED YET (TODO)
 #'
 #'On the heatmap, each line corresponds to a gene set, and each column to a
-#'timepoint.
+#'time point.
 #'
 #'First a heatmap is computed on all the patients (see \code{\link{plot.TcGSA}}
 #'and \code{\link{clustTrend}}) to define the clustering. Then, the clustering
@@ -36,12 +36,12 @@
 #'This vector should include any of the following: "\code{Bonferroni}",
 #'"\code{Holm}", "\code{Hochberg}", "\code{SidakSS}", "\code{SidakSD}",
 #'"\code{BH}", "\code{BY}", "\code{ABH}", "\code{TSBH}" or "\code{none}".  
-#'"\code{none}" indicates no adjustement for multiple testing. See
+#'"\code{none}" indicates no adjustment for multiple testing. See
 #'\code{\link[multtest:mt.rawp2adjp]{mt.rawp2adjp}} for details.  Default is
 #'"\code{BY}", the Benjamini & Yekutieli (2001) step-up FDR-controlling
 #'procedure (general dependency structures).  In order to control the FWER(in
 #'case of an analysis that is more a hypothesis confirmation than an
-#'exploration of the expression data), we recommand to use "\code{Holm}", the
+#'exploration of the expression data), we recommend to use "\code{Holm}", the
 #'Holm (1979) step-down adjusted p-values for strong control of the FWER.
 #'
 #'@param nbsimu_pval 
@@ -110,7 +110,7 @@
 #'
 #'@param FUNcluster 
 #'the clustering function used to agglomerate genes in
-#'trends.  Default is \code{NULL}, in which a hierachical clustering is
+#'trends.  Default is \code{NULL}, in which a hierarchical clustering is
 #'performed via the function \code{\link[cluster:agnes]{agnes}}, using the
 #'metric \code{clustering_metric} and the method \code{clustering_method}.  See
 #'\code{\link[cluster:clusGap]{clusGap}}
@@ -122,7 +122,7 @@
 #'options are \code{"euclidean"} and \code{"manhattan"}.  Default is
 #'\code{"euclidean"}.  See \code{\link[cluster:agnes]{agnes}}.  Also, a \code{"sts"} option 
 #'is available in TcGSA.  It implements the 'Short Time Series' distance 
-#'[Moller-Levet et al., Fuzzy CLustering of short time series and unevenly distributed 
+#'[Moller-Levet et al., Fuzzy Clustering of short time series and unevenly distributed 
 #'sampling points, \emph{Advances in Intelligent Data Analysis V}:330-340 Springer, 2003]
 #'designed specifically for clustering time series.
 #'
@@ -172,7 +172,7 @@
 #'
 #'@param myclusters 
 #'a character vector of colors for predefined clusters of the
-#'represented genesets, with as many levels as the value of \code{N_clusters}.
+#'represented gene sets, with as many levels as the value of \code{N_clusters}.
 #'Default is \code{NULL}, in which case the clusters are automatically
 #'identified and colored via the \code{\link[stats:cutree]{cutree}} function and the
 #'\code{N_clusters} argument only.
@@ -180,12 +180,12 @@
 #'@param label.clusters 
 #'if \code{N_clusters} is not \code{NULL}, a character
 #'vector of length \code{N_clusterss}.  Default is \code{NULL}, in which case
-#'if \code{N_clusters} is not \code{NULL}, clusters are simply labelled with
+#'if \code{N_clusters} is not \code{NULL}, clusters are simply labeled with
 #'numbers.
 #'
 #'@param prev_rowCL 
 #'a \bold{\link[stats:hclust]{hclust}} object, such as the one return by the
-#'present plotting funstion (see Value) for instance.  If not \code{NULL}, no
+#'present plotting function (see Value) for instance.  If not \code{NULL}, no
 #'clustering is calculated by the present plotting function and this tree is
 #'used to represent the gene sets dynamics.  Default is \code{NULL}.
 #'
@@ -195,7 +195,7 @@
 #'Default is \code{TRUE}.  See Details.
 #'
 #'@param plotAll 
-#'logical flag indicating wether a first heatmap with the median
+#'logical flag indicating whether a first heatmap with the median
 #'over all the patients should be plotted, or not.  Default is \code{TRUE}.
 #'
 #'@param color.vec 
@@ -206,7 +206,7 @@
 #'@param legend.breaks 
 #'a numeric vector indicating the splitting points for
 #'coloring.  Default is \code{NULL}, in which case the break points will be
-#'spaced equally and symetrically about 0.
+#'spaced equally and symmetrically about 0.
 #'
 #'@param label.column 
 #'a vector of character strings with the labels to be
@@ -260,11 +260,11 @@
 #'\code{N_clusters} argument is not \code{NULL}.  Default is \code{TRUE}.
 #'
 #'@param main 
-#'a character string for an optionnal title.  Default is
+#'a character string for an optional title.  Default is
 #'\code{NULL}.
 #'
 #'@param subtitle 
-#'a character string for an optionnal subtitle.  Default is
+#'a character string for an optional subtitle.  Default is
 #'\code{NULL}.
 #'
 #'@param \dots 
@@ -273,35 +273,35 @@
 #'@return An object of class \bold{\link[stats:hclust]{hclust}} which describes the tree
 #'produced by the clustering process.  The object is a list with components:
 #'\itemize{
-	#'\item merge an \eqn{n-1} by \eqn{2} matrix.  Row \eqn{i} of
+	#'\item \code{merge} an \eqn{n-1} by \eqn{2} matrix.  Row \eqn{i} of
 	#'\code{merge} describes the merging of clusters at step i of the clustering.
 	#'If an element \eqn{j} in the row is negative, then observation -\eqn{j} was
 	#'merged at this stage.  If \eqn{j} is positive then the merge was with the
 	#'cluster formed at the (earlier) stage \eqn{j} of the algorithm.  Thus
 	#'negative entries in merge indicate agglomerations of singletons, and positive
 	#'entries indicate agglomerations of non-singletons.
-	#'\item height a set of \eqn{n-1} real values (non-decreasing for
+	#'\item \code{height} a set of \eqn{n-1} real values (non-decreasing for
 	#'ultrametric trees).  The clustering height: that is, the value of the
 	#'criterion associated with the Ward clustering method.
-	#'\item order a vector giving the permutation of the original
+	#'\item \code{order} a vector giving the permutation of the original
 	#'observations suitable for plotting, in the sense that a cluster plot using
 	#'this ordering and matrix merge will not have crossings of the branches.
-	#'\item labels the gene sets name.
-	#'\item call the call which produced the result clustering:
+	#'\item \code{labels} the gene sets name.
+	#'\item \code{call} the call which produced the result clustering:
 	#'\cr\code{hclust(d = dist(map2heat, method = "euclidean"), method = "ward.D2")}
 	#'\item method "ward.D2", as it is the clustering method that has been used
 #'for clustering the gene set trends.
-	#'\item dist.method "euclidean", as it is the distance that has been used
+	#'\item \code{dist.method} "euclidean", as it is the distance that has been used
 #'for clustering the gene set trends.
-	#'\item legend.breaks a numeric vector giving the splitting points used
+	#'\item \code{legend.breaks} a numeric vector giving the splitting points used
 	#'for coloring the heatmap.  If \code{plot} is \code{FALSE}, then it is
 	#'\code{NULL}.
-	#'\item myclusters a character vector of colors for clusters of the
-	#'represented genesets, with as many levels as the value of \code{N_clusters}.
+	#'\item \code{myclusters} a character vector of colors for clusters of the
+	#'represented gene sets, with as many levels as the value of \code{N_clusters}.
 	#'If no clusters were represented, than this is \code{NULL}.
-	#'\item ddr a \bold{dendrogram} object with the reordering used for the
+	#'\item \code{ddr} a \bold{dendrogram} object with the reordering used for the
 	#'heatmap.  See \code{\link[gplots:heatmap.2]{heatmap.2}}.
-	#'\item clustersExport a data frame with 2 variables containing the two
+	#'\item \code{clustersExport} a data frame with 2 variables containing the two
 	#'following variables : \itemize{ \item \code{GeneSet}: the gene sets
 	#'clustered.  \item \code{Cluster}: the cluster they belong to.  } The data
 	#'frame is order by the variable \code{Cluster}.
@@ -314,7 +314,7 @@
 #'
 #'@references Hejblum BP, Skinner J, Thiebaut R, (2015) 
 #'Time-Course Gene Set Analysis for Longitudinal Gene Expression Data. 
-#'\emph{PLoS Computat Biol} 11(6): e1004310.
+#'\emph{PLoS Computat. Biol.} 11(6): e1004310.
 #'doi: 10.1371/journal.pcbi.1004310
 #'
 #'@import ggplot2

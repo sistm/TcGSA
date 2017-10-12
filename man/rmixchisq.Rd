@@ -14,7 +14,7 @@ rmixchisq(n, s, q)
 \item{q}{number of random effects to be tested.}
 }
 \value{
-A vector of random independent observations of the chisquare mixture
+A vector of random independent observations of the \eqn{\chi^2}{chi-square} mixture
 identified by the values of \code{s} and \code{q}.
 }
 \description{
@@ -25,7 +25,7 @@ nested mixed models.
 \details{
 The approximate null distribution of a likelihood ratio for 2 nested mixed
 models, where both fixed and random effects are tested simultaneously, is a
-very specific mixture of \eqn{\chi^2}{\chi^2} distributions [\cite{Self & Liang
+very specific mixture of \eqn{\chi^2}{chi-square} distributions [\cite{Self & Liang
 (1987), Stram & Lee (1994) and Stram & Lee (1995)}].  It depends on both the
 number of random effects and the number of fixed effects to be tested
 simultaneously: 

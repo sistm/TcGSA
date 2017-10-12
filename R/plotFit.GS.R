@@ -1,10 +1,10 @@
-#'Plotting function for exploring the fittness of the mixed modeling used in TcGSA
+#'Plotting function for exploring the fitness of the mixed modeling used in TcGSA
 #'
 #'This function plots graphs informing on the fit of the mixed modeling
 #'of the gene expression performed in TcGSA, for 1 or several gene sets.
 #'
 #'@param x a \bold{tcgsa} object for \code{clustTrend}, or a
-#'\bold{ClusteredTrends} object for \code{print.ClusteredTrends} and
+#'\bold{\link{ClusteredTrends}} object for \code{print.ClusteredTrends} and
 #'\code{plot.ClusteredTrends}.
 #'
 #'@param expr 
@@ -30,7 +30,7 @@
 #'
 #'
 #'@param colnames_ID
-#'the name of the variable from \code{design} that contains the columnames of the \code{expr}
+#'the name of the variable from \code{design} that contains the column names of the \code{expr}
 #'expression data matrix.  See Details.
 #'
 #'@param plot_type
@@ -47,11 +47,12 @@
 #'\code{'genes'}, \code{'time'}, \code{'subjects'}, otherwise, no coloring is used.
 #'
 #'@param marginal_hist
-#'a logical flag indicating wether marginal histograms should be drawn. 
+#'a logical flag indicating whether marginal histograms should be drawn. 
 #'Only used for \code{'Fit'} plot type. Default is \code{'TRUE'}
 #'
 #'@param gg.add 
-#'A list of instructions to add to the ggplot2 instruction.  See \link{+.gg}.  Default is \code{list(theme())}, which adds nothing
+#'A list of instructions to add to the \code{ggplot2} instructions.  
+#'See \code{\link{+.gg}}.  Default is \code{list(theme())}, which adds nothing
 #'to the plot.
 #'
 #'@author Boris P. Hejblum
@@ -60,7 +61,7 @@
 #'
 #'@references Hejblum BP, Skinner J, Thiebaut R, (2015) 
 #'Time-Course Gene Set Analysis for Longitudinal Gene Expression Data. 
-#'\emph{PLoS Computat Biol} 11(6): e1004310.
+#'\emph{PLoS Computat. Biol.} 11(6): e1004310.
 #'doi: 10.1371/journal.pcbi.1004310
 #'
 #'@import ggplot2

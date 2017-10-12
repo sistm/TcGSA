@@ -2,7 +2,7 @@
 % Please edit documentation in R/plotFit.GS.R
 \name{plotFit.GS}
 \alias{plotFit.GS}
-\title{Plotting function for exploring the fittness of the mixed modeling used in TcGSA}
+\title{Plotting function for exploring the fitness of the mixed modeling used in TcGSA}
 \usage{
 plotFit.GS(x, expr, design, subject_name = "Patient_ID",
   time_name = "TimePoint", colnames_ID, plot_type = c("Fit",
@@ -12,7 +12,7 @@ plotFit.GS(x, expr, design, subject_name = "Patient_ID",
 }
 \arguments{
 \item{x}{a \bold{tcgsa} object for \code{clustTrend}, or a
-\bold{ClusteredTrends} object for \code{print.ClusteredTrends} and
+\bold{\link{ClusteredTrends}} object for \code{print.ClusteredTrends} and
 \code{plot.ClusteredTrends}.}
 
 \item{expr}{a matrix or dataframe of gene expression.  Its dimension are
@@ -32,7 +32,7 @@ Default is \code{'Patient_ID'}.  See Details.}
 the information on the time replicates (the time points at which gene 
 expression was measured).  Default is \code{'TimePoint'}.  See Details.}
 
-\item{colnames_ID}{the name of the variable from \code{design} that contains the columnames of the \code{expr}
+\item{colnames_ID}{the name of the variable from \code{design} that contains the column names of the \code{expr}
 expression data matrix.  See Details.}
 
 \item{plot_type}{a character string indicating the type of plot to be drawn.  The options are 
@@ -45,10 +45,11 @@ names of those gene sets.}
 \item{color}{a character string indicating which color scale should be used. One of the 3 : 
 \code{'genes'}, \code{'time'}, \code{'subjects'}, otherwise, no coloring is used.}
 
-\item{marginal_hist}{a logical flag indicating wether marginal histograms should be drawn. 
+\item{marginal_hist}{a logical flag indicating whether marginal histograms should be drawn. 
 Only used for \code{'Fit'} plot type. Default is \code{'TRUE'}}
 
-\item{gg.add}{A list of instructions to add to the ggplot2 instruction.  See \link{+.gg}.  Default is \code{list(theme())}, which adds nothing
+\item{gg.add}{A list of instructions to add to the \code{ggplot2} instructions.
+See \code{\link{+.gg}}.  Default is \code{list(theme())}, which adds nothing
 to the plot.}
 }
 \description{
@@ -94,7 +95,7 @@ plotFit.GS(x=tcgsa_sim_1grp, expr=expr_1grp, design=design,
 \references{
 Hejblum BP, Skinner J, Thiebaut R, (2015) 
 Time-Course Gene Set Analysis for Longitudinal Gene Expression Data. 
-\emph{PLoS Computat Biol} 11(6): e1004310.
+\emph{PLoS Computat. Biol.} 11(6): e1004310.
 doi: 10.1371/journal.pcbi.1004310
 }
 \seealso{

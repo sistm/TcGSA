@@ -51,7 +51,7 @@ Default is \code{"one subject per page"}.}
 
 \item{baseline}{a character string which is the value of \code{TimePoint}
 that can be used as a baseline.  Default is \code{NULL}, in which case no
-timepoint is used as a baseline value for gene expression.  Has to be
+time point is used as a baseline value for gene expression.  Has to be
 \code{NULL} when comparing two treatment groups.}
 
 \item{group.var}{in the case of several treatment groups, this is a factor of
@@ -79,9 +79,9 @@ of the labels of \code{group.var}.}
 \item{FUNcluster}{a function which accepts as first argument a matrix
 \code{x} and as second argument the number of clusters desired \code{k}, and
 which returns a list with a component named \code{'cluster'} which is a
-vector of length n = nrow(x) of integers in 1:k, determining the clustering
+vector of length \code{n = nrow(x)} of integers in 1:k, determining the clustering
 or grouping of the n observations.  Default is \code{NULL}, in which case a
-hierachical clustering is performed via the function
+hierarchical clustering is performed via the function
 \code{\link[cluster:agnes]{agnes}}, using the metric \code{clustering_metric}
 and the method \code{clustering_method}.  See \code{'FUNcluster'} in
 \code{\link[cluster:clusGap]{clusGap}} and Details.}
@@ -92,7 +92,7 @@ clustering when \code{FUNcluster} is \code{NULL}.  The currently available
 options are \code{"euclidean"} and \code{"manhattan"}.  Default is
 \code{"euclidean"}.  See \code{\link[cluster:agnes]{agnes}}.  Also, a \code{"sts"} option 
 is available in TcGSA.  It implements the 'Short Time Series' distance 
-[Moller-Levet et al., Fuzzy CLustering of short time series and unevenly distributed 
+[Moller-Levet et al., Fuzzy Clustering of short time series and unevenly distributed 
 sampling points, \emph{Advances in Intelligent Data Analysis V}:330-340 Springer, 2003]
 designed specifically for clustering time series.}
 
@@ -176,8 +176,8 @@ See \code{\link{plot.default}}.}
 character, will create a discrete scale.  Observations not in this range will
 be dropped.  See \code{\link{xlim}}.}
 
-\item{gg.add}{A list of instructions to add to the ggplot2 instruction.  See \link{+.gg}.  Default is \code{list(theme())}, which adds nothing
-to the plot.}
+\item{gg.add}{A list of instructions to add to the \code{ggplot2} instructions.  See \code{\link{+.gg}}.
+Default is \code{list(theme())}, which adds nothing to the plot.}
 }
 \value{
 A dataframe the 2 following variables: \itemize{

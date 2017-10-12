@@ -32,12 +32,12 @@ multiple testing procedures for which adjusted p-values are to be computed.
 This vector should include any of the following: "\code{Bonferroni}",
 "\code{Holm}", "\code{Hochberg}", "\code{SidakSS}", "\code{SidakSD}",
 "\code{BH}", "\code{BY}", "\code{ABH}", "\code{TSBH}" or "\code{none}".  
-"\code{none}" indicates no adjustement for multiple testing. See
+"\code{none}" indicates no adjustment for multiple testing. See
 \code{\link[multtest:mt.rawp2adjp]{mt.rawp2adjp}} for details.  Default is
 "\code{BY}", the Benjamini & Yekutieli (2001) step-up FDR-controlling
 procedure (general dependency structures).  In order to control the FWER(in
 case of an analysis that is more a hypothesis confirmation than an
-exploration of the expression data), we recommand to use "\code{Holm}", the
+exploration of the expression data), we recommend to use "\code{Holm}", the
 Holm (1979) step-down adjusted p-values for strong control of the FWER.}
 
 \item{nbsimu_pval}{the number of observations under the null distribution to
@@ -92,11 +92,11 @@ which means that group of interest is the second group in alphabetical order
 of the labels of \code{group.var}.  See Details.%% ~~Describe
 \code{group_of_interest} here~~}
 
-\item{ranking}{a logical flag. If \code{TRUE}, the gene set trends are not hierarchicaly classified, but
+\item{ranking}{a logical flag. If \code{TRUE}, the gene set trends are not hierarchically classified, but
 ordered by decreasing Likelihood ratios. Default is \code{FALSE}.}
 
 \item{FUNcluster}{the clustering function used to agglomerate genes in
-trends.  Default is \code{NULL}, in which a hierachical clustering is
+trends.  Default is \code{NULL}, in which a hierarchical clustering is
 performed via the function \code{\link[cluster:agnes]{agnes}}, using the
 metric \code{clustering_metric} and the method \code{clustering_method}.  See
 \code{\link[cluster:clusGap]{clusGap}}}
@@ -107,7 +107,7 @@ clustering when \code{FUNcluster} is \code{NULL}.  The currently available
 options are \code{"euclidean"} and \code{"manhattan"}.  Default is
 \code{"euclidean"}.  See \code{\link[cluster:agnes]{agnes}}.  Also, a \code{"sts"} option 
 is available in TcGSA.  It implements the 'Short Time Series' distance 
-[Moller-Levet et al., Fuzzy CLustering of short time series and unevenly distributed 
+[Moller-Levet et al., Fuzzy Clustering of short time series and unevenly distributed 
 sampling points, \emph{Advances in Intelligent Data Analysis V}:330-340 Springer, 2003]
 designed specifically for clustering time series.}
 
@@ -156,18 +156,18 @@ automatically calculated accordingly.  Default is \code{NULL}, in which case
 the dendrogram is not cut and no clusters are identified.}
 
 \item{myclusters}{a character vector of colors for predefined clusters of the
-represented genesets, with as many levels as the value of \code{N_clusters}.
+represented gene sets, with as many levels as the value of \code{N_clusters}.
 Default is \code{NULL}, in which case the clusters are automatically
 identified and colored via the \code{\link[stats:cutree]{cutree}} function and the
 \code{N_clusters} argument only.}
 
 \item{label.clusters}{if \code{N_clusters} is not \code{NULL}, a character
 vector of length \code{N_clusterss}.  Default is \code{NULL}, in which case
-if \code{N_clusters} is not \code{NULL}, clusters are simply labelled with
+if \code{N_clusters} is not \code{NULL}, clusters are simply labeled with
 numbers.}
 
-\item{prev_rowCL}{a \bold{hclust} object, such as the one return by the
-present plotting funstion (see Value) for instance.  If not \code{NULL}, no
+\item{prev_rowCL}{a \bold{\link{hclust}} object, such as the one return by the
+present plotting function (see Value) for instance.  If not \code{NULL}, no
 clustering is calculated by the present plotting function and this tree is
 used to represent the gene sets dynamics.  Default is \code{NULL}.}
 
@@ -175,7 +175,7 @@ used to represent the gene sets dynamics.  Default is \code{NULL}.}
 should appear after their name on the right side of the plot if \code{TRUE}.
 Default is \code{TRUE}.  See Details.}
 
-\item{plot}{logical flag indicating wether the heatmap should be plotted or
+\item{plot}{logical flag indicating whether the heatmap should be plotted or
 not.  Default is \code{TRUE}.}
 
 \item{color.vec}{a character strings vector used to define the color
@@ -184,7 +184,7 @@ not.  Default is \code{TRUE}.}
 
 \item{legend.breaks}{a numeric vector indicating the splitting points for
 coloring.  Default is \code{NULL}, in which case the break points will be
-spaced equally and symetrically about 0.}
+spaced equally and symmetrically about 0.}
 
 \item{label.column}{a vector of character strings with the labels to be
 displayed for the columns (i.e. the time points).  Default is \code{NULL}.}
@@ -224,9 +224,9 @@ should be magnified relative to the default \code{1}.}
 clusters horizontally rather than vertically.  Only used if the
 \code{N_clusters} argument is not \code{NULL}.  Default is \code{TRUE}.}
 
-\item{main}{a character string for an optionnal title.  Default is \code{NULL}.}
+\item{main}{a character string for an optional title.  Default is \code{NULL}.}
 
-\item{subtitle}{a character string for an optionnal subtitle.  Default is \code{NULL}.}
+\item{subtitle}{a character string for an optional subtitle.  Default is \code{NULL}.}
 
 \item{\dots}{other parameters to be passed through to plotting functions.}
 }
@@ -263,7 +263,7 @@ of the represented gene set trends, with as many levels as the value of
 \code{NULL}.
 \item \code{ddr} a \bold{dendrogram} object with the reordering used for the
 heatmap.  See \code{\link[gplots:heatmap.2]{heatmap.2}}.
-\item geneset.names character vector with the names of the gene sets
+\item gene set.names character vector with the names of the gene sets
 used in the heatmap.
 \item \code{clust.trends} a \bold{\link{ClusteredTrends}} object.
 \item \code{clustersExport} a data frame with 2 variables containing the two
@@ -278,7 +278,7 @@ This function plots a gene sets dynamic trends heatmap.
 }
 \details{
 On the heatmap, each line corresponds to a gene set, and each column to a
-timepoint.
+time point.
 
 If \code{expr} is a matrix or a dataframe, then the "original" data are
 plotted.  On the other hand, if \code{expr} is a list returned in the
@@ -292,7 +292,7 @@ their description.
 
 If there is a large number of significant gene sets, the hierarchical clustering
 step repeated for each of them can take a few minutes. To speed things up 
-(especially) when playing with the ploting parameters for having a nice plot,
+(especially) when playing with the plotting parameters for having a nice plot,
 one can run the \code{clustTrend} function beforehand, and plug its results 
 in the \code{plot.TcGSA} function via the \code{clust_trends} argument.
 }
@@ -331,7 +331,7 @@ plot(x=tcgsa_sim_2grp, expr=expr_2grp,
 \references{
 Hejblum BP, Skinner J, Thiebaut R, (2015) 
 Time-Course Gene Set Analysis for Longitudinal Gene Expression Data. 
-\emph{PLoS Computat Biol} 11(6): e1004310.
+\emph{PLoS Computat. Biol.} 11(6): e1004310.
 doi: 10.1371/journal.pcbi.1004310
 }
 \seealso{

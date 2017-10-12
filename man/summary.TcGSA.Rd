@@ -20,12 +20,12 @@
 \value{
 The function summary.TcGSA returns a list with the following
 components (list elements):\itemize{
-\item time_func the chosen form for the time trend.
-\item separateSubjects a logical flag indicating wether gene sets
+\item \code{time_func} the chosen form for the time trend.
+\item \code{separateSubjects} a logical flag indicating whether gene sets
 tested for discriminating among patients, or for time trends over time.
-\item ntg the number of treatment groups.
-\item ngs the number of tested gene sets.
-\item nsignif the number of significant gene sets at a 5\% FDR (using
+\item \code{ntg} the number of treatment groups.
+\item \code{ngs} the number of tested gene sets.
+\item \code{nsignif} the number of significant gene sets at a 5\% FDR (using
 the default Benjamini & Yekutieli step-up procedure).
 }
 }
