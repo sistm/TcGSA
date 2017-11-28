@@ -292,13 +292,14 @@
 #'        lab.cex=0.7)
 #'}
 #'\dontrun{        
-#'plot1GS(expr=tcgsa_sim_1grp$Estimations, TimePoint=design$TimePoint, 
-#'        Subject_ID=design$Patient_ID, gmt=gmt_sim,
-#'        geneset.name="Gene set 5",
-#'        indiv="genes",
-#'        time_unit="H",
-#'        lab.cex=0.7
+#'geneclusters <- plot1GS(expr=tcgsa_sim_1grp$Estimations, TimePoint=design$TimePoint, 
+#'Subject_ID=design$Patient_ID, gmt=gmt_sim,
+#'geneset.name="Gene set 5",
+#'indiv="genes",
+#'time_unit="H",
+#'lab.cex=0.7
 #')
+#'geneclusters
 #'}
 #'
 #'\dontrun{

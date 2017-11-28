@@ -17,3 +17,26 @@ vignette: >
 # Gene Set Analysis of longitudinal gene expression data with `TcGSA`
 
 # Graphical outputs from `TcGSA`
+
+# FAQs
+
+## Extract the clustered dynamics from a fitted geneset
+
+The function `plot1GS` returns an object containing the clustered dynamics, letting you identify which probes belong to which dynamics:
+```{r, eval=FALSE}
+rm(list=ls())
+library(TcGSA)
+data(data_simu_TcGSA)
+tcgsa_sim_1grp <- TcGSA.LR(expr=expr_1grp, gmt=gmt_sim, design=design, 
+                          subject_name="Patient_ID", time_name="TimePoint",
+                          time_func="linear", crossedRandom=FALSE)
+geneclusters <- plot1GS(expr=tcgsa_sim_1grp$Estimations, TimePoint=design$TimePoint, 
+       			Subject_ID=design$Patient_ID, gmt=gmt_sim,
+       			geneset.name="Gene set 5",
+      			 indiv="genes",
+       			time_unit="H",
+       			lab.cex=0.7
+)
+geneclusters
+```
+
