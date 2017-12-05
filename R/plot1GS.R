@@ -127,16 +127,16 @@
 #'to be tested.  Default is \code{4}.
 #'
 #'@param aggreg.fun 
-#'a character string such as \code{"mean"}, \code{"median"}
+#'a character string such as  \code{"median"} or \code{"mean"}
 #'or the name of any other defined statistics function that returns a single
 #'numeric value.  It specifies the function used to aggregate the observations
-#'before the clustering.  Default is to \code{median}.
+#'before the clustering.  Default is to \code{"mean"}.
 #'
 #'@param trend.fun 
-#'a character string such as \code{"mean"}, \code{"median"} or
+#'a character string such as \code{"mean"} or
 #'the name of any other function that returns a single numeric value.  It
 #'specifies the function used to calculate the trends of the identified
-#'clustered.  Default is to \code{median}.
+#'clustered.  Default is to \code{"mean"}.
 #'
 #'@param methodOptiClust 
 #'character string indicating how the "optimal" number
@@ -247,11 +247,12 @@
 #'@param plot 
 #'logical flag.  If \code{FALSE}, no plot is drawn.  Default is \code{TRUE}.
 #'
-#'@return A dataframe the 2 following variables: \itemize{
-#'\item \code{ProbeID} which contains the IDs of the probes of the plotted gene set.
-#'\item \code{Cluster} which to which cluster the probe belongs to.
-#'} If \code{clustering} is \code{FALSE}, then \code{Cluster} is \code{NA} for all the probes.
-#'
+#'@return A list with 2 elements:\itemize{
+#'   \item \code{classif}: a \code{data.frame} with  the 2 following variables: \code{ProbeID} which 
+#'   contains the IDs of the probes of the plotted gene set, and \code{Cluster} containing $
+#'   which cluster the probe belongs to. If \code{clustering} is \code{FALSE}, then \code{Cluster} is \code{NA} for all the probes.
+#'   \item \code{p}: a \code{ggplot} object containing the plot
+#'}
 #'@author Boris P. Hejblum
 #'
 #'@seealso \code{\link[ggplot2:ggplot]{ggplot}}, \code{\link[cluster:clusGap]{clusGap}}
@@ -403,10 +404,10 @@ plot1GS <-
 		
 		if(is.null(y.lab)){
 			if(is.data.frame(expr)){
-				y.lab <- paste(capwords(aggreg.fun), 'of standardized gene expression')
+				y.lab <- paste(capwords(aggreg.fun), 'of standardized gene expression')# per', substr(indiv, 0, nchar(indiv)-1))
 			}
 			else{
-				y.lab <- paste(capwords(aggreg.fun), 'of standardized estimate')
+				y.lab <- paste(capwords(aggreg.fun), 'of standardized estimate')# per', substr(indiv, 0, nchar(indiv)-1))
 			}
 		}
 		
@@ -658,7 +659,7 @@ plot1GS <-
 			print(p)
 		}
 		classif <- classif[order(classif$Cluster), ]
-		invisible(classif)
+		invisible(list("classif" = classif, "p" = p))
 		
 	}
 

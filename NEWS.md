@@ -1,6 +1,9 @@
 # News about the `TcGSA` R package
 
 
+### Main changes in Version 0.10.7 (2017-12-05) --- *this is only a minor release*:
+* Added plotMultipleGS function
+
 ### Main changes in Version 0.10.6 (2017-10-12) --- *this is only a minor release*:
 * Added a `NEWS.md` file to track changes to the package.
 
