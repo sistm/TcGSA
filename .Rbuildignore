@@ -4,3 +4,5 @@
 ^appveyor\.yml$
 ^README\.Rmd$
 ^README-.*\.png$
+vignettes/*cache*
+vignettes/GSE46734
