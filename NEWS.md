@@ -1,5 +1,8 @@
 # News about the `TcGSA` R package
 
+### Main changes in Version 0.11.0 (2018-06-06) --- *this is only a minor release*:
+* Added a vignette
+* p-values are no-longer simulated but computed from asymptotic chi^2 mixture
 
 ### Main changes in Version 0.10.7 (2017-12-05) --- *this is only a minor release*:
 * Added plotMultipleGS function
