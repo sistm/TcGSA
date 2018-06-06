@@ -12,6 +12,7 @@ os:
 
 bioc_packages: 
 - multtest
+- GEOquery
 
 r_packages:
 - reshape2
