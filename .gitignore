@@ -2,6 +2,7 @@
 .Rhistory
 .RData
 inst/doc
-vignettes/*cache*
+vignettes/*cache/*
+vignettes/*files/*
 vignettes/GSE46734
 vignettes/GSE30101*

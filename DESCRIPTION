@@ -1,8 +1,8 @@
 Package: TcGSA
 Type: Package
 Title: Time-Course Gene Set Analysis
-Version: 0.10.7
-Date: 2017-12-05
+Version: 0.11.0
+Date: 2018-06-06
 Authors@R: c(person("Boris P.", "Hejblum", role = c("aut", "cre"),
 		     email = "boris.hejblum@u-bordeaux.fr"), 
 		     person("Damien", "Chimits", role = c("aut")), 
@@ -32,6 +32,7 @@ Suggests:
     doParallel,
     tcgsaseq,
     knitr,
+    GEOquery,
     rmarkdown
 Description: Implementation of Time-course Gene Set Analysis (TcGSA), a method for analyzing longitudinal gene-expression data at the gene set level.
 License: GPL-2 | file LICENSE

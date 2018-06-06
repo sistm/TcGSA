@@ -3,25 +3,22 @@ title: "Userguide to the `TcGSA` R package"
 author: "Anthony Devaux, Boris Hejblum"
 date: "`r Sys.Date()`"
 output:
-  html_document:
-    highlight: pygments
+  rmarkdown::html_vignette:
     number_sections: yes
-    theme: united
     toc: yes
-  pdf_document:
-    toc: yes
-  word_document:
-    toc: yes
-vignette: |
-  %\VignetteIndexEntry{Vignette Title} %\VignetteEngine{knitr::rmarkdown} %\VignetteEncoding{UTF-8}
+vignette: >
+  %\VignetteIndexEntry{TcGSA_userguide} 
+  %\VignetteEngine{knitr::rmarkdown} 
+  %\VignetteEncoding{UTF-8}
 ---
-
+  
 ```{r pre, echo=FALSE, warning=FALSE, include=FALSE}
 library(knitr)
 knitr::opts_chunk$set(echo = TRUE, eval=TRUE, cache=TRUE)
+#rmarkdown::render("vignettes/TcGSA_userguide.Rmd")
 ```
 
-# Overview of `TcGSA`
+# Overview of TcGSA
 
 The `TcGSA` (Time-course Gene Set Analysis *Hejblum et al., 2015*) `R` package tests 
 gene expression dynamics for significance in gene sets. A gene set is a group of genes, 
@@ -32,7 +29,7 @@ within a gene set. For more details, check the [published article in Plos Comput
 
 
 
-# Getting started using `TcGSA`
+# Getting started using TcGSA
 
 3 inputs are required to run `TcGSA`:
 
@@ -47,21 +44,21 @@ A gene set is a group of genes either sharing the same biological function or .
 It enables to detect different gene expression and seems to be more powerful than a gene-by-gene analysis. 
 Several definitions of groups have been made, in particular here we will focus on the following:
 
- - Chaussabel's modules (*Chaussabel et al., 2008*)
- - Gene Ontology database (*Ashburner et al., 2000*)
- - Kyoto Encyclopedia of Genes and Genomes database (*Kanehisa et Goto, 2000*)
+- Chaussabel's modules (*Chaussabel et al., 2008*)
+- Gene Ontology database (*Ashburner et al., 2000*)
+- Kyoto Encyclopedia of Genes and Genomes database (*Kanehisa et Goto, 2000*)
 
 
 The gene set object is a `gmt` format containing:
 
- - the name of the gene set
- - the description of the gene set, such as biological function
- - the list of probes representing the genes inside each gene set
+- the name of the gene set
+- the description of the gene set, such as biological function
+- the list of probes representing the genes inside each gene set
 
 One can either use already existing `gmt` objects, or build their own.
 
 
-### Download `gmt`s from *Hejblum et al., 2015*
+### Download gmts from *Hejblum et al., 2015*
 
 To import the `gmt`s used in *Hejblum et al., 2015*, one can download the 
 supplementary file by running the following command: 
@@ -82,14 +79,14 @@ you can (re-)build the `gmt` object yourself following the method below.
 
 
 
-### Self-built `gmt`
+### Self-built gmt
 
 To self-build your `gmt` object, you have to prepare a `.gmt` file. This file 
 format is the tab delimited file which can be created with this helpful website [here](http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#GMT:_Gene_Matrix_Transposed_file_format_.28.2A.gmt.29). In this file, one row represents one gene set with:
 
- - Column 1: name of the gene set
- - Column 2: description of the gene set
- - Remaining columns: list of genes included in the gene set (represented by the probes)
+- Column 1: name of the gene set
+- Column 2: description of the gene set
+- Remaining columns: list of genes included in the gene set (represented by the probes)
 
 Next, to import the `.gmt` file into R, you need to run the `GSA.read.gmt` function 
 from the `GSA` package. More details on the `GSA` help package.
@@ -140,10 +137,17 @@ The data are available on [GEO website](https://www.ncbi.nlm.nih.gov/geo/) with 
 
 ### Import of data files
 
-In this example, we can see that the supplementary files are available on GEO website with GEO access number, so we can run the `getGEOSuppFiles` function to import data.
+In this example, we can see that the supplementary files are available on GEO website with GEO access number, so we can run the `getGEOSuppFiles` function to import data (we only need the three following files, hence the regeular expression filter: gene expression pre-ATI, gene expression post-ATI, experimental design)
+
+```{r GEOquery, include=FALSE, message=FALSE, cache=FALSE}
+if (!requireNamespace("GEOquery", quietly = TRUE)) {
+	source("https://bioconductor.org/biocLite.R")
+	biocLite("GEOquery")
+}
+```
 
 ```{r import_dalia, message=FALSE, cache=TRUE, results='hide'}
-GEOquery::getGEOSuppFiles('GSE46734')
+GEOquery::getGEOSuppFiles('GSE46734', filter_regex="(*NonParamCombat*)|(*DESIGN*)")
 ```
 
 
@@ -163,17 +167,20 @@ head(design_preATI,5)
 
 This data frame contains `r nrow(design_preATI)` samples and `r ncol(design_preATI)` variables :
 
- - `Sample_name` for the name of samples
- - `Patient_ID` for the identification of patients
- - `TimePoint` for the time measurements
- - `Chip_ID` `HYB_Chamber` `HYB_Day` are the variables not required for TcGSA commands
+- `Sample_name` for the name of samples
+- `Patient_ID` for the identification of patients
+- `TimePoint` for the time measurements
+- `Chip_ID` `HYB_Chamber` `HYB_Day` are the variables not required for TcGSA commands
 
 
 
 
 ### Gene expression matrix
 
-The gene expression matrix (called `expr_preATI`) is built from one of the GEO supplementary files. The data is already normalized.
+The gene expression matrix (called `expr_preATI`) is extracted from one of the 
+GEO supplementary files (namely the "GSE46734_DALIA1longitudinalTranscriptome_PALO01_PreATI_NEQC_NonParamCombat.txt.gz" file). 
+
+NB: The data is already normalized.
 
 ```{r expr_dalia, cache=TRUE}
 expr_preATI <- read.delim(gzfile("GSE46734/GSE46734_DALIA1longitudinalTranscriptome_PALO01_PreATI_NEQC_NonParamCombat.txt.gz"))
@@ -183,11 +190,11 @@ expr_preATI <- expr_preATI[,as.character(design_preATI$Sample_name)]
 expr_preATI[1:4,1:4]
 ```
 
-Here we are:
+We have:
 
-* In row `ILMN_xxxxxxx` for each gene of sample
-* In column `Xxxxxxxxxxx_X` for the name of each sample
-* In cell, gene expression
+ * In row `ILMN_xxxxxxx` for each probe identifier
+ * In column `Xxxxxxxxxxx_X` for the name of each sample
+ * Each cell contains the normalized gene expression
 
 The entire matrix contains `r nrow(expr_preATI)` genes and `r ncol(expr_preATI)` samples 
 (number of samples should be the same as in design data matrix)
@@ -222,12 +229,12 @@ tcgsa_result
 ```
 
 Now `tcgsa_result` is a `tcgsa` object containing in addition to the likelyhood ratio test results: 
- 
- - the form of tested time trends (default option is `linear`)
- - the number of treatment groups and the number of gene sets tested (depending on which gene set base is defined)
- - a few other information
- 
- To get the number of significant gene sets, you can also use `summary` function on your TcGSA object.
+
+- the form of tested time trends (default option is `linear`)
+- the number of treatment groups and the number of gene sets tested (depending on which gene set base is defined)
+- a few other information
+
+To get the number of significant gene sets, you can also use `summary` function on your TcGSA object.
 
 ```{r summary_dalia, cache=TRUE}
 summary(tcgsa_result)
@@ -260,31 +267,31 @@ alternative hypotheses. `0` indicates a good convergence of the model (based on
 
 `plot1GS` plots the different representations of gene expression in a specific gene set defined by `geneset.name` argument. `plot1GS` function requires:
 
- - `expr`: either the name of the gene expression matrix or the estimations of linear mixed model. In this example, we used the raw data from the gene expression matrix.
- - `gmt`: name of the gmt gene set object
- - `Subject_ID`: name of the identification of patients in the design data matrix
- - `TimePoint`: name of the time measurements of the design data matrix
- - `geneset.name`: name of gene set. The significant can be found with `signifLRT.TcGSA(tcgsa_result)$mixedLRTadjRes`
- - `time_unit`: value be displayed next to the values of `TimePoint` on the x-axis **(optional)**
+- `expr`: either the name of the gene expression matrix or the estimations of linear mixed model. In this example, we used the raw data from the gene expression matrix.
+- `gmt`: name of the gmt gene set object
+- `Subject_ID`: name of the identification of patients in the design data matrix
+- `TimePoint`: name of the time measurements of the design data matrix
+- `geneset.name`: name of gene set. The significant can be found with `signifLRT.TcGSA(tcgsa_result)$mixedLRTadjRes`
+- `time_unit`: value be displayed next to the values of `TimePoint` on the x-axis **(optional)**
 
 
 ```{r plot1GS_ST, message=FALSE, warning=FALSE, fig.keep='all', cache=TRUE}
 TcGSA::plot1GS(expr = expr_preATI, 
-#plot1GS(expr = tcgsa_result$Estimations,
-        gmt = gmt_modulesV2, 
-        Subject_ID = design_preATI$Patient_ID, 
-        TimePoint = design_preATI$TimePoint,
-        clustering = FALSE, 
-        time_unit = "W", 
-        geneset.name = "M3.2", 
-        title="",
-        margins=0.4,
-        lab.cex=0.37,
-        axis.cex=0.37,
-        line.size=0.45,
-        gg.add=list(ggplot2::theme(legend.position="none"),
-                    ggplot2::ylim(-1.26,1.26)
-        ))
+			   #plot1GS(expr = tcgsa_result$Estimations,
+			   gmt = gmt_modulesV2, 
+			   Subject_ID = design_preATI$Patient_ID, 
+			   TimePoint = design_preATI$TimePoint,
+			   clustering = FALSE, 
+			   time_unit = "W", 
+			   geneset.name = "M3.2", 
+			   title="",
+			   margins=0.4,
+			   lab.cex=0.37,
+			   axis.cex=0.37,
+			   line.size=0.45,
+			   gg.add=list(ggplot2::theme(legend.position="none"),
+			   			ggplot2::ylim(-1.26,1.26)
+			   ))
 ```
 
 Dotted line shows the trend(s) of the gene set over time.
@@ -304,21 +311,22 @@ In this example, we can see that the supplementary files are available on GEO we
 In this case, the design and expression data matrix are not available on the GEO website using GEO access number. We have to download the raw file and import with `getGEO` function.
 
 ```{r import_ober, message=FALSE, warning=FALSE, cache=TRUE}
-download.file("ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE30nnn/GSE30101/soft/GSE30101_family.soft.gz", destfile = "GSE30101_family.soft.gz", mode = "wb", cacheOK = FALSE)
+utils::download.file("ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE30nnn/GSE30101/soft/GSE30101_family.soft.gz", destfile = "GSE30101_family.soft.gz", mode = "wb", cacheOK = FALSE)
 gse.soft <- GEOquery::getGEO(filename="GSE30101_family.soft.gz")
 ```
 
-In opposite to the first example, more processing should be done on this data to build the design and gene expression data.
+Contrary to the first example, more processing should be done on this data to build the design and gene expression data.
 
 Gene expression matrix can be made from GEO file with these commands:
 
 ```{r expr_ober, cache=TRUE}
 probesIDs <- GEOquery::Table(GEOquery::GSMList(gse.soft)[[1]])$ID
-data.matrix <- do.call('cbind',lapply(GEOquery::GSMList(gse.soft),function(x)
-                                      {tab <- GEOquery::Table(x)
-                                       mymatch <- match(probesIDs,tab$ID_REF)
-                                       return(tab$VALUE[mymatch])
-                                     }))
+data.matrix <- do.call('cbind', lapply(GEOquery::GSMList(gse.soft),
+									   function(x) {
+									   	tab <- GEOquery::Table(x)
+									    mymatch <- match(probesIDs,tab$ID_REF)
+									    return(tab$VALUE[mymatch])
+									   }))
 rownames(data.matrix) <- probesIDs
 expr.All.ChaussVac <- apply(X = data.matrix, MARGIN = 2, FUN = as.numeric)
 rownames(expr.All.ChaussVac) <- probesIDs
@@ -327,7 +335,8 @@ rownames(expr.All.ChaussVac) <- probesIDs
 Design data matrix can be extracted from GEO file with these commands:
 
 ```{r design_ober, cache=TRUE}
-design_list <-lapply(GEOquery::GSMList(gse.soft), function(x){GEOquery::Meta(x)$characteristics_ch1})
+design_list <- lapply(GEOquery::GSMList(gse.soft), 
+					  function(x){GEOquery::Meta(x)$characteristics_ch1})
 design <- data.frame(row.names = names(design_list))
 design$sample_ID <- names(design_list)
 s_id <- unlist(lapply(design_list, function(x){gsub("subject id: ", "", x[grep("subject id: ", x)])}))
@@ -407,28 +416,21 @@ expr.PNEUMOvsSALINE.ChaussVac.AvgBl <- expr.All.ChaussVac.AvgBl[,design.PNEUMOvs
 
 This function provides the result of likelihood ratio test using the linear mixed model for each gene set. For this example, we use gene sets data from Chaussabel's modules (*Chaussabel et al., 2008*). `TcGSA.LR` function requires:
 
- - `expr`: the gene expression matrix
- - `gmt`: the gmt gene set object
- - `design`: the design data matrix
- - `subject_name`: the identification of patients in the design data matrix
- - `time_name`: the time measurements in the design data matrix
- - `group_name`: the group of treatment in the design data matrix
+- `expr`: the gene expression matrix
+- `gmt`: the gmt gene set object
+- `design`: the design data matrix
+- `subject_name`: the identification of patients in the design data matrix
+- `time_name`: the time measurements in the design data matrix
+- `group_name`: the group of treatment in the design data matrix
 
-```{r LR_MT, message=FALSE, warning=FALSE, include=FALSE, cache=TRUE}
+
+```{r LR_MT, cache=TRUE, message=FALSE, warning=FALSE}
 tcgsa_result_MT <- TcGSA::TcGSA.LR(expr = expr.PNEUMOvsSALINE.ChaussVac.AvgBl, 
-         gmt = gmt_modulesV2,
-         design = design.PNEUMOvsSALINE.ChaussVac.AvgBl, 
-         subject_name = "Subject_ID", 
-         time_name = "Day", 
-         group_name = "Vaccine")
-```
-```{r LR_MT_2, eval=FALSE, cache=TRUE}
-tcgsa_result_MT <- TcGSA::TcGSA.LR(expr = expr.PNEUMOvsSALINE.ChaussVac.AvgBl, 
-         gmt = gmt_modulesV2,
-         design = design.PNEUMOvsSALINE.ChaussVac.AvgBl, 
-         subject_name = "Subject_ID", 
-         time_name = "Day", 
-         group_name = "Vaccine")
+								   gmt = gmt_modulesV2,
+								   design = design.PNEUMOvsSALINE.ChaussVac.AvgBl, 
+								   subject_name = "Subject_ID", 
+								   time_name = "Day", 
+								   group_name = "Vaccine")
 ```
 
 ```{r tcgsa_result_MT, cache=TRUE}
@@ -471,14 +473,14 @@ TcGSA::multtest.TcGSA(tcgsa_result_MT)[1:5,]
 
 ```{r clust_MT, message=FALSE, warning=FALSE, cache=TRUE}
 clust <- TcGSA::clustTrend(tcgs = tcgsa_result_MT, 
-                    expr=tcgsa_result_MT$Estimations,
-                    Subject_ID=design_gen$Patient_ID,
-                    TimePoint=design_gen$TimePoint,
-                    baseline = 0,
-                    group_of_interest="pneumo")
+						   expr=tcgsa_result_MT$Estimations,
+						   Subject_ID=design_gen$Patient_ID,
+						   TimePoint=design_gen$TimePoint,
+						   baseline = 0,
+						   group_of_interest="pneumo")
 ```
 
-```{r clust_MT_resg, echo=FALSE}
+```{r clust_MT_res, echo=FALSE}
 clust
 ```
 
@@ -498,14 +500,14 @@ clust
 
 ```{r heatmap_MT, message=FALSE, warning=FALSE, error=FALSE, cache=TRUE}
 plot(x=tcgsa_result_MT, expr=tcgsa_result_MT$Estimations,
-     Subject_ID=design_gen$Patient_ID,
-     TimePoint=design_gen$TimePoint,
-     group_of_interest="pneumo",
-     clust_trends=clust,
-     legend.breaks=seq(from=-2,to=2, by=0.01), time_unit="D",
-     subtitle="Pneumo vs Saline", cex.label.row=2.5, cex.label.col=3,
-     heatmap.width=0.4, dendrogram.size=0.25, margins=c(5,23),
-     heatKey.size=0.13)
+	 Subject_ID=design_gen$Patient_ID,
+	 TimePoint=design_gen$TimePoint,
+	 group_of_interest="pneumo",
+	 clust_trends=clust,
+	 legend.breaks=seq(from=-2,to=2, by=0.01), time_unit="D",
+	 subtitle="Pneumo vs Saline", cex.label.row=2.5, cex.label.col=3,
+	 heatmap.width=0.4, dendrogram.size=0.25, margins=c(5,23),
+	 heatKey.size=0.13)
 ```
 
 The heatmap shows an under (blue color) or an over (red color) gene expression for each significant gene sets compared to `baseline` value (which represents the time measurement reference) in `clust` object. The clusters are plotted with the dendrogram
