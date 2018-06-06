@@ -418,7 +418,7 @@ clustTrend <-
 				names(GenesPartition[[gs]]) <- rownames(data_stand_ByTP)
 			}
 			if(verbose){
-				cat(paste(which(GeneSetsList==gs), "/", length(GeneSetsList), " gene sets clustered\n", sep=""))
+				message(paste(which(GeneSetsList==gs), "/", length(GeneSetsList), " gene sets clustered\n", sep=""))
 			}
 		}
 		res <- list("NbClust"=NbClust, "ClustMeds"=ClustsMeds, "GenesPartition"=GenesPartition, "MaxNbClust"=max_trends)

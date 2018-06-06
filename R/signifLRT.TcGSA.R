@@ -114,11 +114,11 @@ function(tcgsa, threshold=0.05, myproc="BY", nbsimu_pval = 1e+06, write=F, txtfi
    if(!is.null(txtfilename)){
      if (is.null(directory)){
         directory <- getwd()
-        cat("Warning: 'directory' argument is empty, output file written in the current working directory")
+        warning("'directory' argument is empty, output file written in the current working directory")
       }
       utils::write.table(Res_Linear_Mod_FDR, file=paste(directory, txtfilename, sep="/"), row.names=FALSE, sep="\t")
     }else{
-      cat("ERROR: could not write the significant results file because the argument 'txtfilename' is empty")
+      warning("Could not write the significant results file because the argument 'txtfilename' is empty")
     }
   }
   return(list("mixedLRTadjRes"=Res_Linear_Mod_FDR, "multCorProc"= myproc, "threshold"=threshold))

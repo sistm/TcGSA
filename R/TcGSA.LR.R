@@ -246,7 +246,7 @@ function(expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", cr
         	dimnames(estims_tab)[[3]] <- as.numeric(dimnames(estims_tab)[[3]])*10
         }
         estim_expr[[gs]] <- estims_tab
-        cat("Unable to fit the mixed models for this gene set\n")
+        warning("Unable to fit the mixed models for this gene set\n")
       }
     	
     }else{
@@ -255,9 +255,9 @@ function(expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", cr
 	    CVG_H1[gs] <- NA
 	    
 	    estim_expr[[gs]] <- NA
-	    cat("The size of the gene set ",  gmt$geneset.names[[gs]], "is problematic (too many or too few genes)\n")
+	    warning("The size of the gene set ",  gmt$geneset.names[[gs]], "is problematic (too many or too few genes)\n")
 	}
-    cat(paste(gs,"/", length(gmt$genesets)," gene sets analyzed\n", sep=""))
+    message(paste(gs,"/", length(gmt$genesets)," gene sets analyzed\n", sep=""))
   }
   
   if(group_name==""){

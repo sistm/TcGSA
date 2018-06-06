@@ -457,7 +457,7 @@ plot1GS <-
 		if(clustering | showTrend){
 			if(!pre_clustering){
 				if(verbose){
-					cat("Optimally clustering...\n")
+					message("Optimally clustering...\n")
 				}
 				kmax <- ifelse(dim(data_stand_MedianByTP)[1]>4, max_trends, dim(data_stand_MedianByTP)[1]-1)
 				
@@ -497,7 +497,7 @@ plot1GS <-
 				colnames(medoids) <- c("TimePoint", levels(precluster))
 			}
 			if(verbose){
-				cat("DONE\n")
+				message("DONE\n")
 			}
 			
 			

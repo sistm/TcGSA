@@ -368,7 +368,7 @@ function(x, threshold=0.05, myproc="BY", nbsimu_pval=1e+06,
          main=NULL, subtitle=NULL, 
          ...){
   
-  cat("NOT IMPLEMENTED YET")
+	warning("!! NOT FULLY IMPLEMENTED YET !!")
 	
 if(FALSE){
   Fun_byIndex<-function(X, index, fun){
@@ -406,7 +406,7 @@ if(FALSE){
     stop("The 'clust_trends' argument is not of the class 'ClusteredTrends', see the clustTrend function")
   }
   
-  if(verbose){cat("Initializing clustering on all the patients...\n")}
+  if(verbose){message("Initializing clustering on all the patients...\n")}
   hc <- plot.TcGSA(x=x, threshold=threshold, myproc=myproc, nbsimu_pval=nbsimu_pval, 
                    expr=expr, Subject_ID=Subject_ID, TimePoint=TimePoint, 
                    baseline=baseline, only.signif=only.signif,
@@ -469,7 +469,7 @@ if(FALSE){
     clust_trends_p <- clust_trends
     
     if(verbose){
-      cat(paste("Patient ", i, "/", length(pat),":", sep=""))
+      message(paste("Patient ", i, "/", length(pat),":", sep=""))
     }
     
     for(interest in select){
@@ -569,7 +569,7 @@ if(FALSE){
     )
       
     if(verbose){
-      cat(" done\n")
+      message(" DONE\n")
     }           
   }
   return(hc)

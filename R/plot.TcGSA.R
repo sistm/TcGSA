@@ -413,6 +413,10 @@ plot.TcGSA <-
 					stop("The 'baseline' value used is not one of the time points in 'TimePoint'...\n\n")
 				}
 			}
+			
+			if(!is.null(clust_trends)){
+				warning("'baseline' argument will not be used as 'clust_trends' argument is provided. Please re-run the clustTrend() function with adequate 'baseline' argument instead.")
+			}
 		}
 		
 		if(is.null(main)){

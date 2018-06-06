@@ -251,7 +251,7 @@ TcGSA.LR.parallel <-
 						estims_tab <- reshape2::acast(data=estims, formula = stats::as.formula(paste("probe", subject_name, "t1", sep="~")), value.var="fitted")
 						dimnames(estims_tab)[[3]] <- as.numeric(dimnames(estims_tab)[[3]])*10
 						estim_expr <- estims_tab
-						cat("Unable to fit the mixed models for this gene set\n")
+						warning("Unable to fit the mixed models for this gene set\n")
 					}
 					
 
@@ -268,18 +268,18 @@ TcGSA.LR.parallel <-
 					CVG_H1 <- NA
 					
 					estim_expr <- NA
-					cat("The size of the gene set",  gmt$geneset.names[[gs]], "is problematic (too many or too few genes)\n")
+					warning("The size of the gene set",  gmt$geneset.names[[gs]], "is problematic (too many or too few genes)\n")
 				}
 				
 				line_number <- 0
 				try(line_number <- length(readLines(monitorfile)), silent=TRUE)
-				cat(paste(line_number+1,"/", length(gmt$genesets)," gene sets analyzed (geneset ", gs, ")\n", sep=""), file=monitorfile, append = TRUE)
+				message(paste(line_number+1,"/", length(gmt$genesets)," gene sets analyzed (geneset ", gs, ")\n", sep=""), file=monitorfile, append = TRUE)
 				
 				res <- list("LR"=LR, "CVG_H0"=CVG_H0, "CVG_H1"=CVG_H1, "estim_expr"=estim_expr)
 			})
 			
 			
-			cat("Combining the results...")
+			message("Combining the results...")
 			
 			LR <- sapply(res_par, "[[", "LR") #res_par[[gs]][["LR"]]
 			CVG_H0 <- sapply(res_par, "[[", "CVG_H0") #res_par[[gs]][["CVG_H0"]]
