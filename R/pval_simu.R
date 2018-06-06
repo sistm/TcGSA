@@ -15,7 +15,7 @@
 #'
 #'@author Boris P. Hejblum
 #'
-#'@seealso \code{\link{rmixchisq}}
+#'@seealso \code{\link{rchisqmix}}
 #'
 #'@keywords internal
 #'

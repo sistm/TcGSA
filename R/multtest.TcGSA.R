@@ -27,9 +27,14 @@
 #'exploration of the expression data), we recommend to use "\code{Holm}", the
 #'Holm (1979) step-down adjusted p-values for strong control of the FWER.
 #'
+#'@param exact 
+#'logical flag indicating wether the raw p-values should be computed from the 
+#'exact asymptotic mixture of chi-square, or simulated (longer and not better).
+#'Default is \code{TRUE} and should be prefered.
+#'
 #'@param nbsimu_pval 
 #'the number of observations under the null distribution to
-#'be generated in order to compute the p-values. Default is \code{1e+06}
+#'be generated in order to compute the p-values. Default is \code{1e+06}.
 #'
 #'@return \code{multtest.TcGSA} returns an dataframe with 5 variables.  The
 #'rows correspond to the gene sets under scrutiny.  The 1st column is the
@@ -66,50 +71,87 @@
 #'mtt
 #'}
 #'
-multtest.TcGSA <-
-function(tcgsa, threshold=0.05, myproc="BY", nbsimu_pval = 1000000){
-  emp <- tcgsa[["fit"]]
-  func <- tcgsa[["time_func"]]
-  group.var <- tcgsa[["group.var"]]
-  separateSubjects <- tcgsa[["separateSubjects"]]
+multtest.TcGSA <- function(tcgsa, threshold=0.05, myproc="BY", 
+						   exact=TRUE, nbsimu_pval = 1e6){
+	
+	emp <- tcgsa[["fit"]]
+	emp$raw_pval <- NULL
+	
+	func <- tcgsa[["time_func"]]
+	group.var <- tcgsa[["group.var"]]
+	separateSubjects <- tcgsa[["separateSubjects"]]
 	time_DF <- tcgsa[["time_DF"]]
-  
-  if(is.null(group.var)){
-    if(!separateSubjects){
-      if(func=="linear"){
-        theodist <- c(stats::rchisq(nbsimu_pval/2,df=1), stats::rchisq(nbsimu_pval/2,df=2))
-      }else if(func=="cubic"){
-        theodist <- rmixchisq(nbsimu_pval,3,3)
-      }else{
-        theodist <-rmixchisq(nbsimu_pval,time_DF,time_DF)
-      }
-    }else{
-      if(func=="linear"){
-        theodist <- c(stats::rchisq(nbsimu_pval/2,df=0), stats::rchisq(nbsimu_pval/2,df=1) )
-      }else if(func=="cubic"){
-        theodist <- rmixchisq(nbsimu_pval,0,3)
-      }else{
-        theodist <-rmixchisq(nbsimu_pval,0,time_DF)
-      }
-    }
-  }else{
-    nbgp <- length(levels(group.var))
-    if(func=="linear"){
-      theodist <- rmixchisq(nbsimu_pval, 1*(nbgp-1), 0)
-    }else if(func=="cubic"){
-      theodist <- rmixchisq(nbsimu_pval, 3*(nbgp-1), 0)
-    }else{
-      theodist <-rmixchisq(nbsimu_pval, time_DF*(nbgp-1), 0)
-    }
-  }
-  
-  emp$raw_pval <- unlist(lapply(emp$LR, FUN=pval_simu, theo_dist=theodist))
-  if(myproc=="none" | length(emp$raw_pval)==1){
-  	emp$adj_pval <- emp$raw_pval
-  }
-  else{
-  	adj_pval <- mt.rawp2adjp(emp$raw_pval, proc=c(myproc),alpha=threshold)
-  	emp$adj_pval <- adj_pval$adjp[order(adj_pval$index),2]
-  }
-  return(emp)
+	
+	if(!exact){
+		if(is.null(group.var)){
+			if(!separateSubjects){
+				if(func=="linear"){
+					theodist <- c(stats::rchisq(nbsimu_pval/2,df=1), stats::rchisq(nbsimu_pval/2,df=2))
+				}else if(func=="cubic"){
+					theodist <- rchisqmix(nbsimu_pval,3,3)
+				}else{
+					theodist <-rchisqmix(nbsimu_pval,time_DF,time_DF)
+				}
+			}else{
+				if(func=="linear"){
+					theodist <- c(stats::rchisq(nbsimu_pval/2,df=0), stats::rchisq(nbsimu_pval/2,df=1) )
+				}else if(func=="cubic"){
+					theodist <- rchisqmix(nbsimu_pval,0,3)
+				}else{
+					theodist <-rchisqmix(nbsimu_pval,0,time_DF)
+				}
+			}
+		}else{
+			nbgp <- length(levels(group.var))
+			if(func=="linear"){
+				theodist <- rchisqmix(nbsimu_pval, 1*(nbgp-1), 0)
+			}else if(func=="cubic"){
+				theodist <- rchisqmix(nbsimu_pval, 3*(nbgp-1), 0)
+			}else{
+				theodist <-rchisqmix(nbsimu_pval, time_DF*(nbgp-1), 0)
+			}
+		}
+		
+		emp$raw_pval <- unlist(lapply(emp$LR, FUN=pval_simu, theo_dist=theodist))
+		
+		
+	}else{
+		if(is.null(group.var)){
+			if(!separateSubjects){
+				if(func=="linear"){
+					emp$raw_pval <- 1-sapply(emp$LR, pchisqmix, s=1, q=1)
+				}else if(func=="cubic"){
+					emp$raw_pval <- 1-sapply(emp$LR, pchisqmix, s=3, q=3)
+				}else{
+					emp$raw_pval <- 1-sapply(emp$LR, pchisqmix, s=time_DF, q=time_DF)
+				}
+			}else{
+				if(func=="linear"){
+					emp$raw_pval <- 1-sapply(emp$LR, pchisqmix, s=0, q=1)
+				}else if(func=="cubic"){
+					emp$raw_pval <- 1-sapply(emp$LR, pchisqmix, s=0, q=3)
+				}else{
+					emp$raw_pval <- 1-sapply(emp$LR, pchisqmix, s=0, q=time_DF)
+				}
+			}
+		}else{
+			nbgp <- length(levels(group.var))
+			if(func=="linear"){
+				emp$raw_pval <- 1-sapply(emp$LR, pchisqmix, s=1*(nbgp-1), q=0)
+			}else if(func=="cubic"){
+				emp$raw_pval <- 1-sapply(emp$LR, pchisqmix, s=3*(nbgp-1), q=0)
+			}else{
+				emp$raw_pval <- 1-sapply(emp$LR, pchisqmix, s=time_DF*(nbgp-1), q=0)
+			}
+		}
+	}
+	
+	if(myproc=="none" | length(emp$raw_pval)==1){
+		emp$adj_pval <- emp$raw_pval
+	}
+	else{
+		adj_pval <- mt.rawp2adjp(emp$raw_pval, proc=c(myproc), alpha=threshold)
+		emp$adj_pval <- adj_pval$adjp[order(adj_pval$index),2]
+	}
+	return(emp)
 }

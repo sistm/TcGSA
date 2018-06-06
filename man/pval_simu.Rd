@@ -29,7 +29,7 @@ TcGSA:::pval_simu(s=1.96, theo_dist)
 
 }
 \seealso{
-\code{\link{rmixchisq}}
+\code{\link{rchisqmix}}
 }
 \author{
 Boris P. Hejblum
