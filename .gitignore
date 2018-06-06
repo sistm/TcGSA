@@ -2,7 +2,6 @@
 *.Rproj
 .Rhistory
 .RData
-inst/doc
 vignettes/*cache/*
 vignettes/*files/*
 vignettes/GSE46734
