@@ -65,7 +65,7 @@ supplementary file by running the following command:
 
 ```{r GS_import, message=FALSE, cache=TRUE}
 temp <- tempfile()
-utils::download.file("https://doi.org/10.1371/journal.pcbi.1004310.s007", destfile = temp, mode = "wb")
+utils::download.file("http://doi.org/10.1371/journal.pcbi.1004310.s007", destfile = temp, mode = "wb")
 load(unz(temp, "ReproducibleRFiles/GMTs_PLOScb.RData", open = "r"))
 unlink(temp)
 rm(temp)
@@ -311,7 +311,7 @@ In this example, we can see that the supplementary files are available on GEO we
 In this case, the design and expression data matrix are not available on the GEO website using GEO access number. We have to download the raw file and import with `getGEO` function.
 
 ```{r import_ober, message=FALSE, warning=FALSE, cache=TRUE}
-utils::download.file("ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE30nnn/GSE30101/soft/GSE30101_family.soft.gz", destfile = "GSE30101_family.soft.gz", mode = "wb", cacheOK = FALSE)
+utils::download.file("http://ftp.ncbi.nlm.nih.gov/geo/series/GSE30nnn/GSE30101/soft/GSE30101_family.soft.gz", destfile = "GSE30101_family.soft.gz", mode = "wb", cacheOK = FALSE)
 gse.soft <- GEOquery::getGEO(filename="GSE30101_family.soft.gz")
 ```
 
@@ -535,8 +535,7 @@ Obermoser G, Presnell S, Domico K, Xu H, Wang Y, Anguiano E, et al., (2013) Syst
 In case of your data are public and available on Gene Expression Omnibus (GEO), the public database with gene expression data, you have to download GEOquery package with these commands:
 
 ```{r dl_GEOquery, warning=FALSE, message=FALSE, eval=FALSE}
-## try http:// if https:// URLs are not supported
-source("https://bioconductor.org/biocLite.R")
+source("http://bioconductor.org/biocLite.R")
 biocLite("GEOquery")
 ```
 

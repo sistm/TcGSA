@@ -12,7 +12,7 @@
 
 <meta name="author" content="Anthony Devaux, Boris Hejblum" />
 
-<meta name="date" content="2018-06-06" />
+<meta name="date" content="2018-06-07" />
 
 <title>Userguide to the TcGSA R package</title>
 
@@ -280,7 +280,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 
 <h1 class="title toc-ignore">Userguide to the <code>TcGSA</code> R package</h1>
 <h4 class="author"><em>Anthony Devaux, Boris Hejblum</em></h4>
-<h4 class="date"><em>2018-06-06</em></h4>
+<h4 class="date"><em>2018-06-07</em></h4>
 
 
 <div id="TOC">
@@ -349,7 +349,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <h3><span class="header-section-number">2.1.1</span> Download gmts from <em>Hejblum et al., 2015</em></h3>
 <p>To import the <code>gmt</code>s used in <em>Hejblum et al., 2015</em>, one can download the supplementary file by running the following command:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">temp &lt;-<span class="st"> </span><span class="kw">tempfile</span>()</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">utils<span class="op">::</span><span class="kw">download.file</span>(<span class="st">&quot;https://doi.org/10.1371/journal.pcbi.1004310.s007&quot;</span>, <span class="dt">destfile =</span> temp, <span class="dt">mode =</span> <span class="st">&quot;wb&quot;</span>)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">utils<span class="op">::</span><span class="kw">download.file</span>(<span class="st">&quot;http://doi.org/10.1371/journal.pcbi.1004310.s007&quot;</span>, <span class="dt">destfile =</span> temp, <span class="dt">mode =</span> <span class="st">&quot;wb&quot;</span>)</a>
 <a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">load</span>(<span class="kw">unz</span>(temp, <span class="st">&quot;ReproducibleRFiles/GMTs_PLOScb.RData&quot;</span>, <span class="dt">open =</span> <span class="st">&quot;r&quot;</span>))</a>
 <a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw">unlink</span>(temp)</a>
 <a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw">rm</span>(temp)</a></code></pre></div>
@@ -544,7 +544,7 @@ Blood samples have been taken on a day -7, 0, 1, 3, 7, 10, 14, 21 and 28 to anal
 <h2><span class="header-section-number">4.1</span> Data preparation</h2>
 <p>In this example, we can see that the supplementary files are available on GEO website with GEO access number, so we can run the <code>getGEOSuppFiles</code> function to import data.</p>
 <p>In this case, the design and expression data matrix are not available on the GEO website using GEO access number. We have to download the raw file and import with <code>getGEO</code> function.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">utils<span class="op">::</span><span class="kw">download.file</span>(<span class="st">&quot;ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE30nnn/GSE30101/soft/GSE30101_family.soft.gz&quot;</span>, <span class="dt">destfile =</span> <span class="st">&quot;GSE30101_family.soft.gz&quot;</span>, <span class="dt">mode =</span> <span class="st">&quot;wb&quot;</span>, <span class="dt">cacheOK =</span> <span class="ot">FALSE</span>)</a>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">utils<span class="op">::</span><span class="kw">download.file</span>(<span class="st">&quot;http://ftp.ncbi.nlm.nih.gov/geo/series/GSE30nnn/GSE30101/soft/GSE30101_family.soft.gz&quot;</span>, <span class="dt">destfile =</span> <span class="st">&quot;GSE30101_family.soft.gz&quot;</span>, <span class="dt">mode =</span> <span class="st">&quot;wb&quot;</span>, <span class="dt">cacheOK =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb18-2" data-line-number="2">gse.soft &lt;-<span class="st"> </span>GEOquery<span class="op">::</span><span class="kw">getGEO</span>(<span class="dt">filename=</span><span class="st">&quot;GSE30101_family.soft.gz&quot;</span>)</a></code></pre></div>
 <p>Contrary to the first example, more processing should be done on this data to build the design and gene expression data.</p>
 <p>Gene expression matrix can be made from GEO file with these commands:</p>
@@ -760,9 +760,8 @@ Blood samples have been taken on a day -7, 0, 1, 3, 7, 10, 14, 21 and 28 to anal
 <div id="geoquery-package" class="section level2">
 <h2><span class="header-section-number">6.1</span> GEOquery package</h2>
 <p>In case of your data are public and available on Gene Expression Omnibus (GEO), the public database with gene expression data, you have to download GEOquery package with these commands:</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1">## try http:// if https:// URLs are not supported</a>
-<a class="sourceLine" id="cb33-2" data-line-number="2"><span class="kw">source</span>(<span class="st">&quot;https://bioconductor.org/biocLite.R&quot;</span>)</a>
-<a class="sourceLine" id="cb33-3" data-line-number="3"><span class="kw">biocLite</span>(<span class="st">&quot;GEOquery&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1"><span class="kw">source</span>(<span class="st">&quot;http://bioconductor.org/biocLite.R&quot;</span>)</a>
+<a class="sourceLine" id="cb33-2" data-line-number="2"><span class="kw">biocLite</span>(<span class="st">&quot;GEOquery&quot;</span>)</a></code></pre></div>
 <p>Then you can import them from <a href="https://www.ncbi.nlm.nih.gov/geo/">GEO website</a> with the GEO access number (build like this: <em>GSExxxxx</em>) and run the commands with this number. <code>getGEOSuppFiles</code> provides several files including the gene expression file and design data file and don’t need to reprocess them. Sometimes, theses files are not available on GEO website. In this case, you have to run the <code>getGEO</code> function from the file containing the raw data. Moreover, you need some reprocessing to build the gene expression, design data matrix. An example for each function is available on “How to use TcGSA for one treatment group ?” and “How to use TcGSA for several treatment group ?” parts.</p>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1"><span class="kw">library</span>(TcGSA)</a>
 <a class="sourceLine" id="cb34-2" data-line-number="2"><span class="kw">library</span>(GEOquery)</a></code></pre></div>
