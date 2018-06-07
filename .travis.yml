@@ -44,4 +44,4 @@ r_github_packages:
 
 r_build_args: "--html --no-build-vignettes"
 
-r_check_args: "--as-cran --timings"
+r_check_args: "--as-cran --timings --no-build-vignettes"
