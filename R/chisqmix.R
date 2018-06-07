@@ -1,7 +1,7 @@
 #'Chi-Squared Mixtures Distribution
 #'
 #'Density, distribution function, quantile function and random generation
-#'for mixtures of chi-squareq distributions that corresponds to the null 
+#'for mixtures of chi-squared distributions that corresponds to the null 
 #'distribution of the Likelihood Ratio between 2 nested mixed models.
 #'
 #'The approximate null distribution of a likelihood ratio for 2 nested mixed

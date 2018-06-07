@@ -27,9 +27,9 @@ case of an analysis that is more a hypothesis confirmation than an
 exploration of the expression data), we recommend to use "\code{Holm}", the
 Holm (1979) step-down adjusted p-values for strong control of the FWER.}
 
-\item{exact}{logical flag indicating wether the raw p-values should be computed from the 
+\item{exact}{logical flag indicating whether the raw p-values should be computed from the 
 exact asymptotic mixture of chi-square, or simulated (longer and not better).
-Default is \code{TRUE} and should be prefered.}
+Default is \code{TRUE} and should be preferred.}
 
 \item{nbsimu_pval}{the number of observations under the null distribution to
 be generated in order to compute the p-values. Default is \code{1e+06}.}

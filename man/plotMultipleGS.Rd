@@ -18,7 +18,7 @@ plotMultipleGS(genesets_list, ncolumns = 1, labels = NULL, expr, gmt,
 }
 \arguments{
 \item{genesets_list}{a list of the character strings giving the names of the 
-genesets to be plotted as they appear in \code{gmt}.}
+gene sets to be plotted as they appear in \code{gmt}.}
 
 \item{ncolumns}{the number of columns used to display the multiple plots. 
 Default is \code{1}.}

@@ -28,9 +28,9 @@
 #'Holm (1979) step-down adjusted p-values for strong control of the FWER.
 #'
 #'@param exact 
-#'logical flag indicating wether the raw p-values should be computed from the 
+#'logical flag indicating whether the raw p-values should be computed from the 
 #'exact asymptotic mixture of chi-square, or simulated (longer and not better).
-#'Default is \code{TRUE} and should be prefered.
+#'Default is \code{TRUE} and should be preferred.
 #'
 #'@param nbsimu_pval 
 #'the number of observations under the null distribution to
