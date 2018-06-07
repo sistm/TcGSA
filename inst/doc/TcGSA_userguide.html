@@ -411,7 +411,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 ## 5 X6116733029_A     C18         CH1      D2       P001         8
 ## 6 X6116733068_L     C25         CH3      D2       P001        12
 ## 8 X6116733073_K     C29         CH4      D2       P001         0</code></pre>
-<p>This data frame contains 90 samples and 6 variables :</p>
+<p>This data frame contains 90 samples and 6 experimental variables :</p>
 <ul>
 <li><code>Sample_name</code> for the name of samples</li>
 <li><code>Patient_ID</code> for the identification of patients</li>
@@ -439,7 +439,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <li>in column <code>Xxxxxxxxxxx_X</code> for the name of each sample</li>
 <li>each cell contains the normalized gene expression</li>
 </ul>
-<p>The entire matrix contains 32978 genes and 90 samples (number of samples should be the same as in design data matrix)</p>
+<p>The entire matrix contains <span class="math inline">\(32,978\)</span> genes and <span class="math inline">\(90\)</span> samples (number of samples should be the same as in design data matrix)</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">identical</span>(<span class="kw">ncol</span>(expr_preATI), <span class="kw">nrow</span>(design_preATI))</a></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 </div>

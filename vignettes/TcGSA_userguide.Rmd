@@ -14,7 +14,8 @@ vignette: >
   
 ```{r pre, echo=FALSE, warning=FALSE, include=FALSE}
 library(knitr)
-knitr::opts_chunk$set(echo = TRUE, eval=TRUE, cache=TRUE)
+is_check <- ("CheckExEnv" %in% search()) || any(c("_R_CHECK_TIMINGS_", "_R_CHECK_LICENSE_") %in% names(Sys.getenv()))
+knitr::opts_chunk$set(echo = TRUE, eval=!is_check, cache=TRUE)
 #rmarkdown::render("vignettes/TcGSA_userguide.Rmd")
 ```
 
@@ -162,7 +163,12 @@ design_preATI <- design[-which(design$TimePoint<0 | design$TimePoint==16 | desig
 head(design_preATI,5)
 ```
 
-This data frame contains `r nrow(design_preATI)` samples and `r ncol(design_preATI)` variables :
+```{r, include=FALSE}
+stopifnot(nrow(design_preATI)==90 & ncol(design_preATI)==6)
+```
+
+
+This data frame contains 90 samples and 6 experimental variables :
 
 - `Sample_name` for the name of samples
 - `Patient_ID` for the identification of patients
@@ -193,7 +199,12 @@ We have:
  * in column `Xxxxxxxxxxx_X` for the name of each sample
  * each cell contains the normalized gene expression
 
-The entire matrix contains `r nrow(expr_preATI)` genes and `r ncol(expr_preATI)` samples 
+
+```{r, include=FALSE}
+stopifnot(nrow(expr_preATI)==32978 & ncol(expr_preATI)==90)
+```
+
+The entire matrix contains $32,978$ genes and $90$ samples 
 (number of samples should be the same as in design data matrix)
 ```{r dim_expr_DALIA}
 identical(ncol(expr_preATI), nrow(design_preATI))

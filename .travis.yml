@@ -43,6 +43,6 @@ r_github_packages:
 - hadley/ggplot2
 - hadley/stringr
 
-r_build_args: "--html --no-build-vignettes"
+r_build_args: "--html"
 
-r_check_args: "--as-cran --timings --no-build-vignettes"
+r_check_args: "--as-cran --timings"
