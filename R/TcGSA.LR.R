@@ -185,6 +185,10 @@ function(expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", cr
   if(group_name!="" && separateSubjects){
     stop("'separateSubjects' is TRUE while 'group_name' is not \"\".\n This is an attempt to separate subjects in a multiple group setting.\n This is not handled by the TcGSA.LR function.\n\n")
   }
+	
+	if(mode(expr) !="numeric"){
+		stop("'expr' is not numeric. Don't know how to deal with nnon-numerical expressions.")
+	}
 
    
   LR <- numeric(length(gmt$genesets))
@@ -206,7 +210,6 @@ function(expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", cr
     	data_lme  <- TcGSA.dataLME(expr=expr_temp, design=design, subject_name=subject_name, time_name=time_name, 
     														 covariates_fixed=covariates_fixed, time_covariates=time_covariates,
     														 group_name=group_name, time_func=time_func)
-
       if(length(levels(data_lme$probe))>1){
           lmm_H0 <- tryCatch(lmer(formula =my_formul[["H0"]]["reg"], REML=FALSE, data=data_lme),
                    error=function(e){NULL})
@@ -223,7 +226,17 @@ function(expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", cr
         LR[gs] <- stats::deviance(lmm_H0, REML=FALSE) - stats::deviance(lmm_H1, REML=FALSE)
   	    CVG_H0[gs] <- lmm_H0@optinfo[["conv"]]$opt
   	    CVG_H1[gs] <- lmm_H1@optinfo[["conv"]]$opt
-        estims <- cbind.data.frame(data_lme, "fitted"=stats::fitted(lmm_H1))
+  	    #handling NAs in prediction
+  	    samples_containingNA <- which(is.na(data_lme), arr.ind = TRUE)[, "row"]
+  	    if(length(samples_containingNA)>0){
+  	    	fit_vec <-  stats::fitted(lmm_H1)
+  	    	fit_temp <- data.frame("id" = names(fit_vec), "fitted" = fit_vec)
+  	    	estims <- merge(cbind.data.frame("id" = rownames(data_lme), data_lme), 
+  	    					fit_temp,
+  	    					by="id", all.x=TRUE)
+  	    }else{
+  	    	estims <- cbind.data.frame(data_lme, "fitted"=stats::fitted(lmm_H1))
+  	    }
         estims_tab <- acast(data=estims, formula = stats::as.formula(paste("probe", subject_name, "t1", sep="~")), value.var="fitted")
         # drop = FALSE by default, which means that missing combination will be kept in the estims_tab and filled with NA
         dimnames(estims_tab)[[3]] <- as.numeric(dimnames(estims_tab)[[3]])*10
