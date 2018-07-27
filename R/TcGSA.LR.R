@@ -187,7 +187,7 @@ function(expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", cr
   }
 	
 	if(mode(expr) !="numeric"){
-		stop("'expr' is not numeric. Don't know how to deal with nnon-numerical expressions.")
+		stop("'expr' is not numeric. Don't know how to deal with non-numerical expressions.")
 	}
 
    
@@ -201,8 +201,7 @@ function(expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", cr
   													 separateSubjects=separateSubjects, crossedRandom=crossedRandom,
   													 time_func=time_func)
   time_DF <- my_formul[["time_DF"]]
-  	
-  for (gs in 1:length(gmt$genesets)){
+  for (gs in 1:length(gmt$geneset.names)){
     probes <- intersect(gmt$genesets[[gs]], rownames(expr))
     if(length(probes)>0 && length(probes)<=maxGSsize && length(probes)>=minGSsize){                                                       
     	expr_temp <- t(expr[probes, ])
@@ -270,7 +269,7 @@ function(expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", cr
 	    estim_expr[[gs]] <- NA
 	    warning("The size of the gene set ",  gmt$geneset.names[[gs]], "is problematic (too many or too few genes)\n")
 	}
-    message(paste(gs,"/", length(gmt$genesets)," gene sets analyzed\n", sep=""))
+    message(paste(gs,"/", length(gmt$geneset.names)," gene sets analyzed\n", sep=""))
   }
   
   if(group_name==""){

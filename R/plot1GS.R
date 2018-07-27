@@ -433,11 +433,12 @@ plot1GS <-
 
 		data_stand <- t(apply(X=data_sel, MARGIN=1, FUN=scale))
 		if(indiv=="genes"){
-			data_stand_MedianByTP <- t(apply(X=data_stand, MARGIN=1, FUN=Fun_byIndex, index=as.factor(TimePoint), fun=aggreg.fun, na.rm=T))
+			data_stand_MedianByTP <- t(apply(X=data_stand, MARGIN=1, FUN=Fun_byIndex, index=as.factor(TimePoint), fun=aggreg.fun, na.rm=TRUE))
 		}else if(indiv=="patients"){
-			data_tocast<-cbind.data.frame(TimePoint, Subject_ID, "M" = apply(X=data_stand, MARGIN=2, FUN=aggreg.fun))
+			data_tocast<-cbind.data.frame(TimePoint, Subject_ID, "M" = apply(X=data_stand, MARGIN=2, FUN=aggreg.fun, na.rm=TRUE))
 			data_stand_MedianByTP <- as.matrix(acast(data_tocast, formula="Subject_ID~TimePoint", value.var="M"))
 		}
+		
 		
 		if(!is.null(baseline)){
 			colbaseline <- which(sort(unique(TimePoint))==baseline)
@@ -554,11 +555,14 @@ plot1GS <-
 			x.lim <- c(min(MeasPt), max(MeasPt))
 		}
 		
-		p <- (ggplot(meltedData, aes_string(x="TimePoint", y="value")) 
-			  + geom_hline(aes(yintercept = 0), linetype=1, colour='grey50', size=0.4*line.size)
-			  + theme(panel.border=element_rect(fill=NA, size=0.1*line.size, colour='grey50'),
+		
+		#removing NA values for plotting
+		meltedData <- meltedData[-which(is.na(meltedData$value)), ]
+		
+		p <- ggplot(meltedData, aes_string(x="TimePoint", y="value")) + 
+			geom_hline(aes(yintercept = 0), linetype=1, colour='grey50', size=0.4*line.size) + 
+			theme(panel.border=element_rect(fill=NA, size=0.1*line.size, colour='grey50'),
 			  		axis.ticks=element_line(size=0.4*line.size, colour='grey50'))
-		)
 		
 		myalpha <- 1 
 		if(showTrend){
@@ -567,19 +571,19 @@ plot1GS <-
 		
 		if(clustering | pre_clustering){
 			p <- (p
-				  + geom_line(aes_string(group="Probe_ID", colour="Cluster"), size=0.5*line.size, alpha=myalpha)
-				  + guides(colour = guide_legend(override.aes=list(size=1, fill="white"), keywidth=2*lab.cex, 
-				  							   title.theme=element_text(size = 15*lab.cex, angle=0),
-				  							   label.theme=element_text(size = 9*lab.cex, angle=0)
+				  + geom_line(aes_string(group = "Probe_ID", colour = "Cluster"), size=0.5*line.size, alpha = myalpha)
+				  + guides(colour = guide_legend(override.aes = list(size=1, fill="white"), keywidth=2*lab.cex, 
+				  							   title.theme = element_text(size = 15*lab.cex, angle=0),
+				  							   label.theme = element_text(size = 9*lab.cex, angle=0)
 				  )
 				  )
 			)
 		}else{
-			p <- (p
-				  + geom_line(aes_string(group="Probe_ID", colour="Probe_ID"), size=0.5*line.size, alpha=myalpha)
-			)
+			p <- p + 
+				geom_line(aes_string(group = "Probe_ID", colour = "Probe_ID"), size = 0.5*line.size, alpha = myalpha)
+			
 			if(indiv=="patients"){
-				p <- (p + guides(colour=guide_legend(title='Subject')))
+				p <- (p + guides(colour=guide_legend(title = 'Subject')))
 				#+ scale_colour_manual(guide='none', name='Subject', values=rainbow(length(select_probe))))
 			}
 		}
