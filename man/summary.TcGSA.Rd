@@ -3,7 +3,6 @@
 \name{summary.TcGSA}
 \alias{summary.TcGSA}
 \alias{print.summary.TcGSA}
-\alias{print.summary.TcGSA}
 \title{Summarizing TcGSA}
 \usage{
 \method{summary}{TcGSA}(object, ...)

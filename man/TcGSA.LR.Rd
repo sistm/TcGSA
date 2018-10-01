@@ -7,9 +7,10 @@
 \title{Computing the Likelihood Ratios for the Gene Sets under Scrutiny}
 \usage{
 TcGSA.LR(expr, gmt, design, subject_name = "Patient_ID",
-  time_name = "TimePoint", crossedRandom = FALSE, covariates_fixed = "",
-  time_covariates = "", time_func = "linear", group_name = "",
-  separateSubjects = FALSE, minGSsize = 10, maxGSsize = 500)
+  time_name = "TimePoint", crossedRandom = FALSE,
+  covariates_fixed = "", time_covariates = "", time_func = "linear",
+  group_name = "", separateSubjects = FALSE, minGSsize = 10,
+  maxGSsize = 500)
 
 \method{print}{TcGSA}(x, ...)
 }

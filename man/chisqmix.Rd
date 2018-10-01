@@ -6,9 +6,6 @@
 \alias{dchisqmix}
 \alias{qchisqmix}
 \alias{pchisqmix}
-\alias{dchisqmix}
-\alias{qchisqmix}
-\alias{pchisqmix}
 \title{Chi-Squared Mixtures Distribution}
 \usage{
 rchisqmix(n, s, q)

@@ -5,7 +5,8 @@
 \title{Identifying the Significant Gene Sets}
 \usage{
 signifLRT.TcGSA(tcgsa, threshold = 0.05, myproc = "BY",
-  nbsimu_pval = 1e+06, write = F, txtfilename = NULL, directory = NULL)
+  nbsimu_pval = 1e+06, write = F, txtfilename = NULL,
+  directory = NULL)
 }
 \arguments{
 \item{tcgsa}{a \code{tcgsa} object.}

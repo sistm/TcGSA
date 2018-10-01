@@ -10,16 +10,17 @@
   ref = NULL, group_of_interest = NULL, ranking = FALSE,
   FUNcluster = NULL, clustering_metric = "euclidian",
   clustering_method = "ward", B = 500, max_trends = 4,
-  aggreg.fun = "median", methodOptiClust = "firstSEmax", indiv = "genes",
-  verbose = TRUE, clust_trends = NULL, N_clusters = NULL,
-  myclusters = NULL, label.clusters = NULL, prev_rowCL = NULL,
-  descript = TRUE, plot = TRUE, color.vec = c("darkred", "#D73027",
-  "#FC8D59", "snow", "#91BFDB", "#4575B4", "darkblue"), legend.breaks = NULL,
-  label.column = NULL, time_unit = "", cex.label.row = 1,
-  cex.label.column = 1, margins = c(5, 25), heatKey.size = 1,
-  dendrogram.size = 1, heatmap.height = 1, heatmap.width = 1,
-  cex.clusterKey = 1, cex.main = 1, horiz.clusterKey = TRUE,
-  main = NULL, subtitle = NULL, ...)
+  aggreg.fun = "median", methodOptiClust = "firstSEmax",
+  indiv = "genes", verbose = TRUE, clust_trends = NULL,
+  N_clusters = NULL, myclusters = NULL, label.clusters = NULL,
+  prev_rowCL = NULL, descript = TRUE, plot = TRUE,
+  color.vec = c("darkred", "#D73027", "#FC8D59", "snow", "#91BFDB",
+  "#4575B4", "darkblue"), legend.breaks = NULL, label.column = NULL,
+  time_unit = "", cex.label.row = 1, cex.label.column = 1,
+  margins = c(5, 25), heatKey.size = 1, dendrogram.size = 1,
+  heatmap.height = 1, heatmap.width = 1, cex.clusterKey = 1,
+  cex.main = 1, horiz.clusterKey = TRUE, main = NULL,
+  subtitle = NULL, ...)
 }
 \arguments{
 \item{x}{an object of class'\code{TcGSA}'.}

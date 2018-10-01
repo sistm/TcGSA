@@ -8,12 +8,13 @@ plotSelect.GS(expr, gmt, Subject_ID, TimePoint, geneset.names.select,
   Subject_ID.select, display = "one subject per page", baseline = NULL,
   group.var = NULL, Group_ID_paired = NULL, ref = NULL,
   group_of_interest = NULL, FUNcluster = NULL,
-  clustering_metric = "euclidian", clustering_method = "ward", B = 500,
-  max_trends = 4, aggreg.fun = "median", trend.fun = "median",
-  methodOptiClust = "firstSEmax", verbose = TRUE, clustering = TRUE,
-  time_unit = "", title = NULL, y.lab = NULL, desc = TRUE,
-  lab.cex = 1, axis.cex = 1, main.cex = 1, y.lab.angle = 90,
-  x.axis.angle = 45, y.lim = NULL, x.lim = NULL, gg.add = list(theme()))
+  clustering_metric = "euclidian", clustering_method = "ward",
+  B = 500, max_trends = 4, aggreg.fun = "median",
+  trend.fun = "median", methodOptiClust = "firstSEmax",
+  verbose = TRUE, clustering = TRUE, time_unit = "", title = NULL,
+  y.lab = NULL, desc = TRUE, lab.cex = 1, axis.cex = 1,
+  main.cex = 1, y.lab.angle = 90, x.axis.angle = 45, y.lim = NULL,
+  x.lim = NULL, gg.add = list(theme()))
 }
 \arguments{
 \item{expr}{either a matrix or dataframe of gene expression upon which

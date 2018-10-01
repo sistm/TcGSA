@@ -11,10 +11,11 @@ plotMultipleGS(genesets_list, ncolumns = 1, labels = NULL, expr, gmt,
   clustering_method = "ward", B = 500, max_trends = 4,
   aggreg.fun = "median", trend.fun = "median",
   methodOptiClust = "firstSEmax", indiv = "genes", verbose = TRUE,
-  clustering = TRUE, showTrend = TRUE, smooth = TRUE, time_unit = "",
-  y.lab = NULL, desc = TRUE, lab.cex = 1, axis.cex = 1, main.cex = 1,
-  y.lab.angle = 90, x.axis.angle = 45, margins = 1, line.size = 1,
-  y.lim = NULL, x.lim = NULL, gg.add = list(), show_plot = TRUE)
+  clustering = TRUE, showTrend = TRUE, smooth = TRUE,
+  time_unit = "", y.lab = NULL, desc = TRUE, lab.cex = 1,
+  axis.cex = 1, main.cex = 1, y.lab.angle = 90, x.axis.angle = 45,
+  margins = 1, line.size = 1, y.lim = NULL, x.lim = NULL,
+  gg.add = list(), show_plot = TRUE)
 }
 \arguments{
 \item{genesets_list}{a list of the character strings giving the names of the 
