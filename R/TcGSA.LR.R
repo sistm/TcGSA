@@ -181,13 +181,21 @@ function(expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", cr
   #for (i in which(tcGSA_cubic_modules$CVG_H1>6)){
   #  print(paste(i, ":", length(intersect(gmt$genesets[[i]], rownames(expr)))))
   #}
-  
+	
   if(group_name!="" && separateSubjects){
     stop("'separateSubjects' is TRUE while 'group_name' is not \"\".\n This is an attempt to separate subjects in a multiple group setting.\n This is not handled by the TcGSA.LR function.\n\n")
   }
 	
-	if(mode(expr) !="numeric"){
+	if(is.matrix(expr)){
+		if(mode(expr) !="numeric"){
 		stop("'expr' is not numeric. Don't know how to deal with non-numerical expressions.")
+		}
+	}else if(is.data.frame(expr)){
+		if(any(lapply(expr_1grp, mode) !="numeric")){
+			stop("'expr' is not numeric. Don't know how to deal with non-numerical expressions.")
+		}
+	}else{
+		stop("'expr' is neither a matrix nor a data.frame.")
 	}
 
    
