@@ -119,29 +119,29 @@ multtest.TcGSA <- function(tcgsa, threshold=0.05, myproc="BY",
 		if(is.null(group.var)){
 			if(!separateSubjects){
 				if(func=="linear"){
-					emp$raw_pval <- 1-sapply(emp$LR, pchisqmix, s=1, q=1)
+					emp$raw_pval <- sapply(emp$LR, pchisqmix, s=1, q=1, lower.tail=FALSE)
 				}else if(func=="cubic"){
-					emp$raw_pval <- 1-sapply(emp$LR, pchisqmix, s=3, q=3)
+					emp$raw_pval <- sapply(emp$LR, pchisqmix, s=3, q=3, lower.tail=FALSE)
 				}else{
-					emp$raw_pval <- 1-sapply(emp$LR, pchisqmix, s=time_DF, q=time_DF)
+					emp$raw_pval <- sapply(emp$LR, pchisqmix, s=time_DF, q=time_DF, lower.tail=FALSE)
 				}
 			}else{
 				if(func=="linear"){
-					emp$raw_pval <- 1-sapply(emp$LR, pchisqmix, s=0, q=1)
+					emp$raw_pval <- sapply(emp$LR, pchisqmix, s=0, q=1, lower.tail=FALSE)
 				}else if(func=="cubic"){
-					emp$raw_pval <- 1-sapply(emp$LR, pchisqmix, s=0, q=3)
+					emp$raw_pval <- sapply(emp$LR, pchisqmix, s=0, q=3, lower.tail=FALSE)
 				}else{
-					emp$raw_pval <- 1-sapply(emp$LR, pchisqmix, s=0, q=time_DF)
+					emp$raw_pval <- sapply(emp$LR, pchisqmix, s=0, q=time_DF, lower.tail=FALSE)
 				}
 			}
 		}else{
 			nbgp <- length(levels(group.var))
 			if(func=="linear"){
-				emp$raw_pval <- 1-sapply(emp$LR, pchisqmix, s=1*(nbgp-1), q=0)
+				emp$raw_pval <- sapply(emp$LR, pchisqmix, s=1*(nbgp-1), q=0, lower.tail=FALSE)
 			}else if(func=="cubic"){
-				emp$raw_pval <- 1-sapply(emp$LR, pchisqmix, s=3*(nbgp-1), q=0)
+				emp$raw_pval <- sapply(emp$LR, pchisqmix, s=3*(nbgp-1), q=0, lower.tail=FALSE)
 			}else{
-				emp$raw_pval <- 1-sapply(emp$LR, pchisqmix, s=time_DF*(nbgp-1), q=0)
+				emp$raw_pval <- sapply(emp$LR, pchisqmix, s=time_DF*(nbgp-1), q=0, lower.tail=FALSE)
 			}
 		}
 	}

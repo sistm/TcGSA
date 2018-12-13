@@ -14,7 +14,7 @@ dchisqmix(x, s, q)
 
 qchisqmix(p, s, q)
 
-pchisqmix(quant, s, q)
+pchisqmix(quant, s, q, lower.tail = TRUE)
 }
 \arguments{
 \item{n}{number of observations.}
@@ -26,6 +26,8 @@ pchisqmix(quant, s, q)
 \item{x, quant}{a quantile.}
 
 \item{p}{a probability.}
+
+\item{lower.tail}{logical; if \code{TRUE} (default), probabilities are \eqn{P[X \le x]}; otherwise, \eqn{P[X > x]}.}
 }
 \value{
 A vector of random independent observations of the \eqn{\chi^2}{chi-square} mixture

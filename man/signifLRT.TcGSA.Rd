@@ -6,7 +6,7 @@
 \usage{
 signifLRT.TcGSA(tcgsa, threshold = 0.05, myproc = "BY",
   nbsimu_pval = 1e+06, write = F, txtfilename = NULL,
-  directory = NULL)
+  directory = NULL, exact = TRUE)
 }
 \arguments{
 \item{tcgsa}{a \code{tcgsa} object.}
@@ -40,6 +40,10 @@ is \code{NULL}.}
 \item{directory}{if \code{write} is \code{TRUE}, a character string with the
 directory of the .txt file in which the results table is to be written, if
 \code{write} is \code{TRUE}. Default is \code{NULL}.}
+
+\item{exact}{logical flag indicating whether the raw p-values should be computed from the 
+exact asymptotic mixture of chi-square, or simulated (longer and not better).
+Default is \code{TRUE} and should be preferred.}
 }
 \value{
 \code{signifLRT.TcGSA} returns a list. 

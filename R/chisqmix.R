@@ -17,6 +17,7 @@
 #'@param x,quant a quantile.
 #'@param s number of fixed effects to be tested.
 #'@param q number of random effects to be tested.
+#'@param lower.tail logical; if \code{TRUE} (default), probabilities are \eqn{P[X \le x]}; otherwise, \eqn{P[X > x]}.
 #'
 #'@return A vector of random independent observations of the \eqn{\chi^2}{chi-square} mixture
 #'identified by the values of \code{s} and \code{q}.
@@ -118,7 +119,7 @@ qchisqmix <- function(p, s, q){
 
 #'@rdname chisqmix
 #'@export
-pchisqmix <- function(quant, s, q){
+pchisqmix <- function(quant, s, q, lower.tail=TRUE){
 	if(q>0){
 		mixprobs <- numeric(q+1)
 		for(k in s:(q+s)){
@@ -132,7 +133,7 @@ pchisqmix <- function(quant, s, q){
 	
 	res <- numeric(length(mix))
 	for(k in (s:(q+s))){
-		res[k-s+1] <- mix[k-s+1]*stats::pchisq(quant, df=k)
+		res[k-s+1] <- mix[k-s+1]*stats::pchisq(quant, df=k, lower.tail = lower.tail)
 	}
 	return(sum(res)/sum(mix))
 }
