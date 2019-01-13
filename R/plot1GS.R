@@ -368,8 +368,8 @@ plot1GS <-
 		}
 		
 		if(is.null(FUNcluster)){
-			FUNcluster <- switch(EXPR=clustering_metric,
-								 sts= function(x, k, time, ...){
+			FUNcluster <- switch(EXPR = clustering_metric,
+								 sts = function(x, k, time, ...){
 								 	d <- STSdist(m=x, time = time)
 								 	clus <- stats::cutree(agnes(d, ...), k=k)
 								 	return(list("cluster"=clus))
@@ -432,7 +432,7 @@ plot1GS <-
 		
 
 		data_stand <- t(apply(X=data_sel, MARGIN=1, FUN=scale))
-		if(indiv=="genes"){
+		if(indiv == "genes"){
 			data_stand_MedianByTP <- t(apply(X=data_stand, MARGIN=1, FUN=Fun_byIndex, index=as.factor(TimePoint), fun=aggreg.fun, na.rm=TRUE))
 		}else if(indiv=="patients"){
 			data_tocast<-cbind.data.frame(TimePoint, Subject_ID, "M" = apply(X=data_stand, MARGIN=2, FUN=aggreg.fun, na.rm=TRUE))
@@ -480,7 +480,7 @@ plot1GS <-
 				
 				
 				medoids <- as.data.frame(t(apply(X=data_stand_MedianByTP, MARGIN=2, FUN=Fun_byIndex, index=clust, fun=trend.fun)))
-				if(dim(medoids)[1]==1){
+				if(dim(medoids)[1] == 1){
 					medoids <- cbind.data.frame("TimePoint"= colnames(medoids), "1"=t(medoids))
 				}else{
 					medoids <- cbind.data.frame("TimePoint"= rownames(medoids), medoids)
@@ -557,7 +557,10 @@ plot1GS <-
 		
 		
 		#removing NA values for plotting
-		meltedData <- meltedData[-which(is.na(meltedData$value)), ]
+		na_bool <- is.na(meltedData$value)
+		if(sum(na_bool)>0){
+			meltedData <- meltedData[-which(na_bool), ]
+		}
 		
 		p <- ggplot(meltedData, aes_string(x="TimePoint", y="value")) + 
 			geom_hline(aes(yintercept = 0), linetype=1, colour='grey50', size=0.4*line.size) + 
@@ -614,7 +617,7 @@ plot1GS <-
 					p <- (p + geom_line(data=meltedStats, aes_string(x="TimePoint", y="value", group="Cluster", linetype="Cluster"), colour="black", size=3))
 				}
 			}else{
-				if(length(MeasPt)<4){
+				if(length(MeasPt) <= 4){
 					stop("Not enough time points to estimate a smoothed trend! 
     				 Set 'smooth' argument to 'FALSE'.\n")
 				}
