@@ -1,9 +1,8 @@
 ## Test environments
-* local OS X install, R 3.5.1
-* ubuntu 12.04 (on travis-ci, devel and release)
-* OS X 10.12 (on travis-ci, devel and release)
-* Windows Server 2012 R2 x64 (on appveyor), R 3.5.1
-* win-builder (devel and release)
+* local OS X install, R 3.5.2
+* ubuntu 14.04.5 (on travis-ci, devel and release)
+* OS X 10.13.3 (on travis-ci, devel)
+* Windows Server 2012 R2 x64 (on appveyor), R 3.5.2
 
 ## R CMD check results
 

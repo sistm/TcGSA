@@ -191,7 +191,7 @@ function(expr, gmt, design, subject_name="Patient_ID", time_name="TimePoint", cr
 		stop("'expr' is not numeric. Don't know how to deal with non-numerical expressions.")
 		}
 	}else if(is.data.frame(expr)){
-		if(any(lapply(expr_1grp, mode) !="numeric")){
+		if(any(lapply(expr, mode) !="numeric")){
 			stop("'expr' is not numeric. Don't know how to deal with non-numerical expressions.")
 		}
 	}else{
