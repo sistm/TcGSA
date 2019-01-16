@@ -37,8 +37,10 @@ TcGSA imports the `multtest` package which is not available on [CRAN](https://cr
 Before installing TcGSA, be sure to have this `multtest` package installed. If not, you can do so by running the following:
 
 ```{r bioc-install, eval=FALSE}
-source("http://bioconductor.org/biocLite.R")
-biocLite("multtest")
+if (!requireNamespace("BiocManager", quietly = TRUE)) {
+    install.packages("BiocManager")
+}
+BiocManager::install("multtest")
 ```
 
 The easiest way to get `TcGSA` is to install it from [CRAN](https://cran.r-project.org/package=TcGSA):
