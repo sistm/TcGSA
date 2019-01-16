@@ -13,8 +13,10 @@ rm(temp)
 
 ## ----GEOquery, include=FALSE, message=FALSE, cache=FALSE-----------------
 if (!requireNamespace("GEOquery", quietly = TRUE)) {
-	source("https://bioconductor.org/biocLite.R")
-	biocLite("GEOquery")
+	if (!requireNamespace("BiocManager", quietly = TRUE)){
+    	install.packages("BiocManager")
+	}
+	BiocManager::install("GEOquery")
 }
 
 ## ----import_dalia, message=FALSE, cache=TRUE, results='hide'-------------
@@ -201,6 +203,10 @@ plot(x=tcgsa_result_MT, expr=tcgsa_result_MT$Estimations,
 	 heatKey.size=0.8)
 
 ## ----dl_GEOquery, warning=FALSE, message=FALSE, eval=FALSE---------------
-#  source("http://bioconductor.org/biocLite.R")
-#  biocLite("GEOquery")
+#  if (!requireNamespace("GEOquery", quietly = TRUE)) {
+#  	if (!requireNamespace("BiocManager", quietly = TRUE)){
+#  		install.packages("BiocManager")
+#  	}
+#  	BiocManager::install("GEOquery")
+#  }
 

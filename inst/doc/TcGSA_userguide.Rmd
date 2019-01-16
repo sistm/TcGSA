@@ -1,5 +1,5 @@
 ---
-title: "Userguide to the `TcGSA` R package"
+title: "User guide to the `TcGSA` R package"
 author: "Anthony Devaux, Boris Hejblum"
 date: "`r Sys.Date()`"
 output:
@@ -25,7 +25,7 @@ The `TcGSA` (Time-course Gene Set Analysis *Hejblum et al., 2015*) `R` package t
 gene expression dynamics for significance in gene sets. A gene set is a group of genes, 
 known *a priori* to share a common biological function or to be co-expressed. `TcGSA` relies 
 on linear mixed model to take into account the potential heterogeneity of expression 
-within a gene set. For more details, check the [published article in Plos Computationnal Biology](http://dx.plos.org/10.1371/journal.pcbi.1004310).
+within a gene set. For more details, check the [published article in PLOS Computational Biology](http://dx.plos.org/10.1371/journal.pcbi.1004310).
 
 
 
@@ -110,8 +110,8 @@ name of each probe/gene must match with the name of probes/genes in the `gmt` ob
 The design data matrix contains for each sample (in row), several variables (in column). 
 The variables required for the matrix are:
 
-* Name of samples
-* Identifiant of patients
+* Sample names
+* Patient identifiers
 * Time measurements
 * _In case of multiple treatments_, the name of treatment
 
@@ -123,24 +123,26 @@ Name of samples should be unique and match with the samples of gene expression m
 
 This example comes from *Hejblum et al., 2015* and DALIA-1 HIV therapeutic vaccine trial. The aim of this study is to evaluate the immune response to HIV vaccine. To conduct this study, 19 patients contaminated by the HIV have been followed for 48 weeks split into 2 phases of 24 each:
 
-* 1^st^ phase from week 0 to week 24 (before treatment interruption): the patients were under antiretroviral treatment and received trial vaccine on week 0, 4, 8 and 12.
-* 2nd phase from week 24 to week 48 (after treatment interruption): for the follow-up of patients, none of trial vaccine has been injected and antiretroviral treatments have been interrupted (except for health problems).
+* 1^st^ phase from week 0 to week 24 (before treatment interruption): the patients were under anti-retroviral treatment and received trial vaccine on week 0, 4, 8 and 12.
+* 2nd phase from week 24 to week 48 (after treatment interruption): for the follow-up of patients, none of trial vaccine has been injected and anti-retroviral treatments have been interrupted (except for health problems).
 
 Blood samples have been collected at each of the different measurement time points, for each subject, to study the dynamic of gene expression over time. For more details, check the article from Hejblum et al. [here](http://dx.plos.org/10.1371/journal.pcbi.1004310).
 
-The data ar publiclye available on [GEO website](https://www.ncbi.nlm.nih.gov/geo/) with GEO access number 'GSE46734'. We will be using the `GEOquery` package to get the data files from GEO website (see appendix for more details on `GEOquery`)
+The data are publicly available on [GEO website](https://www.ncbi.nlm.nih.gov/geo/) with GEO access number 'GSE46734'. We will be using the `GEOquery` package to get the data files from GEO website (see appendix for more details on `GEOquery`)
 
 
 
 
 ### Import of data files
 
-In this example, we need import the supplementary files available on GEOwith the  `getGEOSuppFiles` function (we only need the three following files, hence the regeular expression filter: gene expression pre-ATI, gene expression post-ATI, experimental design):
+In this example, we need import the supplementary files available on GEOwith the  `getGEOSuppFiles` function (we only need the three following files, hence the regular expression filter: gene expression pre-ATI, gene expression post-ATI, experimental design):
 
 ```{r GEOquery, include=FALSE, message=FALSE, cache=FALSE}
 if (!requireNamespace("GEOquery", quietly = TRUE)) {
-	source("https://bioconductor.org/biocLite.R")
-	biocLite("GEOquery")
+	if (!requireNamespace("BiocManager", quietly = TRUE)){
+    	install.packages("BiocManager")
+	}
+	BiocManager::install("GEOquery")
 }
 ```
 
@@ -252,7 +254,7 @@ summary(tcgsa_result)
 
 To get more details on the significant gene sets, use the `signifLRT.TcGSA()` function. 
 It returns information such as the significant gene sets among all the gene 
-sets tested, along their p-values with adjustment for multiple testing (defaut 
+sets tested, along their p-values with adjustment for multiple testing (default 
 option is `BY` for Benjamini-Yekutieli correction *Benjamini et Yekutieli, 2001*
 and 5% threshold). Below is an example of five significant gene sets:
 
@@ -262,7 +264,7 @@ head(TcGSA::signifLRT.TcGSA(tcgsa_result)$mixedLRTadjRes)
 
 You can also use the `multtest.TcGSA` function to provide the likelihood ratios, the
 raw and adjusted p-values for the whole gene sets with 5% threshold. Below is an 
-example diplaying only for five results:
+example displaying only for five results:
 
 ```{r multtest_ST, cache=TRUE}
 head(TcGSA::multtest.TcGSA(tcgsa_result))
@@ -306,8 +308,8 @@ TcGSA::plot1GS(expr = expr_preATI,
 			   ))
 ```
 
-Dotted line shows the median gene expression accross subjects,
-in the gene set over time.
+Dotted line shows the median gene expression across subjects, in the gene set 
+over time.
 
 
 
@@ -320,7 +322,7 @@ using longitudinal gene expression. The subjects are split into three groups of 
 individuals, each receiving either 2009-2010 seasonal influenza vaccine (Fluzone), 
 a 23-valent pneumococcal vaccine (Pneumovax23), or a placebo (saline solution).  
 Blood samples have been acquired on day -7, 0, 1, 3, 7, 10, 14, 21 and 28 to 
-study gene expression over time. For more details, check the article from *Obermoder et al.* [here](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3492754/).
+study gene expression over time. For more details, check the article from *Obermoser et al.* [here](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3492754/).
 
 The data is available on [GEO website](https://www.ncbi.nlm.nih.gov/geo/) under 
 the GEO access number 'GSE30101', which we will be accessing through the `GEOquery` 
@@ -511,7 +513,7 @@ plot(x=tcgsa_result_MT, expr=tcgsa_result_MT$Estimations,
 The heatmap shows an under (blue color) or an over (red color) expression for each 
 significant gene sets compared to `baseline` value (which represents the reference 
 time-point) from the `clust` object. Similar expression dynamics are clustered 
-through a hierarcical clustering showed through a dendrogram.
+through a hierarchical clustering showed through a dendrogram.
 
 
 
@@ -538,8 +540,12 @@ Obermoser G, Presnell S, Domico K, Xu H, Wang Y, Anguiano E, et al., (2013) Syst
 In case the data you want to analyze is publicly available through [Gene Expression Omnibus (GEO)](https://www.ncbi.nlm.nih.gov/geo/), you can access it with the `GEOquery` package, that can be installed with the following commands:
 
 ```{r dl_GEOquery, warning=FALSE, message=FALSE, eval=FALSE}
-source("http://bioconductor.org/biocLite.R")
-biocLite("GEOquery")
+if (!requireNamespace("GEOquery", quietly = TRUE)) {
+	if (!requireNamespace("BiocManager", quietly = TRUE)){
+		install.packages("BiocManager")
+	}
+	BiocManager::install("GEOquery")
+}
 ```
 
-More details can be found on [bioconductor](https://bioconductor.org/packages/release/bioc/html/GEOquery.html) and in Davis S, Meltzer P, (2007) GEOquery: a bridge between the Gene Expression Omnibus (GEO) and BioConductor _Bioinformatics_ 14:1846-1847.
+More details can be found on [Bioconductor](https://bioconductor.org/packages/release/bioc/html/GEOquery.html) and in Davis S, Meltzer P, (2007) GEOquery: a bridge between the Gene Expression Omnibus (GEO) and Bioconductor _Bioinformatics_ 14:1846-1847.
