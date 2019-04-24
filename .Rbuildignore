@@ -9,3 +9,5 @@
 ^vignettes/GSE46734/*$
 ^vignettes/GSE30101_family.soft.gz$
 ^cran-comments\.md$
+GSE46734/*
+GSE30101*
