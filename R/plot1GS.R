@@ -354,6 +354,7 @@ plot1GS <-
 	){
 		
 		pre_clustering <- !is.null(precluster)
+		clustering <- !pre_clustering
 		
 		capwords <- function(s, strict = FALSE){
 			cap <- function(s){
@@ -488,14 +489,18 @@ plot1GS <-
 			}else{
 				
 				clust <- precluster
+				if(indiv=="genes"){
 				medoids <- as.data.frame(t(apply(X=data_stand_MedianByTP, MARGIN=2, FUN=Fun_byIndex, 
 												 index=as.factor(as.numeric(precluster)), fun=trend.fun, na.rm=TRUE)))
+				}else if(indiv=="patients"){
+					stop("'precluster' is only implemented for indiv = 'genes'")
+				}
 				if(nrow(medoids)==1){
 					medoids <- cbind.data.frame("TimePoint"= colnames(medoids), "1"=t(medoids))
 				}else{
 					medoids <- cbind.data.frame("TimePoint"= rownames(medoids), medoids)
 				}
-				colnames(medoids) <- c("TimePoint", levels(precluster))
+				colnames(medoids) <- c("TimePoint", levels(as.factor(as.numeric(precluster))))
 			}
 			if(verbose){
 				message("DONE\n")
@@ -518,6 +523,7 @@ plot1GS <-
 			medoids <- cbind.data.frame("TimePoint"=colnames(data_stand_MedianByTP), "1"='NA')
 			clust <- rep(NA, dim(data_stand_MedianByTP)[1])
 		}
+		
 		
 		medoids$TimePoint <- as.numeric(as.character(medoids$TimePoint))
 		colnames(data_stand_MedianByTP) <- as.numeric(colnames(data_stand_MedianByTP))
@@ -606,7 +612,6 @@ plot1GS <-
 			  + theme(plot.margin=unit(margins*c(0.5, 0.7, 0.1, 0.5), 'lines'))
 			  + theme(legend.key=element_rect(fill="white"))
 		)
-		
 		
 		if(showTrend){
 			
