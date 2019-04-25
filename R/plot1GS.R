@@ -353,6 +353,13 @@ plot1GS <-
 			 plot=TRUE
 	){
 		
+		if(!is.null(group.var) | !is.null(ref) | !is.null(group_of_interest)){
+			warning("multigroup option is not implemented yet for plot1GS\n Defaulting back to only 1 group representation instead")	
+		}
+		if(is.null(group.var) & (!is.null(group_of_interest) | !is.null(ref))){
+			stop("'group.var' is NULL while 'group_of_interest' or 'ref' is not")
+		}
+		
 		pre_clustering <- !is.null(precluster)
 		clustering <- !pre_clustering
 		

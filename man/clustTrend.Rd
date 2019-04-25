@@ -64,7 +64,7 @@ be generated in order to compute the p-values.  Default is \code{1e+06}.}
 \item{baseline}{a character string which is the value of \code{TimePoint}
 that can be used as a baseline.  Default is \code{NULL}, in which case no
 time point is used as a baseline value for gene expression.  Has to be
-\code{NULL} when comparing two treatment groups.}
+\code{NULL} when comparing several treatment groups.}
 
 \item{only.signif}{logical flag for analyzing the trends in only the
 significant gene sets.  If \code{FALSE}, all the gene sets from the

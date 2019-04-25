@@ -69,7 +69,7 @@
 #'a character string which is the value of \code{TimePoint}
 #'that can be used as a baseline.  Default is \code{NULL}, in which case no
 #'time point is used as a baseline value for gene expression.  Has to be
-#'\code{NULL} when comparing two treatment groups.
+#'\code{NULL} when comparing several treatment groups.
 #TODO See Details.
 #'
 #'@param only.signif 
@@ -246,6 +246,16 @@ clustTrend <-
 			 indiv="genes", verbose=TRUE
 	){
 		
+		if(is.null(group.var) & (!is.null(group_of_interest) | !is.null(ref))){
+			stop("'group.var' is NULL while 'group_of_interest' or 'ref' is not")
+		}
+		if(!is.null(group.var) & !is.null(baseline)){
+			stop("if 'group.var' is not NULL, then baseline must be NULL")
+		}
+		if(!is.null(group.var) & (is.null(group_of_interest) | is.null(ref))){
+			stop("if 'group.var' is not NULL, then both 'group_of_interest' and 'ref' must also not be NULL")
+		}
+		
 		
 		Fun_byIndex<-function(X, index, fun, ...){
 			tapply(X, INDEX=index, FUN = fun, ...)
@@ -320,8 +330,8 @@ clustTrend <-
 					select_probe <- dimnames(expr_sel)[[1]]
 					TimePoint <- sort(as.numeric(rep(dimnames(expr_sel)[[3]], dim(expr_sel)[2])))
 					Subject_ID <- rep(dimnames(expr_sel)[[2]], dim(expr_sel)[3])
+
 				}
-				
 				data_stand <- t(apply(X=data_sel, MARGIN=1, FUN=scale))
 				data_stand[unique(which(is.nan(data_stand), arr.ind=TRUE)[,1]), ] <- 0 
 				if(indiv=="genes"){
@@ -335,7 +345,7 @@ clustTrend <-
 				if(!is.null(baseline)){
 					colbaseline <- which(sort(unique(TimePoint))==baseline)
 					if(length(colbaseline)==0){
-						stop("the 'baseline' value used is not one of the time points in 'TimePoint'...\n")
+						stop("the 'baseline' value used is not one of the time points in 'TimePoint'")
 					}
 					data_stand_ByTP <- data_stand_ByTP-data_stand_ByTP[,colbaseline]
 				}
@@ -343,7 +353,7 @@ clustTrend <-
 			}
 			else{
 				if(!is.null(baseline)){
-					stop("the 'baseline' argument is not NULL while a grouping variable is supplied in 'group.var'...\n")
+					stop("the 'baseline' argument must be NULL when a grouping variable is supplied in 'group.var'")
 				}
 				if(is.data.frame(expr) | is.matrix(expr)){
 					select_probe <- intersect(rownames(expr), unique(gmt$genesets[[interest]]))
@@ -357,6 +367,7 @@ clustTrend <-
 					expr_sel <- expr_sel[, , order(as.numeric(dimnames(expr_sel)[[3]]))]
 					data_sel <- matrix(expr_sel, nrow=dim(expr_sel)[1], ncol=dim(expr_sel)[2]*dim(expr_sel)[3])
 					rownames(data_sel) <- dimnames(expr_sel)[[1]]
+					group.var <- group.var[order(TimePoint)] # watch out for the ordering
 					select_probe <- dimnames(expr_sel)[[1]]
 					if(!is.null(Group_ID_paired)){
 						Group_ID_paired <- Group_ID_paired[order(TimePoint)] # watch out for the ordering
@@ -381,7 +392,7 @@ clustTrend <-
 			
 			if(sum(apply(data_stand_ByTP, MARGIN=2, FUN=var), na.rm = TRUE)<1.e-25){
 				nc <- 1
-				clust <- rep(1, dim(data_stand)[1])
+				clust <- rep(1, dim(data_stand_ByTP)[1])
 			} 
 			else{
 				kmax <- ifelse(dim(data_stand_ByTP)[1]>4, max_trends, dim(data_stand_ByTP)[1]-1)
@@ -397,7 +408,7 @@ clustTrend <-
 					}
 				}else{
 					nc <- 1
-					clust <- rep(1, dim(data_stand)[1])
+					clust <- rep(1, dim(data_stand_ByTP)[1])
 				}
 			}
 			medoids <- as.data.frame(t(apply(X=data_stand_ByTP, MARGIN=2, FUN=Fun_byIndex, index=clust, fun=trend.fun)))

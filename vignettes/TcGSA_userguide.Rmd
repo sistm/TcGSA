@@ -477,10 +477,11 @@ head(TcGSA::signifLRT.TcGSA(tcgsa_result_MT)$mixedLRTadjRes)
 ```{r clust_MT, message=FALSE, warning=FALSE, cache=TRUE}
 clust <- TcGSA::clustTrend(tcgs = tcgsa_result_MT, 
 						   expr=tcgsa_result_MT$Estimations,
-						   Subject_ID=design_gen$Patient_ID,
-						   TimePoint=design_gen$TimePoint,
-						   baseline = 0,
-						   group_of_interest="pneumo")
+						   Subject_ID=design.PNEUMOvsSALINE.ChaussVac.AvgBl$Patient_ID,
+						   TimePoint=design.PNEUMOvsSALINE.ChaussVac.AvgBl$Day,
+						   group.var = design.PNEUMOvsSALINE.ChaussVac.AvgBl$Vaccine,
+						   group_of_interest="pneumo",
+						   ref="saline")
 clust
 ```
 
@@ -500,8 +501,8 @@ clust
 
 ```{r heatmap_MT, message=FALSE, cache=TRUE, results='asis'}
 plot(x=tcgsa_result_MT, expr=tcgsa_result_MT$Estimations,
-	 Subject_ID=design_gen$Patient_ID,
-	 TimePoint=design_gen$TimePoint,
+	 Subject_ID=design.PNEUMOvsSALINE.ChaussVac.AvgBl$Patient_ID,
+	 TimePoint=design.PNEUMOvsSALINE.ChaussVac.AvgBl$TimePoint,
 	 group_of_interest="pneumo",
 	 clust_trends=clust,
 	 legend.breaks=seq(from=-2,to=2, by=0.01), time_unit="D",
@@ -511,9 +512,14 @@ plot(x=tcgsa_result_MT, expr=tcgsa_result_MT$Estimations,
 ```
 
 The heatmap shows an under (blue color) or an over (red color) expression for each 
-significant gene sets compared to `baseline` value (which represents the reference 
-time-point) from the `clust` object. Similar expression dynamics are clustered 
+significant gene sets in the `pneumo` arm (vaccine) compared to the `saline` arm 
+(compared) from the `clust` object. Similar expression dynamics are clustered 
 through a hierarchical clustering showed through a dendrogram.
+
+**Note:** this figure is different than the one in Hejblum *et al.* because here we 
+used a linear time function (for the sake of simplicity and computational speed).
+To reproduce the heatmap from the original article, one must use the `time_func``
+argument to specify a quadratic time function with an offset at Day 1.
 
 
 
