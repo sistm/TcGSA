@@ -1,5 +1,8 @@
 # News about the `TcGSA` R package
 
+### Main changes in Version 0.12.3 (2019-04-25) --- *this is only a minor release*:
+* prevent the simultaneous use of `baseline` and `group.var` in ploting functions 
+
 ### Main changes in Version 0.11.0 (2018-06-07) --- *this is only a minor release*:
 * Added a vignette
 * p-values are no-longer simulated but computed from asymptotic chi^2 mixture

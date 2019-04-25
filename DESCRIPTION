@@ -1,8 +1,8 @@
 Package: TcGSA
 Type: Package
 Title: Time-Course Gene Set Analysis
-Version: 0.12.2
-Date: 2019-01-15
+Version: 0.12.3
+Date: 2019-04-25
 Authors@R: c(person("Boris P.", "Hejblum", role = c("aut", "cre"),
 		     email = "boris.hejblum@u-bordeaux.fr"), 
 		     person("Damien", "Chimits", role = c("aut")), 
