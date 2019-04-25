@@ -16,7 +16,8 @@ cache:
 # Adapt as necessary starting from here
 
 build_script:
-  - travis-tool.sh install_bioc multtest GEOquery
+  - R -e source('https://install-github.me/r-lib/remotes')
+  - travis-tool.sh install_bioc_deps
   - travis-tool.sh install_deps
 
 test_script:
