@@ -518,7 +518,7 @@ through a hierarchical clustering showed through a dendrogram.
 
 **Note:** this figure is different than the one in Hejblum *et al.* because here we 
 used a linear time function (for the sake of simplicity and computational speed).
-To reproduce the heatmap from the original article, one must use the `time_func``
+To reproduce the heatmap from the original article, one must use the `time_func` 
 argument to specify a quadratic time function with an offset at Day 1.
 
 

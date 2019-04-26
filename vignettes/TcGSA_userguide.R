@@ -185,16 +185,17 @@ head(TcGSA::signifLRT.TcGSA(tcgsa_result_MT)$mixedLRTadjRes)
 ## ----clust_MT, message=FALSE, warning=FALSE, cache=TRUE------------------
 clust <- TcGSA::clustTrend(tcgs = tcgsa_result_MT, 
 						   expr=tcgsa_result_MT$Estimations,
-						   Subject_ID=design_gen$Patient_ID,
-						   TimePoint=design_gen$TimePoint,
-						   baseline = 0,
-						   group_of_interest="pneumo")
+						   Subject_ID=design.PNEUMOvsSALINE.ChaussVac.AvgBl$Patient_ID,
+						   TimePoint=design.PNEUMOvsSALINE.ChaussVac.AvgBl$Day,
+						   group.var = design.PNEUMOvsSALINE.ChaussVac.AvgBl$Vaccine,
+						   group_of_interest="pneumo",
+						   ref="saline")
 clust
 
 ## ----heatmap_MT, message=FALSE, cache=TRUE, results='asis'---------------
 plot(x=tcgsa_result_MT, expr=tcgsa_result_MT$Estimations,
-	 Subject_ID=design_gen$Patient_ID,
-	 TimePoint=design_gen$TimePoint,
+	 Subject_ID=design.PNEUMOvsSALINE.ChaussVac.AvgBl$Patient_ID,
+	 TimePoint=design.PNEUMOvsSALINE.ChaussVac.AvgBl$TimePoint,
 	 group_of_interest="pneumo",
 	 clust_trends=clust,
 	 legend.breaks=seq(from=-2,to=2, by=0.01), time_unit="D",

@@ -269,7 +269,7 @@ clustTrend <-
 								 	return(list("cluster"=clus))
 								 },
 								 function(x, k, ...){
-								 	clus <- stats::cutree(agnes(x, method=clustering_method, metric=clustering_metric, ...), k=k)
+								 	clus <- stats::cutree(cluster::agnes(x, method=clustering_method, metric=clustering_metric, ...), k=k)
 								 	return(list("cluster"=clus))
 								 }
 			)
