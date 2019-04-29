@@ -150,6 +150,12 @@
 #'before the clustering.  Default is to \code{median}.  Default is
 #'\code{"median"}.
 #'
+#'@param na.rm.aggreg
+#'a logical flag indicating whether \code{NA} should be remove to prevent 
+#'propagation through \code{aggreg.fun}. Can be useful to set to TRUE with 
+#'unbalanced design as those will generate structural \code{NA}s in 
+#'\code{$Estimations}. Default is \code{TRUE}.
+#'
 #'@param trend.fun 
 #'a character string such as \code{"mean"}, \code{"median"} or
 #'the name of any other function that returns a single numeric value.  It
@@ -173,6 +179,7 @@
 #'@param verbose 
 #'logical flag enabling verbose messages to track the computing
 #'status of the function.  Default is \code{TRUE}.
+#'
 #'
 #'@return An object of class \bold{\link{ClusteredTrends}} which is a list with
 #'the 4 following components: \itemize{
@@ -241,7 +248,7 @@ clustTrend <-
 			 only.signif=TRUE, group.var=NULL, Group_ID_paired=NULL, 
 			 ref=NULL, group_of_interest=NULL, FUNcluster=NULL, 
 			 clustering_metric="euclidian", clustering_method="ward", 
-			 B=100,	 max_trends=4, aggreg.fun="median", 
+			 B=100,	 max_trends=4, aggreg.fun="median", na.rm.aggreg = TRUE,
 			 trend.fun="median", methodOptiClust = "firstSEmax",
 			 indiv="genes", verbose=TRUE
 	){
@@ -379,14 +386,14 @@ clustTrend <-
 				data_stand_interest <- t(apply(X=data_sel[,group.var==group_of_interest], MARGIN=1, FUN=scale))
 				
 				if(is.null(Group_ID_paired)){
-					data_stand_ByTP_ref <- t(apply(X=data_stand_ref, MARGIN=1, FUN=Fun_byIndex, index=as.factor(TimePoint)[group.var==ref], fun=aggreg.fun))
-					data_stand_ByTP_interest <- t(apply(X=data_stand_interest, MARGIN=1, FUN=Fun_byIndex, index=as.factor(TimePoint)[group.var==group_of_interest], fun=aggreg.fun))                         
+					data_stand_ByTP_ref <- t(apply(X=data_stand_ref, MARGIN=1, FUN=Fun_byIndex, index=as.factor(TimePoint)[group.var==ref], fun=aggreg.fun, na.rm=na.rm.aggreg))
+					data_stand_ByTP_interest <- t(apply(X=data_stand_interest, MARGIN=1, FUN=Fun_byIndex, index=as.factor(TimePoint)[group.var==group_of_interest], fun=aggreg.fun, na.rm=na.rm.aggreg))                         
 					data_stand_ByTP <- data_stand_ByTP_interest-data_stand_ByTP_ref
 				}else{
 					data_stand <- t(apply(X=cbind.data.frame(data_stand_interest, -data_stand_ref), MARGIN=1, FUN=Fun_byIndex, 
 										  index=(as.factor(c(TimePoint[group.var==group_of_interest], TimePoint[group.var==ref])):as.factor(c(as.character(Group_ID_paired)[group.var==group_of_interest], as.character(Group_ID_paired)[group.var==ref]))),
 										  fun=sum))
-					data_stand_ByTP <- t(apply(X=data_stand, MARGIN=1, FUN=Fun_byIndex, index=sort(as.factor(TimePoint[group.var==group_of_interest])), fun=aggreg.fun))
+					data_stand_ByTP <- t(apply(X=data_stand, MARGIN=1, FUN=Fun_byIndex, index=sort(as.factor(TimePoint[group.var==group_of_interest])), fun=aggreg.fun, na.rm=na.rm.aggreg))
 				}
 			}
 			

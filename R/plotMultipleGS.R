@@ -138,6 +138,12 @@
 #'numeric value.  It specifies the function used to aggregate the observations
 #'before the clustering. Default is to \code{"median"}.
 #'
+#'@param na.rm.aggreg
+#'a logical flag indicating whether \code{NA} should be remove to prevent 
+#'propagation through \code{aggreg.fun}. Can be useful to set to TRUE with 
+#'unbalanced design as those will generate structural \code{NA}s in 
+#'\code{$Estimations}. Default is \code{TRUE}.
+#'
 #'@param trend.fun 
 #'a character string such as \code{"mean"} or
 #'the name of any other function that returns a single numeric value.  It
@@ -265,7 +271,8 @@ plotMultipleGS <- function(genesets_list, ncolumns=1, labels=NULL,
 						   baseline=NULL,
 						   group.var=NULL, Group_ID_paired=NULL, ref=NULL, group_of_interest=NULL,
 						   FUNcluster=NULL, clustering_metric="euclidian", clustering_method="ward", B=500,
-						   max_trends=4, aggreg.fun="median", trend.fun="median",
+						   max_trends=4, aggreg.fun="median", na.rm.aggreg=TRUE,
+						   trend.fun="median",
 						   methodOptiClust = "firstSEmax",
 						   indiv="genes",
 						   verbose=TRUE,
@@ -292,7 +299,8 @@ plotMultipleGS <- function(genesets_list, ncolumns=1, labels=NULL,
 								   FUNcluster = FUNcluster, clustering_metric = clustering_metric, 
 								   clustering_method=clustering_method, B=B,
 								   max_trends = max_trends, 
-								   aggreg.fun = aggreg.fun, trend.fun = trend.fun,
+								   aggreg.fun = aggreg.fun, na.rm.aggreg=na.rm.aggreg, 
+								   trend.fun = trend.fun,
 								   methodOptiClust = methodOptiClust,
 								   indiv = indiv, verbose=verbose, 
 								   clustering = clustering, showTrend = showTrend, smooth = smooth,

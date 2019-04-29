@@ -132,6 +132,12 @@
 #'numeric value.  It specifies the function used to aggregate the observations
 #'before the clustering.  Default is to \code{"mean"}.
 #'
+#'@param na.rm.aggreg
+#'a logical flag indicating whether \code{NA} should be remove to prevent 
+#'propagation through \code{aggreg.fun}. Can be useful to set to TRUE with 
+#'unbalanced design as those will generate structural \code{NA}s in 
+#'\code{$Estimations}. Default is \code{TRUE}.
+#'
 #'@param trend.fun 
 #'a character string such as \code{"mean"} or
 #'the name of any other function that returns a single numeric value.  It
@@ -341,7 +347,8 @@ plot1GS <-
 			 baseline=NULL,
 			 group.var=NULL, Group_ID_paired=NULL, ref=NULL, group_of_interest=NULL,
 			 FUNcluster=NULL, clustering_metric="euclidian", clustering_method="ward", B=500,
-			 max_trends=4, aggreg.fun="median", trend.fun="median",
+			 max_trends=4, aggreg.fun="median", na.rm.aggreg=TRUE,
+			 trend.fun="median",
 			 methodOptiClust = "firstSEmax",
 			 indiv="genes",
 			 verbose=TRUE,
@@ -441,9 +448,9 @@ plot1GS <-
 
 		data_stand <- t(apply(X=data_sel, MARGIN=1, FUN=scale))
 		if(indiv == "genes"){
-			data_stand_MedianByTP <- t(apply(X=data_stand, MARGIN=1, FUN=Fun_byIndex, index=as.factor(TimePoint), fun=aggreg.fun, na.rm=TRUE))
+			data_stand_MedianByTP <- t(apply(X=data_stand, MARGIN=1, FUN=Fun_byIndex, index=as.factor(TimePoint), fun=aggreg.fun, na.rm=na.rm.aggreg))
 		}else if(indiv=="patients"){
-			data_tocast<-cbind.data.frame(TimePoint, Subject_ID, "M" = apply(X=data_stand, MARGIN=2, FUN=aggreg.fun, na.rm=TRUE))
+			data_tocast <- cbind.data.frame(TimePoint, Subject_ID, "M" = apply(X=data_stand, MARGIN=2, FUN=aggreg.fun, na.rm=na.rm.aggreg))
 			data_stand_MedianByTP <- as.matrix(acast(data_tocast, formula="Subject_ID~TimePoint", value.var="M"))
 		}
 		

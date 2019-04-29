@@ -13,8 +13,8 @@ clustTrend(tcgs, expr, Subject_ID, TimePoint, threshold = 0.05,
   ref = NULL, group_of_interest = NULL, FUNcluster = NULL,
   clustering_metric = "euclidian", clustering_method = "ward",
   B = 100, max_trends = 4, aggreg.fun = "median",
-  trend.fun = "median", methodOptiClust = "firstSEmax",
-  indiv = "genes", verbose = TRUE)
+  na.rm.aggreg = TRUE, trend.fun = "median",
+  methodOptiClust = "firstSEmax", indiv = "genes", verbose = TRUE)
 
 \method{print}{ClusteredTrends}(x, ...)
 
@@ -128,6 +128,11 @@ or the name of any other defined statistics function that returns a single
 numeric value.  It specifies the function used to aggregate the observations
 before the clustering.  Default is to \code{median}.  Default is
 \code{"median"}.}
+
+\item{na.rm.aggreg}{a logical flag indicating whether \code{NA} should be remove to prevent 
+propagation through \code{aggreg.fun}. Can be useful to set to TRUE with 
+unbalanced design as those will generate structural \code{NA}s in 
+\code{$Estimations}. Default is \code{TRUE}.}
 
 \item{trend.fun}{a character string such as \code{"mean"}, \code{"median"} or
 the name of any other function that returns a single numeric value.  It

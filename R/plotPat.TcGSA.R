@@ -141,11 +141,18 @@
 #'\code{\link[cluster:clusGap]{clusGap}}.
 #'@param max_trends integer specifying the maximum number of different clusters
 #'to be tested.  Default is \code{4}.
+#'
 #'@param aggreg.fun a character string such as \code{"mean"}, \code{"median"}
 #'or the name of any other statistics function defined that returns a single
 #'numeric value.  It specifies the function used to aggregate the observations
 #'before the clustering.  Default is to \code{median}.  Default is
 #'\code{"median"}.
+#'
+#'@param na.rm.aggreg
+#'a logical flag indicating whether \code{NA} should be remove to prevent 
+#'propagation through \code{aggreg.fun}. Can be useful to set to TRUE with 
+#'unbalanced design as those will generate structural \code{NA}s in 
+#'\code{$Estimations}. Default is \code{TRUE}.
 #'
 #'@param methodOptiClust 
 #'character string indicating how the "optimal"" number
@@ -352,7 +359,7 @@ function(x, threshold=0.05, myproc="BY", nbsimu_pval=1e+06,
          baseline=NULL, only.signif=TRUE,
          group.var=NULL, Group_ID_paired=NULL, ref=NULL, group_of_interest=NULL,
          FUNcluster=NULL, clustering_metric="euclidian", clustering_method="ward", B=500,
-         max_trends=4, aggreg.fun="median",
+         max_trends=4, aggreg.fun="median", na.rm.aggreg=TRUE,
          methodOptiClust = "firstSEmax",
          verbose=TRUE,
          clust_trends=NULL,
@@ -397,7 +404,7 @@ if(FALSE){
     clust_trends <- clustTrend(x=x, expr=expr, Subject_ID=Subject_ID, TimePoint=TimePoint, baseline=baseline, only.signif=TRUE,
                                group.var=group.var, Group_ID_paired=Group_ID_paired, ref=ref, group_of_interest=group_of_interest,
                                FUNcluster=FUNcluster, clustering_metric=clustering_metric, clustering_method=clustering_method, B=B,
-                               max_trends=max_trends, aggreg.fun=aggreg.fun,
+                               max_trends=max_trends, aggreg.fun=aggreg.fun, na.rm.aggreg = na.rm.aggreg,
                                methodOptiClust = methodOptiClust,
                                indiv="genes",
                                verbose=verbose
@@ -412,7 +419,7 @@ if(FALSE){
                    baseline=baseline, only.signif=only.signif,
                    group.var=group.var, Group_ID_paired=Group_ID_paired, ref=ref, group_of_interest=group_of_interest,
                    FUNcluster=FUNcluster, clustering_metric=clustering_metric, clustering_method=clustering_method, B=B,
-                   max_trends=max_trends, aggreg.fun=aggreg.fun,
+                   max_trends=max_trends, aggreg.fun=aggreg.fun, na.rm.aggreg = na.rm.aggreg, 
                    methodOptiClust = methodOptiClust,
                    indiv="genes",
                    verbose=verbose,
@@ -514,14 +521,14 @@ if(FALSE){
         data_stand_interest <- t(apply(X=data_sel[,group.var==group_of_interest], MARGIN=1, FUN=scale))
         
         if(is.null(Group_ID_paired)){
-          data_stand_ByTP_ref <- t(apply(X=data_stand_ref, MARGIN=1, FUN=Fun_byIndex, index=as.factor(TimePoint)[group.var==ref], fun=aggreg.fun))
-          data_stand_ByTP_interest <- t(apply(X=data_stand_interest, MARGIN=1, FUN=Fun_byIndex, index=as.factor(TimePoint)[group.var==group_of_interest], fun=aggreg.fun))                         
+          data_stand_ByTP_ref <- t(apply(X=data_stand_ref, MARGIN=1, FUN=Fun_byIndex, index=as.factor(TimePoint)[group.var==ref], fun=aggreg.fun, na.rm=na.rm.aggreg))
+          data_stand_ByTP_interest <- t(apply(X=data_stand_interest, MARGIN=1, FUN=Fun_byIndex, index=as.factor(TimePoint)[group.var==group_of_interest], fun=aggreg.fun, na.rm=na.rm.aggreg))                         
           data_stand_ByTP <- data_stand_ByTP_interest-data_stand_ByTP_ref
         }else{
           data_diff <- t(apply(X=cbind.data.frame(data_stand_interest, -data_stand_ref), MARGIN=1, FUN=Fun_byIndex, 
                                 index=(as.factor(c(TimePoint[group.var==group_of_interest], TimePoint[group.var==ref])):as.factor(c(as.character(Group_ID_paired)[group.var==group_of_interest], as.character(Group_ID_paired)[group.var==ref]))),
                                 fun=sum))
-          data_stand <- t(apply(X=data_diff, MARGIN=1, FUN=Fun_byIndex, index=sort(as.factor(TimePoint[group.var==group_of_interest])), fun=aggreg.fun))
+          data_stand <- t(apply(X=data_diff, MARGIN=1, FUN=Fun_byIndex, index=sort(as.factor(TimePoint[group.var==group_of_interest])), fun=aggreg.fun, na.rm=na.rm.aggreg))
         }
       }
       
@@ -552,7 +559,7 @@ if(FALSE){
                baseline=baseline, only.signif=only.signif,
                group.var=group.var, Group_ID_paired=Group_ID_paired, ref=ref, group_of_interest=group_of_interest,
                FUNcluster=FUNcluster, clustering_metric=clustering_metric, clustering_method=clustering_method, B=B,
-               max_trends=max_trends, aggreg.fun=aggreg.fun,
+               max_trends=max_trends, aggreg.fun=aggreg.fun, na.rm.aggreg=na.rm.aggreg,
                methodOptiClust = methodOptiClust,
                indiv="genes",
                verbose=verbose,

@@ -156,6 +156,12 @@
 #'before the clustering.  Default is to \code{median}.  Default is
 #'\code{"median"}.
 #'
+#'@param na.rm.aggreg
+#'a logical flag indicating whether \code{NA} should be remove to prevent 
+#'propagation through \code{aggreg.fun}. Can be useful to set to TRUE with 
+#'unbalanced design as those will generate structural \code{NA}s in 
+#'\code{$Estimations}. Default is \code{TRUE}.
+#'
 #'@param methodOptiClust 
 #'character string indicating how the "optimal"" number
 #'of clusters is computed from the gap statistics and their standard
@@ -382,7 +388,7 @@ plot.TcGSA <-
 			 group.var=NULL, Group_ID_paired=NULL, ref=NULL, group_of_interest=NULL,
 			 ranking=FALSE,
 			 FUNcluster=NULL, clustering_metric="euclidian", clustering_method="ward", B=500,
-			 max_trends=4, aggreg.fun="median",
+			 max_trends=4, aggreg.fun="median", na.rm.aggreg = TRUE,
 			 methodOptiClust = "firstSEmax",
 			 indiv="genes",
 			 verbose=TRUE,
@@ -472,7 +478,7 @@ plot.TcGSA <-
 			clust_trends <- clustTrend(tcgs=x, expr=expr, Subject_ID=Subject_ID, TimePoint=TimePoint, baseline=baseline, only.signif=only.signif,
 									   group.var=group.var, Group_ID_paired=Group_ID_paired, ref=ref, group_of_interest=group_of_interest,
 									   FUNcluster=FUNcluster, clustering_metric=clustering_metric, clustering_method=clustering_method, B=B,
-									   max_trends=max_trends, aggreg.fun=aggreg.fun,
+									   max_trends=max_trends, aggreg.fun=aggreg.fun, na.rm.aggreg=na.rm.aggreg,
 									   methodOptiClust = methodOptiClust,
 									   indiv=indiv,
 									   verbose=verbose

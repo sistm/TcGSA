@@ -141,6 +141,12 @@
 #'numeric value.  It specifies the function used to aggregate the observations
 #'before the clustering.  Default is to \code{median}.
 #'
+#'@param na.rm.aggreg
+#'a logical flag indicating whether \code{NA} should be remove to prevent 
+#'propagation through \code{aggreg.fun}. Can be useful to set to TRUE with 
+#'unbalanced design as those will generate structural \code{NA}s in 
+#'\code{$Estimations}. Default is \code{TRUE}.
+#'
 #'@param trend.fun 
 #'a character string such as \code{"mean"}, \code{"median"} or
 #'the name of any other function that returns a single numeric value.  It
@@ -316,7 +322,8 @@ plotSelect.GS <-
 			 baseline=NULL,
 			 group.var=NULL, Group_ID_paired=NULL, ref=NULL, group_of_interest=NULL,
 			 FUNcluster=NULL, clustering_metric="euclidian", clustering_method="ward", B=500,
-			 max_trends=4, aggreg.fun="median", trend.fun="median",
+			 max_trends=4, aggreg.fun="median", na.rm.aggreg=TRUE, 
+			 trend.fun="median",
 			 methodOptiClust = "firstSEmax",
 			 #indiv="genes",
 			 verbose=TRUE,
@@ -413,7 +420,7 @@ plotSelect.GS <-
 			all_clust[[gs]] <- plot1GS(expr, gmt, Subject_ID, TimePoint, geneset.name=gs, 
 									   baseline, group.var, Group_ID_paired, ref, group_of_interest,
 									   FUNcluster, clustering_metric, clustering_method, B,
-									   max_trends, aggreg.fun, trend.fun,
+									   max_trends, aggreg.fun, na.rm.aggreg, trend.fun,
 									   methodOptiClust,
 									   indiv="genes",
 									   verbose=verbose,
