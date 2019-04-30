@@ -16,8 +16,7 @@ cache:
 # Adapt as necessary starting from here
 
 build_script:
-  - R -e source('https://install-github.me/r-lib/remotes')
-  - travis-tool.sh install_bioc_deps
+  - travis-tool.sh install_bioc GEOquery multtest
   - travis-tool.sh install_deps
 
 test_script:
@@ -30,16 +29,13 @@ on_failure:
 environment:
   global:
     NOT_CRAN: true
-    R_REMOTES_STANDALONE: true
     R_BUILD_ARGS: '--no-manual --no-resave-data'
     WARNINGS_ARE_ERRORS: 1
-    _R_CHECK_FORCE_SUGGESTS_: 0
     R_ARCH: x64
     USE_RTOOLS: true ## to be able to use Remotes (i.e. packages from non-CRAN sources)
 
   matrix:
     - R_VERSION: release
-    
     - R_VERSION: devel
 
 artifacts:
