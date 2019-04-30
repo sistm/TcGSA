@@ -1,6 +1,6 @@
 # News about the `TcGSA` R package
 
-### Main changes in Version 0.12.3 (2019-04-30) --- *this is only a minor release*:
+### Main changes in Version 0.12.4 (2019-04-30) --- *this is only a minor release*:
 * Prevent the simultaneous use of `baseline` and `group.var` in plotting functions 
 * Added `na.rm`support for `aggreg.fun` everywhere
 

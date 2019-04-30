@@ -6,7 +6,7 @@
 #'\tabular{ll}{
 #'Package: \tab TcGSA\cr
 #'Type: \tab Package\cr
-#'Version: \tab 0.12.3\cr
+#'Version: \tab 0.12.4\cr
 #'Date: \tab 2019-04-30\cr
 #'License:\tab \href{http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt}{GPL-2}\cr
 #'}

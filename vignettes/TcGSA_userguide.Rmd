@@ -15,7 +15,7 @@ vignette: >
 ```{r pre, echo=FALSE, warning=FALSE, include=FALSE}
 library(knitr)
 is_check <- ("CheckExEnv" %in% search()) || any(c("_R_CHECK_TIMINGS_", "_R_CHECK_LICENSE_") %in% names(Sys.getenv()))
-knitr::opts_chunk$set(echo = TRUE, eval=FALSE, #!is_check, cache=TRUE,
+knitr::opts_chunk$set(echo = TRUE, eval=!is_check, cache=TRUE,
 					  collapse = TRUE,
 					  comment = "#>"
 )
