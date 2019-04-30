@@ -15,7 +15,10 @@ vignette: >
 ```{r pre, echo=FALSE, warning=FALSE, include=FALSE}
 library(knitr)
 is_check <- ("CheckExEnv" %in% search()) || any(c("_R_CHECK_TIMINGS_", "_R_CHECK_LICENSE_") %in% names(Sys.getenv()))
-knitr::opts_chunk$set(echo = TRUE, eval=!is_check, cache=TRUE)
+knitr::opts_chunk$set(echo = TRUE, eval=FALSE, #!is_check, cache=TRUE,
+					  collapse = TRUE,
+					  comment = "#>"
+)
 #rmarkdown::render("vignettes/TcGSA_userguide.Rmd")
 ```
 
@@ -64,7 +67,7 @@ One can either use already existing `gmt` objects, or build their own.
 To import the `gmt`s used in *Hejblum et al., 2015*, one can download the 
 supplementary file by running the following command: 
 
-```{r GS_import, message=FALSE, cache=TRUE}
+```{r GS_import, message=FALSE}
 temp <- tempfile()
 utils::download.file("http://doi.org/10.1371/journal.pcbi.1004310.s007", destfile = temp, mode = "wb")
 load(unz(temp, "ReproducibleRFiles/GMTs_PLOScb.RData", open = "r"))
@@ -146,7 +149,7 @@ if (!requireNamespace("GEOquery", quietly = TRUE)) {
 }
 ```
 
-```{r import_dalia, message=FALSE, cache=TRUE, results='hide'}
+```{r import_dalia, message=FALSE, results='hide'}
 GEOquery::getGEOSuppFiles('GSE46734', filter_regex="(*NonParamCombat*)|(*DESIGN*)")
 ```
 
@@ -159,7 +162,7 @@ GEOquery::getGEOSuppFiles('GSE46734', filter_regex="(*NonParamCombat*)|(*DESIGN*
 
 The design data matrix (called `design_preATI`) is extracted from one of the GEO supplementary files. It contains the needed experimental variables, plus some additional information regarding this study. Some data processing is performed made according to the source of this paper.
 
-```{r design_dalia, cache=TRUE}
+```{r design_dalia}
 design <- read.delim(gzfile("GSE46734/GSE46734_DALIA1longitudinalTranscriptome_DESIGN_anonym.txt.gz"))
 design_preATI <- design[-which(design$TimePoint<0 | design$TimePoint==16 | design$TimePoint>22), ]
 head(design_preATI,5)
@@ -226,7 +229,7 @@ This function provides the result of likelihood ratio test using the linear mixe
 * `time_name`: name of the time measurements in the design data matrix
 
 
-```{r LR_ST, message=FALSE, warning=FALSE, cache=TRUE}
+```{r LR_ST, message=FALSE, warning=FALSE}
 tcgsa_result <- TcGSA::TcGSA.LR(expr = expr_preATI, 
 								gmt = gmt_modulesV2, 
 								design = design_preATI, 
@@ -234,7 +237,7 @@ tcgsa_result <- TcGSA::TcGSA.LR(expr = expr_preATI,
 								time_name = "TimePoint")
 ```
 
-```{r tcgsa_result, cache=TRUE, echo=FALSE}
+```{r tcgsa_result, echo=FALSE}
 tcgsa_result
 ```
 
@@ -248,7 +251,7 @@ ratio test results:
 To get the number of significant gene sets, one can use `summary` function 
 on a `tcgsa` object:
 
-```{r summary_dalia, cache=TRUE}
+```{r summary_dalia}
 summary(tcgsa_result)
 ```
 
@@ -258,7 +261,7 @@ sets tested, along their p-values with adjustment for multiple testing (default
 option is `BY` for Benjamini-Yekutieli correction *Benjamini et Yekutieli, 2001*
 and 5% threshold). Below is an example of five significant gene sets:
 
-```{r signifLRT_ST, cache=TRUE}
+```{r signifLRT_ST}
 head(TcGSA::signifLRT.TcGSA(tcgsa_result)$mixedLRTadjRes)
 ```
 
@@ -266,7 +269,7 @@ You can also use the `multtest.TcGSA` function to provide the likelihood ratios,
 raw and adjusted p-values for the whole gene sets with 5% threshold. Below is an 
 example displaying only for five results:
 
-```{r multtest_ST, cache=TRUE}
+```{r multtest_ST}
 head(TcGSA::multtest.TcGSA(tcgsa_result))
 ```
 
@@ -289,7 +292,7 @@ function requires the following:
 - `time_unit`: string to be displayed before to the values of `TimePoint` on the x-axis (such as 'D' for 'days' for instance - **optional**)
 
 
-```{r plot1GS_ST, message=FALSE, warning=FALSE, fig.keep='all', cache=TRUE}
+```{r plot1GS_ST, message=FALSE, warning=FALSE, fig.keep='all'}
 TcGSA::plot1GS(expr = expr_preATI, 
 			   #plot1GS(expr = tcgsa_result$Estimations,
 			   gmt = gmt_modulesV2, 
@@ -334,7 +337,7 @@ package (see appendix for more details on `GEOquery`)
 
 Here, we download the data files and import them with `getGEO()` function:
 
-```{r import_ober, message=FALSE, warning=FALSE, cache=TRUE}
+```{r import_ober, message=FALSE, warning=FALSE}
 utils::download.file("ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE30nnn/GSE30101/soft/GSE30101_family.soft.gz", destfile = "GSE30101_family.soft.gz", mode = "wb", cacheOK = FALSE)
 gse.soft <- GEOquery::getGEO(filename="GSE30101_family.soft.gz")
 ```
@@ -342,7 +345,7 @@ gse.soft <- GEOquery::getGEO(filename="GSE30101_family.soft.gz")
 Additional processing is needed to shape our dataset into a gene expression 
 matrix:
 
-```{r expr_ober, cache=TRUE}
+```{r expr_ober}
 probesIDs <- GEOquery::Table(GEOquery::GSMList(gse.soft)[[1]])$ID
 data.matrix <- do.call('cbind', lapply(GEOquery::GSMList(gse.soft),
 									   function(x) {
@@ -357,7 +360,7 @@ rownames(expr.All.ChaussVac) <- probesIDs
 
 The experimental design data matrix can be extracted with the following commands:
 
-```{r design_ober, cache=TRUE}
+```{r design_ober}
 design_list <- lapply(GEOquery::GSMList(gse.soft), 
 					  function(x){GEOquery::Meta(x)$characteristics_ch1})
 design <- data.frame(row.names = names(design_list))
@@ -447,7 +450,7 @@ This function provides the result of likelihood ratio test using the linear mixe
 - `group_name`: the group of treatment in the design data matrix
 
 
-```{r LR_MT, cache=TRUE, message=FALSE, warning=FALSE}
+```{r LR_MT, message=FALSE, warning=FALSE}
 tcgsa_result_MT <- TcGSA::TcGSA.LR(expr = expr.PNEUMOvsSALINE.ChaussVac.AvgBl, 
 								   gmt = gmt_modulesV2,
 								   design = design.PNEUMOvsSALINE.ChaussVac.AvgBl, 
@@ -474,7 +477,7 @@ head(TcGSA::signifLRT.TcGSA(tcgsa_result_MT)$mixedLRTadjRes)
 * `group_of_interest`: name of a treatment in the design data matrix
 
 
-```{r clust_MT, message=FALSE, warning=FALSE, cache=TRUE}
+```{r clust_MT, message=FALSE, warning=FALSE}
 clust <- TcGSA::clustTrend(tcgs = tcgsa_result_MT, 
 						   expr=tcgsa_result_MT$Estimations,
 						   Subject_ID=design.PNEUMOvsSALINE.ChaussVac.AvgBl$Patient_ID,
@@ -499,7 +502,7 @@ clust
 * `clust_trends`: cluster object with the clusters of genes from their trends dynamics
 
 
-```{r heatmap_MT, message=FALSE, cache=TRUE, results='asis'}
+```{r heatmap_MT, message=FALSE, results='asis'}
 plot(x=tcgsa_result_MT, expr=tcgsa_result_MT$Estimations,
 	 Subject_ID=design.PNEUMOvsSALINE.ChaussVac.AvgBl$Patient_ID,
 	 TimePoint=design.PNEUMOvsSALINE.ChaussVac.AvgBl$TimePoint,
