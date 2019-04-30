@@ -5,7 +5,7 @@ warnings_are_errors: false
 
 r:
 - release
-- bioc-devel
+- devel
 
 os:
 - linux
@@ -49,4 +49,4 @@ r_check_args: "--as-cran --no-build-vignettes --no-manual --timings"
 
 env:
   global:
-	- _R_CHECK_TIMINGS_="0"
+  - _R_CHECK_TIMINGS_="0"
