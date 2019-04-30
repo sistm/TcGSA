@@ -6,6 +6,7 @@ warnings_are_errors: false
 r:
 - release
 - devel
+- bioc-devel
 
 os:
 - linux
