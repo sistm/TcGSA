@@ -29,7 +29,8 @@ on_failure:
 
 environment:
   global:
-    WARNINGS_ARE_ERRORS: 1
+	  NOT_CRAN: true
+    WARNINGS_ARE_ERRORS:
     _R_CHECK_FORCE_SUGGESTS_: 0
     R_ARCH: x64
     USE_RTOOLS: true ## to be able to use Remotes (i.e. packages from non-CRAN sources)
@@ -37,7 +38,7 @@ environment:
   matrix:
     - R_VERSION: release
     
-    - R_VERSION: bioc-devel
+    - R_VERSION: devel
 
 artifacts:
   - path: '*.Rcheck\**\*.log'
