@@ -360,8 +360,8 @@ plot1GS <-
 			 plot=TRUE
 	){
 		
-		if(!is.null(group.var) | !is.null(ref) | !is.null(group_of_interest)){
-			warning("multigroup option is not implemented yet for plot1GS\n Defaulting back to only 1 group representation instead")	
+		if((!is.null(group.var) | !is.null(ref) | !is.null(group_of_interest)) & indiv == "patients"){
+			warning("multigroup is not implemented yet for plot1GS when 'indiv = \"patients\"'\n  Defaulting back to only 1 group representation instead")	
 		}
 		if(is.null(group.var) & (!is.null(group_of_interest) | !is.null(ref))){
 			stop("'group.var' is NULL while 'group_of_interest' or 'ref' is not")
@@ -447,8 +447,20 @@ plot1GS <-
 		
 
 		data_stand <- t(apply(X=data_sel, MARGIN=1, FUN=scale))
+		browser()
 		if(indiv == "genes"){
-			data_stand_MedianByTP <- t(apply(X=data_stand, MARGIN=1, FUN=Fun_byIndex, index=as.factor(TimePoint), fun=aggreg.fun, na.rm=na.rm.aggreg))
+			if(!is.null(group.var)){
+				data_stand_MedianByTP <- list()
+				for(gr in levels(group.var)){
+					data_stand_MedianByTP[[gr]] <- t(apply(X=data_stand[, group.var==gr], MARGIN=1,
+														   FUN=Fun_byIndex, index=as.factor(TimePoint[group.var==gr]), 
+														   fun=aggreg.fun, na.rm=na.rm.aggreg))
+				}
+			}else{
+				data_stand_MedianByTP <- t(apply(X=data_stand, MARGIN=1, FUN=Fun_byIndex, 
+												 index=as.factor(TimePoint), fun=aggreg.fun, 
+												 na.rm=na.rm.aggreg))
+			}
 		}else if(indiv=="patients"){
 			data_tocast <- cbind.data.frame(TimePoint, Subject_ID, "M" = apply(X=data_stand, MARGIN=2, FUN=aggreg.fun, na.rm=na.rm.aggreg))
 			data_stand_MedianByTP <- as.matrix(acast(data_tocast, formula="Subject_ID~TimePoint", value.var="M"))
@@ -460,14 +472,17 @@ plot1GS <-
 			if(length(colbaseline)==0){
 				stop("the 'baseline' value used is not one of the time points in 'TimePoint'...\n\n")
 			}
-			data_stand_MedianByTP <- data_stand_MedianByTP-data_stand_MedianByTP[,colbaseline]
+			if(!is.null(group.var)){
+				data_stand_MedianByTP <- lapply(data_stand_MedianByTP, function(x){x - x[, colbaseline]})
+			}else{
+				data_stand_MedianByTP <- data_stand_MedianByTP - data_stand_MedianByTP[, colbaseline]
+			}
 		}
 		
 		if(!pre_clustering && (clustering | showTrend) && length(which(is.na(data_stand_MedianByTP)))>0){
 			warning("Unable to compute optimal number of clusters/trends due to missing values\n")
 			clustering <- FALSE
 			showTrend <- FALSE
-			
 		}
 		
 		if(clustering | showTrend){
@@ -475,46 +490,86 @@ plot1GS <-
 				if(verbose){
 					message("Optimally clustering...\n")
 				}
-				kmax <- ifelse(dim(data_stand_MedianByTP)[1]>4, max_trends, dim(data_stand_MedianByTP)[1]-1)
+				kmax <- ifelse(nrow(data_stand_MedianByTP) > 4, max_trends, nrow(data_stand_MedianByTP) - 1)
+				
+				if(!is.null(group.var)){
+					data_stand_MedianByTP_collapsed <- do.call(cbind, data_stand_MedianByTP)
+				}else{
+					data_stand_MedianByTP_collapsed <- data_stand_MedianByTP
+				}
 				
 				if(kmax>=2){
-					if(clustering_metric!="sts"){
-						cG <- clusGap(x=data_stand_MedianByTP, FUNcluster=FUNcluster, K.max=kmax, B=B, verbose=FALSE)
+					if(clustering_metric != "sts"){
+						cG <- clusGap(x=data_stand_MedianByTP_collapsed, FUNcluster=FUNcluster, K.max=kmax, B=B, verbose=FALSE)
 						nc <- maxSE(f = cG$Tab[, "gap"], SE.f = cG$Tab[, "SE.sim"], method = methodOptiClust)
-						clust <- FUNcluster(data_stand_MedianByTP, k=nc)$cluster
+						clust <- FUNcluster(data_stand_MedianByTP_collapsed, k=nc)$cluster
 					}else{
-						cG <- clusGap(x=data_stand_MedianByTP, FUNcluster=FUNcluster, K.max=kmax, B=B, verbose=FALSE, time=as.numeric(colnames(data_stand_MedianByTP)))
+						cG <- clusGap(x=data_stand_MedianByTP_collapsed, FUNcluster=FUNcluster, K.max=kmax, B=B, verbose=FALSE, time=as.numeric(colnames(data_stand_MedianByTP_collapsed)))
 						nc <- maxSE(f = cG$Tab[, "gap"], SE.f = cG$Tab[, "SE.sim"], method = methodOptiClust)
-						clust <- FUNcluster(data_stand_MedianByTP, k=nc, time=as.numeric(colnames(data_stand_MedianByTP)))$cluster
+						clust <- FUNcluster(data_stand_MedianByTP_collapsed, k=nc, time=as.numeric(colnames(data_stand_MedianByTP_collapsed)))$cluster
 					}    
 				}else{
 					nc <- 1
-					clust <- rep(1, dim(data_stand_MedianByTP)[1])
+					clust <- rep(1, nrow(data_stand_MedianByTP))
 				}
 				
 				
-				
-				medoids <- as.data.frame(t(apply(X=data_stand_MedianByTP, MARGIN=2, FUN=Fun_byIndex, index=clust, fun=trend.fun)))
-				if(dim(medoids)[1] == 1){
-					medoids <- cbind.data.frame("TimePoint"= colnames(medoids), "1"=t(medoids))
+				if(!is.null(group.var)){
+					medoids <- lapply(data_stand_MedianByTP, function(x){
+						as.data.frame(t(apply(X=x, MARGIN=2, FUN=Fun_byIndex, index=clust, fun=trend.fun)))
+					})
+					if(nrow(medoids[[1]]) == 1){
+						medoids <- lapply(medoids, function(x){
+							cbind.data.frame("TimePoint"= colnames(x), "1" = t(x))
+						})
+					}else{
+						medoids <- lapply(medoids, function(x){
+							cbind.data.frame("TimePoint"= rownames(x), x)
+						})
+					}
 				}else{
-					medoids <- cbind.data.frame("TimePoint"= rownames(medoids), medoids)
+					medoids <- as.data.frame(t(apply(X=data_stand_MedianByTP, MARGIN=2, FUN=Fun_byIndex, index=clust, fun=trend.fun)))	
+					if(nrow(medoids) == 1){
+						medoids <- cbind.data.frame("TimePoint"= colnames(medoids), "1" = t(medoids))
+					}else{
+						medoids <- cbind.data.frame("TimePoint"= rownames(medoids), medoids)
+					}
 				}
 			}else{
 				
 				clust <- precluster
 				if(indiv=="genes"){
-				medoids <- as.data.frame(t(apply(X=data_stand_MedianByTP, MARGIN=2, FUN=Fun_byIndex, 
-												 index=as.factor(as.numeric(precluster)), fun=trend.fun, na.rm=TRUE)))
+					if(!is.null(group.var)){
+						medoids <- lapply(data_stand_MedianByTP, function(x){
+							as.data.frame(t(apply(X=x, MARGIN=2, FUN=Fun_byIndex, 
+												  index=as.factor(as.numeric(precluster)), 
+												  fun=trend.fun, na.rm=TRUE)))
+						})
+						if(nrow(medoids[[1]]) == 1){
+							medoids <- lapply(medoids, function(x){
+								cbind.data.frame("TimePoint"= colnames(x), "1" = t(x))
+							})
+						}else{
+							medoids <- lapply(medoids, function(x){
+								cbind.data.frame("TimePoint"= rownames(x), x)
+							})
+						}
+						for(i in 1:length(medoids)){
+							colnames(medoids[[i]]) <- c("TimePoint", levels(as.factor(as.numeric(precluster))))
+						}
+					}else{
+						medoids <- as.data.frame(t(apply(X=data_stand_MedianByTP, MARGIN=2, FUN=Fun_byIndex, 
+														 index=as.factor(as.numeric(precluster)), fun=trend.fun, na.rm=TRUE)))
+						if(nrow(medoids)==1){
+							medoids <- cbind.data.frame("TimePoint"= colnames(medoids), "1" = t(medoids))
+						}else{
+							medoids <- cbind.data.frame("TimePoint"= rownames(medoids), medoids)
+						}
+						colnames(medoids) <- c("TimePoint", levels(as.factor(as.numeric(precluster))))
+					}
 				}else if(indiv=="patients"){
 					stop("'precluster' is only implemented for indiv = 'genes'")
 				}
-				if(nrow(medoids)==1){
-					medoids <- cbind.data.frame("TimePoint"= colnames(medoids), "1"=t(medoids))
-				}else{
-					medoids <- cbind.data.frame("TimePoint"= rownames(medoids), medoids)
-				}
-				colnames(medoids) <- c("TimePoint", levels(as.factor(as.numeric(precluster))))
 			}
 			if(verbose){
 				message("DONE\n")
@@ -534,23 +589,43 @@ plot1GS <-
 				position<-order(as.character(position))
 			}
 		}else{
-			medoids <- cbind.data.frame("TimePoint"=colnames(data_stand_MedianByTP), "1"='NA')
+			if(!is.null(group.var)){
+				medoids <- list()
+				for(i in 1:length(medoids)){
+					medoids[[i]] <- cbind.data.frame("TimePoint"=colnames(data_stand_MedianByTP[[i]]), "1"='NA')
+				}
+			}else{
+				medoids <- cbind.data.frame("TimePoint"=colnames(data_stand_MedianByTP), "1"='NA')
+			}
 			clust <- rep(NA, dim(data_stand_MedianByTP)[1])
 		}
 		
 		
-		medoids$TimePoint <- as.numeric(as.character(medoids$TimePoint))
-		colnames(data_stand_MedianByTP) <- as.numeric(colnames(data_stand_MedianByTP))
-		
-		classif <- cbind.data.frame("ProbeID"=rownames(data_stand_MedianByTP), "Cluster"=clust)
-		
-		meltedData <- melt(cbind.data.frame("Probe_ID"=rownames(data_stand_MedianByTP), "Cluster"=classif$Cluster, data_stand_MedianByTP), id.vars=c("Probe_ID", "Cluster"), variable.name="TimePoint")
-		meltedStats <- melt(medoids, id.vars="TimePoint", variable.name="Cluster")
+		classif <- cbind.data.frame("ProbeID"=rownames(data_stand), "Cluster"=clust)
+		if(is.null(group.var)){
+			medoids$TimePoint <- as.numeric(as.character(medoids$TimePoint))
+			colnames(data_stand_MedianByTP) <- as.numeric(colnames(data_stand_MedianByTP))
+			
+			meltedData <- melt(cbind.data.frame("Probe_ID"=rownames(data_stand), "Cluster"=classif$Cluster, data_stand_MedianByTP), id.vars=c("Probe_ID", "Cluster"), variable.name="TimePoint")
+			meltedStats <- melt(medoids, id.vars="TimePoint", variable.name="Cluster")
+		}else{
+			meltedData <- list()
+			meltedStats <- list()
+			for(i in 1:length(medoids)){
+				medoids[[i]]$TimePoint <- as.numeric(as.character(medoids[[i]]$TimePoint))
+				colnames(data_stand_MedianByTP[[i]]) <- as.numeric(colnames(data_stand_MedianByTP[[i]]))
+				meltedData[[i]] <- melt(cbind.data.frame("Probe_ID"=rownames(data_stand), "Cluster"=classif$Cluster, "Group"= levels(group.var)[i],
+														 data_stand_MedianByTP[[i]]), id.vars=c("Probe_ID", "Cluster", "Group"), variable.name="TimePoint")
+				meltedStats[[i]] <- melt(cbind.data.frame(medoids[[i]], "Group"= levels(group.var)[i]),
+														  id.vars=c("TimePoint", "Group"), variable.name="Cluster")
+			}
+			meltedData <- do.call(rbind, meltedData)
+			meltedStats <- do.call(rbind, meltedStats)
+		}
 		meltedData$Cluster <- as.character(meltedData$Cluster)
 		meltedData$TimePoint <- as.numeric(as.character(meltedData$TimePoint))
 		meltedStats$TimePoint <- as.numeric(as.character(meltedStats$TimePoint))
 		MeasPt <- unique(meltedData$TimePoint)
-		
 		
 		# 		browser()
 		# 		pca_data <- acast(meltedData, formula=TimePoint~Probe_ID)
@@ -676,6 +751,10 @@ plot1GS <-
 					p <- p + scale_size_continuous(name="", labels=capwords(trend.fun))
 				}	
 			}
+		}
+		
+		if(!is.null(group.var)){
+			p <- p + facet_wrap(~Group, labeller = "label_both")
 		}
 		
 		for(a in gg.add){
