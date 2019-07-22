@@ -447,7 +447,7 @@ plot1GS <-
 		
 
 		data_stand <- t(apply(X=data_sel, MARGIN=1, FUN=scale))
-		browser()
+
 		if(indiv == "genes"){
 			if(!is.null(group.var)){
 				data_stand_MedianByTP <- list()
