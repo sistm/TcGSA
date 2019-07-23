@@ -340,6 +340,19 @@
 #'                    guides(colour = guide_legend(reverse=TRUE))),
 #'        lab.cex=0.7
 #')
+#'
+#'plot1GS(expr=expr_1grp, TimePoint=design$TimePoint, 
+#'        Subject_ID=design$Patient_ID, gmt=gmt_sim,
+#'        geneset.name="Gene set 5",
+#'        indiv="genes",
+#'        group.var = design$group.var,
+#'        time_unit="H",
+#'        title="",
+#'        gg.add=list(scale_color_manual(values=colval), 
+#'                    guides(colour = guide_legend(reverse=TRUE))),
+#'        lab.cex=0.7
+#')
+#'
 #'}
 #'
 plot1GS <- 
