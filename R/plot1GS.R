@@ -490,7 +490,7 @@ plot1GS <-
 				if(verbose){
 					message("Optimally clustering...\n")
 				}
-				kmax <- ifelse(nrow(data_stand_MedianByTP) > 4, max_trends, nrow(data_stand_MedianByTP) - 1)
+				
 				
 				if(!is.null(group.var)){
 					data_stand_MedianByTP_collapsed <- do.call(cbind, data_stand_MedianByTP)
@@ -498,6 +498,7 @@ plot1GS <-
 					data_stand_MedianByTP_collapsed <- data_stand_MedianByTP
 				}
 				
+				kmax <- ifelse(nrow(data_stand_MedianByTP_collapsed) > 4, max_trends, nrow(data_stand_MedianByTP_collapsed) - 1)
 				if(kmax>=2){
 					if(clustering_metric != "sts"){
 						cG <- clusGap(x=data_stand_MedianByTP_collapsed, FUNcluster=FUNcluster, K.max=kmax, B=B, verbose=FALSE)
