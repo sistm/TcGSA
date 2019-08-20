@@ -1,3 +1,5 @@
+* This is an update of the TcGSA package
+
 ## Test environments
 * local OS X install, R 3.6.0
 * ubuntu 14.04.5 (on travis-ci, devel and release)
@@ -7,9 +9,6 @@
 ## R CMD check results
 
 0 errors | 0 warnings | 0 note
-
-* This is a update of the TcGSA package
-
 
 ## Reverse dependencies
 

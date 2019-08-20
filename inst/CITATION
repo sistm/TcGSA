@@ -2,7 +2,8 @@ citHeader("To cite TcGSA in publications, please use:")
 
 citEntry(entry = "Article",
    title  = "Time-Course Gene Set Analysis for Longitudinal Gene Expression Data",
-   author = c(person("Boris P Hejblum"), person("Jason Skinner"), person("Rodolphe Thi\\'ebaut")),
+   author = c(person(given = "Boris", middle="P", family="Hejblum"), person("Jason", "Skinner"), 
+   person("Rodolphe", "Thi{\\'e}baut")),
    journal = "PLoS Computational Biology",
    year   = "2015",
    volume = "11",
