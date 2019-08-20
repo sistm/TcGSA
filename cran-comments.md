@@ -1,15 +1,18 @@
-* This is an update of the TcGSA package
+# This is an update of the TcGSA package  
 
-## Test environments
-* local OS X install, R 3.6.0
-* ubuntu 14.04.5 (on travis-ci, devel and release)
-* OS X 10.13.3 (on travis-ci, devel and release)
-* Windows Server 2012 R2 x64 (on appveyor, devel and release)
+## Test environments  
+* local macOS 10.12.6 install, R 3.6.1
+* macOS 10.13.3 (on travis-ci), R devel and release
+* ubuntu 16.04.6 (on travis-ci), R devel and release
+* Windows Visual Studio 2015 (on appveyor), R devel and release
 
-## R CMD check results
-
+## R CMD check results  
 0 errors | 0 warnings | 0 note
 
-## Reverse dependencies
-
+## Reverse dependencies  
 There are no reverse dependencies.
+
+
+Thanks, Boris Hejblum
+
+---
