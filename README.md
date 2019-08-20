@@ -18,10 +18,10 @@ Status](https://ci.appveyor.com/api/projects/status/github/borishejblum/TcGSA?br
 On top of the CRAN help pdf-file, the following article explains what
 TcGSA is about:
 
-> Hejblum, B. P., Skinner, J., & Thiébaut, R. (2015). Time-Course Gene
-> Set Analysis for Longitudinal Gene Expression Data. PLOS Comput Biol,
-> 11(6), e1004310.
-> [doi:10.1371/journal.pcbi.1004310](https://doi.org/10.1371/journal.pcbi.1004310)
+> Hejblum, BP, Skinner, J, & Thiébaut, R (2015). Time-Course Gene Set
+> Analysis for Longitudinal Gene Expression Data. *PLOS Computational
+> Biology*, **11**(6):e1004310.
+> [\<doi: 10.1371/journal.pcbi.1004310\>](https://doi.org/10.1371/journal.pcbi.1004310)
 
 ## Installation
 
