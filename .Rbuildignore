@@ -11,3 +11,6 @@
 ^cran-comments\.md$
 GSE46734/*
 GSE30101*
+CRAN-RELEASE
+^doc$
+^Meta$
