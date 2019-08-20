@@ -528,17 +528,17 @@ argument to specify a quadratic time function with an offset at Day 1.
 
 # References
 
-Ashburner M, Ball CA, Blake JA, Botstein D, Butler H, Cherry JM, et al., (2000) Gene Ontology: tool for the unification of biology. _Nat Genet_ 25(1):25-9. 
+Ashburner M, Ball CA, Blake JA, Botstein D, Butler H, Cherry JM, et al., (2000) Gene Ontology: tool for the unification of biology. _Nat Genet_ **25**(1):25-9. 
 
-Benjamini Y, Yekutieli D, (2001) The Control of the False Discovery Rate in Multiple Testing under Dependency. _Ann Stat_ 29(4):1165-88. 
+Benjamini Y, Yekutieli D, (2001) The Control of the False Discovery Rate in Multiple Testing under Dependency. _Ann Stat_ **29**(4):1165-88. 
 
-Chaussabel D, Quinn C, Shen J, Patel P, Glaser C, Baldwin N, et al., (2008) A Modular Analysis Framework for Blood Genomics Studies: Application to Systemic Lupus Erythematosus. _Immunity_ 29(1):150-64. 
+Chaussabel D, Quinn C, Shen J, Patel P, Glaser C, Baldwin N, et al., (2008) A Modular Analysis Framework for Blood Genomics Studies: Application to Systemic Lupus Erythematosus. _Immunity_ **29**(1):150-64. 
 
-Hejblum BP, Skinner J, Thiebaut R, (2015) Time-Course Gene Set Analysis for Longitudinal Gene Expression Data. _PLOS Comput Biol_ 11(6):e1004310.
+Hejblum BP, Skinner J, Thiebaut R, (2015) Time-Course Gene Set Analysis for Longitudinal Gene Expression Data. _PLOS Comput Biol_ **11**(6):e1004310.
 
-Kanehisa M, Goto S, (2000) KEGG: Kyoto Encyclopedia of Genes and Genomes. _Nucleic Acids Res_ 28(1):27-30.
+Kanehisa M, Goto S, (2000) KEGG: Kyoto Encyclopedia of Genes and Genomes. _Nucleic Acids Res_ **28**(1):27-30.
 
-Obermoser G, Presnell S, Domico K, Xu H, Wang Y, Anguiano E, et al., (2013) Systems Scale Interactive Exploration Reveals Quantitative and Qualitative Differences in Response to Influenza and Pneumococcal Vaccines. _Immunity_ 38(4):831-44. 
+Obermoser G, Presnell S, Domico K, Xu H, Wang Y, Anguiano E, *et al.*, (2013) Systems Scale Interactive Exploration Reveals Quantitative and Qualitative Differences in Response to Influenza and Pneumococcal Vaccines. _Immunity_ **38**(4):831-44. 
 
 
 
