@@ -58,7 +58,7 @@ of the gene expression performed in TcGSA, for 1 or several gene sets.
 }
 \examples{
 
-\dontrun{
+if(interactive()){
 
 data(data_simu_TcGSA)
 

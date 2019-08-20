@@ -133,7 +133,7 @@ have significantly different trends over time depending on \code{Subjects}.
 }
 \examples{
 
-\dontrun{ 
+if(interactive()){
 data(data_simu_TcGSA)
 
 tcgsa_sim_1grp <- TcGSA.LR(expr=expr_1grp, gmt=gmt_sim, design=design, 

@@ -278,7 +278,7 @@
 #'
 #'@examples
 #'
-#'\dontrun{
+#'if(interactive()){
 #'data(data_simu_TcGSA)
 #'tcgsa_sim_1grp <- TcGSA.LR(expr=expr_1grp, gmt=gmt_sim, design=design, 
 #'                           subject_name="Patient_ID", time_name="TimePoint",
@@ -298,7 +298,7 @@
 #'        time_unit="H",
 #'        lab.cex=0.7)
 #'}
-#'\dontrun{        
+#'if(interactive()){      
 #'geneclusters <- plot1GS(expr=tcgsa_sim_1grp$Estimations, TimePoint=design$TimePoint, 
 #'                        Subject_ID=design$Patient_ID, gmt=gmt_sim,
 #'                        geneset.name="Gene set 5",
@@ -309,7 +309,7 @@
 #'geneclusters
 #'}
 #'
-#'\dontrun{
+#'if(interactive()){
 #'library(grDevices)
 #'library(graphics)
 #'colval <- c(hsv(0.56, 0.9, 1),

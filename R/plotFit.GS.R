@@ -76,7 +76,7 @@
 #'
 #'@examples
 #'
-#'\dontrun{
+#'if(interactive()){
 #'
 #'data(data_simu_TcGSA)
 #'

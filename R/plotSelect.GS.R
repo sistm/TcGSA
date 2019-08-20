@@ -270,14 +270,14 @@
 #'
 #'@examples
 #'
-#'\dontrun{ 
+#'if(interactive()){
 #'data(data_simu_TcGSA)
 #'tcgsa_sim_1grp <- TcGSA.LR(expr=expr_1grp, gmt=gmt_sim, design=design, 
 #'                           subject_name="Patient_ID", time_name="TimePoint",
 #'                           time_func="linear", crossedRandom=TRUE)
 #'}
 #'
-#'\dontrun{ 
+#'if(interactive()){
 #'plotSelect.GS(expr=expr_1grp, TimePoint=design$TimePoint, 
 #'        Subject_ID=design$Patient_ID, gmt=gmt_sim,
 #'        geneset.names.select=c("Gene set 4", "Gene set 5"),
@@ -288,7 +288,7 @@
 #')
 #'}
 #'
-#'\dontrun{ 
+#'if(interactive()){
 #'plotSelect.GS(expr=tcgsa_sim_1grp$Estimations, TimePoint=design$TimePoint, 
 #'        Subject_ID=design$Patient_ID, gmt=gmt_sim,
 #'        geneset.names.select=c("Gene set 4", "Gene set 5"),
@@ -300,7 +300,7 @@
 #'}
 #'
 #'
-#'\dontrun{
+#'if(interactive()){
 #'tcgsa_sim_1grp <- TcGSA.LR(expr=expr_1grp, gmt=gmt_sim, design=design, 
 #'                           subject_name="Patient_ID", time_name="TimePoint",
 #'                           time_func="linear", crossedRandom=FALSE)

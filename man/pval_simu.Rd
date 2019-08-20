@@ -21,7 +21,7 @@ from its theoretical null distribution.
 }
 \examples{
 
-\dontrun{ 
+if(interactive()){
 theo_dist <- rnorm(n=10000, mean=0, sd=1)
 TcGSA:::pval_simu(s=1.96, theo_dist)
 1-pnorm(q=1.96, mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE)

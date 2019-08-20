@@ -193,7 +193,7 @@ clusters in the plotted gene set.  See
 }
 \examples{
 
-\dontrun{
+if(interactive()){
 data(data_simu_TcGSA)
 
 tcgsa_sim_1grp <- TcGSA.LR(expr=expr_1grp, gmt=gmt_sim, design=design, 
