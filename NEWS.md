@@ -1,5 +1,9 @@
 # News about the `TcGSA` R package
 
+### Main changes in Version 0.12.7 (2020-01-23) --- *this is only a minor release*:
+* better handling of `NA` values
+* removed gplots dependency (only used in documentation) because `gplots` is orphaned
+
 ### Main changes in Version 0.12.5 (2019-07-22) --- *this is only a minor release*:
 * adding partial support for `group.var` in `plot1GS()`
 
