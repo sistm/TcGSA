@@ -317,7 +317,7 @@
 #'\code{N_clusters}.  If no dynamic clusters were represented, than this is
 #'\code{NULL}.
 #'\item \code{ddr} a \bold{dendrogram} object with the reordering used for the
-#'heatmap.  See \code{\link[gplots]{heatmap.2}} function from package 
+#'heatmap.  See \code{heatmap.2} function from package 
 #'\code{gplots}.
 #'\item gene set.names character vector with the names of the gene sets
 #'used in the heatmap.
@@ -331,7 +331,7 @@
 #'
 #'@author Boris P. Hejblum
 #'
-#'@seealso \code{\link[gplots]{heatmap.2}}, \code{\link{TcGSA.LR}},
+#'@seealso \code{heatmap.2}, \code{\link{TcGSA.LR}},
 #'\code{\link[stats:hclust]{hclust}}
 #'
 #'@references Hejblum BP, Skinner J, Thiebaut R, (2015) 

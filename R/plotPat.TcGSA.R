@@ -307,7 +307,7 @@
 	#'represented gene sets, with as many levels as the value of \code{N_clusters}.
 	#'If no clusters were represented, than this is \code{NULL}.
 	#'\item \code{ddr} a \bold{dendrogram} object with the reordering used for the
-	#'heatmap.  See \code{\link[gplots]{heatmap.2}} function from package 
+	#'heatmap.  See \code{heatmap.2} function from package 
 	#'\code{gplots}.
 	#'\item \code{clustersExport} a data frame with 2 variables containing the two
 	#'following variables : \itemize{ \item \code{GeneSet}: the gene sets
@@ -317,7 +317,7 @@
 #'
 #'@author Boris P. Hejblum
 #'
-#'@seealso \code{\link{plot.TcGSA}}, \code{\link[gplots]{heatmap.2}},
+#'@seealso \code{\link{plot.TcGSA}}, \code{heatmap.2},
 #'\code{\link{TcGSA.LR}}, \code{\link[stats:hclust]{hclust}}
 #'
 #'@references Hejblum BP, Skinner J, Thiebaut R, (2015) 
