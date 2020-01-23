@@ -5,8 +5,13 @@
 \title{Computing the P-value of the Likelihood Ratios Applying a Multiple Testing
 Correction}
 \usage{
-multtest.TcGSA(tcgsa, threshold = 0.05, myproc = "BY", exact = TRUE,
-  nbsimu_pval = 1e+06)
+multtest.TcGSA(
+  tcgsa,
+  threshold = 0.05,
+  myproc = "BY",
+  exact = TRUE,
+  nbsimu_pval = 1e+06
+)
 }
 \arguments{
 \item{tcgsa}{a TcGSA object.}

@@ -4,22 +4,55 @@
 \alias{plotPat.TcGSA}
 \title{Plot a Gene Set Trends Heatmap for each Patient.}
 \usage{
-plotPat.TcGSA(x, threshold = 0.05, myproc = "BY",
-  nbsimu_pval = 1e+06, expr, Subject_ID, TimePoint, baseline = NULL,
-  only.signif = TRUE, group.var = NULL, Group_ID_paired = NULL,
-  ref = NULL, group_of_interest = NULL, FUNcluster = NULL,
-  clustering_metric = "euclidian", clustering_method = "ward",
-  B = 500, max_trends = 4, aggreg.fun = "median",
-  na.rm.aggreg = TRUE, methodOptiClust = "firstSEmax",
-  verbose = TRUE, clust_trends = NULL, N_clusters = NULL,
-  myclusters = NULL, label.clusters = NULL, prev_rowCL = NULL,
-  descript = TRUE, plotAll = TRUE, color.vec = c("darkred",
-  "#D73027", "#FC8D59", "snow", "#91BFDB", "#4575B4", "darkblue"),
-  legend.breaks = NULL, label.column = NULL, time_unit = "",
-  cex.label.row = 1, cex.label.column = 1, margins = c(5, 25),
-  heatKey.size = 1, dendrogram.size = 1, heatmap.height = 1,
-  heatmap.width = 1, cex.clusterKey = 1, cex.main = 1,
-  horiz.clusterKey = TRUE, main = NULL, subtitle = NULL, ...)
+plotPat.TcGSA(
+  x,
+  threshold = 0.05,
+  myproc = "BY",
+  nbsimu_pval = 1e+06,
+  expr,
+  Subject_ID,
+  TimePoint,
+  baseline = NULL,
+  only.signif = TRUE,
+  group.var = NULL,
+  Group_ID_paired = NULL,
+  ref = NULL,
+  group_of_interest = NULL,
+  FUNcluster = NULL,
+  clustering_metric = "euclidian",
+  clustering_method = "ward",
+  B = 500,
+  max_trends = 4,
+  aggreg.fun = "median",
+  na.rm.aggreg = TRUE,
+  methodOptiClust = "firstSEmax",
+  verbose = TRUE,
+  clust_trends = NULL,
+  N_clusters = NULL,
+  myclusters = NULL,
+  label.clusters = NULL,
+  prev_rowCL = NULL,
+  descript = TRUE,
+  plotAll = TRUE,
+  color.vec = c("darkred", "#D73027", "#FC8D59", "snow", "#91BFDB", "#4575B4",
+    "darkblue"),
+  legend.breaks = NULL,
+  label.column = NULL,
+  time_unit = "",
+  cex.label.row = 1,
+  cex.label.column = 1,
+  margins = c(5, 25),
+  heatKey.size = 1,
+  dendrogram.size = 1,
+  heatmap.height = 1,
+  heatmap.width = 1,
+  cex.clusterKey = 1,
+  cex.main = 1,
+  horiz.clusterKey = TRUE,
+  main = NULL,
+  subtitle = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{a \bold{tcgsa} object.}
@@ -260,7 +293,8 @@ for coloring the heatmap.  If \code{plot} is \code{FALSE}, then it is
 represented gene sets, with as many levels as the value of \code{N_clusters}.
 If no clusters were represented, than this is \code{NULL}.
 \item \code{ddr} a \bold{dendrogram} object with the reordering used for the
-heatmap.  See \code{heatmap.2} function from package \code{gplots}.
+heatmap.  See \code{\link[gplots]{heatmap.2}} function from package 
+\code{gplots}.
 \item \code{clustersExport} a data frame with 2 variables containing the two
 following variables : \itemize{ \item \code{GeneSet}: the gene sets
 clustered.  \item \code{Cluster}: the cluster they belong to.  } The data
@@ -324,7 +358,7 @@ Time-Course Gene Set Analysis for Longitudinal Gene Expression Data.
 doi: 10.1371/journal.pcbi.1004310
 }
 \seealso{
-\code{\link{plot.TcGSA}}, \code{\link[gplots:heatmap.2]{heatmap.2}},
+\code{\link{plot.TcGSA}}, \code{\link[gplots]{heatmap.2}},
 \code{\link{TcGSA.LR}}, \code{\link[stats:hclust]{hclust}}
 }
 \author{

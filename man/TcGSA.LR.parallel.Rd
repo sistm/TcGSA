@@ -4,11 +4,24 @@
 \alias{TcGSA.LR.parallel}
 \title{Parallel computing the Likelihood Ratios for the Gene Sets under Scrutiny}
 \usage{
-TcGSA.LR.parallel(Ncpus, type_connec, expr, gmt, design,
-  subject_name = "Patient_ID", time_name = "TimePoint",
-  crossedRandom = FALSE, covariates_fixed = "", time_covariates = "",
-  time_func = "linear", group_name = "", separateSubjects = FALSE,
-  minGSsize = 10, maxGSsize = 500, monitorfile = "")
+TcGSA.LR.parallel(
+  Ncpus,
+  type_connec,
+  expr,
+  gmt,
+  design,
+  subject_name = "Patient_ID",
+  time_name = "TimePoint",
+  crossedRandom = FALSE,
+  covariates_fixed = "",
+  time_covariates = "",
+  time_func = "linear",
+  group_name = "",
+  separateSubjects = FALSE,
+  minGSsize = 10,
+  maxGSsize = 500,
+  monitorfile = ""
+)
 }
 \arguments{
 \item{Ncpus}{The number of processors available.}

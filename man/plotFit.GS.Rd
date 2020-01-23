@@ -4,11 +4,19 @@
 \alias{plotFit.GS}
 \title{Plotting function for exploring the fitness of the mixed modeling used in TcGSA}
 \usage{
-plotFit.GS(x, expr, design, subject_name = "Patient_ID",
-  time_name = "TimePoint", colnames_ID, plot_type = c("Fit",
-  "Residuals Obs", "Residuals Est", "Histogram Obs"), GeneSetsList,
-  color = c("genes", "time", "subjects"), marginal_hist = TRUE,
-  gg.add = list(theme()))
+plotFit.GS(
+  x,
+  expr,
+  design,
+  subject_name = "Patient_ID",
+  time_name = "TimePoint",
+  colnames_ID,
+  plot_type = c("Fit", "Residuals Obs", "Residuals Est", "Histogram Obs"),
+  GeneSetsList,
+  color = c("genes", "time", "subjects"),
+  marginal_hist = TRUE,
+  gg.add = list(theme())
+)
 }
 \arguments{
 \item{x}{a \bold{tcgsa} object for \code{clustTrend}, or a
