@@ -331,7 +331,7 @@
 #'
 #'@author Boris P. Hejblum
 #'
-#'@seealso \code{heatmap.2}, \code{\link{TcGSA.LR}},
+#'@seealso \code{\link{TcGSA.LR}},
 #'\code{\link[stats:hclust]{hclust}}
 #'
 #'@references Hejblum BP, Skinner J, Thiebaut R, (2015) 

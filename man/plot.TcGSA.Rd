@@ -376,7 +376,7 @@ Time-Course Gene Set Analysis for Longitudinal Gene Expression Data.
 doi: 10.1371/journal.pcbi.1004310
 }
 \seealso{
-\code{heatmap.2}, \code{\link{TcGSA.LR}},
+\code{\link{TcGSA.LR}},
 \code{\link[stats:hclust]{hclust}}
 }
 \author{
