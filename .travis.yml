@@ -21,7 +21,6 @@ r_packages:
 - gtools
 - cluster
 - splines
-- gplots
 - stats
 - graphics
 - grDevices

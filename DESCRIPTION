@@ -18,7 +18,6 @@ Imports:
     multtest,
     cluster,
     cowplot,
-    gplots,
     graphics,
     grDevices,
     gtools,

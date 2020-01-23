@@ -6,8 +6,6 @@
 #'
 #'@importFrom gtools invalid
 #'
-#'@importFrom gplots heatmap.2
-#'
 #'@importFrom graphics abline axis image hist lines mtext par plot plot.new rect text title
 #'
 #'@importFrom stats as.dendrogram density median order.dendrogram reorder sd
