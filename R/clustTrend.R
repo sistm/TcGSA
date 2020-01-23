@@ -405,13 +405,20 @@ clustTrend <-
 				kmax <- ifelse(dim(data_stand_ByTP)[1]>4, max_trends, dim(data_stand_ByTP)[1]-1)
 				if(kmax>=2){
 					if(clustering_metric!="sts"){
-						cG <- cluster::clusGap(x=data_stand_ByTP, FUNcluster=FUNcluster, K.max=kmax, B=B, verbose=FALSE)
+					  all.na <- apply(data_stand_ByTP, 2, function(x){all(is.na(x))})
+						cG <- cluster::clusGap(x=data_stand_ByTP[, !all.na], 
+						                       FUNcluster=FUNcluster, 
+						                       K.max=kmax, B=B, verbose=FALSE)
 						nc <- cluster::maxSE(f = cG$Tab[, "gap"], SE.f = cG$Tab[, "SE.sim"], method = methodOptiClust)
 						clust <- FUNcluster(data_stand_ByTP, k=nc)$cluster
 					}else{
-						cG <- cluster::clusGap(x=data_stand_ByTP, FUNcluster=FUNcluster, K.max=kmax, B=B, verbose=FALSE, time=as.numeric(colnames(data_stand_ByTP)))
+					  all.na <- apply(data_stand_ByTP, 2, function(x){all(is.na(x))})
+					  cG <- cluster::clusGap(x=data_stand_ByTP[, !all.na],
+					                         FUNcluster=FUNcluster, 
+					                         K.max=kmax, B=B, verbose=FALSE, time=as.numeric(colnames(data_stand_ByTP)[!all.na]))
 						nc <- cluster::maxSE(f = cG$Tab[, "gap"], SE.f = cG$Tab[, "SE.sim"], method = methodOptiClust)
-						clust <- FUNcluster(data_stand_ByTP, k=nc, time=as.numeric(colnames(data_stand_ByTP)))$cluster
+						clust <- FUNcluster(data_stand_ByTP[, !all.na], k=nc, 
+						                    time=as.numeric(colnames(data_stand_ByTP)[!all.na]))$cluster
 					}
 				}else{
 					nc <- 1
