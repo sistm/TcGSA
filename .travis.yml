@@ -11,7 +11,7 @@ os:
 - linux
 - osx
 
-bioc_packages: 
+bioc_packages:
 - multtest
 - GEOquery
 
@@ -39,9 +39,9 @@ r_packages:
 - cowplot
 
 r_github_packages:
-- hadley/scales
-- hadley/ggplot2
-- hadley/stringr
+- r-lib/scales
+- tidyverse/ggplot2
+- tidyverse/stringr
 
 r_build_args: "--no-manual --no-resave-data"
 r_check_args: "--as-cran --no-build-vignettes --no-manual --timings"
