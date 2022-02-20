@@ -50,4 +50,14 @@ or to get the development version from
 devtools::install_github("borishejblum/TcGSA")
 ```
 
+## Microarrays vs RNA-seq
+
+`TcGSA` relies on a Gaussian assumption for the expression data, which
+is suitable for normalized microarray data. Due to their count and
+heteroskedastic nature, RNA-seq data need to be handled differently and
+***TcGSA cannot deal with RNA-seq data***. For RNA-seq data, please have
+a look at the [Bioconductor package
+`dearseq`](https://bioconductor.org/packages/dearseq/) which
+incorporates similar functionality for analyzing RNA-seq data.
+
 – Boris Hejblum
