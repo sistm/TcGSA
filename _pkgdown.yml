@@ -1,0 +1,8 @@
+url: http://sistm.github.io/TcGSA/
+template:
+  bootstrap: 5
+  bootswatch: lux
+
+authors:
+  Boris P Hejblum:
+    href: https://borishejblum.science

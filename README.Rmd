@@ -47,10 +47,10 @@ The easiest way to get `TcGSA` is to install it from [CRAN](https://cran.r-proje
 install.packages("TcGSA")
 ```
 
-or to get the development version from [GitHub](https://github.com/borishejblum/TcGSA):
+or to get the development version from [GitHub](https://github.com/sistm/TcGSA):
 ```{r GitHub-install, eval=FALSE}
 #install.packages("devtools")
-devtools::install_github("borishejblum/TcGSA")
+devtools::install_github("sistm/TcGSA")
 ```
 
 ## Microarrays vs RNA-seq

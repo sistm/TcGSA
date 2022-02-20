@@ -43,11 +43,11 @@ install.packages("TcGSA")
 ```
 
 or to get the development version from
-[GitHub](https://github.com/borishejblum/TcGSA):
+[GitHub](https://github.com/sistm/TcGSA):
 
 ``` r
 #install.packages("devtools")
-devtools::install_github("borishejblum/TcGSA")
+devtools::install_github("sistm/TcGSA")
 ```
 
 ## Microarrays vs RNA-seq
