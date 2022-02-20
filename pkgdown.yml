@@ -1,0 +1,10 @@
+pandoc: 2.7.3
+pkgdown: 2.0.2
+pkgdown_sha: ~
+articles:
+  TcGSA_userguide: TcGSA_userguide.html
+last_built: 2022-02-20T22:12Z
+urls:
+  reference: http://sistm.github.io/TcGSA/reference
+  article: http://sistm.github.io/TcGSA/articles
+
