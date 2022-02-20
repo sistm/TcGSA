@@ -14,3 +14,5 @@ GSE30101*
 CRAN-RELEASE
 ^doc$
 ^Meta$
+^CRAN-RELEASE$
+^\.github$
