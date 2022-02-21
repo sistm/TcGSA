@@ -1,7 +1,7 @@
 url: http://sistm.github.io/TcGSA/
 template:
   bootstrap: 5
-  bootswatch: lux
+  bootswatch: flatly
 
 authors:
   Boris P Hejblum:
