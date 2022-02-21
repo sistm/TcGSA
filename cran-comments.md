@@ -1,10 +1,11 @@
 # This is an update of the TcGSA package  
+ All problems shown on <https://cran.r-project.org/web/checks/check_results_TcGSA.html>
+ have been corrected
 
-## Test environments  
-* local macOS 10.15.2 install, R 3.6.2
-* macOS 10.13.6 (on travis-ci), R devel and release
-* ubuntu 16.04.11 (on travis-ci), R devel and release
-* Windows Visual Studio 2015 (on appveyor), R devel and release
+## Test environments   
+ * local R installation, R 4.1.2
+ * Linux (Ubuntu 20.04), macOS (11.6) and Windows (Server 2019 10.0), R devel and release (through GitHub Actions)
+
 
 ## R CMD check results  
 0 errors | 0 warnings | 0 note
