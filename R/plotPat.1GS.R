@@ -30,7 +30,7 @@
 #'@param gmt 
 #'a \bold{gmt} object containing the gene sets definition.  See
 #'\code{\link[GSA:GSA.read.gmt]{GSA.read.gmt}} and
-#'definition on \href{http://www.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats}{www.broadinstitute.org}.
+#'definition on \href{https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats}{www.software.broadinstitute.org}.
 #'
 #'@param Subject_ID 
 #'a factor of length \eqn{p} that is in the same order as the

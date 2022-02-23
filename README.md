@@ -4,7 +4,7 @@
 # `TcGSA`
 
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/TcGSA)](https://cran.r-project.org/package=TcGSA)
-[![R-CMD-check](https://github.com/borishejblum/TcGSA/workflows/R-CMD-check/badge.svg)](https://github.com/borishejblum/TcGSA/actions)
+[![R-CMD-check](https://github.com/sistm/TcGSA/workflows/R-CMD-check/badge.svg)](https://github.com/sistm/TcGSA/actions)
 [![Downloads](https://cranlogs.r-pkg.org/badges/TcGSA?color=blue)](https://www.r-pkg.org/pkg/TcGSA)
 
 ## Overview

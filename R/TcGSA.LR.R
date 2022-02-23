@@ -21,7 +21,7 @@
 #'@param gmt 
 #'a \bold{gmt} object containing the gene sets definition.  See
 #'\code{\link[GSA:GSA.read.gmt]{GSA.read.gmt}} and definition on 
-#'\href{http://www.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats}{www.broadinstitute.org}.
+#'\href{https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats}{www.software.broadinstitute.org}.
 #'
 #'@param design
 #'a matrix or dataframe containing the experimental variables that used in the model,
