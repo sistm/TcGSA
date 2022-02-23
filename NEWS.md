@@ -1,3 +1,6 @@
+# TcGSA 0.12.8
+* improved documentation
+
 # TcGSA 0.12.7
 * better handling of `NA` values
 * removed gplots dependency (only used in documentation) because `gplots` is orphaned
@@ -20,4 +23,4 @@
 * Added a `NEWS.md` file to track changes to the package.
 
 # TcGSA 0.10.5
-* Bug fix: plot.TcGSA better handles more various geneses names
+* Bug fix: plot.TcGSA better handles more various genesets names
