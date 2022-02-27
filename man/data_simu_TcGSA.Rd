@@ -41,7 +41,7 @@ a random paired identifier for paired couples (one in each of the 2 treatment gr
 }
 }
   \item{gmt_sim}{
-a \bold{gmt} object containing the gene sets definition.  See \code{\link[GSA:GSA.read.gmt]{GSA.read.gmt}} and \href{http://www.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats}{GMT definition on www.broadinstitute.org}.
+a \bold{gmt} object containing the gene sets definition.  See \code{\link[GSA:GSA.read.gmt]{GSA.read.gmt}} and \href{https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats}{GMT definition on www.broadinstitute.org}.
 }
 }
 
