@@ -1,4 +1,4 @@
-# TcGSA 0.12.9
+# TcGSA 0.12.10
 * improved documentation
 
 # TcGSA 0.12.7
