@@ -28,7 +28,7 @@ The `TcGSA` (Time-course Gene Set Analysis *Hejblum et al., 2015*) `R` package t
 gene expression dynamics for significance in gene sets. A gene set is a group of genes, 
 known *a priori* to share a common biological function or to be co-expressed. `TcGSA` relies 
 on linear mixed model to take into account the potential heterogeneity of expression 
-within a gene set. For more details, check the [published article in PLOS Computational Biology](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004310/).
+within a gene set. For more details, check the [published article in PLOS Computational Biology](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004310).
 
 
 
@@ -129,7 +129,7 @@ This example comes from *Hejblum et al., 2015* and DALIA-1 HIV therapeutic vacci
 * 1^st^ phase from week 0 to week 24 (before treatment interruption): the patients were under anti-retroviral treatment and received trial vaccine on week 0, 4, 8 and 12.
 * 2nd phase from week 24 to week 48 (after treatment interruption): for the follow-up of patients, none of trial vaccine has been injected and anti-retroviral treatments have been interrupted (except for health problems).
 
-Blood samples have been collected at each of the different measurement time points, for each subject, to study the dynamic of gene expression over time. For more details, check the article from Hejblum et al. [here](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004310/).
+Blood samples have been collected at each of the different measurement time points, for each subject, to study the dynamic of gene expression over time. For more details, check the article from Hejblum et al. [here](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004310).
 
 The data are publicly available on [GEO website](https://www.ncbi.nlm.nih.gov/geo/) with GEO access number 'GSE46734'. We will be using the `GEOquery` package to get the data files from GEO website (see appendix for more details on `GEOquery`)
 
