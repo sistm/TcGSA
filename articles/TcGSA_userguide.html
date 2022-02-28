@@ -73,7 +73,7 @@
       <img src="" class="logo" alt=""><h1>User guide to the `TcGSA` R package</h1>
                         <h4 data-toc-skip class="author">Anthony Devaux, Boris Hejblum</h4>
             
-            <h4 data-toc-skip class="date">2022-02-27</h4>
+            <h4 data-toc-skip class="date">2022-02-28</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/sistm/TcGSA/blob/HEAD/vignettes/TcGSA_userguide.Rmd" class="external-link"><code>vignettes/TcGSA_userguide.Rmd</code></a></small>
       <div class="d-none name"><code>TcGSA_userguide.Rmd</code></div>
@@ -84,7 +84,7 @@
 <div class="section level2">
 <h2 id="overview-of-tcgsa">Overview of TcGSA<a class="anchor" aria-label="anchor" href="#overview-of-tcgsa"></a>
 </h2>
-<p>The <code>TcGSA</code> (Time-course Gene Set Analysis <em>Hejblum et al., 2015</em>) <code>R</code> package tests gene expression dynamics for significance in gene sets. A gene set is a group of genes, known <em>a priori</em> to share a common biological function or to be co-expressed. <code>TcGSA</code> relies on linear mixed model to take into account the potential heterogeneity of expression within a gene set. For more details, check the <a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004310" class="external-link">published article in PLOS Computational Biology</a>.</p>
+<p>The <code>TcGSA</code> (Time-course Gene Set Analysis <em>Hejblum et al., 2015</em>) <code>R</code> package tests gene expression dynamics for significance in gene sets. A gene set is a group of genes, known <em>a priori</em> to share a common biological function or to be co-expressed. <code>TcGSA</code> relies on linear mixed model to take into account the potential heterogeneity of expression within a gene set. For more details, check the <a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004310/" class="external-link">published article in PLOS Computational Biology</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="getting-started-using-tcgsa">Getting started using TcGSA<a class="anchor" aria-label="anchor" href="#getting-started-using-tcgsa"></a>
@@ -127,7 +127,7 @@
 <div class="section level4">
 <h4 id="self-built-gmt">Self-built gmt<a class="anchor" aria-label="anchor" href="#self-built-gmt"></a>
 </h4>
-<p>To self-build your <code>gmt</code> object, you have to prepare a <code>.gmt</code> file. This file format is the tab delimited file which can be created with <a href="https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#GMT:_Gene_Matrix_Transposed_file_format_.28.2A.gmt.29" class="external-link">this helpful website</a> from the Broad Institute. In this file, one row represents one gene set with:</p>
+<p>To self-build your <code>gmt</code> object, you have to prepare a <code>.gmt</code> file. This file format is the tab delimited file which can be created with <a href="https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#GMT:_Gene_Matrix_Transposed_file_format_.28.2A.gmt.29/" class="external-link">this helpful website</a> from the Broad Institute. In this file, one row represents one gene set with:</p>
 <ul>
 <li>Column 1: name of the gene set</li>
 <li>Column 2: description of the gene set</li>
@@ -166,7 +166,7 @@
 <li>1<sup>st</sup> phase from week 0 to week 24 (before treatment interruption): the patients were under anti-retroviral treatment and received trial vaccine on week 0, 4, 8 and 12.</li>
 <li>2nd phase from week 24 to week 48 (after treatment interruption): for the follow-up of patients, none of trial vaccine has been injected and anti-retroviral treatments have been interrupted (except for health problems).</li>
 </ul>
-<p>Blood samples have been collected at each of the different measurement time points, for each subject, to study the dynamic of gene expression over time. For more details, check the article from Hejblum et al. <a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004310" class="external-link">here</a>.</p>
+<p>Blood samples have been collected at each of the different measurement time points, for each subject, to study the dynamic of gene expression over time. For more details, check the article from Hejblum et al. <a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004310/" class="external-link">here</a>.</p>
 <p>The data are publicly available on <a href="https://www.ncbi.nlm.nih.gov/geo/" class="external-link">GEO website</a> with GEO access number ‘GSE46734’. We will be using the <code>GEOquery</code> package to get the data files from GEO website (see appendix for more details on <code>GEOquery</code>)</p>
 <div class="section level4">
 <h4 id="import-of-data-files">Import of data files<a class="anchor" aria-label="anchor" href="#import-of-data-files"></a>
@@ -479,7 +479,7 @@ Blood samples have been acquired on day -7, 0, 1, 3, 7, 10, 14, 21 and 28 to stu
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu">TcGSA</span><span class="fu">::</span><span class="fu"><a href="../reference/signifLRT.TcGSA.html">signifLRT.TcGSA</a></span><span class="op">(</span><span class="va">tcgsa_result_MT</span><span class="op">)</span><span class="op">$</span><span class="va">mixedLRTadjRes</span><span class="op">)</span>
 <span class="co">#&gt;   GeneSet      AdjPval         desc</span>
 <span class="co">#&gt; 1    M1.1 1.284340e-09    Platelets</span>
-<span class="co">#&gt; 2    M1.2 5.945222e-06   Interferon</span>
+<span class="co">#&gt; 2    M1.2 5.945221e-06   Interferon</span>
 <span class="co">#&gt; 3    M2.3 1.633082e-04 Erythrocytes</span>
 <span class="co">#&gt; 4    M3.1 1.284340e-09 Erythrocytes</span>
 <span class="co">#&gt; 5    M3.2 3.554220e-10 Inflammation</span>
