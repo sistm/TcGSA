@@ -229,7 +229,7 @@
 #'@param y.lab.angle 
 #'a numerical value (in [0, 360]) giving the orientation by
 #'which y-label text should be turned (anti-clockwise).  Default is \code{90}.
-#'See \code{\link{element_text}}.
+#'See \code{\link[ggplot2]{element_text}}.
 #'
 #'@param x.axis.angle 
 #'a numerical value (in [0, 360]) giving the orientation by
@@ -243,11 +243,11 @@
 #'@param x.lim 
 #'if numeric, will create a continuous scale, if factor or
 #'character, will create a discrete scale.  Observations not in this range will
-#'be dropped.  See \code{\link{xlim}}.
+#'be dropped.  See \code{\link[ggplot2]{xlim}}.
 #'
 #'@param gg.add 
 #'A list of instructions to add to the \code{ggplot2} instructions.  
-#'See \code{\link{+.gg}}.  Default is \code{list(theme())}, which adds nothing
+#'See \code{\link[ggplot2]{+.gg}}.  Default is \code{list(theme())}, which adds nothing
 #'to the plot.
 #'
 #'@param plot 

@@ -24,11 +24,9 @@
 #'
 #'@importFrom GSA GSA.read.gmt
 #'
-#'@docType package
 #'@name TcGSA-package
 #'@aliases TcGSA
-#'
-NULL
+"_PACKAGE"
 
 
 

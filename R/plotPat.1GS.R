@@ -15,7 +15,7 @@
 #'
 #'This function uses the Gap statistics to determine the optimal number of
 #'clusters in the plotted gene set.  See
-#'\code{\link[cluster:clusGap]{clusGap}}. 
+#'\code{\link[cluster]{clusGap}}. 
 #'
 #'@param expr 
 #'either a matrix or dataframe of gene expression upon which
@@ -29,7 +29,7 @@
 #'
 #'@param gmt 
 #'a \bold{gmt} object containing the gene sets definition.  See
-#'\code{\link[GSA:GSA.read.gmt]{GSA.read.gmt}} and
+#'\code{\link[GSA]{GSA.read.gmt}} and
 #'definition on \href{https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats}{www.software.broadinstitute.org}.
 #'
 #'@param Subject_ID 
@@ -92,16 +92,16 @@
 #'vector of length \code{n = nrow(x)} of integers in 1:k, determining the clustering
 #'or grouping of the n observations.  Default is \code{NULL}, in which case a
 #'hierarchical clustering is performed via the function
-#'\code{\link[cluster:agnes]{agnes}}, using the metric \code{clustering_metric}
+#'\code{\link[cluster]{agnes}}, using the metric \code{clustering_metric}
 #'and the method \code{clustering_method}.  See \code{'FUNcluster'} in
-#'\code{\link[cluster:clusGap]{clusGap}} and Details.
+#'\code{\link[cluster]{clusGap}} and Details.
 #'
 #'@param clustering_metric 
 #'character string specifying the metric to be used
 #'for calculating dissimilarities between observations in the hierarchical
 #'clustering when \code{FUNcluster} is \code{NULL}.  The currently available
 #'options are \code{"euclidean"} and \code{"manhattan"}.  Default is
-#'\code{"euclidean"}.  See \code{\link[cluster:agnes]{agnes}}.  Also, a \code{"sts"} option 
+#'\code{"euclidean"}.  See \code{\link[cluster]{agnes}}.  Also, a \code{"sts"} option 
 #'is available in TcGSA.  It implements the 'Short Time Series' distance 
 #'[Moller-Levet et al., Fuzzy Clustering of short time series and unevenly distributed 
 #'sampling points, \emph{Advances in Intelligent Data Analysis V}:330-340 Springer, 2003]
@@ -114,12 +114,12 @@
 #'pair-]group average method, UPGMA), \code{"single"} (single linkage),
 #'\code{"complete"} (complete linkage), \code{"ward"} (Ward's method),
 #'\code{"weighted"} (weighted average linkage).  Default is \code{"ward"}.  See
-#'\code{\link[cluster:agnes]{agnes}}.
+#'\code{\link[cluster]{agnes}}.
 #'
 #'@param B 
 #'integer specifying the number of Monte Carlo ("bootstrap") samples
 #'used to compute the gap statistics.  Default is \code{500}.  See
-#'\code{\link[cluster:clusGap]{clusGap}}.
+#'\code{\link[cluster]{clusGap}}.
 #'
 #'@param max_trends 
 #'integer specifying the maximum number of different clusters
@@ -149,7 +149,7 @@
 #'deviations. Possible values are \code{"globalmax"}, \code{"firstmax"},
 #'\code{"Tibs2001SEmax"}, \code{"firstSEmax"} and \code{"globalSEmax"}.
 #'Default is \code{"firstSEmax"}.  See \code{'method'} in
-#'\code{\link[cluster:clusGap]{clusGap}}, Details and \emph{Tibshirani et al.,
+#'\code{\link[cluster]{clusGap}}, Details and \emph{Tibshirani et al.,
 #'2001} in References.
 #'
 #@param indiv a character string indicating by which unit observations are
@@ -174,7 +174,7 @@
 #@param smooth 
 #logical flag.  If \code{TRUE} and \code{showTrend} is also
 #\code{TRUE}, the representation of each cluster \code{trend.fun} is smoothed
-#using cubic polynoms (see \code{\link[ggplot2:stat_smooth]{stat_smooth}}.
+#using cubic polynoms (see \code{\link[ggplot2]{stat_smooth}}.
 #Default is \code{TRUE}.
 #'
 #'@param time_unit 
@@ -212,7 +212,7 @@
 #'@param y.lab.angle 
 #'a numerical value (in [0, 360]) giving the orientation by
 #'which y-label text should be turned (anti-clockwise).  Default is \code{90}.
-#'See \code{\link{element_text}}.
+#'See \code{\link[ggplot2]{element_text}}.
 #'
 #'@param x.axis.angle 
 #'a numerical value (in [0, 360]) giving the orientation by
@@ -226,11 +226,11 @@
 #'@param x.lim 
 #'if numeric, will create a continuous scale, if factor or
 #'character, will create a discrete scale.  Observations not in this range will
-#'be dropped.  See \code{\link{xlim}}.
+#'be dropped.  See \code{\link[ggplot2]{xlim}}.
 #'
 #'@param gg.add 
 #'A list of instructions to add to the \code{ggplot2} instructions.  
-#'See \code{\link{+.gg}}.  Default is \code{list(theme())}, which adds nothing
+#'See \code{\link[ggplot2]{+.gg}}.  Default is \code{list(theme())}, which adds nothing
 #'to the plot.
 #'
 #'@return A dataframe the 2 following variables: \itemize{
@@ -240,7 +240,7 @@
 #'
 #'@author Boris P. Hejblum
 #'
-#'@seealso \code{\link[ggplot2:ggplot]{ggplot}}, \code{\link[cluster:clusGap]{clusGap}}
+#'@seealso \code{\link[ggplot2]{ggplot}}, \code{\link[cluster]{clusGap}}
 #'
 #'@references Tibshirani, R., Walther, G. and Hastie, T., 2001, Estimating the
 #'number of data clusters via the Gap statistic, \emph{Journal of the Royal

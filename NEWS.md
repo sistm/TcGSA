@@ -1,3 +1,6 @@
+# TcGSA 0.12.11
+* improved documentation with correct links for CRAN static html
+
 # TcGSA 0.12.10
 * improved documentation
 

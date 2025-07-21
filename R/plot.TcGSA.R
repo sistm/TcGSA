@@ -484,8 +484,8 @@ plot.TcGSA <-
 									   indiv=indiv,
 									   verbose=verbose
 			)
-		}else if(class(clust_trends)!="ClusteredTrends"){
-			stop("The 'clust_trends' argument is not of the class 'ClusteredTrends', see the clustTrend function")
+		}else if(!inherits(clust_trends, "ClusteredTrends")){
+			stop("The 'clust_trends' argument is not of the class 'ClusteredTrends', see the clustTrend() function")
 		}
 		
 		medoids2clust <- reshape2::acast(reshape2::melt(clust_trends[["ClustMeds"]], variable.name="Cluster", id.vars="TimePoint"),

@@ -52,7 +52,7 @@
 #'
 #'@param gg.add 
 #'A list of instructions to add to the \code{ggplot2} instructions.  
-#'See \code{\link{+.gg}}.  Default is \code{list(theme())}, which adds nothing
+#'See \code{\link[ggplot2]{+.gg}}.  Default is \code{list(theme())}, which adds nothing
 #'to the plot.
 #'
 #'@author Boris P. Hejblum

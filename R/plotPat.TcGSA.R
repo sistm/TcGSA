@@ -410,8 +410,8 @@ if(FALSE){
                                indiv="genes",
                                verbose=verbose
     )
-  }else if(class(clust_trends)!="ClusteredTrends"){
-    stop("The 'clust_trends' argument is not of the class 'ClusteredTrends', see the clustTrend function")
+  }else if(!inherits(clust_trends, "ClusteredTrends")){
+    stop("The 'clust_trends' argument is not of the class 'ClusteredTrends', see the clustTrend() function")
   }
   
   if(verbose){message("Initializing clustering on all the patients...\n")}

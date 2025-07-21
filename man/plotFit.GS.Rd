@@ -57,7 +57,7 @@ names of those gene sets.}
 Only used for \code{'Fit'} plot type. Default is \code{'TRUE'}}
 
 \item{gg.add}{A list of instructions to add to the \code{ggplot2} instructions.
-See \code{\link{+.gg}}.  Default is \code{list(theme())}, which adds nothing
+See \code{\link[ggplot2]{+.gg}}.  Default is \code{list(theme())}, which adds nothing
 to the plot.}
 }
 \description{

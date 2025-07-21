@@ -51,7 +51,7 @@ estimated gene expression, such as for the list returned in the
 \code{'Estimations'} element of \code{\link{TcGSA.LR}}.  See details.}
 
 \item{gmt}{a \bold{gmt} object containing the gene sets definition.  See
-\code{\link[GSA:GSA.read.gmt]{GSA.read.gmt}} and
+\code{\link[GSA]{GSA.read.gmt}} and
 definition on \href{https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats}{www.software.broadinstitute.org}.}
 
 \item{Subject_ID}{a factor of length \eqn{p} that is in the same order as the
@@ -100,15 +100,15 @@ which returns a list with a component named \code{'cluster'} which is a
 vector of length \code{n = nrow(x)} of integers in 1:k, determining the clustering
 or grouping of the n observations.  Default is \code{NULL}, in which case a
 hierarchical clustering is performed via the function
-\code{\link[cluster:agnes]{agnes}}, using the metric \code{clustering_metric}
+\code{\link[cluster]{agnes}}, using the metric \code{clustering_metric}
 and the method \code{clustering_method}.  See \code{'FUNcluster'} in
-\code{\link[cluster:clusGap]{clusGap}} and Details.}
+\code{\link[cluster]{clusGap}} and Details.}
 
 \item{clustering_metric}{character string specifying the metric to be used
 for calculating dissimilarities between observations in the hierarchical
 clustering when \code{FUNcluster} is \code{NULL}.  The currently available
 options are \code{"euclidean"} and \code{"manhattan"}.  Default is
-\code{"euclidean"}.  See \code{\link[cluster:agnes]{agnes}}.  Also, a \code{"sts"} option 
+\code{"euclidean"}.  See \code{\link[cluster]{agnes}}.  Also, a \code{"sts"} option 
 is available in TcGSA.  It implements the 'Short Time Series' distance 
 [Moller-Levet et al., Fuzzy Clustering of short time series and unevenly distributed 
 sampling points, \emph{Advances in Intelligent Data Analysis V}:330-340 Springer, 2003]
@@ -120,11 +120,11 @@ to be used in the hierarchical clustering when \code{FUNcluster} is
 pair-]group average method, UPGMA), \code{"single"} (single linkage),
 \code{"complete"} (complete linkage), \code{"ward"} (Ward's method),
 \code{"weighted"} (weighted average linkage).  Default is \code{"ward"}.  See
-\code{\link[cluster:agnes]{agnes}}.}
+\code{\link[cluster]{agnes}}.}
 
 \item{B}{integer specifying the number of Monte Carlo ("bootstrap") samples
 used to compute the gap statistics.  Default is \code{500}.  See
-\code{\link[cluster:clusGap]{clusGap}}.}
+\code{\link[cluster]{clusGap}}.}
 
 \item{max_trends}{integer specifying the maximum number of different clusters
 to be tested.  Default is \code{4}.}
@@ -149,7 +149,7 @@ of clusters is computed from the gap statistics and their standard
 deviations. Possible values are \code{"globalmax"}, \code{"firstmax"},
 \code{"Tibs2001SEmax"}, \code{"firstSEmax"} and \code{"globalSEmax"}.
 Default is \code{"firstSEmax"}.  See \code{'method'} in
-\code{\link[cluster:clusGap]{clusGap}}, Details and \emph{Tibshirani et al.,
+\code{\link[cluster]{clusGap}}, Details and \emph{Tibshirani et al.,
 2001} in References.}
 
 \item{verbose}{logical flag enabling verbose messages to track the computing
@@ -186,7 +186,7 @@ should be magnified relative to the default \code{1}.}
 
 \item{y.lab.angle}{a numerical value (in [0, 360]) giving the orientation by
 which y-label text should be turned (anti-clockwise).  Default is \code{90}.
-See \code{\link{element_text}}.}
+See \code{\link[ggplot2]{element_text}}.}
 
 \item{x.axis.angle}{a numerical value (in [0, 360]) giving the orientation by
 which x-axis annotation text should be turned (anti-clockwise).  Default is
@@ -197,10 +197,10 @@ See \code{\link{plot.default}}.}
 
 \item{x.lim}{if numeric, will create a continuous scale, if factor or
 character, will create a discrete scale.  Observations not in this range will
-be dropped.  See \code{\link{xlim}}.}
+be dropped.  See \code{\link[ggplot2]{xlim}}.}
 
 \item{gg.add}{A list of instructions to add to the \code{ggplot2} instructions.
-See \code{\link{+.gg}}.  Default is \code{list(theme())}, which adds nothing
+See \code{\link[ggplot2]{+.gg}}.  Default is \code{list(theme())}, which adds nothing
 to the plot.}
 }
 \value{
@@ -226,7 +226,7 @@ expression in this gene set.
 
 This function uses the Gap statistics to determine the optimal number of
 clusters in the plotted gene set.  See
-\code{\link[cluster:clusGap]{clusGap}}.
+\code{\link[cluster]{clusGap}}.
 }
 \examples{
 
@@ -293,7 +293,7 @@ Statistical Society, Series B (Statistical Methodology)}, \bold{63}, 2:
 411--423.
 }
 \seealso{
-\code{\link[ggplot2:ggplot]{ggplot}}, \code{\link[cluster:clusGap]{clusGap}}
+\code{\link[ggplot2]{ggplot}}, \code{\link[cluster]{clusGap}}
 }
 \author{
 Boris P. Hejblum

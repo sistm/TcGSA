@@ -18,7 +18,7 @@ TcGSA is about:
 > Hejblum, BP, Skinner, J, & Thiébaut, R (2015). Time-Course Gene Set
 > Analysis for Longitudinal Gene Expression Data. *PLOS Computational
 > Biology*, **11**(6):e1004310. [\<doi:
-> 10.1371/journal.pcbi.1004310>](https://doi.org/10.1371/journal.pcbi.1004310)
+> 10.1371/journal.pcbi.1004310\>](https://doi.org/10.1371/journal.pcbi.1004310/)
 
 ## Installation
 
@@ -43,7 +43,7 @@ install.packages("TcGSA")
 ```
 
 or to get the development version from
-[GitHub](https://github.com/sistm/TcGSA):
+[GitHub](https://github.com/sistm/TcGSA/):
 
 ``` r
 #install.packages("devtools")
@@ -58,6 +58,6 @@ heteroskedastic nature, RNA-seq data need to be handled differently and
 ***TcGSA cannot deal with RNA-seq data***. For RNA-seq data, please have
 a look at the [Bioconductor package
 `dearseq`](https://bioconductor.org/packages/dearseq/) which
-incorporates similar functionality for analyzing RNA-seq data.
+incorporates similar functionalities for analyzing RNA-seq data.
 
 – Boris Hejblum

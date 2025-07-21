@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 # `TcGSA`
 
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/TcGSA)](https://cran.r-project.org/package=TcGSA)
-[![R-CMD-check](https://github.com/sistm/TcGSA/workflows/R-CMD-check/badge.svg)](https://github.com/sistm/TcGSA/actions)
+[![R-CMD-check](https://github.com/sistm/TcGSA/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/sistm/TcGSA/actions/workflows/R-CMD-check.yaml)
 [![Downloads](https://cranlogs.r-pkg.org/badges/TcGSA?color=blue)](https://www.r-pkg.org/pkg/TcGSA)
 
 ## Overview
@@ -59,6 +59,6 @@ devtools::install_github("sistm/TcGSA")
 normalized microarray data. Due to their count and heteroskedastic nature, RNA-seq
 data need to be handled differently and ***TcGSA cannot deal with RNA-seq data***.
 For RNA-seq data, please have a look at the [Bioconductor package `dearseq`](https://bioconductor.org/packages/dearseq/) 
-which incorporates similar functionality for analyzing RNA-seq data.
+which incorporates similar functionalities for analyzing RNA-seq data.
 
  -- Boris Hejblum
