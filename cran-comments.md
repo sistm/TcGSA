@@ -1,6 +1,7 @@
 # This is an update of the TcGSA package  
  All problems shown on <https://cran.r-project.org/web/checks/check_results_TcGSA.html>
- have been corrected, notably missing package anchors in the "Rd cross-references" check.
+ have been corrected, notably missing package anchors in the "Rd cross-references" check. 
+ Incorrect URLs have been updated as well.
 
 ## Test environments 
  * local R installation, R 4.4.3

@@ -70,7 +70,7 @@ estimated gene expression, such as for the list returned in the
 
 \item{gmt}{a \bold{gmt} object containing the gene sets definition.  See
 \code{\link[GSA:GSA.read.gmt]{GSA.read.gmt}} and
-definition on \href{https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats}{www.software.broadinstitute.org}.}
+\href{https://docs.gsea-msigdb.org/#GSEA/Data_Formats/}{https://docs.gsea-msigdb.org/}.}
 
 \item{Subject_ID}{a factor of length \eqn{p} that is in the same order as the
 columns of \code{expr} (when it is a dataframe) and that contains the patient

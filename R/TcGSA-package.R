@@ -6,8 +6,8 @@
 #'\tabular{ll}{
 #'Package: \tab TcGSA\cr
 #'Type: \tab Package\cr
-#'Version: \tab 0.12.11\cr
-#'Date: \tab 2025-07-21\cr
+#'Version: \tab 0.12.12\cr
+#'Date: \tab 2025-07-22\cr
 #'License:\tab \href{http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt}{GPL-2}\cr
 #'}
 #'The main function in this package is \code{\link{TcGSA.LR}} which performs Time-course Gene Set Analysis, and provide nice representations of its results (see \code{\link{plot.TcGSA}} and \code{\link{plot1GS}}).

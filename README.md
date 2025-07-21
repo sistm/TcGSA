@@ -18,7 +18,7 @@ TcGSA is about:
 > Hejblum, BP, Skinner, J, & Thiébaut, R (2015). Time-Course Gene Set
 > Analysis for Longitudinal Gene Expression Data. *PLOS Computational
 > Biology*, **11**(6):e1004310. [\<doi:
-> 10.1371/journal.pcbi.1004310\>](https://doi.org/10.1371/journal.pcbi.1004310/)
+> 10.1371/journal.pcbi.1004310\>](https://doi.org/10.1371/journal.pcbi.1004310)
 
 ## Installation
 

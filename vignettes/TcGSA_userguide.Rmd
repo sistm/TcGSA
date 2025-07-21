@@ -86,7 +86,7 @@ you can (re-)build the `gmt` object yourself following the method below.
 ### Self-built gmt
 
 To self-build your `gmt` object, you have to prepare a `.gmt` file. This file 
-format is the tab delimited file which can be created with [this helpful website](https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#GMT:_Gene_Matrix_Transposed_file_format_.28.2A.gmt.29/) from the Broad Institute. In this file, one row represents one gene set with:
+format is the tab delimited file which can be created with [this helpful website](https://docs.gsea-msigdb.org/#GSEA/Data_Formats/#gmt-gene-matrix-transposed-file-format-gmt/) from the Broad Institute. In this file, one row represents one gene set with:
 
 - Column 1: name of the gene set
 - Column 2: description of the gene set
