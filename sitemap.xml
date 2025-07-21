@@ -1,81 +1,29 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>http://sistm.github.io/TcGSA/404.html</loc>
-  </url>
-  <url>
-    <loc>http://sistm.github.io/TcGSA/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>http://sistm.github.io/TcGSA/articles/TcGSA_userguide.html</loc>
-  </url>
-  <url>
-    <loc>http://sistm.github.io/TcGSA/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>http://sistm.github.io/TcGSA/authors.html</loc>
-  </url>
-  <url>
-    <loc>http://sistm.github.io/TcGSA/index.html</loc>
-  </url>
-  <url>
-    <loc>http://sistm.github.io/TcGSA/news/index.html</loc>
-  </url>
-  <url>
-    <loc>http://sistm.github.io/TcGSA/reference/TcGSA-internal.html</loc>
-  </url>
-  <url>
-    <loc>http://sistm.github.io/TcGSA/reference/TcGSA-package.html</loc>
-  </url>
-  <url>
-    <loc>http://sistm.github.io/TcGSA/reference/TcGSA.LR.html</loc>
-  </url>
-  <url>
-    <loc>http://sistm.github.io/TcGSA/reference/TcGSA.LR.parallel.html</loc>
-  </url>
-  <url>
-    <loc>http://sistm.github.io/TcGSA/reference/chisqmix.html</loc>
-  </url>
-  <url>
-    <loc>http://sistm.github.io/TcGSA/reference/clustTrend.html</loc>
-  </url>
-  <url>
-    <loc>http://sistm.github.io/TcGSA/reference/data_simu_TcGSA.html</loc>
-  </url>
-  <url>
-    <loc>http://sistm.github.io/TcGSA/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>http://sistm.github.io/TcGSA/reference/multtest.TcGSA.html</loc>
-  </url>
-  <url>
-    <loc>http://sistm.github.io/TcGSA/reference/plot.TcGSA.html</loc>
-  </url>
-  <url>
-    <loc>http://sistm.github.io/TcGSA/reference/plot1GS.html</loc>
-  </url>
-  <url>
-    <loc>http://sistm.github.io/TcGSA/reference/plotFit.GS.html</loc>
-  </url>
-  <url>
-    <loc>http://sistm.github.io/TcGSA/reference/plotMultipleGS.html</loc>
-  </url>
-  <url>
-    <loc>http://sistm.github.io/TcGSA/reference/plotPat.1GS.html</loc>
-  </url>
-  <url>
-    <loc>http://sistm.github.io/TcGSA/reference/plotPat.TcGSA.html</loc>
-  </url>
-  <url>
-    <loc>http://sistm.github.io/TcGSA/reference/plotSelect.GS.html</loc>
-  </url>
-  <url>
-    <loc>http://sistm.github.io/TcGSA/reference/pval_simu.html</loc>
-  </url>
-  <url>
-    <loc>http://sistm.github.io/TcGSA/reference/signifLRT.TcGSA.html</loc>
-  </url>
-  <url>
-    <loc>http://sistm.github.io/TcGSA/reference/summary.TcGSA.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>http://sistm.github.io/TcGSA/404.html</loc></url>
+<url><loc>http://sistm.github.io/TcGSA/LICENSE-text.html</loc></url>
+<url><loc>http://sistm.github.io/TcGSA/articles/TcGSA_userguide.html</loc></url>
+<url><loc>http://sistm.github.io/TcGSA/articles/index.html</loc></url>
+<url><loc>http://sistm.github.io/TcGSA/authors.html</loc></url>
+<url><loc>http://sistm.github.io/TcGSA/index.html</loc></url>
+<url><loc>http://sistm.github.io/TcGSA/news/index.html</loc></url>
+<url><loc>http://sistm.github.io/TcGSA/reference/TcGSA-internal.html</loc></url>
+<url><loc>http://sistm.github.io/TcGSA/reference/TcGSA-package.html</loc></url>
+<url><loc>http://sistm.github.io/TcGSA/reference/TcGSA.LR.html</loc></url>
+<url><loc>http://sistm.github.io/TcGSA/reference/TcGSA.LR.parallel.html</loc></url>
+<url><loc>http://sistm.github.io/TcGSA/reference/chisqmix.html</loc></url>
+<url><loc>http://sistm.github.io/TcGSA/reference/clustTrend.html</loc></url>
+<url><loc>http://sistm.github.io/TcGSA/reference/data_simu_TcGSA.html</loc></url>
+<url><loc>http://sistm.github.io/TcGSA/reference/index.html</loc></url>
+<url><loc>http://sistm.github.io/TcGSA/reference/multtest.TcGSA.html</loc></url>
+<url><loc>http://sistm.github.io/TcGSA/reference/plot.TcGSA.html</loc></url>
+<url><loc>http://sistm.github.io/TcGSA/reference/plot1GS.html</loc></url>
+<url><loc>http://sistm.github.io/TcGSA/reference/plotFit.GS.html</loc></url>
+<url><loc>http://sistm.github.io/TcGSA/reference/plotMultipleGS.html</loc></url>
+<url><loc>http://sistm.github.io/TcGSA/reference/plotPat.1GS.html</loc></url>
+<url><loc>http://sistm.github.io/TcGSA/reference/plotPat.TcGSA.html</loc></url>
+<url><loc>http://sistm.github.io/TcGSA/reference/plotSelect.GS.html</loc></url>
+<url><loc>http://sistm.github.io/TcGSA/reference/pval_simu.html</loc></url>
+<url><loc>http://sistm.github.io/TcGSA/reference/signifLRT.TcGSA.html</loc></url>
+<url><loc>http://sistm.github.io/TcGSA/reference/summary.TcGSA.html</loc></url>
 </urlset>
+

@@ -5,77 +5,64 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="TcGSA">
 <title>User guide to the `TcGSA` R package • TcGSA</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="User guide to the `TcGSA` R package">
-<meta property="og:description" content="TcGSA">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="User guide to the `TcGSA` R package">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
-    
 
-    <nav class="navbar fixed-top navbar-dark navbar-expand-lg bg-primary"><div class="container">
-    
+
+    <nav class="navbar navbar-expand-lg fixed-top bg-primary" data-bs-theme="dark" aria-label="Site navigation"><div class="container">
+
     <a class="navbar-brand me-2" href="../index.html">TcGSA</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.12.10</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.12.11</small>
 
-    
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
-<li class="nav-item">
-  <a class="nav-link" href="../reference/index.html">Reference</a>
-</li>
+<li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="active nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
-  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/TcGSA_userguide.html">User guide to the `TcGSA` R package</a>
-  </div>
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
+<li><a class="dropdown-item" href="../articles/TcGSA_userguide.html">User guide to the `TcGSA` R package</a></li>
+  </ul>
 </li>
-<li class="nav-item">
-  <a class="nav-link" href="../news/index.html">Changelog</a>
-</li>
+<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul>
-<form class="form-inline my-2 my-lg-0" role="search">
-        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
-</form>
-
-      <ul class="navbar-nav">
-<li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/sistm/TcGSA/" aria-label="github">
-    <span class="fab fa fab fa-github fa-lg"></span>
-     
-  </a>
-</li>
+<ul class="navbar-nav">
+<li class="nav-item"><form class="form-inline" role="search">
+ <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
+</form></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/sistm/TcGSA/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul>
 </div>
 
-    
+
   </div>
 </nav><div class="container template-article">
 
 
 
-<script src="TcGSA_userguide_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
-  <main id="main"><div class="page-header">
-      <img src="" class="logo" alt=""><h1>User guide to the `TcGSA` R package</h1>
-                        <h4 data-toc-skip class="author">Anthony Devaux, Boris Hejblum</h4>
+
+<div class="row">
+  <main id="main" class="col-md-9"><div class="page-header">
+
+      <h1>User guide to the `TcGSA` R package</h1>
+                        <h4 data-toc-skip class="author">Anthony Devaux,
+Boris Hejblum</h4>
             
-            <h4 data-toc-skip class="date">2022-02-28</h4>
+            <h4 data-toc-skip class="date">2025-07-21</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/sistm/TcGSA/blob/HEAD/vignettes/TcGSA_userguide.Rmd" class="external-link"><code>vignettes/TcGSA_userguide.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/sistm/TcGSA/blob/master/vignettes/TcGSA_userguide.Rmd" class="external-link"><code>vignettes/TcGSA_userguide.Rmd</code></a></small>
       <div class="d-none name"><code>TcGSA_userguide.Rmd</code></div>
     </div>
 
@@ -84,7 +71,14 @@
 <div class="section level2">
 <h2 id="overview-of-tcgsa">Overview of TcGSA<a class="anchor" aria-label="anchor" href="#overview-of-tcgsa"></a>
 </h2>
-<p>The <code>TcGSA</code> (Time-course Gene Set Analysis <em>Hejblum et al., 2015</em>) <code>R</code> package tests gene expression dynamics for significance in gene sets. A gene set is a group of genes, known <em>a priori</em> to share a common biological function or to be co-expressed. <code>TcGSA</code> relies on linear mixed model to take into account the potential heterogeneity of expression within a gene set. For more details, check the <a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004310" class="external-link">published article in PLOS Computational Biology</a>.</p>
+<p>The <code>TcGSA</code> (Time-course Gene Set Analysis <em>Hejblum et
+al., 2015</em>) <code>R</code> package tests gene expression dynamics
+for significance in gene sets. A gene set is a group of genes, known
+<em>a priori</em> to share a common biological function or to be
+co-expressed. <code>TcGSA</code> relies on linear mixed model to take
+into account the potential heterogeneity of expression within a gene
+set. For more details, check the <a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004310" class="external-link">published
+article in PLOS Computational Biology</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="getting-started-using-tcgsa">Getting started using TcGSA<a class="anchor" aria-label="anchor" href="#getting-started-using-tcgsa"></a>
@@ -98,11 +92,16 @@
 <div class="section level3">
 <h3 id="gene-set-object">Gene set object<a class="anchor" aria-label="anchor" href="#gene-set-object"></a>
 </h3>
-<p>A gene set is a group of genes either sharing the same biological function or . It enables to detect different gene expression and seems to be more powerful than a gene-by-gene analysis. Several definitions of groups have been made, in particular here we will focus on the following:</p>
+<p>A gene set is a group of genes either sharing the same biological
+function or . It enables to detect different gene expression and seems
+to be more powerful than a gene-by-gene analysis. Several definitions of
+groups have been made, in particular here we will focus on the
+following:</p>
 <ul>
 <li>Chaussabel’s modules (<em>Chaussabel et al., 2008</em>)</li>
 <li>Gene Ontology database (<em>Ashburner et al., 2000</em>)</li>
-<li>Kyoto Encyclopedia of Genes and Genomes database (<em>Kanehisa et Goto, 2000</em>)</li>
+<li>Kyoto Encyclopedia of Genes and Genomes database (<em>Kanehisa et
+Goto, 2000</em>)</li>
 </ul>
 <p>The gene set object is a <code>gmt</code> format containing:</p>
 <ul>
@@ -110,41 +109,62 @@
 <li>the description of the gene set, such as biological function</li>
 <li>the list of probes representing the genes inside each gene set</li>
 </ul>
-<p>One can either use already existing <code>gmt</code> objects, or build their own.</p>
+<p>One can either use already existing <code>gmt</code> objects, or
+build their own.</p>
 <div class="section level4">
 <h4 id="download-gmts-from-hejblum-et-al--2015">Download gmts from <em>Hejblum et al., 2015</em><a class="anchor" aria-label="anchor" href="#download-gmts-from-hejblum-et-al--2015"></a>
 </h4>
-<p>To import the <code>gmt</code>s used in <em>Hejblum et al., 2015</em>, one can download the supplementary file by running the following command:</p>
+<p>To import the <code>gmt</code>s used in <em>Hejblum et al.,
+2015</em>, one can download the supplementary file by running the
+following command:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">temp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="op">)</span>
-<span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html" class="external-link">download.file</a></span><span class="op">(</span><span class="st">"http://doi.org/10.1371/journal.pcbi.1004310.s007"</span>, destfile <span class="op">=</span> <span class="va">temp</span>, mode <span class="op">=</span> <span class="st">"wb"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/load.html" class="external-link">load</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/connections.html" class="external-link">unz</a></span><span class="op">(</span><span class="va">temp</span>, <span class="st">"ReproducibleRFiles/GMTs_PLOScb.RData"</span>, open <span class="op">=</span> <span class="st">"r"</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink</a></span><span class="op">(</span><span class="va">temp</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/rm.html" class="external-link">rm</a></span><span class="op">(</span><span class="va">temp</span><span class="op">)</span></code></pre></div>
-<p>It contains the 3 gene sets detailed above (for GO, it is only a subset of mutually exclusive gene sets with biological functions related to the immune system).</p>
-<p><em>Disclaimer</em>: be careful with the version of the gene set databases because they are probably outdated by now. To make sure to have the latest version of the database, you can (re-)build the <code>gmt</code> object yourself following the method below.</p>
+<code class="sourceCode R"><span><span class="va">temp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html" class="external-link">download.file</a></span><span class="op">(</span><span class="st">"http://doi.org/10.1371/journal.pcbi.1004310.s007"</span>, destfile <span class="op">=</span> <span class="va">temp</span>, mode <span class="op">=</span> <span class="st">"wb"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/load.html" class="external-link">load</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/connections.html" class="external-link">unz</a></span><span class="op">(</span><span class="va">temp</span>, <span class="st">"ReproducibleRFiles/GMTs_PLOScb.RData"</span>, open <span class="op">=</span> <span class="st">"r"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink</a></span><span class="op">(</span><span class="va">temp</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/rm.html" class="external-link">rm</a></span><span class="op">(</span><span class="va">temp</span><span class="op">)</span></span></code></pre></div>
+<p>It contains the 3 gene sets detailed above (for GO, it is only a
+subset of mutually exclusive gene sets with biological functions related
+to the immune system).</p>
+<p><em>Disclaimer</em>: be careful with the version of the gene set
+databases because they are probably outdated by now. To make sure to
+have the latest version of the database, you can (re-)build the
+<code>gmt</code> object yourself following the method below.</p>
 </div>
 <div class="section level4">
 <h4 id="self-built-gmt">Self-built gmt<a class="anchor" aria-label="anchor" href="#self-built-gmt"></a>
 </h4>
-<p>To self-build your <code>gmt</code> object, you have to prepare a <code>.gmt</code> file. This file format is the tab delimited file which can be created with <a href="https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#GMT:_Gene_Matrix_Transposed_file_format_.28.2A.gmt.29/" class="external-link">this helpful website</a> from the Broad Institute. In this file, one row represents one gene set with:</p>
+<p>To self-build your <code>gmt</code> object, you have to prepare a
+<code>.gmt</code> file. This file format is the tab delimited file which
+can be created with <a href="https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#GMT:_Gene_Matrix_Transposed_file_format_.28.2A.gmt.29/" class="external-link">this
+helpful website</a> from the Broad Institute. In this file, one row
+represents one gene set with:</p>
 <ul>
 <li>Column 1: name of the gene set</li>
 <li>Column 2: description of the gene set</li>
-<li>Remaining columns: list of genes included in the gene set (represented by the probes)</li>
+<li>Remaining columns: list of genes included in the gene set
+(represented by the probes)</li>
 </ul>
-<p>Next, to import the <code>.gmt</code> file into R, you need to run the <code>GSA.read.gmt()</code> function from the <code>GSA</code> package. More details on the <code>GSA</code> help package.</p>
+<p>Next, to import the <code>.gmt</code> file into R, you need to run
+the <code>GSA.read.gmt()</code> function from the <code>GSA</code>
+package. More details on the <code>GSA</code> help package.</p>
 </div>
 </div>
 <div class="section level3">
 <h3 id="gene-expression-matrix">Gene expression matrix<a class="anchor" aria-label="anchor" href="#gene-expression-matrix"></a>
 </h3>
-<p>This matrix contains the gene expression (in cells) for each gene (in rows) of each sample (in columns) gathered from microarray measurements. The gene expression should <strong>already</strong> be <strong>normalized before using <code>TcGSA</code></strong>. In the <code>rownames</code>, the name of each probe/gene must match with the name of probes/genes in the <code>gmt</code> object.</p>
+<p>This matrix contains the gene expression (in cells) for each gene (in
+rows) of each sample (in columns) gathered from microarray measurements.
+The gene expression should <strong>already</strong> be
+<strong>normalized before using <code>TcGSA</code></strong>. In the
+<code>rownames</code>, the name of each probe/gene must match with the
+name of probes/genes in the <code>gmt</code> object.</p>
 </div>
 <div class="section level3">
 <h3 id="design-data-matrix">Design data matrix<a class="anchor" aria-label="anchor" href="#design-data-matrix"></a>
 </h3>
-<p>The design data matrix contains for each sample (in row), several variables (in column). The variables required for the matrix are:</p>
+<p>The design data matrix contains for each sample (in row), several
+variables (in column). The variables required for the matrix are:</p>
 <ul>
 <li>Sample names</li>
 <li>Patient identifiers</li>
@@ -152,7 +172,8 @@
 <li>
 <em>In case of multiple treatments</em>, the name of treatment</li>
 </ul>
-<p>Name of samples should be unique and match with the samples of gene expression matrix with the same order.</p>
+<p>Name of samples should be unique and match with the samples of gene
+expression matrix with the same order.</p>
 </div>
 </div>
 <div class="section level2">
@@ -161,35 +182,58 @@
 <div class="section level3">
 <h3 id="data-preparation">Data preparation<a class="anchor" aria-label="anchor" href="#data-preparation"></a>
 </h3>
-<p>This example comes from <em>Hejblum et al., 2015</em> and DALIA-1 HIV therapeutic vaccine trial. The aim of this study is to evaluate the immune response to HIV vaccine. To conduct this study, 19 patients contaminated by the HIV have been followed for 48 weeks split into 2 phases of 24 each:</p>
+<p>This example comes from <em>Hejblum et al., 2015</em> and DALIA-1 HIV
+therapeutic vaccine trial. The aim of this study is to evaluate the
+immune response to HIV vaccine. To conduct this study, 19 patients
+contaminated by the HIV have been followed for 48 weeks split into 2
+phases of 24 each:</p>
 <ul>
-<li>1<sup>st</sup> phase from week 0 to week 24 (before treatment interruption): the patients were under anti-retroviral treatment and received trial vaccine on week 0, 4, 8 and 12.</li>
-<li>2nd phase from week 24 to week 48 (after treatment interruption): for the follow-up of patients, none of trial vaccine has been injected and anti-retroviral treatments have been interrupted (except for health problems).</li>
+<li>1<sup>st</sup> phase from week 0 to week 24 (before treatment
+interruption): the patients were under anti-retroviral treatment and
+received trial vaccine on week 0, 4, 8 and 12.</li>
+<li>2nd phase from week 24 to week 48 (after treatment interruption):
+for the follow-up of patients, none of trial vaccine has been injected
+and anti-retroviral treatments have been interrupted (except for health
+problems).</li>
 </ul>
-<p>Blood samples have been collected at each of the different measurement time points, for each subject, to study the dynamic of gene expression over time. For more details, check the article from Hejblum et al. <a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004310" class="external-link">here</a>.</p>
-<p>The data are publicly available on <a href="https://www.ncbi.nlm.nih.gov/geo/" class="external-link">GEO website</a> with GEO access number ‘GSE46734’. We will be using the <code>GEOquery</code> package to get the data files from GEO website (see appendix for more details on <code>GEOquery</code>)</p>
+<p>Blood samples have been collected at each of the different
+measurement time points, for each subject, to study the dynamic of gene
+expression over time. For more details, check the article from Hejblum
+et al. <a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004310" class="external-link">here</a>.</p>
+<p>The data are publicly available on <a href="https://www.ncbi.nlm.nih.gov/geo/" class="external-link">GEO website</a> with GEO access
+number ‘GSE46734’. We will be using the <code>GEOquery</code> package to
+get the data files from GEO website (see appendix for more details on
+<code>GEOquery</code>)</p>
 <div class="section level4">
 <h4 id="import-of-data-files">Import of data files<a class="anchor" aria-label="anchor" href="#import-of-data-files"></a>
 </h4>
-<p>In this example, we need import the supplementary files available on GEOwith the <code>getGEOSuppFiles</code> function (we only need the three following files, hence the regular expression filter: gene expression pre-ATI, gene expression post-ATI, experimental design):</p>
+<p>In this example, we need import the supplementary files available on
+GEOwith the <code>getGEOSuppFiles</code> function (we only need the
+three following files, hence the regular expression filter: gene
+expression pre-ATI, gene expression post-ATI, experimental design):</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">GEOquery</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/GEOquery/man/getGEOSuppFiles.html" class="external-link">getGEOSuppFiles</a></span><span class="op">(</span><span class="st">'GSE46734'</span>, filter_regex<span class="op">=</span><span class="st">"(*NonParamCombat*)|(*DESIGN*)"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">GEOquery</span><span class="fu">::</span><span class="fu"><a href="http://seandavi.github.io/GEOquery/reference/getGEOSuppFiles.html" class="external-link">getGEOSuppFiles</a></span><span class="op">(</span><span class="st">'GSE46734'</span>, filter_regex<span class="op">=</span><span class="st">"(*NonParamCombat*)|(*DESIGN*)"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="design-data-matrix-1">Design data matrix<a class="anchor" aria-label="anchor" href="#design-data-matrix-1"></a>
 </h4>
-<p>The design data matrix (called <code>design_preATI</code>) is extracted from one of the GEO supplementary files. It contains the needed experimental variables, plus some additional information regarding this study. Some data processing is performed made according to the source of this paper.</p>
+<p>The design data matrix (called <code>design_preATI</code>) is
+extracted from one of the GEO supplementary files. It contains the
+needed experimental variables, plus some additional information
+regarding this study. Some data processing is performed made according
+to the source of this paper.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">design</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.delim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/connections.html" class="external-link">gzfile</a></span><span class="op">(</span><span class="st">"GSE46734/GSE46734_DALIA1longitudinalTranscriptome_DESIGN_anonym.txt.gz"</span><span class="op">)</span><span class="op">)</span>
-<span class="va">design_preATI</span> <span class="op">&lt;-</span> <span class="va">design</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">design</span><span class="op">$</span><span class="va">TimePoint</span><span class="op">&lt;</span><span class="fl">0</span> <span class="op">|</span> <span class="va">design</span><span class="op">$</span><span class="va">TimePoint</span><span class="op">==</span><span class="fl">16</span> <span class="op">|</span> <span class="va">design</span><span class="op">$</span><span class="va">TimePoint</span><span class="op">&gt;</span><span class="fl">22</span><span class="op">)</span>, <span class="op">]</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">design_preATI</span>,<span class="fl">5</span><span class="op">)</span>
-<span class="co">#&gt;     Sample_name Chip_ID HYB_Chamber HYB_Day Patient_ID TimePoint</span>
-<span class="co">#&gt; 1 X6116733008_L      C4         CH1      D1       P001         4</span>
-<span class="co">#&gt; 3 X6116733022_E     C13         CH4      D1       P001        22</span>
-<span class="co">#&gt; 5 X6116733029_A     C18         CH1      D2       P001         8</span>
-<span class="co">#&gt; 6 X6116733068_L     C25         CH3      D2       P001        12</span>
-<span class="co">#&gt; 8 X6116733073_K     C29         CH4      D2       P001         0</span></code></pre></div>
-<p>This data frame contains 90 samples and 6 experimental variables :</p>
+<code class="sourceCode R"><span><span class="va">design</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.delim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/connections.html" class="external-link">gzfile</a></span><span class="op">(</span><span class="st">"GSE46734/GSE46734_DALIA1longitudinalTranscriptome_DESIGN_anonym.txt.gz"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">design_preATI</span> <span class="op">&lt;-</span> <span class="va">design</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">design</span><span class="op">$</span><span class="va">TimePoint</span><span class="op">&lt;</span><span class="fl">0</span> <span class="op">|</span> <span class="va">design</span><span class="op">$</span><span class="va">TimePoint</span><span class="op">==</span><span class="fl">16</span> <span class="op">|</span> <span class="va">design</span><span class="op">$</span><span class="va">TimePoint</span><span class="op">&gt;</span><span class="fl">22</span><span class="op">)</span>, <span class="op">]</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">design_preATI</span>,<span class="fl">5</span><span class="op">)</span></span>
+<span><span class="co">#&gt;     Sample_name Chip_ID HYB_Chamber HYB_Day Patient_ID TimePoint</span></span>
+<span><span class="co">#&gt; 1 X6116733008_L      C4         CH1      D1       P001         4</span></span>
+<span><span class="co">#&gt; 3 X6116733022_E     C13         CH4      D1       P001        22</span></span>
+<span><span class="co">#&gt; 5 X6116733029_A     C18         CH1      D2       P001         8</span></span>
+<span><span class="co">#&gt; 6 X6116733068_L     C25         CH3      D2       P001        12</span></span>
+<span><span class="co">#&gt; 8 X6116733073_K     C29         CH4      D2       P001         0</span></span></code></pre></div>
+<p>This data frame contains 90 samples and 6 experimental variables
+:</p>
 <ul>
 <li>
 <code>Sample_name</code> for the name of samples</li>
@@ -198,41 +242,54 @@
 <li>
 <code>TimePoint</code> for the time measurements</li>
 <li>
-<code>Chip_ID</code> <code>HYB_Chamber</code> <code>HYB_Day</code> are the variables not required for TcGSA commands</li>
+<code>Chip_ID</code> <code>HYB_Chamber</code> <code>HYB_Day</code>
+are the variables not required for TcGSA commands</li>
 </ul>
 </div>
 <div class="section level4">
 <h4 id="gene-expression-matrix-1">Gene expression matrix<a class="anchor" aria-label="anchor" href="#gene-expression-matrix-1"></a>
 </h4>
-<p>The gene expression matrix (called <code>expr_preATI</code>) is extracted from one of the GEO supplementary files (namely the “GSE46734_DALIA1longitudinalTranscriptome_PALO01_PreATI_NEQC_NonParamCombat.txt.gz” file).</p>
+<p>The gene expression matrix (called <code>expr_preATI</code>) is
+extracted from one of the GEO supplementary files (namely the
+“GSE46734_DALIA1longitudinalTranscriptome_PALO01_PreATI_NEQC_NonParamCombat.txt.gz”
+file).</p>
 <p>NB: The data is already normalized.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">expr_preATI</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.delim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/connections.html" class="external-link">gzfile</a></span><span class="op">(</span><span class="st">"GSE46734/GSE46734_DALIA1longitudinalTranscriptome_PALO01_PreATI_NEQC_NonParamCombat.txt.gz"</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">expr_preATI</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">expr_preATI</span><span class="op">$</span><span class="va">PROBE_ID</span>
-<span class="va">expr_preATI</span> <span class="op">&lt;-</span> <span class="va">expr_preATI</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">design_preATI</span><span class="op">$</span><span class="va">Sample_name</span><span class="op">)</span><span class="op">]</span>
-
-<span class="va">expr_preATI</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>
-<span class="co">#&gt;              X6116733008_L X6116733022_E X6116733029_A X6116733068_L</span>
-<span class="co">#&gt; ILMN_1762337      4.967101      4.398911      4.384093      4.927489</span>
-<span class="co">#&gt; ILMN_2055271      5.215882      4.744463      5.038972      5.209726</span>
-<span class="co">#&gt; ILMN_2383229      4.565933      4.578123      4.696965      4.306206</span>
-<span class="co">#&gt; ILMN_1806310      4.402265      4.473504      4.598726      4.589389</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">expr_preATI</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.delim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/connections.html" class="external-link">gzfile</a></span><span class="op">(</span><span class="st">"GSE46734/GSE46734_DALIA1longitudinalTranscriptome_PALO01_PreATI_NEQC_NonParamCombat.txt.gz"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">expr_preATI</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">expr_preATI</span><span class="op">$</span><span class="va">PROBE_ID</span></span>
+<span><span class="va">expr_preATI</span> <span class="op">&lt;-</span> <span class="va">expr_preATI</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">design_preATI</span><span class="op">$</span><span class="va">Sample_name</span><span class="op">)</span><span class="op">]</span></span>
+<span></span>
+<span><span class="va">expr_preATI</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span></span>
+<span><span class="co">#&gt;              X6116733008_L X6116733022_E X6116733029_A X6116733068_L</span></span>
+<span><span class="co">#&gt; ILMN_1762337      4.967101      4.398911      4.384093      4.927489</span></span>
+<span><span class="co">#&gt; ILMN_2055271      5.215882      4.744463      5.038972      5.209726</span></span>
+<span><span class="co">#&gt; ILMN_2383229      4.565933      4.578123      4.696965      4.306206</span></span>
+<span><span class="co">#&gt; ILMN_1806310      4.402265      4.473504      4.598726      4.589389</span></span></code></pre></div>
 <p>We have:</p>
 <ul>
 <li>in row <code>ILMN_xxxxxxx</code> for each probe identifier</li>
-<li>in column <code>Xxxxxxxxxxx_X</code> for the name of each sample</li>
+<li>in column <code>Xxxxxxxxxxx_X</code> for the name of each
+sample</li>
 <li>each cell contains the normalized gene expression</li>
 </ul>
-<p>The entire matrix contains <span class="math inline">\(32,978\)</span> genes and <span class="math inline">\(90\)</span> samples (number of samples should be the same as in design data matrix)</p>
+<p>The entire matrix contains
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>32</mn><mo>,</mo><mn>978</mn></mrow><annotation encoding="application/x-tex">32,978</annotation></semantics></math>
+genes and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>90</mn><annotation encoding="application/x-tex">90</annotation></semantics></math>
+samples (number of samples should be the same as in design data
+matrix)</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">expr_preATI</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">design_preATI</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] TRUE</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">expr_preATI</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">design_preATI</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level3">
 <h3 id="likelihood-ratios-test">Likelihood ratios test<a class="anchor" aria-label="anchor" href="#likelihood-ratios-test"></a>
 </h3>
-<p>This function provides the result of likelihood ratio test using the linear mixed model for each gene set. For this example, we use gene sets data from Chaussabel’s modules (<em>Chaussabel et al., 2008</em>). <code>TcGSA.LR</code> function requires:</p>
+<p>This function provides the result of likelihood ratio test using the
+linear mixed model for each gene set. For this example, we use gene sets
+data from Chaussabel’s modules (<em>Chaussabel et al., 2008</em>).
+<code>TcGSA.LR</code> function requires:</p>
 <ul>
 <li>
 <code>expr</code>: name of the gene expression matrix</li>
@@ -241,209 +298,256 @@
 <li>
 <code>design</code>: name of the design data matrix</li>
 <li>
-<code>subject_name</code>: name of the identification of patients in the design data matrix</li>
+<code>subject_name</code>: name of the identification of patients in
+the design data matrix</li>
 <li>
-<code>time_name</code>: name of the time measurements in the design data matrix</li>
+<code>time_name</code>: name of the time measurements in the design
+data matrix</li>
 </ul>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">tcgsa_result</span> <span class="op">&lt;-</span> <span class="fu">TcGSA</span><span class="fu">::</span><span class="fu"><a href="../reference/TcGSA.LR.html">TcGSA.LR</a></span><span class="op">(</span>expr <span class="op">=</span> <span class="va">expr_preATI</span>, 
-                                gmt <span class="op">=</span> <span class="va">gmt_modulesV2</span>, 
-                                design <span class="op">=</span> <span class="va">design_preATI</span>, 
-                                subject_name <span class="op">=</span> <span class="st">"Patient_ID"</span>, 
-                                time_name <span class="op">=</span> <span class="st">"TimePoint"</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">#&gt;      A TcGSA object</span>
-<span class="co">#&gt; Form of the time trend:</span>
-<span class="co">#&gt;  linear</span>
-<span class="co">#&gt; Number of treatment groups:</span>
-<span class="co">#&gt;  1</span>
-<span class="co">#&gt; Number of gene sets tested for significant time trend:</span>
-<span class="co">#&gt;  260</span></code></pre>
-<p>Now <code>tcgsa_result</code> is a <code>tcgsa</code> object containing, in addition to the likelihood ratio test results:</p>
+<code class="sourceCode R"><span><span class="va">tcgsa_result</span> <span class="op">&lt;-</span> <span class="fu">TcGSA</span><span class="fu">::</span><span class="fu"><a href="../reference/TcGSA.LR.html">TcGSA.LR</a></span><span class="op">(</span>expr <span class="op">=</span> <span class="va">expr_preATI</span>, </span>
+<span>                                gmt <span class="op">=</span> <span class="va">gmt_modulesV2</span>, </span>
+<span>                                design <span class="op">=</span> <span class="va">design_preATI</span>, </span>
+<span>                                subject_name <span class="op">=</span> <span class="st">"Patient_ID"</span>, </span>
+<span>                                time_name <span class="op">=</span> <span class="st">"TimePoint"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt;      A TcGSA object</span></span>
+<span><span class="co">#&gt; Form of the time trend:</span></span>
+<span><span class="co">#&gt;  linear</span></span>
+<span><span class="co">#&gt; Number of treatment groups:</span></span>
+<span><span class="co">#&gt;  1</span></span>
+<span><span class="co">#&gt; Number of gene sets tested for significant time trend:</span></span>
+<span><span class="co">#&gt;  260</span></span></code></pre>
+<p>Now <code>tcgsa_result</code> is a <code>tcgsa</code> object
+containing, in addition to the likelihood ratio test results:</p>
 <ul>
-<li>the form of tested time trends (default option is <code>linear</code>)</li>
-<li>the number of treatment groups and the number of gene sets tested (depending on which gene set base is defined)</li>
+<li>the form of tested time trends (default option is
+<code>linear</code>)</li>
+<li>the number of treatment groups and the number of gene sets tested
+(depending on which gene set base is defined)</li>
 <li>a few other information</li>
 </ul>
-<p>To get the number of significant gene sets, one can use <code>summary</code> function on a <code>tcgsa</code> object:</p>
+<p>To get the number of significant gene sets, one can use
+<code>summary</code> function on a <code>tcgsa</code> object:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">tcgsa_result</span><span class="op">)</span>
-<span class="co">#&gt;      A TcGSA object</span>
-<span class="co">#&gt; Form of the time trend:</span>
-<span class="co">#&gt;  linear</span>
-<span class="co">#&gt; Number of treatment groups:</span>
-<span class="co">#&gt;  1</span>
-<span class="co">#&gt; Number of gene sets tested for significant time trend:</span>
-<span class="co">#&gt;  260</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Number of significant gene sets at a 5% threshold (BY procedure):</span>
-<span class="co">#&gt;  17 out of 260 gene sets</span></code></pre></div>
-<p>To get more details on the significant gene sets, use the <code><a href="../reference/signifLRT.TcGSA.html">signifLRT.TcGSA()</a></code> function. It returns information such as the significant gene sets among all the gene sets tested, along their p-values with adjustment for multiple testing (default option is <code>BY</code> for Benjamini-Yekutieli correction <em>Benjamini et Yekutieli, 2001</em> and 5% threshold). Below is an example of five significant gene sets:</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">tcgsa_result</span><span class="op">)</span></span>
+<span><span class="co">#&gt;      A TcGSA object</span></span>
+<span><span class="co">#&gt; Form of the time trend:</span></span>
+<span><span class="co">#&gt;  linear</span></span>
+<span><span class="co">#&gt; Number of treatment groups:</span></span>
+<span><span class="co">#&gt;  1</span></span>
+<span><span class="co">#&gt; Number of gene sets tested for significant time trend:</span></span>
+<span><span class="co">#&gt;  260</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Number of significant gene sets at a 5% threshold (BY procedure):</span></span>
+<span><span class="co">#&gt;  17 out of 260 gene sets</span></span></code></pre></div>
+<p>To get more details on the significant gene sets, use the
+<code><a href="../reference/signifLRT.TcGSA.html">signifLRT.TcGSA()</a></code> function. It returns information such as
+the significant gene sets among all the gene sets tested, along their
+p-values with adjustment for multiple testing (default option is
+<code>BY</code> for Benjamini-Yekutieli correction <em>Benjamini et
+Yekutieli, 2001</em> and 5% threshold). Below is an example of five
+significant gene sets:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu">TcGSA</span><span class="fu">::</span><span class="fu"><a href="../reference/signifLRT.TcGSA.html">signifLRT.TcGSA</a></span><span class="op">(</span><span class="va">tcgsa_result</span><span class="op">)</span><span class="op">$</span><span class="va">mixedLRTadjRes</span><span class="op">)</span>
-<span class="co">#&gt;   GeneSet      AdjPval         desc</span>
-<span class="co">#&gt; 1    M1.1 8.296095e-09    Platelets</span>
-<span class="co">#&gt; 2    M3.2 4.096412e-08 Inflammation</span>
-<span class="co">#&gt; 3    M3.5 3.952334e-02   Cell Cycle</span>
-<span class="co">#&gt; 6    M4.6 1.337921e-06 Inflammation</span>
-<span class="co">#&gt; 7    M4.9 3.820230e-04 Undetermined</span>
-<span class="co">#&gt; 4   M4.11 7.411800e-07 Plasma Cells</span></code></pre></div>
-<p>You can also use the <code>multtest.TcGSA</code> function to provide the likelihood ratios, the raw and adjusted p-values for the whole gene sets with 5% threshold. Below is an example displaying only for five results:</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu">TcGSA</span><span class="fu">::</span><span class="fu"><a href="../reference/signifLRT.TcGSA.html">signifLRT.TcGSA</a></span><span class="op">(</span><span class="va">tcgsa_result</span><span class="op">)</span><span class="op">$</span><span class="va">mixedLRTadjRes</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   GeneSet      AdjPval         desc</span></span>
+<span><span class="co">#&gt; 1    M1.1 8.296095e-09    Platelets</span></span>
+<span><span class="co">#&gt; 2    M3.2 4.096412e-08 Inflammation</span></span>
+<span><span class="co">#&gt; 3    M3.5 3.952334e-02   Cell Cycle</span></span>
+<span><span class="co">#&gt; 6    M4.6 1.337921e-06 Inflammation</span></span>
+<span><span class="co">#&gt; 7    M4.9 3.820230e-04 Undetermined</span></span>
+<span><span class="co">#&gt; 4   M4.11 7.411800e-07 Plasma Cells</span></span></code></pre></div>
+<p>You can also use the <code>multtest.TcGSA</code> function to provide
+the likelihood ratios, the raw and adjusted p-values for the whole gene
+sets with 5% threshold. Below is an example displaying only for five
+results:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu">TcGSA</span><span class="fu">::</span><span class="fu"><a href="../reference/multtest.TcGSA.html">multtest.TcGSA</a></span><span class="op">(</span><span class="va">tcgsa_result</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt;           LR CVG_H0 CVG_H1     raw_pval     adj_pval</span>
-<span class="co">#&gt; 1 48.5951385      0      0 1.559071e-11 8.296095e-09</span>
-<span class="co">#&gt; 2  0.4574752      0      0 6.471718e-01 1.000000e+00</span>
-<span class="co">#&gt; 3  3.1626395      0      0 1.405224e-01 1.000000e+00</span>
-<span class="co">#&gt; 4  1.6726757      0      0 3.145975e-01 1.000000e+00</span>
-<span class="co">#&gt; 5  0.1412185      0      0 8.194493e-01 1.000000e+00</span>
-<span class="co">#&gt; 6  0.1036336      0      0 8.485074e-01 1.000000e+00</span></code></pre></div>
-<p><code>CVG_H0</code> and <code>CVG_H1</code> are the convergence of the model under null and alternative hypotheses. <code>0</code> indicates a good convergence of the model (based on <code>lme4</code> output).</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu">TcGSA</span><span class="fu">::</span><span class="fu"><a href="../reference/multtest.TcGSA.html">multtest.TcGSA</a></span><span class="op">(</span><span class="va">tcgsa_result</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt;           LR CVG_H0 CVG_H1     raw_pval     adj_pval</span></span>
+<span><span class="co">#&gt; 1 48.5951385      0      0 1.559071e-11 8.296095e-09</span></span>
+<span><span class="co">#&gt; 2  0.4574752      0      0 6.471718e-01 1.000000e+00</span></span>
+<span><span class="co">#&gt; 3  3.1626395      0      0 1.405224e-01 1.000000e+00</span></span>
+<span><span class="co">#&gt; 4  1.6726757      0      0 3.145975e-01 1.000000e+00</span></span>
+<span><span class="co">#&gt; 5  0.1412185      0      0 8.194493e-01 1.000000e+00</span></span>
+<span><span class="co">#&gt; 6  0.1036336      0      0 8.485074e-01 1.000000e+00</span></span></code></pre></div>
+<p><code>CVG_H0</code> and <code>CVG_H1</code> are the convergence of
+the model under null and alternative hypotheses. <code>0</code>
+indicates a good convergence of the model (based on <code>lme4</code>
+output).</p>
 </div>
 <div class="section level3">
 <h3 id="graphical-outputs">Graphical outputs<a class="anchor" aria-label="anchor" href="#graphical-outputs"></a>
 </h3>
-<p><code><a href="../reference/plot1GS.html">plot1GS()</a></code> plots the different representations of gene expression in a specific gene set of interest (specified by the <code>geneset.name</code> argument). This function requires the following:</p>
+<p><code><a href="../reference/plot1GS.html">plot1GS()</a></code> plots the different representations of gene
+expression in a specific gene set of interest (specified by the
+<code>geneset.name</code> argument). This function requires the
+following:</p>
 <ul>
 <li>
-<code>expr</code>: either the name of the gene expression matrix or the estimations of linear mixed model (in this example, we used the raw data from the gene expression matrix)</li>
+<code>expr</code>: either the name of the gene expression matrix or
+the estimations of linear mixed model (in this example, we used the raw
+data from the gene expression matrix)</li>
 <li>
 <code>gmt</code>: the name of the gmt gene set object</li>
 <li>
-<code>Subject_ID</code>: the name of the identification of patients in the design data matrix</li>
+<code>Subject_ID</code>: the name of the identification of patients
+in the design data matrix</li>
 <li>
-<code>TimePoint</code>: the name of the time measurements of the design data matrix</li>
+<code>TimePoint</code>: the name of the time measurements of the
+design data matrix</li>
 <li>
-<code>geneset.name</code>: the name of gene set (significant ones can be found with <code>signifLRT.TcGSA(tcgsa_result)$mixedLRTadjRes</code>)</li>
+<code>geneset.name</code>: the name of gene set (significant ones
+can be found with
+<code>signifLRT.TcGSA(tcgsa_result)$mixedLRTadjRes</code>)</li>
 <li>
-<code>time_unit</code>: string to be displayed before to the values of <code>TimePoint</code> on the x-axis (such as ‘D’ for ‘days’ for instance - <strong>optional</strong>)</li>
+<code>time_unit</code>: string to be displayed before to the values
+of <code>TimePoint</code> on the x-axis (such as ‘D’ for ‘days’ for
+instance - <strong>optional</strong>)</li>
 </ul>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">TcGSA</span><span class="fu">::</span><span class="fu"><a href="../reference/plot1GS.html">plot1GS</a></span><span class="op">(</span>expr <span class="op">=</span> <span class="va">expr_preATI</span>, 
-               <span class="co">#plot1GS(expr = tcgsa_result$Estimations,</span>
-               gmt <span class="op">=</span> <span class="va">gmt_modulesV2</span>, 
-               Subject_ID <span class="op">=</span> <span class="va">design_preATI</span><span class="op">$</span><span class="va">Patient_ID</span>, 
-               TimePoint <span class="op">=</span> <span class="va">design_preATI</span><span class="op">$</span><span class="va">TimePoint</span>,
-               clustering <span class="op">=</span> <span class="cn">FALSE</span>, 
-               time_unit <span class="op">=</span> <span class="st">"W"</span>, 
-               geneset.name <span class="op">=</span> <span class="st">"M3.2"</span>, 
-               title<span class="op">=</span><span class="st">""</span>,
-               margins<span class="op">=</span><span class="fl">0.4</span>,
-               lab.cex<span class="op">=</span><span class="fl">0.37</span>,
-               axis.cex<span class="op">=</span><span class="fl">0.37</span>,
-               line.size<span class="op">=</span><span class="fl">0.45</span>,
-               gg.add<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position<span class="op">=</span><span class="st">"none"</span><span class="op">)</span>,
-                        <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html" class="external-link">ylim</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1.26</span>,<span class="fl">1.26</span><span class="op">)</span>
-               <span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">TcGSA</span><span class="fu">::</span><span class="fu"><a href="../reference/plot1GS.html">plot1GS</a></span><span class="op">(</span>expr <span class="op">=</span> <span class="va">expr_preATI</span>, </span>
+<span>               <span class="co">#plot1GS(expr = tcgsa_result$Estimations,</span></span>
+<span>               gmt <span class="op">=</span> <span class="va">gmt_modulesV2</span>, </span>
+<span>               Subject_ID <span class="op">=</span> <span class="va">design_preATI</span><span class="op">$</span><span class="va">Patient_ID</span>, </span>
+<span>               TimePoint <span class="op">=</span> <span class="va">design_preATI</span><span class="op">$</span><span class="va">TimePoint</span>,</span>
+<span>               clustering <span class="op">=</span> <span class="cn">FALSE</span>, </span>
+<span>               time_unit <span class="op">=</span> <span class="st">"W"</span>, </span>
+<span>               geneset.name <span class="op">=</span> <span class="st">"M3.2"</span>, </span>
+<span>               title<span class="op">=</span><span class="st">""</span>,</span>
+<span>               margins<span class="op">=</span><span class="fl">0.4</span>,</span>
+<span>               lab.cex<span class="op">=</span><span class="fl">0.37</span>,</span>
+<span>               axis.cex<span class="op">=</span><span class="fl">0.37</span>,</span>
+<span>               line.size<span class="op">=</span><span class="fl">0.45</span>,</span>
+<span>               gg.add<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position<span class="op">=</span><span class="st">"none"</span><span class="op">)</span>,</span>
+<span>                        <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html" class="external-link">ylim</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1.26</span>,<span class="fl">1.26</span><span class="op">)</span></span>
+<span>               <span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="TcGSA_userguide_files/figure-html/plot1GS_ST-1.png" width="700"></p>
-<p>Dotted line shows the median gene expression across subjects, in the gene set over time.</p>
+<p>Dotted line shows the median gene expression across subjects, in the
+gene set over time.</p>
 </div>
 </div>
 <div class="section level2">
 <h2 id="how-to-use-tcgsa-for-several-treatment-group">How to use TcGSA for several treatment group ?<a class="anchor" aria-label="anchor" href="#how-to-use-tcgsa-for-several-treatment-group"></a>
 </h2>
-<p>Here we are going to take another example, from <em>Obermoser et al. 2013</em>, to study the responses to influenza and pneumococcal vaccines on healthy individuals using longitudinal gene expression. The subjects are split into three groups of 6 individuals, each receiving either 2009-2010 seasonal influenza vaccine (Fluzone), a 23-valent pneumococcal vaccine (Pneumovax23), or a placebo (saline solution).<br>
-Blood samples have been acquired on day -7, 0, 1, 3, 7, 10, 14, 21 and 28 to study gene expression over time. For more details, check the article from <em>Obermoser et al.</em> <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3492754/" class="external-link">here</a>.</p>
-<p>The data is available on <a href="https://www.ncbi.nlm.nih.gov/geo/" class="external-link">GEO website</a> under the GEO access number ‘GSE30101’, which we will be accessing through the <code>GEOquery</code> package (see appendix for more details on <code>GEOquery</code>)</p>
+<p>Here we are going to take another example, from <em>Obermoser et
+al. 2013</em>, to study the responses to influenza and pneumococcal
+vaccines on healthy individuals using longitudinal gene expression. The
+subjects are split into three groups of 6 individuals, each receiving
+either 2009-2010 seasonal influenza vaccine (Fluzone), a 23-valent
+pneumococcal vaccine (Pneumovax23), or a placebo (saline
+solution).<br>
+Blood samples have been acquired on day -7, 0, 1, 3, 7, 10, 14, 21 and
+28 to study gene expression over time. For more details, check the
+article from <em>Obermoser et al.</em> <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3492754/" class="external-link">here</a>.</p>
+<p>The data is available on <a href="https://www.ncbi.nlm.nih.gov/geo/" class="external-link">GEO website</a> under the GEO
+access number ‘GSE30101’, which we will be accessing through the
+<code>GEOquery</code> package (see appendix for more details on
+<code>GEOquery</code>)</p>
 <div class="section level3">
 <h3 id="data-preparation-1">Data preparation<a class="anchor" aria-label="anchor" href="#data-preparation-1"></a>
 </h3>
-<p>Here, we download the data files and import them with <code>getGEO()</code> function:</p>
+<p>Here, we download the data files and import them with
+<code>getGEO()</code> function:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html" class="external-link">download.file</a></span><span class="op">(</span><span class="st">"ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE30nnn/GSE30101/soft/GSE30101_family.soft.gz"</span>, destfile <span class="op">=</span> <span class="st">"GSE30101_family.soft.gz"</span>, mode <span class="op">=</span> <span class="st">"wb"</span>, cacheOK <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="va">gse.soft</span> <span class="op">&lt;-</span> <span class="fu">GEOquery</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/GEOquery/man/getGEO.html" class="external-link">getGEO</a></span><span class="op">(</span>filename<span class="op">=</span><span class="st">"GSE30101_family.soft.gz"</span><span class="op">)</span></code></pre></div>
-<p>Additional processing is needed to shape our dataset into a gene expression matrix:</p>
+<code class="sourceCode R"><span><span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html" class="external-link">download.file</a></span><span class="op">(</span><span class="st">"ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE30nnn/GSE30101/soft/GSE30101_family.soft.gz"</span>, destfile <span class="op">=</span> <span class="st">"GSE30101_family.soft.gz"</span>, mode <span class="op">=</span> <span class="st">"wb"</span>, cacheOK <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">gse.soft</span> <span class="op">&lt;-</span> <span class="fu">GEOquery</span><span class="fu">::</span><span class="fu"><a href="http://seandavi.github.io/GEOquery/reference/getGEO.html" class="external-link">getGEO</a></span><span class="op">(</span>filename<span class="op">=</span><span class="st">"GSE30101_family.soft.gz"</span><span class="op">)</span></span></code></pre></div>
+<p>Additional processing is needed to shape our dataset into a gene
+expression matrix:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">probesIDs</span> <span class="op">&lt;-</span> <span class="fu">GEOquery</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/GEOquery/man/GEOData-accessors.html" class="external-link">Table</a></span><span class="op">(</span><span class="fu">GEOquery</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/GEOquery/man/GEOData-accessors.html" class="external-link">GSMList</a></span><span class="op">(</span><span class="va">gse.soft</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">$</span><span class="va">ID</span>
-<span class="va">data.matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="st">'cbind'</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu">GEOquery</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/GEOquery/man/GEOData-accessors.html" class="external-link">GSMList</a></span><span class="op">(</span><span class="va">gse.soft</span><span class="op">)</span>,
-                                       <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
-                                        <span class="va">tab</span> <span class="op">&lt;-</span> <span class="fu">GEOquery</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/GEOquery/man/GEOData-accessors.html" class="external-link">Table</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-                                        <span class="va">mymatch</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/match.html" class="external-link">match</a></span><span class="op">(</span><span class="va">probesIDs</span>,<span class="va">tab</span><span class="op">$</span><span class="va">ID_REF</span><span class="op">)</span>
-                                        <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">tab</span><span class="op">$</span><span class="va">VALUE</span><span class="op">[</span><span class="va">mymatch</span><span class="op">]</span><span class="op">)</span>
-                                       <span class="op">}</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">data.matrix</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">probesIDs</span>
-<span class="va">expr.All.ChaussVac</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">data.matrix</span>, MARGIN <span class="op">=</span> <span class="fl">2</span>, FUN <span class="op">=</span> <span class="va">as.numeric</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">expr.All.ChaussVac</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">probesIDs</span></code></pre></div>
-<p>The experimental design data matrix can be extracted with the following commands:</p>
+<code class="sourceCode R"><span><span class="va">probesIDs</span> <span class="op">&lt;-</span> <span class="fu">GEOquery</span><span class="fu">::</span><span class="fu"><a href="http://seandavi.github.io/GEOquery/reference/GEOData-accessors.html" class="external-link">Table</a></span><span class="op">(</span><span class="fu">GEOquery</span><span class="fu">::</span><span class="fu"><a href="http://seandavi.github.io/GEOquery/reference/GEOData-accessors.html" class="external-link">GSMList</a></span><span class="op">(</span><span class="va">gse.soft</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">$</span><span class="va">ID</span></span>
+<span><span class="va">data.matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="st">'cbind'</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu">GEOquery</span><span class="fu">::</span><span class="fu"><a href="http://seandavi.github.io/GEOquery/reference/GEOData-accessors.html" class="external-link">GSMList</a></span><span class="op">(</span><span class="va">gse.soft</span><span class="op">)</span>,</span>
+<span>                                       <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>                                        <span class="va">tab</span> <span class="op">&lt;-</span> <span class="fu">GEOquery</span><span class="fu">::</span><span class="fu"><a href="http://seandavi.github.io/GEOquery/reference/GEOData-accessors.html" class="external-link">Table</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span>                                        <span class="va">mymatch</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/match.html" class="external-link">match</a></span><span class="op">(</span><span class="va">probesIDs</span>,<span class="va">tab</span><span class="op">$</span><span class="va">ID_REF</span><span class="op">)</span></span>
+<span>                                        <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">tab</span><span class="op">$</span><span class="va">VALUE</span><span class="op">[</span><span class="va">mymatch</span><span class="op">]</span><span class="op">)</span></span>
+<span>                                       <span class="op">}</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">data.matrix</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">probesIDs</span></span>
+<span><span class="va">expr.All.ChaussVac</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">data.matrix</span>, MARGIN <span class="op">=</span> <span class="fl">2</span>, FUN <span class="op">=</span> <span class="va">as.numeric</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">expr.All.ChaussVac</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">probesIDs</span></span></code></pre></div>
+<p>The experimental design data matrix can be extracted with the
+following commands:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">design_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu">GEOquery</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/GEOquery/man/GEOData-accessors.html" class="external-link">GSMList</a></span><span class="op">(</span><span class="va">gse.soft</span><span class="op">)</span>, 
-                      <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span><span class="fu">GEOquery</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/GEOquery/man/GEOData-accessors.html" class="external-link">Meta</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">$</span><span class="va">characteristics_ch1</span><span class="op">}</span><span class="op">)</span>
-<span class="va">design</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>row.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">design_list</span><span class="op">)</span><span class="op">)</span>
-<span class="va">design</span><span class="op">$</span><span class="va">sample_ID</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">design_list</span><span class="op">)</span>
-<span class="va">s_id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">design_list</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"subject id: "</span>, <span class="st">""</span>, <span class="va">x</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"subject id: "</span>, <span class="va">x</span><span class="op">)</span><span class="op">]</span><span class="op">)</span><span class="op">}</span><span class="op">)</span><span class="op">)</span>
-<span class="va">design</span><span class="op">$</span><span class="va">Subject_ID</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"P"</span>, <span class="va">s_id</span><span class="op">[</span><span class="va">design</span><span class="op">$</span><span class="va">sample_ID</span><span class="op">]</span>, sep<span class="op">=</span><span class="st">""</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">time</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">design_list</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"day: "</span>, <span class="st">""</span>, <span class="va">x</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"day: "</span>, <span class="va">x</span><span class="op">)</span><span class="op">]</span><span class="op">)</span><span class="op">}</span><span class="op">)</span><span class="op">)</span>
-<span class="va">time</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">time</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"-7"</span>, <span class="st">"0.5"</span>, <span class="st">"1"</span>, <span class="st">"7"</span>, <span class="st">"10"</span>, <span class="st">"14"</span>,  <span class="st">"21"</span>, <span class="st">"28"</span><span class="op">)</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"D"</span>, <span class="va">time</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">time</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"-7"</span>, <span class="st">"0.5"</span>, <span class="st">"1"</span>, <span class="st">"7"</span>, <span class="st">"10"</span>, <span class="st">"14"</span>, <span class="st">"21"</span>, <span class="st">"28"</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>, sep<span class="op">=</span><span class="st">""</span><span class="op">)</span>
-<span class="va">time</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">time</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"-168"</span>, <span class="st">"1.5"</span>, <span class="st">"6"</span>, <span class="st">"9"</span>, <span class="st">"12"</span>, <span class="st">"15"</span>, <span class="st">"24"</span>, <span class="st">"36"</span>, <span class="st">"48"</span><span class="op">)</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"H"</span>, <span class="va">time</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">time</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"-168"</span>, <span class="st">"1.5"</span>, <span class="st">"6"</span>, <span class="st">"9"</span>, <span class="st">"12"</span>, <span class="st">"15"</span>, <span class="st">"24"</span>, <span class="st">"36"</span>, <span class="st">"48"</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>, sep<span class="op">=</span><span class="st">""</span><span class="op">)</span>
-<span class="va">design</span><span class="op">$</span><span class="va">Time</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">time</span><span class="op">[</span><span class="va">design</span><span class="op">$</span><span class="va">sample_ID</span><span class="op">]</span><span class="op">)</span>
-
-<span class="va">vac</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">design_list</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"vaccine: "</span>, <span class="st">""</span>, <span class="va">x</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"vaccine: "</span>, <span class="va">x</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>
-<span class="op">}</span><span class="op">)</span><span class="op">)</span>
-<span class="va">vac</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">vac</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">vac</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"influenza"</span>, <span class="st">"influenza"</span>, <span class="st">"influenza"</span>, <span class="st">"influenza"</span>, <span class="st">"saline"</span>, 
-                 <span class="st">"pneumo"</span>, <span class="st">"pneumo"</span>, <span class="st">"pneumo"</span>, <span class="st">"saline"</span>, <span class="st">"saline"</span><span class="op">)</span>
-<span class="va">design</span><span class="op">$</span><span class="va">Vaccine</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">vac</span><span class="op">[</span><span class="va">design</span><span class="op">$</span><span class="va">sample_ID</span><span class="op">]</span><span class="op">)</span>
-
-<span class="va">sampSet</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">design_list</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"sample set: "</span>, <span class="st">""</span>, <span class="va">x</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"sample set: "</span>, <span class="va">x</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>
-<span class="op">}</span><span class="op">)</span><span class="op">)</span>
-<span class="va">design</span><span class="op">$</span><span class="va">sampSet</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">sampSet</span><span class="op">[</span><span class="va">design</span><span class="op">$</span><span class="va">sample_ID</span><span class="op">]</span><span class="op">)</span>
-
-<span class="va">design</span><span class="op">$</span><span class="va">Time</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">design</span><span class="op">$</span><span class="va">sampSet</span><span class="op">==</span><span class="st">"Training_Set_Vein"</span> <span class="op">&amp;</span> <span class="va">design</span><span class="op">$</span><span class="va">Time</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0"</span>, <span class="st">"3"</span><span class="op">)</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"D"</span>, <span class="va">design</span><span class="op">$</span><span class="va">Time</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">design</span><span class="op">$</span><span class="va">sampSet</span><span class="op">==</span><span class="st">"Training_Set_Vein"</span> <span class="op">&amp;</span> <span class="va">design</span><span class="op">$</span><span class="va">Time</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0"</span>, <span class="st">"3"</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>, sep<span class="op">=</span><span class="st">""</span><span class="op">)</span>
-<span class="va">design</span><span class="op">$</span><span class="va">Time</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">design</span><span class="op">$</span><span class="va">sampSet</span><span class="op">==</span><span class="st">"Training_Set_Finger"</span> <span class="op">&amp;</span> <span class="va">design</span><span class="op">$</span><span class="va">Time</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0"</span>, <span class="st">"3"</span><span class="op">)</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"H"</span>, <span class="va">design</span><span class="op">$</span><span class="va">Time</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">design</span><span class="op">$</span><span class="va">sampSet</span><span class="op">==</span><span class="st">"Training_Set_Finger"</span> <span class="op">&amp;</span> <span class="va">design</span><span class="op">$</span><span class="va">Time</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0"</span>, <span class="st">"3"</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>, sep<span class="op">=</span><span class="st">""</span><span class="op">)</span>
-<span class="va">design</span><span class="op">$</span><span class="va">Time</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">design</span><span class="op">$</span><span class="va">sampSet</span><span class="op">==</span><span class="st">"Test_Set_Vein"</span> <span class="op">&amp;</span> <span class="va">design</span><span class="op">$</span><span class="va">Time</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0"</span>, <span class="st">"3"</span><span class="op">)</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"D"</span>, <span class="va">design</span><span class="op">$</span><span class="va">Time</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">design</span><span class="op">$</span><span class="va">sampSet</span><span class="op">==</span><span class="st">"Test_Set_Vein"</span> <span class="op">&amp;</span> <span class="va">design</span><span class="op">$</span><span class="va">Time</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0"</span>, <span class="st">"3"</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>, sep<span class="op">=</span><span class="st">""</span><span class="op">)</span>
-<span class="va">design</span><span class="op">$</span><span class="va">Time</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">design</span><span class="op">$</span><span class="va">sampSet</span><span class="op">==</span><span class="st">"Test_Set_Finger"</span> <span class="op">&amp;</span> <span class="va">design</span><span class="op">$</span><span class="va">Time</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0"</span>, <span class="st">"3"</span><span class="op">)</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"D"</span>, <span class="va">design</span><span class="op">$</span><span class="va">Time</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">design</span><span class="op">$</span><span class="va">sampSet</span><span class="op">==</span><span class="st">"Test_Set_Finger"</span> <span class="op">&amp;</span> <span class="va">design</span><span class="op">$</span><span class="va">Time</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0"</span>, <span class="st">"3"</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>, sep<span class="op">=</span><span class="st">""</span><span class="op">)</span>
-<span class="va">design</span><span class="op">$</span><span class="va">Time</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">design</span><span class="op">$</span><span class="va">sampSet</span><span class="op">==</span><span class="st">"Validation_Vein"</span> <span class="op">&amp;</span> <span class="va">design</span><span class="op">$</span><span class="va">Time</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0"</span>, <span class="st">"3"</span><span class="op">)</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"D"</span>, <span class="va">design</span><span class="op">$</span><span class="va">Time</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">design</span><span class="op">$</span><span class="va">sampSet</span><span class="op">==</span><span class="st">"Validation_Vein"</span> <span class="op">&amp;</span> <span class="va">design</span><span class="op">$</span><span class="va">Time</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0"</span>, <span class="st">"3"</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>, sep<span class="op">=</span><span class="st">""</span><span class="op">)</span>
-
-<span class="va">design</span><span class="op">$</span><span class="va">Day</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"D"</span>, <span class="st">""</span>, <span class="va">design</span><span class="op">$</span><span class="va">Time</span><span class="op">)</span>
-<span class="va">design</span><span class="op">$</span><span class="va">Day</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"H"</span>, <span class="va">design</span><span class="op">$</span><span class="va">Day</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"H"</span>, <span class="st">""</span>, <span class="va">design</span><span class="op">$</span><span class="va">Day</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"H"</span>, <span class="va">design</span><span class="op">$</span><span class="va">Day</span><span class="op">)</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">/</span><span class="fl">24</span>
-<span class="va">design</span><span class="op">$</span><span class="va">Day</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">design</span><span class="op">$</span><span class="va">Day</span><span class="op">)</span>
-
-<span class="va">design.All.ChaussVac</span> <span class="op">&lt;-</span> <span class="va">design</span>
-
-
-
-<span class="co"># Avg Baseline -----</span>
-<span class="va">design.All.ChaussVac.trainSetVein</span> <span class="op">&lt;-</span> <span class="va">design.All.ChaussVac</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">design.All.ChaussVac</span><span class="op">$</span><span class="va">sampSet</span><span class="op">==</span><span class="st">"Training_Set_Vein"</span><span class="op">)</span>,<span class="op">]</span>
-<span class="va">samplesSaline2rmv</span> <span class="op">&lt;-</span> <span class="va">design.All.ChaussVac.trainSetVein</span><span class="op">[</span><span class="fl">162</span><span class="op">:</span><span class="fl">214</span>,<span class="st">"sample_ID"</span><span class="op">]</span>
-<span class="va">design.All.ChaussVac.noDup</span> <span class="op">&lt;-</span> <span class="va">design.All.ChaussVac.trainSetVein</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">design.All.ChaussVac.trainSetVein</span><span class="op">$</span><span class="va">sample_ID</span><span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span><span class="va">samplesSaline2rmv</span><span class="op">)</span>,<span class="op">]</span>
-
-<span class="va">design.All.ChaussVac.AvgBl</span> <span class="op">&lt;-</span> <span class="va">design.All.ChaussVac.noDup</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">design.All.ChaussVac.noDup</span><span class="op">$</span><span class="va">Day</span><span class="op">!=</span><span class="fl">0</span><span class="op">)</span>,<span class="op">]</span>
-<span class="va">design.All.ChaussVac.AvgBl</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">design.All.ChaussVac.AvgBl</span><span class="op">$</span><span class="va">Day</span><span class="op">==</span><span class="op">-</span><span class="fl">7</span><span class="op">)</span>,<span class="st">"Day"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span>
-<span class="va">design.All.ChaussVac.AvgBl</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">design.All.ChaussVac.AvgBl</span><span class="op">$</span><span class="va">Time</span><span class="op">==</span><span class="st">"D-7"</span><span class="op">)</span>,<span class="st">"Time"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"D0"</span>
-
-<span class="va">expr.All.ChaussVac.AvgBl</span> <span class="op">&lt;-</span> <span class="va">expr.All.ChaussVac</span><span class="op">[</span>, <span class="va">design.All.ChaussVac.AvgBl</span><span class="op">$</span><span class="va">sample_ID</span><span class="op">]</span>
-<span class="kw">for</span><span class="op">(</span><span class="va">p</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">design.All.ChaussVac.AvgBl</span><span class="op">$</span><span class="va">Subject_ID</span><span class="op">)</span><span class="op">)</span><span class="op">{</span>
-    <span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">design.All.ChaussVac.noDup</span><span class="op">$</span><span class="va">Subject_ID</span><span class="op">==</span><span class="va">p</span> <span class="op">&amp;</span> <span class="op">(</span><span class="va">design.All.ChaussVac.noDup</span><span class="op">$</span><span class="va">Day</span><span class="op">==</span><span class="fl">0</span> <span class="op">|</span> <span class="va">design.All.ChaussVac.noDup</span><span class="op">$</span><span class="va">Day</span><span class="op">==</span><span class="op">-</span><span class="fl">7</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">&gt;</span><span class="fl">1</span><span class="op">)</span><span class="op">{</span>
-        <span class="va">expr.All.ChaussVac.AvgBl</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">design.All.ChaussVac.AvgBl</span><span class="op">$</span><span class="va">Subject_ID</span><span class="op">==</span><span class="va">p</span> <span class="op">&amp;</span> <span class="va">design.All.ChaussVac.AvgBl</span><span class="op">$</span><span class="va">Day</span><span class="op">==</span><span class="fl">0</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span>
-            <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span>X<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">expr.All.ChaussVac</span><span class="op">[</span>, <span class="va">design.All.ChaussVac.noDup</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">design.All.ChaussVac.noDup</span><span class="op">$</span><span class="va">Subject_ID</span><span class="op">==</span><span class="va">p</span> <span class="op">&amp;</span> <span class="va">design.All.ChaussVac.noDup</span><span class="op">$</span><span class="va">Day</span><span class="op">==</span><span class="fl">0</span><span class="op">)</span>, <span class="st">"sample_ID"</span><span class="op">]</span><span class="op">]</span>,
-                          <span class="va">expr.All.ChaussVac</span><span class="op">[</span>, <span class="va">design.All.ChaussVac.noDup</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">design.All.ChaussVac.noDup</span><span class="op">$</span><span class="va">Subject_ID</span><span class="op">==</span><span class="va">p</span> <span class="op">&amp;</span> <span class="va">design.All.ChaussVac.noDup</span><span class="op">$</span><span class="va">Day</span><span class="op">==</span><span class="op">-</span><span class="fl">7</span><span class="op">)</span>, <span class="st">"sample_ID"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>,
-                  MARGIN<span class="op">=</span><span class="fl">1</span>, FUN<span class="op">=</span><span class="va">mean</span>, na.rm<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
-    <span class="op">}</span>
-<span class="op">}</span>
-<span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">expr.All.ChaussVac.AvgBl</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">probesIDs</span>
-
-<span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">design.All.ChaussVac.AvgBl</span><span class="op">$</span><span class="va">sample_ID</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">expr.All.ChaussVac.AvgBl</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">{</span><span class="kw"><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop</a></span><span class="op">(</span><span class="st">"\n\n\nWARNING: EXPRESSION FILE ORDER NOT MATCHING DESIGN FILE\n\n\n"</span><span class="op">)</span><span class="op">}</span>
-<span class="va">design.All.ChaussVac.AvgBl</span><span class="op">$</span><span class="va">Subject_ID</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">design.All.ChaussVac.AvgBl</span><span class="op">$</span><span class="va">Subject_ID</span><span class="op">)</span>
-
-
-<span class="va">design.PNEUMOvsSALINE.ChaussVac.AvgBl</span> <span class="op">&lt;-</span> <span class="va">design.All.ChaussVac.AvgBl</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">design.All.ChaussVac.AvgBl</span><span class="op">$</span><span class="va">Vaccine</span><span class="op">!=</span><span class="st">"influenza"</span><span class="op">)</span>, <span class="op">]</span>
-<span class="va">design.PNEUMOvsSALINE.ChaussVac.AvgBl</span><span class="op">$</span><span class="va">Vaccine</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">design.PNEUMOvsSALINE.ChaussVac.AvgBl</span><span class="op">$</span><span class="va">Vaccine</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">expr.PNEUMOvsSALINE.ChaussVac.AvgBl</span> <span class="op">&lt;-</span> <span class="va">expr.All.ChaussVac.AvgBl</span><span class="op">[</span>,<span class="va">design.PNEUMOvsSALINE.ChaussVac.AvgBl</span><span class="op">$</span><span class="va">sample_ID</span><span class="op">]</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">design_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu">GEOquery</span><span class="fu">::</span><span class="fu"><a href="http://seandavi.github.io/GEOquery/reference/GEOData-accessors.html" class="external-link">GSMList</a></span><span class="op">(</span><span class="va">gse.soft</span><span class="op">)</span>, </span>
+<span>                      <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span><span class="fu">GEOquery</span><span class="fu">::</span><span class="fu"><a href="http://seandavi.github.io/GEOquery/reference/GEOData-accessors.html" class="external-link">Meta</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">$</span><span class="va">characteristics_ch1</span><span class="op">}</span><span class="op">)</span></span>
+<span><span class="va">design</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>row.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">design_list</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">design</span><span class="op">$</span><span class="va">sample_ID</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">design_list</span><span class="op">)</span></span>
+<span><span class="va">s_id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">design_list</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"subject id: "</span>, <span class="st">""</span>, <span class="va">x</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"subject id: "</span>, <span class="va">x</span><span class="op">)</span><span class="op">]</span><span class="op">)</span><span class="op">}</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">design</span><span class="op">$</span><span class="va">Subject_ID</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"P"</span>, <span class="va">s_id</span><span class="op">[</span><span class="va">design</span><span class="op">$</span><span class="va">sample_ID</span><span class="op">]</span>, sep<span class="op">=</span><span class="st">""</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">time</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">design_list</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"day: "</span>, <span class="st">""</span>, <span class="va">x</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"day: "</span>, <span class="va">x</span><span class="op">)</span><span class="op">]</span><span class="op">)</span><span class="op">}</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">time</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">time</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"-7"</span>, <span class="st">"0.5"</span>, <span class="st">"1"</span>, <span class="st">"7"</span>, <span class="st">"10"</span>, <span class="st">"14"</span>,  <span class="st">"21"</span>, <span class="st">"28"</span><span class="op">)</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"D"</span>, <span class="va">time</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">time</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"-7"</span>, <span class="st">"0.5"</span>, <span class="st">"1"</span>, <span class="st">"7"</span>, <span class="st">"10"</span>, <span class="st">"14"</span>, <span class="st">"21"</span>, <span class="st">"28"</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>, sep<span class="op">=</span><span class="st">""</span><span class="op">)</span></span>
+<span><span class="va">time</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">time</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"-168"</span>, <span class="st">"1.5"</span>, <span class="st">"6"</span>, <span class="st">"9"</span>, <span class="st">"12"</span>, <span class="st">"15"</span>, <span class="st">"24"</span>, <span class="st">"36"</span>, <span class="st">"48"</span><span class="op">)</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"H"</span>, <span class="va">time</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">time</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"-168"</span>, <span class="st">"1.5"</span>, <span class="st">"6"</span>, <span class="st">"9"</span>, <span class="st">"12"</span>, <span class="st">"15"</span>, <span class="st">"24"</span>, <span class="st">"36"</span>, <span class="st">"48"</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>, sep<span class="op">=</span><span class="st">""</span><span class="op">)</span></span>
+<span><span class="va">design</span><span class="op">$</span><span class="va">Time</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">time</span><span class="op">[</span><span class="va">design</span><span class="op">$</span><span class="va">sample_ID</span><span class="op">]</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">vac</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">design_list</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"vaccine: "</span>, <span class="st">""</span>, <span class="va">x</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"vaccine: "</span>, <span class="va">x</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">vac</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">vac</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">vac</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"influenza"</span>, <span class="st">"influenza"</span>, <span class="st">"influenza"</span>, <span class="st">"influenza"</span>, <span class="st">"saline"</span>, </span>
+<span>                 <span class="st">"pneumo"</span>, <span class="st">"pneumo"</span>, <span class="st">"pneumo"</span>, <span class="st">"saline"</span>, <span class="st">"saline"</span><span class="op">)</span></span>
+<span><span class="va">design</span><span class="op">$</span><span class="va">Vaccine</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">vac</span><span class="op">[</span><span class="va">design</span><span class="op">$</span><span class="va">sample_ID</span><span class="op">]</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">sampSet</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">design_list</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"sample set: "</span>, <span class="st">""</span>, <span class="va">x</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"sample set: "</span>, <span class="va">x</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">design</span><span class="op">$</span><span class="va">sampSet</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">sampSet</span><span class="op">[</span><span class="va">design</span><span class="op">$</span><span class="va">sample_ID</span><span class="op">]</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">design</span><span class="op">$</span><span class="va">Time</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">design</span><span class="op">$</span><span class="va">sampSet</span><span class="op">==</span><span class="st">"Training_Set_Vein"</span> <span class="op">&amp;</span> <span class="va">design</span><span class="op">$</span><span class="va">Time</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0"</span>, <span class="st">"3"</span><span class="op">)</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"D"</span>, <span class="va">design</span><span class="op">$</span><span class="va">Time</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">design</span><span class="op">$</span><span class="va">sampSet</span><span class="op">==</span><span class="st">"Training_Set_Vein"</span> <span class="op">&amp;</span> <span class="va">design</span><span class="op">$</span><span class="va">Time</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0"</span>, <span class="st">"3"</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>, sep<span class="op">=</span><span class="st">""</span><span class="op">)</span></span>
+<span><span class="va">design</span><span class="op">$</span><span class="va">Time</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">design</span><span class="op">$</span><span class="va">sampSet</span><span class="op">==</span><span class="st">"Training_Set_Finger"</span> <span class="op">&amp;</span> <span class="va">design</span><span class="op">$</span><span class="va">Time</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0"</span>, <span class="st">"3"</span><span class="op">)</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"H"</span>, <span class="va">design</span><span class="op">$</span><span class="va">Time</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">design</span><span class="op">$</span><span class="va">sampSet</span><span class="op">==</span><span class="st">"Training_Set_Finger"</span> <span class="op">&amp;</span> <span class="va">design</span><span class="op">$</span><span class="va">Time</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0"</span>, <span class="st">"3"</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>, sep<span class="op">=</span><span class="st">""</span><span class="op">)</span></span>
+<span><span class="va">design</span><span class="op">$</span><span class="va">Time</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">design</span><span class="op">$</span><span class="va">sampSet</span><span class="op">==</span><span class="st">"Test_Set_Vein"</span> <span class="op">&amp;</span> <span class="va">design</span><span class="op">$</span><span class="va">Time</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0"</span>, <span class="st">"3"</span><span class="op">)</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"D"</span>, <span class="va">design</span><span class="op">$</span><span class="va">Time</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">design</span><span class="op">$</span><span class="va">sampSet</span><span class="op">==</span><span class="st">"Test_Set_Vein"</span> <span class="op">&amp;</span> <span class="va">design</span><span class="op">$</span><span class="va">Time</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0"</span>, <span class="st">"3"</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>, sep<span class="op">=</span><span class="st">""</span><span class="op">)</span></span>
+<span><span class="va">design</span><span class="op">$</span><span class="va">Time</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">design</span><span class="op">$</span><span class="va">sampSet</span><span class="op">==</span><span class="st">"Test_Set_Finger"</span> <span class="op">&amp;</span> <span class="va">design</span><span class="op">$</span><span class="va">Time</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0"</span>, <span class="st">"3"</span><span class="op">)</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"D"</span>, <span class="va">design</span><span class="op">$</span><span class="va">Time</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">design</span><span class="op">$</span><span class="va">sampSet</span><span class="op">==</span><span class="st">"Test_Set_Finger"</span> <span class="op">&amp;</span> <span class="va">design</span><span class="op">$</span><span class="va">Time</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0"</span>, <span class="st">"3"</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>, sep<span class="op">=</span><span class="st">""</span><span class="op">)</span></span>
+<span><span class="va">design</span><span class="op">$</span><span class="va">Time</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">design</span><span class="op">$</span><span class="va">sampSet</span><span class="op">==</span><span class="st">"Validation_Vein"</span> <span class="op">&amp;</span> <span class="va">design</span><span class="op">$</span><span class="va">Time</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0"</span>, <span class="st">"3"</span><span class="op">)</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"D"</span>, <span class="va">design</span><span class="op">$</span><span class="va">Time</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">design</span><span class="op">$</span><span class="va">sampSet</span><span class="op">==</span><span class="st">"Validation_Vein"</span> <span class="op">&amp;</span> <span class="va">design</span><span class="op">$</span><span class="va">Time</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0"</span>, <span class="st">"3"</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>, sep<span class="op">=</span><span class="st">""</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">design</span><span class="op">$</span><span class="va">Day</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"D"</span>, <span class="st">""</span>, <span class="va">design</span><span class="op">$</span><span class="va">Time</span><span class="op">)</span></span>
+<span><span class="va">design</span><span class="op">$</span><span class="va">Day</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"H"</span>, <span class="va">design</span><span class="op">$</span><span class="va">Day</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"H"</span>, <span class="st">""</span>, <span class="va">design</span><span class="op">$</span><span class="va">Day</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"H"</span>, <span class="va">design</span><span class="op">$</span><span class="va">Day</span><span class="op">)</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">/</span><span class="fl">24</span></span>
+<span><span class="va">design</span><span class="op">$</span><span class="va">Day</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">design</span><span class="op">$</span><span class="va">Day</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">design.All.ChaussVac</span> <span class="op">&lt;-</span> <span class="va">design</span></span>
+<span></span>
+<span></span>
+<span></span>
+<span><span class="co"># Avg Baseline -----</span></span>
+<span><span class="va">design.All.ChaussVac.trainSetVein</span> <span class="op">&lt;-</span> <span class="va">design.All.ChaussVac</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">design.All.ChaussVac</span><span class="op">$</span><span class="va">sampSet</span><span class="op">==</span><span class="st">"Training_Set_Vein"</span><span class="op">)</span>,<span class="op">]</span></span>
+<span><span class="va">samplesSaline2rmv</span> <span class="op">&lt;-</span> <span class="va">design.All.ChaussVac.trainSetVein</span><span class="op">[</span><span class="fl">162</span><span class="op">:</span><span class="fl">214</span>,<span class="st">"sample_ID"</span><span class="op">]</span></span>
+<span><span class="va">design.All.ChaussVac.noDup</span> <span class="op">&lt;-</span> <span class="va">design.All.ChaussVac.trainSetVein</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">design.All.ChaussVac.trainSetVein</span><span class="op">$</span><span class="va">sample_ID</span><span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span><span class="va">samplesSaline2rmv</span><span class="op">)</span>,<span class="op">]</span></span>
+<span></span>
+<span><span class="va">design.All.ChaussVac.AvgBl</span> <span class="op">&lt;-</span> <span class="va">design.All.ChaussVac.noDup</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">design.All.ChaussVac.noDup</span><span class="op">$</span><span class="va">Day</span><span class="op">!=</span><span class="fl">0</span><span class="op">)</span>,<span class="op">]</span></span>
+<span><span class="va">design.All.ChaussVac.AvgBl</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">design.All.ChaussVac.AvgBl</span><span class="op">$</span><span class="va">Day</span><span class="op">==</span><span class="op">-</span><span class="fl">7</span><span class="op">)</span>,<span class="st">"Day"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
+<span><span class="va">design.All.ChaussVac.AvgBl</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">design.All.ChaussVac.AvgBl</span><span class="op">$</span><span class="va">Time</span><span class="op">==</span><span class="st">"D-7"</span><span class="op">)</span>,<span class="st">"Time"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"D0"</span></span>
+<span></span>
+<span><span class="va">expr.All.ChaussVac.AvgBl</span> <span class="op">&lt;-</span> <span class="va">expr.All.ChaussVac</span><span class="op">[</span>, <span class="va">design.All.ChaussVac.AvgBl</span><span class="op">$</span><span class="va">sample_ID</span><span class="op">]</span></span>
+<span><span class="kw">for</span><span class="op">(</span><span class="va">p</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">design.All.ChaussVac.AvgBl</span><span class="op">$</span><span class="va">Subject_ID</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
+<span>    <span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">design.All.ChaussVac.noDup</span><span class="op">$</span><span class="va">Subject_ID</span><span class="op">==</span><span class="va">p</span> <span class="op">&amp;</span> <span class="op">(</span><span class="va">design.All.ChaussVac.noDup</span><span class="op">$</span><span class="va">Day</span><span class="op">==</span><span class="fl">0</span> <span class="op">|</span> <span class="va">design.All.ChaussVac.noDup</span><span class="op">$</span><span class="va">Day</span><span class="op">==</span><span class="op">-</span><span class="fl">7</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">&gt;</span><span class="fl">1</span><span class="op">)</span><span class="op">{</span></span>
+<span>        <span class="va">expr.All.ChaussVac.AvgBl</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">design.All.ChaussVac.AvgBl</span><span class="op">$</span><span class="va">Subject_ID</span><span class="op">==</span><span class="va">p</span> <span class="op">&amp;</span> <span class="va">design.All.ChaussVac.AvgBl</span><span class="op">$</span><span class="va">Day</span><span class="op">==</span><span class="fl">0</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span></span>
+<span>            <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span>X<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">expr.All.ChaussVac</span><span class="op">[</span>, <span class="va">design.All.ChaussVac.noDup</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">design.All.ChaussVac.noDup</span><span class="op">$</span><span class="va">Subject_ID</span><span class="op">==</span><span class="va">p</span> <span class="op">&amp;</span> <span class="va">design.All.ChaussVac.noDup</span><span class="op">$</span><span class="va">Day</span><span class="op">==</span><span class="fl">0</span><span class="op">)</span>, <span class="st">"sample_ID"</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>                          <span class="va">expr.All.ChaussVac</span><span class="op">[</span>, <span class="va">design.All.ChaussVac.noDup</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">design.All.ChaussVac.noDup</span><span class="op">$</span><span class="va">Subject_ID</span><span class="op">==</span><span class="va">p</span> <span class="op">&amp;</span> <span class="va">design.All.ChaussVac.noDup</span><span class="op">$</span><span class="va">Day</span><span class="op">==</span><span class="op">-</span><span class="fl">7</span><span class="op">)</span>, <span class="st">"sample_ID"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>                  MARGIN<span class="op">=</span><span class="fl">1</span>, FUN<span class="op">=</span><span class="va">mean</span>, na.rm<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span>    <span class="op">}</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">expr.All.ChaussVac.AvgBl</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">probesIDs</span></span>
+<span></span>
+<span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">design.All.ChaussVac.AvgBl</span><span class="op">$</span><span class="va">sample_ID</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">expr.All.ChaussVac.AvgBl</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">{</span><span class="kw"><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop</a></span><span class="op">(</span><span class="st">"\n\n\nWARNING: EXPRESSION FILE ORDER NOT MATCHING DESIGN FILE\n\n\n"</span><span class="op">)</span><span class="op">}</span></span>
+<span><span class="va">design.All.ChaussVac.AvgBl</span><span class="op">$</span><span class="va">Subject_ID</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">design.All.ChaussVac.AvgBl</span><span class="op">$</span><span class="va">Subject_ID</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="va">design.PNEUMOvsSALINE.ChaussVac.AvgBl</span> <span class="op">&lt;-</span> <span class="va">design.All.ChaussVac.AvgBl</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">design.All.ChaussVac.AvgBl</span><span class="op">$</span><span class="va">Vaccine</span><span class="op">!=</span><span class="st">"influenza"</span><span class="op">)</span>, <span class="op">]</span></span>
+<span><span class="va">design.PNEUMOvsSALINE.ChaussVac.AvgBl</span><span class="op">$</span><span class="va">Vaccine</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">design.PNEUMOvsSALINE.ChaussVac.AvgBl</span><span class="op">$</span><span class="va">Vaccine</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">expr.PNEUMOvsSALINE.ChaussVac.AvgBl</span> <span class="op">&lt;-</span> <span class="va">expr.All.ChaussVac.AvgBl</span><span class="op">[</span>,<span class="va">design.PNEUMOvsSALINE.ChaussVac.AvgBl</span><span class="op">$</span><span class="va">sample_ID</span><span class="op">]</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="likelihood-ratio-tests">Likelihood ratio tests<a class="anchor" aria-label="anchor" href="#likelihood-ratio-tests"></a>
 </h3>
-<p>This function provides the result of likelihood ratio test using the linear mixed model for each gene set. For this example, we use gene sets data from Chaussabel’s modules (<em>Chaussabel et al., 2008</em>). <code>TcGSA.LR</code> function requires:</p>
+<p>This function provides the result of likelihood ratio test using the
+linear mixed model for each gene set. For this example, we use gene sets
+data from Chaussabel’s modules (<em>Chaussabel et al., 2008</em>).
+<code>TcGSA.LR</code> function requires:</p>
 <ul>
 <li>
 <code>expr</code>: the gene expression matrix</li>
@@ -452,38 +556,41 @@ Blood samples have been acquired on day -7, 0, 1, 3, 7, 10, 14, 21 and 28 to stu
 <li>
 <code>design</code>: the design data matrix</li>
 <li>
-<code>subject_name</code>: the identification of patients in the design data matrix</li>
+<code>subject_name</code>: the identification of patients in the
+design data matrix</li>
 <li>
-<code>time_name</code>: the time measurements in the design data matrix</li>
+<code>time_name</code>: the time measurements in the design data
+matrix</li>
 <li>
-<code>group_name</code>: the group of treatment in the design data matrix</li>
+<code>group_name</code>: the group of treatment in the design data
+matrix</li>
 </ul>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">tcgsa_result_MT</span> <span class="op">&lt;-</span> <span class="fu">TcGSA</span><span class="fu">::</span><span class="fu"><a href="../reference/TcGSA.LR.html">TcGSA.LR</a></span><span class="op">(</span>expr <span class="op">=</span> <span class="va">expr.PNEUMOvsSALINE.ChaussVac.AvgBl</span>, 
-                                   gmt <span class="op">=</span> <span class="va">gmt_modulesV2</span>,
-                                   design <span class="op">=</span> <span class="va">design.PNEUMOvsSALINE.ChaussVac.AvgBl</span>, 
-                                   subject_name <span class="op">=</span> <span class="st">"Subject_ID"</span>, 
-                                   time_name <span class="op">=</span> <span class="st">"Day"</span>, 
-                                   group_name <span class="op">=</span> <span class="st">"Vaccine"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">tcgsa_result_MT</span><span class="op">)</span>
-<span class="co">#&gt;      A TcGSA object</span>
-<span class="co">#&gt; Form of the time trend:</span>
-<span class="co">#&gt;  linear</span>
-<span class="co">#&gt; Number of treatment groups:</span>
-<span class="co">#&gt;  2</span>
-<span class="co">#&gt; Number of gene sets tested for significant time trend:</span>
-<span class="co">#&gt;  260</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Number of significant gene sets at a 5% threshold (BY procedure):</span>
-<span class="co">#&gt;  36 out of 260 gene sets</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu">TcGSA</span><span class="fu">::</span><span class="fu"><a href="../reference/signifLRT.TcGSA.html">signifLRT.TcGSA</a></span><span class="op">(</span><span class="va">tcgsa_result_MT</span><span class="op">)</span><span class="op">$</span><span class="va">mixedLRTadjRes</span><span class="op">)</span>
-<span class="co">#&gt;   GeneSet      AdjPval         desc</span>
-<span class="co">#&gt; 1    M1.1 1.284340e-09    Platelets</span>
-<span class="co">#&gt; 2    M1.2 5.945221e-06   Interferon</span>
-<span class="co">#&gt; 3    M2.3 1.633082e-04 Erythrocytes</span>
-<span class="co">#&gt; 4    M3.1 1.284340e-09 Erythrocytes</span>
-<span class="co">#&gt; 5    M3.2 3.554220e-10 Inflammation</span>
-<span class="co">#&gt; 6    M3.4 2.474143e-07   Interferon</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">tcgsa_result_MT</span> <span class="op">&lt;-</span> <span class="fu">TcGSA</span><span class="fu">::</span><span class="fu"><a href="../reference/TcGSA.LR.html">TcGSA.LR</a></span><span class="op">(</span>expr <span class="op">=</span> <span class="va">expr.PNEUMOvsSALINE.ChaussVac.AvgBl</span>, </span>
+<span>                                   gmt <span class="op">=</span> <span class="va">gmt_modulesV2</span>,</span>
+<span>                                   design <span class="op">=</span> <span class="va">design.PNEUMOvsSALINE.ChaussVac.AvgBl</span>, </span>
+<span>                                   subject_name <span class="op">=</span> <span class="st">"Subject_ID"</span>, </span>
+<span>                                   time_name <span class="op">=</span> <span class="st">"Day"</span>, </span>
+<span>                                   group_name <span class="op">=</span> <span class="st">"Vaccine"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">tcgsa_result_MT</span><span class="op">)</span></span>
+<span><span class="co">#&gt;      A TcGSA object</span></span>
+<span><span class="co">#&gt; Form of the time trend:</span></span>
+<span><span class="co">#&gt;  linear</span></span>
+<span><span class="co">#&gt; Number of treatment groups:</span></span>
+<span><span class="co">#&gt;  2</span></span>
+<span><span class="co">#&gt; Number of gene sets tested for significant time trend:</span></span>
+<span><span class="co">#&gt;  260</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Number of significant gene sets at a 5% threshold (BY procedure):</span></span>
+<span><span class="co">#&gt;  36 out of 260 gene sets</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu">TcGSA</span><span class="fu">::</span><span class="fu"><a href="../reference/signifLRT.TcGSA.html">signifLRT.TcGSA</a></span><span class="op">(</span><span class="va">tcgsa_result_MT</span><span class="op">)</span><span class="op">$</span><span class="va">mixedLRTadjRes</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   GeneSet      AdjPval         desc</span></span>
+<span><span class="co">#&gt; 1    M1.1 1.284341e-09    Platelets</span></span>
+<span><span class="co">#&gt; 2    M1.2 5.945222e-06   Interferon</span></span>
+<span><span class="co">#&gt; 3    M2.3 1.633082e-04 Erythrocytes</span></span>
+<span><span class="co">#&gt; 4    M3.1 1.284341e-09 Erythrocytes</span></span>
+<span><span class="co">#&gt; 5    M3.2 3.554221e-10 Inflammation</span></span>
+<span><span class="co">#&gt; 6    M3.4 2.474143e-07   Interferon</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="graphical-outputs-for-significant-gene-sets">Graphical outputs for significant gene sets<a class="anchor" aria-label="anchor" href="#graphical-outputs-for-significant-gene-sets"></a>
@@ -491,87 +598,123 @@ Blood samples have been acquired on day -7, 0, 1, 3, 7, 10, 14, 21 and 28 to stu
 <div class="section level4">
 <h4 id="make-clusters-from-tcgsa-object">Make clusters from tcgsa object<a class="anchor" aria-label="anchor" href="#make-clusters-from-tcgsa-object"></a>
 </h4>
-<p><code>clustTrend</code> builds clusters of genes from their trends dynamics. <code>clustTrend</code> function requires:</p>
+<p><code>clustTrend</code> builds clusters of genes from their trends
+dynamics. <code>clustTrend</code> function requires:</p>
 <ul>
 <li>
 <code>tcgs</code>: your TcGSA object</li>
 <li>
-<code>expr</code>: estimation of gene expressions with linear mixed model from TcGSA object</li>
+<code>expr</code>: estimation of gene expressions with linear mixed
+model from TcGSA object</li>
 <li>
-<code>Subject_ID</code>: name of the identification of patients in the design data matrix</li>
+<code>Subject_ID</code>: name of the identification of patients in
+the design data matrix</li>
 <li>
-<code>TimePoint</code>: name of the time measurements in the design data matrix</li>
+<code>TimePoint</code>: name of the time measurements in the design
+data matrix</li>
 <li>
-<code>baseline</code> (<em>optional</em>): value of <code>TimePoint</code> used to be the reference</li>
+<code>baseline</code> (<em>optional</em>): value of
+<code>TimePoint</code> used to be the reference</li>
 <li>
-<code>group_of_interest</code>: name of a treatment in the design data matrix</li>
+<code>group_of_interest</code>: name of a treatment in the design
+data matrix</li>
 </ul>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">clust</span> <span class="op">&lt;-</span> <span class="fu">TcGSA</span><span class="fu">::</span><span class="fu"><a href="../reference/clustTrend.html">clustTrend</a></span><span class="op">(</span>tcgs <span class="op">=</span> <span class="va">tcgsa_result_MT</span>, 
-                           expr<span class="op">=</span><span class="va">tcgsa_result_MT</span><span class="op">$</span><span class="va">Estimations</span>,
-                           Subject_ID<span class="op">=</span><span class="va">design.PNEUMOvsSALINE.ChaussVac.AvgBl</span><span class="op">$</span><span class="va">Patient_ID</span>,
-                           TimePoint<span class="op">=</span><span class="va">design.PNEUMOvsSALINE.ChaussVac.AvgBl</span><span class="op">$</span><span class="va">Day</span>,
-                           group.var <span class="op">=</span> <span class="va">design.PNEUMOvsSALINE.ChaussVac.AvgBl</span><span class="op">$</span><span class="va">Vaccine</span>,
-                           group_of_interest<span class="op">=</span><span class="st">"pneumo"</span>,
-                           ref<span class="op">=</span><span class="st">"saline"</span><span class="op">)</span>
-<span class="va">clust</span>
-<span class="co">#&gt;          A ClusteredTrends object</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Distribution of the number of trends per gene sets:</span>
-<span class="co">#&gt;  1 trend:  36</span>
-<span class="co">#&gt;  2 trends: 0</span>
-<span class="co">#&gt;  3 trends: 0</span>
-<span class="co">#&gt;  4 trends: 0</span>
-<span class="co">#&gt;  Total number of trends: 36 (out of 36 significant gene sets)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Maximal number of clusters tested: 4 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Mean number of trends by significant gene set:    1</span></code></pre></div>
-<p><code>clust</code> shows the number of trends within the significant gene sets.</p>
+<code class="sourceCode R"><span><span class="va">clust</span> <span class="op">&lt;-</span> <span class="fu">TcGSA</span><span class="fu">::</span><span class="fu"><a href="../reference/clustTrend.html">clustTrend</a></span><span class="op">(</span>tcgs <span class="op">=</span> <span class="va">tcgsa_result_MT</span>, </span>
+<span>                           expr<span class="op">=</span><span class="va">tcgsa_result_MT</span><span class="op">$</span><span class="va">Estimations</span>,</span>
+<span>                           Subject_ID<span class="op">=</span><span class="va">design.PNEUMOvsSALINE.ChaussVac.AvgBl</span><span class="op">$</span><span class="va">Patient_ID</span>,</span>
+<span>                           TimePoint<span class="op">=</span><span class="va">design.PNEUMOvsSALINE.ChaussVac.AvgBl</span><span class="op">$</span><span class="va">Day</span>,</span>
+<span>                           group.var <span class="op">=</span> <span class="va">design.PNEUMOvsSALINE.ChaussVac.AvgBl</span><span class="op">$</span><span class="va">Vaccine</span>,</span>
+<span>                           group_of_interest<span class="op">=</span><span class="st">"pneumo"</span>,</span>
+<span>                           ref<span class="op">=</span><span class="st">"saline"</span><span class="op">)</span></span>
+<span><span class="va">clust</span></span>
+<span><span class="co">#&gt;          A ClusteredTrends object</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Distribution of the number of trends per gene sets:</span></span>
+<span><span class="co">#&gt;  1 trend:  36</span></span>
+<span><span class="co">#&gt;  2 trends: 0</span></span>
+<span><span class="co">#&gt;  3 trends: 0</span></span>
+<span><span class="co">#&gt;  4 trends: 0</span></span>
+<span><span class="co">#&gt;  Total number of trends: 36 (out of 36 significant gene sets)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Maximal number of clusters tested: 4 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Mean number of trends by significant gene set:    1</span></span></code></pre></div>
+<p><code>clust</code> shows the number of trends within the significant
+gene sets.</p>
 </div>
 <div class="section level4">
 <h4 id="heatmap-of-significant-gene-sets">Heatmap of significant gene sets<a class="anchor" aria-label="anchor" href="#heatmap-of-significant-gene-sets"></a>
 </h4>
-<p><code>plot</code> draws different kinds of graphics, but we focus on heatmap graphics. This function requires:</p>
+<p><code>plot</code> draws different kinds of graphics, but we focus on
+heatmap graphics. This function requires:</p>
 <ul>
 <li>
 <code>x</code>: a <code>tcgsa</code> object</li>
 <li>
-<code>expr</code>: estimation of gene expressions with linear mixed model from a <code>tcgsa</code> object</li>
+<code>expr</code>: estimation of gene expressions with linear mixed
+model from a <code>tcgsa</code> object</li>
 <li>
-<code>Subject_ID</code>: name of the subject identifier variable in the design data matrix</li>
+<code>Subject_ID</code>: name of the subject identifier variable in
+the design data matrix</li>
 <li>
-<code>TimePoint</code>: name of the time measurement variable in the design data matrix</li>
+<code>TimePoint</code>: name of the time measurement variable in the
+design data matrix</li>
 <li>
-<code>group_of_interest</code>: name of the treatment factor variable in the design data matrix</li>
+<code>group_of_interest</code>: name of the treatment factor
+variable in the design data matrix</li>
 <li>
-<code>clust_trends</code>: cluster object with the clusters of genes from their trends dynamics</li>
+<code>clust_trends</code>: cluster object with the clusters of genes
+from their trends dynamics</li>
 </ul>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">tcgsa_result_MT</span>, expr<span class="op">=</span><span class="va">tcgsa_result_MT</span><span class="op">$</span><span class="va">Estimations</span>,
-     Subject_ID<span class="op">=</span><span class="va">design.PNEUMOvsSALINE.ChaussVac.AvgBl</span><span class="op">$</span><span class="va">Patient_ID</span>,
-     TimePoint<span class="op">=</span><span class="va">design.PNEUMOvsSALINE.ChaussVac.AvgBl</span><span class="op">$</span><span class="va">TimePoint</span>,
-     group_of_interest<span class="op">=</span><span class="st">"pneumo"</span>,
-     clust_trends<span class="op">=</span><span class="va">clust</span>,
-     legend.breaks<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span>from<span class="op">=</span><span class="op">-</span><span class="fl">2</span>,to<span class="op">=</span><span class="fl">2</span>, by<span class="op">=</span><span class="fl">0.01</span><span class="op">)</span>, time_unit<span class="op">=</span><span class="st">"D"</span>,
-     subtitle<span class="op">=</span><span class="st">"Pneumo vs Saline"</span>, cex.label.row<span class="op">=</span><span class="fl">0.5</span>, cex.label.col<span class="op">=</span><span class="fl">1</span>, cex.main<span class="op">=</span><span class="fl">0.7</span>,
-     heatmap.width<span class="op">=</span><span class="fl">0.2</span>, dendrogram.size<span class="op">=</span><span class="fl">0.3</span>, margins<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span>,
-     heatKey.size<span class="op">=</span><span class="fl">0.8</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">tcgsa_result_MT</span>, expr<span class="op">=</span><span class="va">tcgsa_result_MT</span><span class="op">$</span><span class="va">Estimations</span>,</span>
+<span>     Subject_ID<span class="op">=</span><span class="va">design.PNEUMOvsSALINE.ChaussVac.AvgBl</span><span class="op">$</span><span class="va">Patient_ID</span>,</span>
+<span>     TimePoint<span class="op">=</span><span class="va">design.PNEUMOvsSALINE.ChaussVac.AvgBl</span><span class="op">$</span><span class="va">TimePoint</span>,</span>
+<span>     group_of_interest<span class="op">=</span><span class="st">"pneumo"</span>,</span>
+<span>     clust_trends<span class="op">=</span><span class="va">clust</span>,</span>
+<span>     legend.breaks<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span>from<span class="op">=</span><span class="op">-</span><span class="fl">2</span>,to<span class="op">=</span><span class="fl">2</span>, by<span class="op">=</span><span class="fl">0.01</span><span class="op">)</span>, time_unit<span class="op">=</span><span class="st">"D"</span>,</span>
+<span>     subtitle<span class="op">=</span><span class="st">"Pneumo vs Saline"</span>, cex.label.row<span class="op">=</span><span class="fl">0.5</span>, cex.label.col<span class="op">=</span><span class="fl">1</span>, cex.main<span class="op">=</span><span class="fl">0.7</span>,</span>
+<span>     heatmap.width<span class="op">=</span><span class="fl">0.2</span>, dendrogram.size<span class="op">=</span><span class="fl">0.3</span>, margins<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span>,</span>
+<span>     heatKey.size<span class="op">=</span><span class="fl">0.8</span><span class="op">)</span></span></code></pre></div>
 <p><img src="TcGSA_userguide_files/figure-html/heatmap_MT-1.png" width="700"></p>
-<p>The heatmap shows an under (blue color) or an over (red color) expression for each significant gene sets in the <code>pneumo</code> arm (vaccine) compared to the <code>saline</code> arm (compared) from the <code>clust</code> object. Similar expression dynamics are clustered through a hierarchical clustering showed through a dendrogram.</p>
-<p><strong>Note:</strong> this figure is different than the one in Hejblum <em>et al.</em> because here we used a linear time function (for the sake of simplicity and computational speed). To reproduce the heatmap from the original article, one must use the <code>time_func</code> argument to specify a quadratic time function with an offset at Day 1.</p>
+<p>The heatmap shows an under (blue color) or an over (red color)
+expression for each significant gene sets in the <code>pneumo</code> arm
+(vaccine) compared to the <code>saline</code> arm (compared) from the
+<code>clust</code> object. Similar expression dynamics are clustered
+through a hierarchical clustering showed through a dendrogram.</p>
+<p><strong>Note:</strong> this figure is different than the one in
+Hejblum <em>et al.</em> because here we used a linear time function (for
+the sake of simplicity and computational speed). To reproduce the
+heatmap from the original article, one must use the
+<code>time_func</code> argument to specify a quadratic time function
+with an offset at Day 1.</p>
 </div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<p>Ashburner M, Ball CA, Blake JA, Botstein D, Butler H, Cherry JM, et al., (2000) Gene Ontology: tool for the unification of biology. <em>Nat Genet</em> <strong>25</strong>(1):25-9.</p>
-<p>Benjamini Y, Yekutieli D, (2001) The Control of the False Discovery Rate in Multiple Testing under Dependency. <em>Ann Stat</em> <strong>29</strong>(4):1165-88.</p>
-<p>Chaussabel D, Quinn C, Shen J, Patel P, Glaser C, Baldwin N, et al., (2008) A Modular Analysis Framework for Blood Genomics Studies: Application to Systemic Lupus Erythematosus. <em>Immunity</em> <strong>29</strong>(1):150-64.</p>
-<p>Hejblum BP, Skinner J, Thiebaut R, (2015) Time-Course Gene Set Analysis for Longitudinal Gene Expression Data. <em>PLOS Comput Biol</em> <strong>11</strong>(6):e1004310.</p>
-<p>Kanehisa M, Goto S, (2000) KEGG: Kyoto Encyclopedia of Genes and Genomes. <em>Nucleic Acids Res</em> <strong>28</strong>(1):27-30.</p>
-<p>Obermoser G, Presnell S, Domico K, Xu H, Wang Y, Anguiano E, <em>et al.</em>, (2013) Systems Scale Interactive Exploration Reveals Quantitative and Qualitative Differences in Response to Influenza and Pneumococcal Vaccines. <em>Immunity</em> <strong>38</strong>(4):831-44.</p>
+<p>Ashburner M, Ball CA, Blake JA, Botstein D, Butler H, Cherry JM, et
+al., (2000) Gene Ontology: tool for the unification of biology. <em>Nat
+Genet</em> <strong>25</strong>(1):25-9.</p>
+<p>Benjamini Y, Yekutieli D, (2001) The Control of the False Discovery
+Rate in Multiple Testing under Dependency. <em>Ann Stat</em>
+<strong>29</strong>(4):1165-88.</p>
+<p>Chaussabel D, Quinn C, Shen J, Patel P, Glaser C, Baldwin N, et al.,
+(2008) A Modular Analysis Framework for Blood Genomics Studies:
+Application to Systemic Lupus Erythematosus. <em>Immunity</em>
+<strong>29</strong>(1):150-64.</p>
+<p>Hejblum BP, Skinner J, Thiebaut R, (2015) Time-Course Gene Set
+Analysis for Longitudinal Gene Expression Data. <em>PLOS Comput
+Biol</em> <strong>11</strong>(6):e1004310.</p>
+<p>Kanehisa M, Goto S, (2000) KEGG: Kyoto Encyclopedia of Genes and
+Genomes. <em>Nucleic Acids Res</em> <strong>28</strong>(1):27-30.</p>
+<p>Obermoser G, Presnell S, Domico K, Xu H, Wang Y, Anguiano E, <em>et
+al.</em>, (2013) Systems Scale Interactive Exploration Reveals
+Quantitative and Qualitative Differences in Response to Influenza and
+Pneumococcal Vaccines. <em>Immunity</em>
+<strong>38</strong>(4):831-44.</p>
 </div>
 <div class="section level2">
 <h2 id="appendix">Appendix<a class="anchor" aria-label="anchor" href="#appendix"></a>
@@ -579,39 +722,42 @@ Blood samples have been acquired on day -7, 0, 1, 3, 7, 10, 14, 21 and 28 to stu
 <div class="section level3">
 <h3 id="geoquery-package">GEOquery package<a class="anchor" aria-label="anchor" href="#geoquery-package"></a>
 </h3>
-<p>In case the data you want to analyze is publicly available through <a href="https://www.ncbi.nlm.nih.gov/geo/" class="external-link">Gene Expression Omnibus (GEO)</a>, you can access it with the <code>GEOquery</code> package, that can be installed with the following commands:</p>
+<p>In case the data you want to analyze is publicly available through <a href="https://www.ncbi.nlm.nih.gov/geo/" class="external-link">Gene Expression Omnibus
+(GEO)</a>, you can access it with the <code>GEOquery</code> package,
+that can be installed with the following commands:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"GEOquery"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-    <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"BiocManager"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span><span class="op">{</span>
-        <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span>
-    <span class="op">}</span>
-    <span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"GEOquery"</span><span class="op">)</span>
-<span class="op">}</span></code></pre></div>
-<p>More details can be found on <a href="https://bioconductor.org/packages/release/bioc/html/GEOquery.html" class="external-link">Bioconductor</a> and in Davis S, Meltzer P, (2007) GEOquery: a bridge between the Gene Expression Omnibus (GEO) and Bioconductor <em>Bioinformatics</em> 14:1846-1847.</p>
+<code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"GEOquery"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"BiocManager"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
+<span>        <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
+<span>    <span class="op">}</span></span>
+<span>    <span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"GEOquery"</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<p>More details can be found on <a href="https://bioconductor.org/packages/release/bioc/html/GEOquery.html" class="external-link">Bioconductor</a>
+and in Davis S, Meltzer P, (2007) GEOquery: a bridge between the Gene
+Expression Omnibus (GEO) and Bioconductor <em>Bioinformatics</em>
+14:1846-1847.</p>
 </div>
 </div>
-  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>
 
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p>
-<p>Developed by <a href="https://borishejblum.science" class="external-link">Boris P Hejblum</a>, Damien Chimits, Anthony Devaux.</p>
+  <p>Developed by <a href="https://borishejblum.science" class="external-link">Boris P Hejblum</a>, Damien Chimits, Anthony Devaux.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer>
 </div>
 
-  
 
-  
+
+
 
   </body>
 </html>
