@@ -1,4 +1,5 @@
-name: Check CRAN status periodically
+name: cran-status-checks.yaml
+#Check CRAN status periodically
 
 on:
   schedule:
@@ -21,7 +22,7 @@ jobs:
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
           packages: |
-          any::urlchecker
+            any::urlchecker
           
       - name: URL check
         run: |
