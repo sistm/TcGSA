@@ -1,0 +1,30 @@
+name: Check CRAN status periodically
+
+on:
+  schedule:
+    # Runs daily at 4:00 PM UTC (9:00 AM PST)
+    - cron: '0 9 * * *'  
+  # allows for manually running of the check
+  workflow_dispatch:
+
+jobs:
+  check_cran_status:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get CRAN checks
+        uses: ricochet-rs/cran-checks/check-pkg@main
+        with:
+          pkg: TcGSA
+    
+      - name: Install urlchecker
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          packages: |
+          any::urlchecker
+          
+      - name: URL check
+        run: |
+          urlchecker::url_check()
+        shell: Rscript {0}
+      
