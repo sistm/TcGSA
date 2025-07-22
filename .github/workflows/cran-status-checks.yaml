@@ -8,6 +8,9 @@ on:
   # allows for manually running of the check
   workflow_dispatch:
 
+inputs:
+  pkg: "TcGSA"
+
 jobs:
   check_cran_status:
     runs-on: ubuntu-latest
@@ -29,8 +32,6 @@ jobs:
       - name: Check CRAN checks status
           # from https://github.com/ricochet-rs/cran-checks/blob/main/check-pkg/action.yaml
         id: cran-check-status
-        with:
-          pkg: "TcGSA"
         run: |
           pkg <- "${{ inputs.pkg }}"
           fp <- paste0("https://ricochet-rs.github.io/cran-checks/", pkg, ".json")
