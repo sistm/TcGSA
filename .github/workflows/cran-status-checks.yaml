@@ -30,7 +30,7 @@ jobs:
           # from https://github.com/ricochet-rs/cran-checks/blob/main/check-pkg/action.yaml
         id: cran-check-status
         run: |
-          pkg <- ""TcGSA"
+          pkg <- "TcGSA"
           fp <- paste0("https://ricochet-rs.github.io/cran-checks/", pkg, ".json")
 
           json <- tryCatch(readLines(fp),
