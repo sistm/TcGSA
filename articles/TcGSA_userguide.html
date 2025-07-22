@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">TcGSA</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.12.12</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.12.13</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -437,7 +437,7 @@ pneumococcal vaccine (Pneumovax23), or a placebo (saline
 solution).<br>
 Blood samples have been acquired on day -7, 0, 1, 3, 7, 10, 14, 21 and
 28 to study gene expression over time. For more details, check the
-article from <em>Obermoser et al.</em> <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3492754/" class="external-link">here</a>.</p>
+article from <em>Obermoser et al.</em> <a href="https://doi.org/10.1016/j.immuni.2012.12.008" class="external-link">here</a>.</p>
 <p>The data is available on <a href="https://www.ncbi.nlm.nih.gov/geo/" class="external-link">GEO website</a> under the GEO
 access number ‘GSE30101’, which we will be accessing through the
 <code>GEOquery</code> package (see appendix for more details on
@@ -448,7 +448,8 @@ access number ‘GSE30101’, which we will be accessing through the
 <p>Here, we download the data files and import them with
 <code>getGEO()</code> function:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html" class="external-link">download.file</a></span><span class="op">(</span><span class="st">"ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE30nnn/GSE30101/soft/GSE30101_family.soft.gz"</span>, destfile <span class="op">=</span> <span class="st">"GSE30101_family.soft.gz"</span>, mode <span class="op">=</span> <span class="st">"wb"</span>, cacheOK <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html" class="external-link">download.file</a></span><span class="op">(</span><span class="st">"ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE30nnn/GSE30101/soft/GSE30101_family.soft.gz"</span>, </span>
+<span>                     destfile <span class="op">=</span> <span class="st">"GSE30101_family.soft.gz"</span>, mode <span class="op">=</span> <span class="st">"wb"</span>, cacheOK <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="va">gse.soft</span> <span class="op">&lt;-</span> <span class="fu">GEOquery</span><span class="fu">::</span><span class="fu"><a href="http://seandavi.github.io/GEOquery/reference/getGEO.html" class="external-link">getGEO</a></span><span class="op">(</span>filename<span class="op">=</span><span class="st">"GSE30101_family.soft.gz"</span><span class="op">)</span></span></code></pre></div>
 <p>Additional processing is needed to shape our dataset into a gene
 expression matrix:</p>
