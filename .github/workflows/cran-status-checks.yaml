@@ -27,10 +27,15 @@ jobs:
           
       - name: URL check
         run: |
-          urlchecker::url_check()
+          urls_checks <- urlchecker::url_check()
+          if(nrow(urls_checks)>0){
+            stop(print(urls_checks))
+          }else{
+            print(urls_checks)
+          }
         shell: Rscript {0}
         
-      - name: Check CRAN checks status
+      - name: Check CRAN-checks status
           # from https://github.com/ricochet-rs/cran-checks/blob/main/check-pkg/action.yaml
         id: cran-check-status
         run: |
