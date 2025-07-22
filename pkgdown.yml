@@ -3,7 +3,7 @@ pkgdown: 2.1.3
 pkgdown_sha: ~
 articles:
   TcGSA_userguide: TcGSA_userguide.html
-last_built: 2025-07-21T22:22Z
+last_built: 2025-07-22T15:10Z
 urls:
   reference: http://sistm.github.io/TcGSA/reference
   article: http://sistm.github.io/TcGSA/articles
