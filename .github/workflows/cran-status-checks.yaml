@@ -86,6 +86,13 @@ jobs:
               "https://cran.r-project.org/web/checks/check_results_", pkg, ".html"
             )
           }
-          message("\u2713 `", pkg, "` has no notes, issues, warnings or errors")
+          
+          cli::cli_alert_success(c("{.pkg {pkg}} has no ", cli::col_blue("{.code NOTES}"), ", ",  
+                                   cli::col_yellow("{.code issues}"), ", ", 
+                                   cli::col_magenta("{.code WARNINGS}"), " or ",  
+                                   cli::col_red("{.code ERRORS}")
+                                   )
+          )
+          
         shell: Rscript {0}
       
